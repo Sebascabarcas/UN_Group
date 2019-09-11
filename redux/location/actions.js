@@ -1,0 +1,14 @@
+const actions = {
+  RESET_APP: 'RESET_APP',
+  GET_LOCATION: 'location/GET_LOCATION',
+  UPDATE_LOCATION: 'location/UPDATE_LOCATION',
+  ADD_LOCATION: 'location/ADD_LOCATION',
+  POP_LOCATION: 'location/POP_LOCATION',
+  CREATE_LOCATION: 'location/CREATE_LOCATION',
+  DELETE_LOCATION: 'location/DELETE_LOCATION',
+  GET_LOCATIONS: 'location/GET_LOCATIONS',
+  SET_STATE: 'location/SET_STATE',
+  SET_LOCATION_STATE: 'location/SET_LOCATION_STATE',
+}
+
+export default actions
