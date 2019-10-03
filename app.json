@@ -13,7 +13,7 @@
     "icon": "./assets/images/icon.png",
     "splash": {
       "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -24,15 +24,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bcd.bcd"
+      "bundleIdentifier": "com.wstem.ungroup"
     },
     "android": {
-      "package": "com.dbits.bcd",
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyCWPrODz1hIw-3g2gX94dTJTspvq768GOw"
-        }
-      }
+      "package": "com.wstem.ungroup",
     }
   }
 }
