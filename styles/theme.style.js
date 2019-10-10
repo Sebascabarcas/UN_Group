@@ -4,7 +4,7 @@ import {
 } from 'react-native-responsive-screen';
 
 export default {
-  PRIMARY_COLOR: '#743880',
+  PRIMARY_COLOR: '#407D39',
   SECONDARY_COLOR: '#7DC623',
   GRAY_COLOR: '#BEC2CE',
   SUCCESS_COLOR: '#7DC623',
@@ -16,6 +16,7 @@ export default {
   LIGHT_COLOR: '#F4F4F4',
   GRAY_BACKGROUND_COLOR: '#F7F8FA',
   HEADER_MENU_TITLE_COLOR: "#FFF",
+  // HEADER_MENU_TITLE_COLOR: "#101010",
   ROLE_TEXT_COLOR: '#8A8A8F',
   FONT_FAMILY_REGULAR: 'SFUIText',
   FONT_FAMILY_BOLD: 'SFUIText_bold',
