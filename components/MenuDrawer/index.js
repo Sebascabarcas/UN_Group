@@ -55,7 +55,8 @@ const MenuDrawer = () => {
 
   _signOutAsync = async () => {
     // await logout();
-    dispatch({type: 'session/LOGOUT', payload: {navigate}})
+    navigate('Auth')
+    // dispatch({type: 'session/LOGOUT', payload: {navigate}})
     
   };
 
@@ -107,7 +108,7 @@ const MenuDrawer = () => {
                     size={theme.ICON_SIZE_SUPER_EXTRA_SMALL}
                   />
                   <MyText style={styles.roleText}>
-                    Funcionario
+                    Grupo
                   </MyText>
               </Badge>
               <FontAwesome
@@ -145,7 +146,7 @@ const MenuDrawer = () => {
         )}
         {navLink (
           'Orders',
-          'Mis Viajes',
+          'Mis Eventos',
           <MaterialIcons
             style={styles.iconLink}
             name="update"
@@ -156,7 +157,7 @@ const MenuDrawer = () => {
         {navLink (
           'Wallet',
           // 'Assignment',
-          'Mi Billetera',
+          'Mis Usuarios',
           <Entypo
             style={styles.iconLink}
             name="wallet"
@@ -164,7 +165,7 @@ const MenuDrawer = () => {
             size={theme.ICON_SIZE_SMALL}
           />
         )}
-        {navLink (
+        {/* {navLink (
           // 'Wallet',
           'Assignment',
           'Enviar PQR',
@@ -174,7 +175,7 @@ const MenuDrawer = () => {
             color={theme.GRAY_COLOR}
             size={theme.ICON_SIZE_SMALL}
           />
-        )}
+        )} */}
         {navLink (
           'Configuration',
           'Opciones',
