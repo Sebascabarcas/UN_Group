@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 import theme from '../../styles/theme.style';
 import {
   widthPercentageToDP as wp,
@@ -11,11 +11,22 @@ export default StyleSheet.create ({
       // marginBottom: 0,
       // padding: 5,
     },
+    fullImage: {
+      width: '100%',
+      height: '100%',
+      flex: 1,
+      display: 'flex',
+      // marginTop: Platform.OS === 'ios' ? 60 : 80,
+      // paddingBottom: Platform.OS === 'ios' ? 60 : 80,
+      // justifyContent: 'space-evenly',
+      // alignItems: 'center',
+    },
     scroller: {
       flex: 1,
     },
     container: {
       flex: 1,
+      marginTop: Platform.OS === 'ios' ? 60 : 80,
       // alignItems: 'center',
       justifyContent: 'center',
     },
@@ -86,7 +97,7 @@ export default StyleSheet.create ({
       // overflow: 'hidden',
       flexDirection: 'column',
       flex: 1,
-      marginBottom: 10,
+      marginHorizontal: 10,
     },
     spinnerTextStyle: {
       color: '#FFF',

@@ -78,7 +78,7 @@ const MyProfileScreen = () => {
       <View style={styles.profileImgContainer}>
         <Image style={styles.profileImg} source={images[user.identification]} />
         <MyText fontStyle="bold" style={styles.name}>{user.name} {user.last_name}</MyText>
-        <MyText style={styles.role}> Funcionario </MyText>
+        <MyText style={styles.role}> Grupo </MyText>
       </View>
     <ScrollView style={styles.infoContainer}>
           <MyText color={theme.GRAY_COLOR} style={{margin: 16}}>INFORMACIÓN</MyText>

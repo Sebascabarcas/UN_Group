@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 import theme from '../../../styles/theme.style';
 import {
   widthPercentageToDP as wp,
@@ -7,6 +7,7 @@ import {
 
 export default StyleSheet.create ({
   container: {
+    paddingTop: Platform.OS === 'ios' ? 60 : 110,
     backgroundColor: theme.GRAY_BACKGROUND_COLOR,
     flex: 1,
     opacity: 0.98,

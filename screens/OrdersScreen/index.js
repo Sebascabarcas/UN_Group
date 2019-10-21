@@ -5,12 +5,13 @@ import {
   Dimensions,
   Animated,
   ScrollView,
+  ImageBackground,
   // Picker,
   FlatList,
 } from 'react-native';
 import * as Location from 'expo-location';
 import { Divider} from 'react-native-elements';
-import {Badge, Picker} from 'native-base';
+import {Badge, Picker, Button} from 'native-base';
 import styles from './styles.js';
 import MyText from '../../components/MyText';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -23,14 +24,13 @@ import {
 } from 'react-native-responsive-screen';
 import {getOrders} from '../../services/Order';
 import TripBox from '../../components/TripBox';
+import CardEvent from '../../components/CardEvent/index.js';
 
-const TAB_BAR_HEIGHT = 0;
-const GOOGLE_MAPS_APIKEY = 'AIzaSyCWPrODz1hIw-3g2gX94dTJTspvq768GOw';
-
-const {height} = Dimensions.get ('window');
+const {height: fullHeight} = Dimensions.get ('window');
 
 OrdersScreen = () => {
   const [isReady, _setReady] = useState (false);
+  const [offSet, _setOffSet] = useState (0);
   const searchHeader = useRef (null);
   const flatList = useRef (null);
   const {navigate, setParams} = navigationHooks.useNavigation ();
@@ -45,33 +45,28 @@ OrdersScreen = () => {
   const [filter, _setFilter] = useState ('all');
   // const [orders, _setOrders] = useState ([]);
 
-  useEffect (() => {
-    // setParams({'search_header': searchHeader})
-    const fetchActualLocation = async () => {
-      let location = await Location.getCurrentPositionAsync ({});
-      const {coords: {latitude, longitude}} = location;
-      const response = await fetch (
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_APIKEY}&sessiontoken=1234567890`,
-        {
-          method: `get`,
-        }
-      );
-      const data = await response.json ();
-      // console.log (data.results);
-      // console.log (data.results[0].address_components);
-      // console.log (data.results[0].address_components[0]);
+  // useEffect (() => {
+  //   const fetchActualLocation = async () => {
+  //     let location = await Location.getCurrentPositionAsync ({});
+  //     const {coords: {latitude, longitude}} = location;
+  //     const response = await fetch (
+  //       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_APIKEY}&sessiontoken=1234567890`,
+  //       {
+  //         method: `get`,
+  //       }
+  //     );
+  //     const data = await response.json ();
+  //     const place = data.results[0].formatted_address.split (/,(.+)/)[0];
+  //     _setActualPosition (place);
+  //   };
 
-      const place = data.results[0].formatted_address.split (/,(.+)/)[0];
-      _setActualPosition (place);
-    };
-
-    fetchActualLocation ();
-  }, []);
+  //   fetchActualLocation ();
+  // }, []);
 
   useEffect (
     () => {
       const fetchOrders = async () => {
-        _setLoading (true);
+        // _setLoading (true);
         try {
           flatList.current.scrollToOffset ({animated: true, offset: 0});
           const _orders = await getOrders ({
@@ -85,7 +80,7 @@ OrdersScreen = () => {
         } catch (error) {
           console.log (error.response);
         }
-        _setLoading (false);
+        // _setLoading (false);
       };
 
       fetchOrders ();
@@ -117,8 +112,6 @@ OrdersScreen = () => {
   };
 
   _onRefresh = async () => {
-    // console.log(orders);
-
     _setRefreshing (true);
     console.log ('Render on refresh');
     try {
@@ -176,79 +169,26 @@ OrdersScreen = () => {
     );
   };
 
+  onLayout = ({
+    nativeEvent: { layout: { height } },
+  }) => {
+    const offset = fullHeight - height;
+    _setOffSet(offset);
+    console.log(`Offset: ${offset}`);
+    
+  }
+
   return (
+    <ImageBackground
+        onLayout={onLayout}  
+        style={styles.fullImage}
+        source={require ('../../assets/images/dashboard_image.png')}
+      >
     <View style={styles.container}>
-      <Spinner
-        //visibility of Overlay Loading Spinner
-        visible={loading}
-        //Text with the Spinner
-        textContent={'Loading...'}
-        //Text style of the Spinner Text
-        textStyle={styles.spinnerTextStyle}
-      />
-      {
-        /* <SearchHeader
-        ref={searchHeader}
-        style = {{
-          container: {
-            position: 'absolute',
-            top: 0
-          }
-        }}
-        enableSuggestion={false}
-        placeholder="Buscar..."
-        onHide={() => _setFiltering (false)}
-        // searchHeader.current.clear()
-        placeholderColor="gray"
-        // onShow={() => _setFiltering(true)}
-        onClear={() => {
-          _setOrdersFiltered (orders);
-          flatList.current.scrollToOffset ({animated: true, offset: 0});
-        }}
-        onEnteringSearch={ev => {
-          const {nativeEvent: {text}} = ev;
-          console.log (`El text: ${text}`);
-          flatList.current.scrollToOffset ({animated: true, offset: 0});
-          if (text) {
-            _setFiltering (true);
-            _setOrdersFiltered (
-              orders.filter (
-                order => order.code.toString ().search (text) !== -1
-              )
-            );
-          } else {
-            console.log ('ajskdajs');
-            _setOrdersFiltered (orders);
-          }
-        }}
-      /> */
-      }
-      <View style={styles.badgesContainer}>
-        <Badge style={styles.badge} success />
-        <MyText fontStyle="bold" style={styles.badgeText}>Activo</MyText>
-        <Badge style={styles.badge} warning />
-        <MyText fontStyle="bold" style={styles.badgeText}>Finalizado</MyText>
-        <View style={styles.pickerContainer}>
-          <Picker
-            mode="dialog"
-            selectedValue={filter}
-            textStyle={styles.pickerItem}
-            itemStyle={styles.pickerItem}
-            itemTextStyle={styles.pickerItem}
-            style={styles.picker}
-            onValueChange={(itemValue, itemIndex) => _setFilter (itemValue)}
-            //   this.setState ({language: itemValue})}
-          >
-            <Picker.Item label="Todos" value="all" />
-            <Picker.Item label="Activos" value="not_assigned" />
-            <Picker.Item label="Finalizados" value="finished" />
-          </Picker>
-        </View>
-      </View>
       <Divider style={{marginBottom: 5}} />
       {/* <ScrollView > */}
       <View style={styles.tripsContainer}>
-        <FlatList
+        {/* <FlatList
           // style={styles.scroller}
           data={filtering ? ordersFiltered : orders}
           keyExtractor={order => order.id.toString ()}
@@ -259,44 +199,28 @@ OrdersScreen = () => {
           onRefresh={!filtering && _onRefresh}
           onEndReached={!noMorePages && !filtering && _fetchOrdersOnEnd}
           onEndReachedThreshold={0.2}
-        />
-      </View>
-      {/* </ScrollView> */}
-      <View style={styles.footerContainer}>
-        <View style={styles.footerInfoContainer}>
-          <FontAwesome
-            style={styles.iconContainer}
-            name="map-marker"
-            color="#fff"
-            size={theme.ICON_SIZE_SMALL}
-          />
-          <View style={styles.footerTextContainer}>
-            <MyText fontStyle="bold" style={styles.footerText}>
-              Posición actual
-            </MyText>
-            <MyText fontStyle="bold" style={styles.footerText}>
-              {actualPosition}
-            </MyText>
-          </View>
-        </View>
+        /> */}
+        <CardEvent name="Evento 1" time="04:20 PM" date="04/02/19" groupName="W-STEM" source="Soledad" description="Breve descripción" />
       </View>
     </View>
+    </ImageBackground>
   );
 };
 
-// OrdersScreen.navigationOptions = ({navigation}) => {
-//   const searchHeader = navigation.getParam('search_header', null)
-//   return {
-
-//     headerRight: (
-//       <Button iconRight transparent onPress={() => searchHeader.current.show ()}>
-//         <Ionicons
-//           name="md-search"
-//           color={theme.HEADER_MENU_TITLE_COLOR}
-//           size={theme.ICON_SIZE_MEDIUM}
-//         />
-//       </Button>
-//     ),
-//   }
-// };
+OrdersScreen.navigationOptions = ({navigation}) => {
+  const searchHeader = navigation.getParam('search_header', null)
+  return {
+    headerRight: (
+      <Button iconRight transparent onPress={() => searchHeader.current.show ()}
+      style={{marginRight: 20}}
+      >
+        <Ionicons
+          name="md-search"
+          color={theme.HEADER_MENU_TITLE_COLOR}
+          size={theme.ICON_SIZE_MEDIUM}
+        />
+      </Button>
+    ),
+  }
+};
 export default OrdersScreen;

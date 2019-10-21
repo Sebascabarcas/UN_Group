@@ -16,6 +16,9 @@ import {
 } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import MainTabNavigator from './MainTabNavigator';
+
 import { Transition } from 'react-native-reanimated';
 import theme from '../styles/theme.style'
 import MyText from '../components/MyText';
@@ -66,10 +69,55 @@ const AppStack = createStackNavigator(
     // AddCreditCard: {
     //   screen: AddCreditCardScreen,
     // },
+    // Home: {
+    //   screen: HomeScreen,
+    //   navigationOptions: {
+    //     title: 'W STEM',
+    //     headerTransparent: true,
+    //     headerStyle: {
+    //       backgroundColor: 'transparent',
+    //     },
+    //   },
+    // },
     Home: {
-      screen: HomeScreen,
+      screen: MainTabNavigator,
       navigationOptions: {
-        title: 'INICIO',
+        title: 'W STEM',
+        headerTransparent: true,
+        headerStyle: {
+          // backgroundColor: 'transparent',
+          // position: 'absolute',
+          // backgroundColor: 'transparent',
+          // zIndex: 100,
+          // top: 0,
+          // left: 0,
+          // right: 0,
+          // elevation: 0,
+          // shadowOpacity: 0,
+          // borderBottomWidth: 0,
+        },
+      },
+    },
+    Orders: {
+      screen: OrdersScreen,
+      navigationOptions: {
+        title: "W STEM",
+        headerTransparent: true,
+        headerStyle: {
+          backgroundColor: 'transparent',
+        },
+        // headerLeft: ({navigation}) => (
+        //   <Button
+        //     iconLeft transparent
+        //     onPress={() => navigation.openDrawer()}
+        //   >
+        //     <FontAwesome
+        //         name="navicon"
+        //         color={theme.HEADER_MENU_TITLE_COLOR}
+        //         size={theme.ICON_SIZE_SMALL}
+        //       />
+        //   </Button>
+        // ),
       },
     },
     Configuration: {
@@ -96,24 +144,7 @@ const AppStack = createStackNavigator(
     AddCreditCard: {
       screen: AddCreditCardScreen,
     },
-    Orders: {
-      screen: OrdersScreen,
-      navigationOptions: {
-        title: "MIS VIAJES",
-        // headerLeft: ({navigation}) => (
-        //   <Button
-        //     iconLeft transparent
-        //     onPress={() => navigation.openDrawer()}
-        //   >
-        //     <FontAwesome
-        //         name="navicon"
-        //         color={theme.HEADER_MENU_TITLE_COLOR}
-        //         size={theme.ICON_SIZE_SMALL}
-        //       />
-        //   </Button>
-        // ),
-      },
-    },
+    
     TripPreview: {
       screen: TripPreviewScreen,
       navigationOptions: {
@@ -188,14 +219,16 @@ export default createAppContainer (
   // createSwitchNavigator (
   createAnimatedSwitchNavigator (
     {
-      AuthLoading: AuthLoadingScreen,
+      App: AppDrawerNavigator,
+
+      // AuthLoading: AuthLoadingScreen,
       Intro: IntroSlider,
       LocationPermissions: LocationPermissionsScreen,
-      App: AppDrawerNavigator,
+      // App: AppDrawerNavigator,
       Auth: AuthStack,
     },
     {
-      initialRouteName: 'AuthLoading',
+      // initialRouteName: 'AuthLoading',
       transition: (
         <Transition.Together>
           <Transition.Out

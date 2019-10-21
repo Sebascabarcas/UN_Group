@@ -6,52 +6,63 @@ import {
 } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import WalletScreen from '../screens/Profile/WalletScreen';
+import PaymentMethodScreen from '../screens/Profile/PaymentMethodScreen';
+import AddCreditCardScreen from '../screens/Profile/AddCreditCardScreen';
+import OrdersScreen from '../screens/OrdersScreen';
+import theme from '../styles/theme.style';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
-});
+  Home: OrdersScreen,
+}, { headerMode: "none" });
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: 'Eventos',
+  tabBarOptions: {
+    activeTintColor: theme.PRIMARY_COLOR
+  },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          ? `ios-calendar-${focused ? '' : '-outline'}`
+          : 'md-calendar'
       }
     />
   ),
 };
 
 const LinksStack = createStackNavigator({
-  Links: LinksScreen,
-});
+  Links: PaymentMethodScreen,
+}, { headerMode: "none" });
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+  tabBarLabel: 'Grupos',
+  tabBarOptions: {
+    activeTintColor: theme.PRIMARY_COLOR
+  },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
+      name={Platform.OS === 'ios' ? 'ios-people' : 'md-people'}
     />
   ),
 };
 
 const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
-});
+  Settings: AddCreditCardScreen,
+}, { headerMode: "none" });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+  tabBarLabel: 'No se',
+  tabBarOptions: {
+    activeTintColor: theme.PRIMARY_COLOR
+  },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
+      name={Platform.OS === 'ios' ? 'ios-star' : 'md-star'}
     />
   ),
 };
