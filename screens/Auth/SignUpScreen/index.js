@@ -49,7 +49,7 @@ const SignUpScreen = () => {
       >
         {/* <View style={styles.container}> */}
         <Image
-          style={{width: 279, height: 76, marginBottom: 20}}
+          style={{marginBottom: 20}}
           source={require ('../../../assets/images/Logo.png')}
         />
         <Form style={styles.mainForm}>
@@ -61,7 +61,37 @@ const SignUpScreen = () => {
           >
           <Item white style={styles.itemForm}>
             <Input
-              placeholder="Correo"
+              placeholder="Primer Nombre"
+              placeholderTextColor="#FFF"
+              style={styles.input}
+              onChangeText={email => _setUser ({...user, email})}
+              value={user.email}
+            />
+            <Ionicons
+              style={styles.iconInput}
+              name="ios-mail"
+              color="#FFF"
+              size={theme.ICON_SIZE_SMALL}
+            />
+          </Item>
+          <Item white style={styles.itemForm}>
+            <Input
+              placeholder="Segundo Nombre"
+              placeholderTextColor="#FFF"
+              style={styles.input}
+              onChangeText={email => _setUser ({...user, email})}
+              value={user.email}
+            />
+            <Ionicons
+              style={styles.iconInput}
+              name="ios-mail"
+              color="#FFF"
+              size={theme.ICON_SIZE_SMALL}
+            />
+          </Item>
+          <Item white style={styles.itemForm}>
+            <Input
+              placeholder="Primer Apellido"
               placeholderTextColor="#FFF"
               style={styles.input}
               onChangeText={email => _setUser ({...user, email})}
