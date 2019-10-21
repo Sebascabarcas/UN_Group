@@ -47,7 +47,7 @@ const ConfigurationScreen = () => {
             <MyText fontStyle="bold" style={styles.name}>
               {user.name} {user.last_name}
             </MyText>
-            <MyText style={styles.role}>Funcionario</MyText>
+            <MyText style={styles.role}>Grupo</MyText>
           </View>
           <View style={{paddingRight: 15}}>
             <Ionicons active name="ios-arrow-forward" />
