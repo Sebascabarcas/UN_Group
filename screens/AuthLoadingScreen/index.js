@@ -22,7 +22,7 @@ export default class AuthLoadingScreen extends React.Component {
     let {status} = await Permissions.getAsync (Permissions.LOCATION);
     console.log(status)
     if (userToken) {
-      this.props.navigation.navigate (status === 'granted' ? 'App' : 'LocationPermissions');
+      this.props.navigation.navigate (status === 'granted' ? 'App' : 'Intro');
     } else {
       this.props.navigation.navigate ('Auth');
     }

@@ -33,16 +33,18 @@ const MenuDrawer = () => {
   const dispatch = useDispatch()
   const {navigate} = navigationHooks.useNavigation ();
   const user = useSelector(state => state.session.current_user)
+  console.log(user);
+  
   useEffect (() => {
     const fetchUserInfo = async () => {
-      const {user_id: userID, profileImg} = await Storage.get ('Session');
+      const {user: userInfo, profileImg} = await Storage.get ('Session');
       try {
-        const userInfo = await showUser (userID);
-        Object.entries (userInfo).map (
-          ([key, value]) =>
-            (userInfo[key] = userInfo[key] ? value.toString () : null)
-        );
-        dispatch({type: 'session/SET_STATE', payload: {current_user: userInfo}})
+        // const userInfo = await showUser (userID);
+        // Object.entries (userInfo).map (
+        //   ([key, value]) =>
+        //     (userInfo[key] = userInfo[key] ? value.toString () : null)
+        // );
+        dispatch({type: 'session/SET_STATE', payload: {current_user: userInfo}});
         _setReady (true);
       } catch (error) {
         console.log (error);
@@ -92,11 +94,11 @@ const MenuDrawer = () => {
         <View style={styles.profile}>
           <TouchableWithoutFeedback style={styles.imgView} onPress={() => navigate ('MyProfile')}>
             {/* <View style={styles.imgView}> */}
-              <Image style={styles.img} source={images[user.identification]} />
+              <Image style={styles.img} source={images["123456789"]} />
             {/* </View> */}
           </TouchableWithoutFeedback>
           <View style={styles.profileText}>
-            <MyText style={styles.name}>{user.name} {user.last_name}</MyText>
+            <MyText style={styles.name}>{user.firstName} {user.lastName}</MyText>
             <View style={styles.settingsContainer}>
               <Badge
                 white
@@ -108,7 +110,7 @@ const MenuDrawer = () => {
                     size={theme.ICON_SIZE_SUPER_EXTRA_SMALL}
                   />
                   <MyText style={styles.roleText}>
-                    Grupo
+                    {user.group || 'Sin Grupo'}
                   </MyText>
               </Badge>
               <FontAwesome
