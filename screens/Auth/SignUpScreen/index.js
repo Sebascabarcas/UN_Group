@@ -27,7 +27,15 @@ const SignUpScreen = () => {
   // const [email, _setEmail] = useState (null);
   // const [password, _setPassword] = useState (null);
   // const [user, _setUser] = useState ({});
-  const [user, _setUser] = useState ({});
+  const [user, _setUser] = useState ( {
+    "username": "tester",
+    "firstName": "John",
+    "middleName": "Deivis",
+    "lastName": "Barbosa",
+    "job_title": "Colla",
+    "pwd": "123456",
+    "pwd_confirmation": "123456"
+  });
 
   useEffect (() => {
     console.log ('SignUp');
@@ -40,7 +48,6 @@ const SignUpScreen = () => {
   };
 
   return (
-    
       <ImageBackground
         source={require ('../../../assets/images/Image_Background.png')}
         style={styles.fullImage}
@@ -48,10 +55,6 @@ const SignUpScreen = () => {
         // tintColor={"rgba(0, 0, 0, .75)"}
       >
         {/* <View style={styles.container}> */}
-        <Image
-          style={{marginBottom: 20}}
-          source={require ('../../../assets/images/Logo.png')}
-        />
         <Form style={styles.mainForm}>
           {/* {loading && <Spinner color={theme.PRIMARY_COLOR} />} */}
           <KeyboardAvoidingView
@@ -61,11 +64,26 @@ const SignUpScreen = () => {
           >
           <Item white style={styles.itemForm}>
             <Input
+              placeholder="Nombre de Usuario"
+              placeholderTextColor="#FFF"
+              style={styles.input}
+              onChangeText={username => _setUser ({...user, username})}
+              value={user.username}
+            />
+            <Ionicons
+              style={styles.iconInput}
+              name="ios-mail"
+              color="#FFF"
+              size={theme.ICON_SIZE_SMALL}
+            />
+          </Item>
+          <Item white style={styles.itemForm}>
+            <Input
               placeholder="Primer Nombre"
               placeholderTextColor="#FFF"
               style={styles.input}
-              onChangeText={email => _setUser ({...user, email})}
-              value={user.email}
+              onChangeText={firstName => _setUser ({...user, firstName})}
+              value={user.firstName}
             />
             <Ionicons
               style={styles.iconInput}
@@ -79,8 +97,8 @@ const SignUpScreen = () => {
               placeholder="Segundo Nombre"
               placeholderTextColor="#FFF"
               style={styles.input}
-              onChangeText={email => _setUser ({...user, email})}
-              value={user.email}
+              onChangeText={middleName => _setUser ({...user, middleName})}
+              value={user.middleName}
             />
             <Ionicons
               style={styles.iconInput}
@@ -94,8 +112,8 @@ const SignUpScreen = () => {
               placeholder="Primer Apellido"
               placeholderTextColor="#FFF"
               style={styles.input}
-              onChangeText={email => _setUser ({...user, email})}
-              value={user.email}
+              onChangeText={lastName => _setUser ({...user, lastName})}
+              value={user.lastName}
             />
             <Ionicons
               style={styles.iconInput}
@@ -106,28 +124,12 @@ const SignUpScreen = () => {
           </Item>
           <Item white style={styles.itemForm}>
             <Input
-              placeholder="Celular"
-              placeholderTextColor="#FFF"
-              onChangeText={cellphone_number =>
-                _setUser ({...user, cellphone_number})}
-              value={user.cellphone_number}
-              keyboardType="number-pad"
-              style={styles.input}
-            />
-            <AntDesign
-              name="phone"
-              size={theme.ICON_SIZE_SMALL}
-              color="white"
-            />
-          </Item>
-          <Item white style={styles.itemForm}>
-            <Input
               placeholder="Contraseña"
               placeholderTextColor="#FFF"
               secureTextEntry={!showPassword}
               style={styles.input}
-              onChangeText={password => _setUser ({...user, password})}
-              value={user.password}
+              onChangeText={password => _setUser ({...user, pwd})}
+              value={user.pwd}
             />
             {!showPassword
               ? <FontAwesome
@@ -146,7 +148,7 @@ const SignUpScreen = () => {
                 />}
           </Item>
           </KeyboardAvoidingView>
-          <View style={styles.checksContainer}>
+          {/* <View style={styles.checksContainer}>
             <View style={styles.checkContainer}>
               <CheckBox
                 center
@@ -179,8 +181,6 @@ const SignUpScreen = () => {
                 Mujer
               </MyText>
             </View>
-          </View>
-          {/* <View style={styles.checkContainer}>
           </View> */}
           <Button
             onPress={_signUpAsync}

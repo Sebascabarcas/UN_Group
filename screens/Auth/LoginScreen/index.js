@@ -30,20 +30,17 @@ import {useDispatch} from 'react-redux';
 const LoginScreen = () => {
   const dispatch = useDispatch ();
   const {navigate} = useNavigation ();
-  const [checked, _setChecked] = useState (true);
+  // const [checked, _setChecked] = useState (true);
   const [showPassword, _setShowPassword] = useState (false);
   const [loading, _setLoading] = useState (false);
-  const [identification, _setIdentification] = useState ('123456789');
-  const [password, _setPassword] = useState ('123456');
+  const [username, _setUsername] = useState ('tester');
+  const [pwd, _setPassword] = useState ('123456');
 
   _signInAsync = async () => {
     _setLoading (true);
     try {
-      console.log({identification, password});
-      
-      // const session = await login ({identification, password});
-      dispatch({type: 'session/LOGIN', payload: {auth: {identification, password}, storeSession: checked, navigate}});
-      
+      dispatch({type: 'session/LOGIN', payload: {auth: {username, pwd}, navigate}});
+      // storeSession: checked, }});
     } catch (error) {
       console.log('error');
       console.log(error);
@@ -71,8 +68,8 @@ const LoginScreen = () => {
               placeholder="Correo"
               placeholderTextColor="#FFF"
               style={styles.input}
-              onChangeText={text => _setIdentification(text)}
-              value={identification}
+              onChangeText={text => _setUsername(text)}
+              value={username}
             />
             <FontAwesome
               style={styles.iconInput}
@@ -88,7 +85,7 @@ const LoginScreen = () => {
               secureTextEntry={!showPassword}
               style={styles.input}
               onChangeText={text => _setPassword(text)}
-              value={password}
+              value={pwd}
             />
             {!showPassword ? <FontAwesome
               style={styles.iconInput}
@@ -105,7 +102,7 @@ const LoginScreen = () => {
               size={24}
             />}
           </Item>
-          <View style={styles.containerMainCheck}>
+          {/* <View style={styles.containerMainCheck}>
             <CheckBox
               style={styles.mainCheck}
               checked={checked}
@@ -117,7 +114,7 @@ const LoginScreen = () => {
             >
               Mantener mi sesión activa.
             </MyText>
-          </View>
+          </View> */}
           <Button
             onPress={_signInAsync}
             rounded
