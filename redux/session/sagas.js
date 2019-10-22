@@ -1,6 +1,7 @@
 import { all, takeEvery, takeLatest, put, call } from 'redux-saga/effects'
 import {ToastAndroid} from 'react-native'
-import { login, currentAccount, logout, register, updateUser } from '../../services/Session'
+import { login, currentAccount, logout, register, updateUser } from '../../services/Session';
+import jwt_decode from 'jwt-decode';
 import Storage from '../../services/Storage';
 import actions from './actions'
 // import { errorMessage } from '../../services/helpers'
@@ -20,26 +21,25 @@ export function* LOGIN({ payload }) {
       { skipLoading },
     )
     console.log(success)
-    const {secret, tokenable_id: user_id, tokenable_type: role} = success
-    console.log(secret,
-      user_id,
-      role);
-    
-    yield put({
-      type: 'session/SET_STATE',
-      payload: {
-        secret,
-        user_id,
-        role
-      },
-    })
-    console.log(storeSession);
-    
-    if (storeSession) yield call (Storage.set, 'Session', {
-      secret,
-      user_id,
-      role
-    }, ()  => navigate('Intro'))
+    // const {secret, tokenable_id: user_id, tokenable_type: role} = success
+    const {data: token} = success
+    const {user} = jwt_decode(token);
+    // console.log(secret,
+    //   user_id,
+    //   role);
+    // yield put({
+    //   type: 'session/SET_STATE',
+    //   payload: {
+    //     secret,
+    //     user_id,
+    //     role
+    //   },
+    // })
+    // console.log(storeSession);
+    yield call (Storage.set, 'Session', {
+      secret: token,
+      user
+    }, ()  => navigate('Home'))
     ToastAndroid.show ('Bienvenido a la aplicación!', ToastAndroid.SHORT);
     console.log('guardado');
   } catch (error) {
