@@ -41,7 +41,7 @@ import LocationPermissionsScreen from '../screens/LocationPermissionScreen';
 // App 
 import TripPreviewScreen from '../screens/TripPreviewScreen';
 import ChooseLocationScreen from '../screens/ChooseLocationScreen';
-import OrdersScreen from '../screens/OrdersScreen';
+import EventsScreen from '../screens/EventsScreen';
 import ShowOrderScreen from '../screens/ShowOrderScreen';
 // Profile
 import MyProfileScreen from '../screens/Profile/MyProfileScreen';
@@ -99,7 +99,7 @@ const AppStack = createStackNavigator(
       },
     },
     Orders: {
-      screen: OrdersScreen,
+      screen: EventsScreen,
       navigationOptions: {
         title: "W STEM",
         headerTransparent: true,
@@ -219,13 +219,12 @@ export default createAppContainer (
   // createSwitchNavigator (
   createAnimatedSwitchNavigator (
     {
+      AuthLoading: AuthLoadingScreen,
+      Auth: AuthStack,
       App: AppDrawerNavigator,
-
-      // AuthLoading: AuthLoadingScreen,
       Intro: IntroSlider,
       LocationPermissions: LocationPermissionsScreen,
       // App: AppDrawerNavigator,
-      Auth: AuthStack,
     },
     {
       // initialRouteName: 'AuthLoading',

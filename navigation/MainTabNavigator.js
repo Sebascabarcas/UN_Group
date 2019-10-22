@@ -7,16 +7,16 @@ import {
 
 import TabBarIcon from '../components/TabBarIcon';
 import WalletScreen from '../screens/Profile/WalletScreen';
-import PaymentMethodScreen from '../screens/Profile/PaymentMethodScreen';
+import GroupsScreen from '../screens/GroupsScreen';
 import AddCreditCardScreen from '../screens/Profile/AddCreditCardScreen';
-import OrdersScreen from '../screens/OrdersScreen';
+import EventsScreen from '../screens/EventsScreen';
 import theme from '../styles/theme.style';
 
-const HomeStack = createStackNavigator({
-  Home: OrdersScreen,
+const EventsStack = createStackNavigator({
+  Home: EventsScreen,
 }, { headerMode: "none" });
 
-HomeStack.navigationOptions = {
+EventsStack.navigationOptions = {
   tabBarLabel: 'Eventos',
   tabBarOptions: {
     activeTintColor: theme.PRIMARY_COLOR
@@ -33,11 +33,11 @@ HomeStack.navigationOptions = {
   ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: PaymentMethodScreen,
+const GroupsStack = createStackNavigator({
+  Links: GroupsScreen,
 }, { headerMode: "none" });
 
-LinksStack.navigationOptions = {
+GroupsStack.navigationOptions = {
   tabBarLabel: 'Grupos',
   tabBarOptions: {
     activeTintColor: theme.PRIMARY_COLOR
@@ -68,7 +68,7 @@ SettingsStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
+  EventsStack,
+  GroupsStack,
   SettingsStack,
 });
