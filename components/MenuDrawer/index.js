@@ -58,7 +58,7 @@ const MenuDrawer = () => {
   _signOutAsync = async () => {
     // await logout();
     navigate('Auth')
-    // dispatch({type: 'session/LOGOUT', payload: {navigate}})
+    dispatch({type: 'session/LOGOUT', payload: {navigate}})
     
   };
 
