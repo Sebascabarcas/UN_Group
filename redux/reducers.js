@@ -9,7 +9,7 @@ import { combineReducers } from 'redux'
 // import extras from './extras/reducers'
 import session from './session/reducers'
 import location from './location/reducers'
-import trip from './trip/reducers'
+import groups from './groups/reducers'
 
 export default
   combineReducers({
@@ -23,5 +23,5 @@ export default
     // offices,
     // extras,
     location,
-    trip,
+    groups,
   })

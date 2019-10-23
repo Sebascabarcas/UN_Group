@@ -25,23 +25,23 @@ export async function login(auth, { skipLoading } = {}) {
 }
 
 export async function register(newUser) {
-  return Requests.post('users/', newUser).then(user => user.data)
+  return Requests.post('users/', newUser, { skipLoading }).then(user => user.data)
 }
 
 // export async function register(newUser) {
 //   return Requests.get('utils/testSQLConnection/').then(user => user.data)
 // }
 
-export async function showUser(userID) {
-  return Requests.get(`users/id/${userID}`).then(user => user.data)
+export async function showUser(userID, { skipLoading }) {
+  return Requests.get(`users/id/${userID}`, { skipLoading }).then(user => user.data)
 }
 
-export async function updateUser(user, userID) {
-  return Requests.put(`users/id/${userID}`, user).then(user => user.data)
+export async function updateUser(user, userID, { skipLoading }) {
+  return Requests.put(`users/id/${userID}`, user, { skipLoading }).then(user => user.data)
 }
 
-export async function deleteUser(userID) {
-  return Requests.delete(`users/id/${userID}`, user).then(user => user.data)
+export async function deleteUser(userID, { skipLoading }) {
+  return Requests.delete(`users/id/${userID}`, user, { skipLoading }).then(user => user.data)
 }
 
 export async function currentAccount() {

@@ -7,8 +7,8 @@ import session from './session/sagas'
 // import jurisdictions from './jurisdictions/sagas'
 // import competences from './competences/sagas'
 // import offices from './offices/sagas'
-import location from './location/sagas'
-import trip from './trip/sagas'
+// import location from './location/sagas'
+import groups from './groups/sagas'
 
 export default function* rootSaga() {
   // yield all([
@@ -24,7 +24,7 @@ export default function* rootSaga() {
   // ])
   yield all([
     session(),
-    location(),
-    trip(),
+    // location(),
+    groups(),
   ])
 }
