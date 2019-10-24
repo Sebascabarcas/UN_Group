@@ -10,9 +10,9 @@ const CardEvent = ({ name, time, date, groupName, price, distance, source, descr
 			<View style={styles.dataContainer}>
 				<Image source={require('./../../assets/images/big_check.png')} style={styles.profilePhoto}/>
 				<View style={styles.subDataContainer}>
-					<View style={styles.driverNameContainer}>
-						<MyText numberOfLines={1} fontStyle="semibold" style={styles.driverNameText}> {name} </MyText>
-						{/*<MyText fontStyle="semibold" style={styles.driverNameText}> ${price} </MyText>*/}
+					<View style={styles.groupNameContainer}>
+						<MyText numberOfLines={1} fontStyle="semibold" style={styles.groupNameText}> {name} </MyText>
+						{/*<MyText fontStyle="semibold" style={styles.groupNameText}> ${price} </MyText>*/}
 					</View>
 					<View style={styles.driverPriceContainer}>
 						<View style={styles.badgeContainer}>
