@@ -8,7 +8,7 @@ const initialState = {
   avatar: '',
   current_user: {},
   current_user_edition: {},
-  authorized: false,
+  isSuperAdmin: false,
   loading: false,
 }
 

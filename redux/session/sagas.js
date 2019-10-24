@@ -40,6 +40,12 @@ export function* LOGIN({ payload }) {
       secret: token,
       user
     }, ()  => navigate('Home'))
+    yield put({
+      type: 'session/SET_STATE',
+      payload: {
+        isSuperAdmin: user.isSuperAdmin
+      },
+    })
     ToastAndroid.show ('Bienvenido a la aplicación!', ToastAndroid.SHORT);
     console.log('guardado');
   } catch (error) {
