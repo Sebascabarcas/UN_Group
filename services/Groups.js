@@ -1,3 +1,4 @@
+import Requests from './Requests'
 
 export async function getGroups({ skipLoading } = {}) {
     return Requests.get(`groups`).then(groups => groups.data)

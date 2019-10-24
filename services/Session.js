@@ -4,6 +4,7 @@
 // import 'firebase/database'
 // import 'firebase/storage'
 import Requests from './Requests'
+import Storage from './Storage';
 
 // const firebaseConfig = {
 //   apiKey: 'AIzaSyAE5G0RI2LwzwTBizhJbnRKIKbiXQIA1dY',
@@ -45,7 +46,7 @@ export async function deleteUser(userID, { skipLoading }) {
 }
 
 export async function currentAccount() {
-  return JSON.parse(localStorage.getItem('authInvima'))
+  return (await Storage.get('Session')).user
 }
 
 export async function logout({ skipLoading }) {

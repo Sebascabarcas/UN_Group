@@ -24,6 +24,8 @@ export function* LOGIN({ payload }) {
     // const {secret, tokenable_id: user_id, tokenable_type: role} = success
     const {data: token} = success
     const {user} = jwt_decode(token);
+    console.log(user);
+    
     // console.log(secret,
     //   user_id,
     //   role);
@@ -173,7 +175,7 @@ export function* LOAD_CURRENT_ACCOUNT() {
   const response = yield call(currentAccount)
 
   if (response) {
-    const { id, email, photoURL: avatar, role, name, phone } = response
+    const { id, email, photoURL: avatar, role, name, phone, isSuperAdmin } = response
     yield put({
       type: 'session/SET_STATE',
       payload: {
@@ -183,6 +185,7 @@ export function* LOAD_CURRENT_ACCOUNT() {
         phone,
         avatar,
         role,
+        isSuperAdmin,
         authorized: true,
       },
     })
@@ -210,6 +213,6 @@ export default function* rootSaga() {
     takeLatest(actions.LOGOUT, LOGOUT),
     // takeEvery(actions.LOAD_CURRENT_ACCOUNT, LOAD_CURRENT_ACCOUNT),
     // takeEvery(actions.UNAUTH_USER, UNAUTH_USER),
-    // LOAD_CURRENT_ACCOUNT(),
+    LOAD_CURRENT_ACCOUNT(),
   ])
 }
