@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { View, Text, ImageBackground, Image, Alert } from 'react-native'
 import { Button, Card, Badge } from 'native-base'
-import MyText from '../../components/MyText'
-import styles from './styles.js.js'
+import MyText from '../../../components/MyText'
+import styles from './styles.js.js.js'
 import {useNavigation} from 'react-navigation-hooks'
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux'
-import theme from '../../styles/theme.style.js'
+import theme from '../../../styles/theme.style.js'
 import {updateTrip} from './../../services/Trip';
 
 

@@ -13,37 +13,35 @@ import * as Location from 'expo-location';
 import { Divider} from 'react-native-elements';
 import {Badge, Picker, Button} from 'native-base';
 import styles from './styles.js';
-import MyText from '../../components/MyText';
+import MyText from '../../../components/MyText';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {FontAwesome, Ionicons} from '@expo/vector-icons';
 import SearchHeader from 'react-native-search-header';
-import theme from '../../styles/theme.style';
+import theme from '../../../styles/theme.style';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {getOrders} from '../../services/Order';
-import TripBox from '../../components/TripBox';
-import CardEvent from '../../components/CardEvent/index.js';
+import {getGroups} from '../../../services/Groups';
+import TripBox from '../../../components/TripBox';
+import CardEvent from '../../../components/CardEvent/index.js';
 
 const {height: fullHeight} = Dimensions.get ('window');
 
 EventsScreen = () => {
-  const [isReady, _setReady] = useState (false);
-  const [offSet, _setOffSet] = useState (0);
   const searchHeader = useRef (null);
+  const [offSet, _setOffSet] = useState (0);
   const flatList = useRef (null);
   const {navigate, setParams} = navigationHooks.useNavigation ();
-  const [orders, _setOrders] = useState ([]);
-  const [ordersFiltered, _setOrdersFiltered] = useState ([]);
+  const [groups, _setGroups] = useState ([]);
+  const [groupsFiltered, _setGroupsFiltered] = useState ([]);
   const [page, _setPage] = useState (1);
   const [noMorePages, _setNoMorePages] = useState (false);
-  const [actualPosition, _setActualPosition] = useState ('');
   const [filtering, _setFiltering] = useState (false);
   const [loading, _setLoading] = useState (false);
   const [refreshing, _setRefreshing] = useState (false);
   const [filter, _setFilter] = useState ('all');
-  // const [orders, _setOrders] = useState ([]);
+  // const [groups, _setGroups] = useState ([]);
 
   // useEffect (() => {
   //   const fetchActualLocation = async () => {
@@ -65,16 +63,17 @@ EventsScreen = () => {
 
   useEffect (
     () => {
-      const fetchOrders = async () => {
+      const fetchGroups = async () => {
         // _setLoading (true);
         try {
           flatList.current.scrollToOffset ({animated: true, offset: 0});
-          const _orders = await getOrders ({
-            index_tag: filter !== 'all' ? 'status' : 'all',
-            flag: filter !== 'all' ? filter : null,
-          });
-          // console.log(_orders);
-          _setOrders (_orders);
+          const _groups = await getGroup ()
+          // ({
+          //   index_tag: filter !== 'all' ? 'status' : 'all',
+          //   flag: filter !== 'all' ? filter : null,
+          // });
+          // console.log(_groups);
+          _setGroups (_groups);
           _setPage (1);
           _setNoMorePages (false);
         } catch (error) {
@@ -83,24 +82,25 @@ EventsScreen = () => {
         // _setLoading (false);
       };
 
-      fetchOrders ();
+      fetchGroups ();
     },
     [filter]
   );
 
-  _fetchOrdersOnEnd = async () => {
-    // console.log(orders);
+  _fetchGroupsOnEnd = async () => {
+    // console.log(groups);
 
     _setLoading (true);
-    console.log ('Render on order');
+    console.log ('Render on group');
     try {
-      const _orders = await getOrders ({
-        index_tag: filter !== 'all' ? 'status' : 'all',
-        page: page + 1,
-        flag: filter !== 'all' ? filter : null,
-      });
-      if (_orders.length !== 0) {
-        _setOrders (orders.concat (_orders));
+      const _groups = await getGroup ()
+      // ({
+      //   index_tag: filter !== 'all' ? 'status' : 'all',
+      //   page: page + 1,
+      //   flag: filter !== 'all' ? filter : null,
+      // });
+      if (_groups.length !== 0) {
+        _setGroups (groups.concat (_groups));
         _setPage (page + 1);
       } else {
         _setNoMorePages (true);
@@ -115,13 +115,14 @@ EventsScreen = () => {
     _setRefreshing (true);
     console.log ('Render on refresh');
     try {
-      const _orders = await getOrders ({
-        index_tag: filter !== 'all' ? 'status' : 'all',
-        page: 1,
-        flag: filter !== 'all' ? filter : null,
-      });
+      const _groups = await getGroup ()
+      // ({
+      //   index_tag: filter !== 'all' ? 'status' : 'all',
+      //   page: 1,
+      //   flag: filter !== 'all' ? filter : null,
+      // });
       _setPage (1);
-      _setOrders (_orders);
+      _setGroups (_groups);
     } catch (error) {
       console.log (error);
     }
@@ -132,40 +133,15 @@ EventsScreen = () => {
     navigate ('Notifications');
   };
 
-  _onPressTrip = order => {
+  _onPressTrip = group => {
     navigate ('ShowOrder', {
-      order,
+      group,
     });
   };
 
-  _renderOrder = ({item: order, index}) => {
+  _renderOrder = ({item: group, index}) => {
     return (
-      <TripBox
-        // key={order.id}
-        style={styles.tripBox}
-        onPress={() =>
-          _onPressTrip ({
-            code: order.code,
-            origin: order.origin,
-            origin_lat: order.origin_lat,
-            origin_lon: order.origin_lon,
-            // latitude: 10.980999,
-            // longitude: -74.810593,
-            date_and_time: order.start_time,
-            destiny: order.target,
-            target_lat: order.target_lat,
-            target_lon: order.target_lon,
-            // latitude: 10.987004,
-            // longitude: -74.808966,
-            comment: order.comment,
-          })}
-        code={order.code}
-        origin={order.origin}
-        destiny={order.target}
-        date_and_time={order.start_time}
-        status={order.status}
-        comment={order.comment}
-      />
+      <CardEvent name="Evento 1" time="04:20 PM" date="04/02/19" groupName="W-STEM" source="Soledad" description="Breve descripción" />
     );
   };
 
@@ -190,14 +166,14 @@ EventsScreen = () => {
       <View style={styles.groupsContainer}>
         {/* <FlatList
           // style={styles.scroller}
-          data={filtering ? ordersFiltered : orders}
-          keyExtractor={order => order.id.toString ()}
+          data={filtering ? groupsFiltered : groups}
+          keyExtractor={group => group.id.toString ()}
           renderItem={_renderOrder}
           showsVerticalScrollIndicator={false}
           ref={flatList}
           refreshing={refreshing}
           onRefresh={!filtering && _onRefresh}
-          onEndReached={!noMorePages && !filtering && _fetchOrdersOnEnd}
+          onEndReached={!noMorePages && !filtering && _fetchGroupsOnEnd}
           onEndReachedThreshold={0.2}
         /> */}
         <CardEvent name="Evento 1" time="04:20 PM" date="04/02/19" groupName="W-STEM" source="Soledad" description="Breve descripción" />
