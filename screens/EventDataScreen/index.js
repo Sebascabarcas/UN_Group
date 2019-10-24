@@ -49,9 +49,9 @@ const TripDataScreen = ({navigation},props)=>{
 			<View style={styles.dataContainer}>
 				<Image source={require('./../../assets/images/raul.png')} style={styles.profilePhoto}/>
 				<View style={styles.subDataContainer}>
-					<View style={styles.driverNameContainer}>
-						<MyText numberOfLines={1} fontStyle="semibold" style={styles.driverNameText}> {actualEvent.person} </MyText>
-						{/*<MyText fontStyle="semibold" style={styles.driverNameText}> ${actualEvent.price} </MyText>*/}
+					<View style={styles.groupNameContainer}>
+						<MyText numberOfLines={1} fontStyle="semibold" style={styles.groupNameText}> {actualEvent.person} </MyText>
+						{/*<MyText fontStyle="semibold" style={styles.groupNameText}> ${actualEvent.price} </MyText>*/}
 					</View>
 					<View style={styles.driverPriceContainer}>
 						<View style={styles.badgeContainer}>

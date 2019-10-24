@@ -39,12 +39,12 @@ export default StyleSheet.create({
 		height: 50,
 		borderRadius: 50/3
 	},
-	driverNameContainer:{
+	groupNameContainer:{
 		flexDirection: 'row',
 		marginBottom: 5,
 		justifyContent: 'space-between',
 	},
-	driverNameText:{
+	groupNameText:{
 		fontSize: theme.FONT_SIZE_LARGE
 	},
 	driverTypeText:{
