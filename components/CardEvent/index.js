@@ -8,7 +8,7 @@ const CardEvent = ({ name, time, date, groupName, price, distance, source, descr
 	return(
 		<Card style={styles.container}>
 			<View style={styles.dataContainer}>
-				<Image source={require('./../../assets/images/big_check.png')} style={styles.profilePhoto}/>
+				<Image source={require('./../../../assets/images/big_check.png')} style={styles.profilePhoto}/>
 				<View style={styles.subDataContainer}>
 					<View style={styles.groupNameContainer}>
 						<MyText numberOfLines={1} fontStyle="semibold" style={styles.groupNameText}> {name} </MyText>

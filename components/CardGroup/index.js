@@ -11,14 +11,14 @@ import {
 } from 'react-native-responsive-screen';
 // https://dbits.netlify.com/assets/img/teamAlbeiro.min.jpg
 
-const CardGroup = () => {
+const CardGroup = ({groupName}) => {
     return(
         <Card style={styles.container}>
             <View style={styles.dataContainer}>
                 <View style={styles.groupPrincipalInfo}>
                     <Image style={styles.image} source={{uri:'https://dbits.netlify.com/assets/img/teamAlbeiro.min.jpg'}}></Image>
                     <View style={styles.nameContainer}>
-                        <MyText numberOfLines={1} style={styles.groupName}>W-STEM</MyText>
+                        <MyText numberOfLines={1} style={styles.groupName}>{groupName}</MyText>
                         <Badge style={styles.badgeRate}>
                             <AntDesign
                                 name="star"

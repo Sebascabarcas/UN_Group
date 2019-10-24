@@ -33,7 +33,6 @@ import SignInScreen from '../screens/Auth/LoginScreen';
 import SignUpScreen from '../screens/Auth/SignUpScreen';
 import ForgotPasswordScreen from '../screens/Auth/ForgetScreen';
 import CheckEmail from '../screens/Auth/CheckEmail';
-import HomeScreen from '../screens/HomeScreen';
 // Intro
 import IntroSlider from '../screens/Intro/IntroSlider';
 // LocationPermissions
@@ -41,7 +40,6 @@ import LocationPermissionsScreen from '../screens/LocationPermissionScreen';
 // App 
 import TripPreviewScreen from '../screens/TripPreviewScreen';
 import ChooseLocationScreen from '../screens/ChooseLocationScreen';
-import EventsScreen from '../screens/EventsScreen';
 import ShowOrderScreen from '../screens/ShowOrderScreen';
 // Profile
 import MyProfileScreen from '../screens/Profile/MyProfileScreen';
@@ -95,16 +93,6 @@ const AppStack = createStackNavigator(
           // elevation: 0,
           // shadowOpacity: 0,
           // borderBottomWidth: 0,
-        },
-      },
-    },
-    Orders: {
-      screen: EventsScreen,
-      navigationOptions: {
-        title: "W STEM",
-        headerTransparent: true,
-        headerStyle: {
-          backgroundColor: 'transparent',
         },
         // headerLeft: ({navigation}) => (
         //   <Button
@@ -220,8 +208,8 @@ export default createAppContainer (
   createAnimatedSwitchNavigator (
     {
       AuthLoading: AuthLoadingScreen,
-      Auth: AuthStack,
       App: AppDrawerNavigator,
+      Auth: AuthStack,
       Intro: IntroSlider,
       LocationPermissions: LocationPermissionsScreen,
       // App: AppDrawerNavigator,

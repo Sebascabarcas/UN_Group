@@ -7,13 +7,14 @@ import {
 
 import TabBarIcon from '../components/TabBarIcon';
 import WalletScreen from '../screens/Profile/WalletScreen';
-import GroupsScreen from '../screens/GroupsScreen';
+import GroupsScreen from '../screens/Groups/GroupsScreen';
+// // import CreateGroupScreen from '../screens/CreateGroupScreen';
 import AddCreditCardScreen from '../screens/Profile/AddCreditCardScreen';
-import EventsScreen from '../screens/EventsScreen';
+import EventsScreen from '../screens/Events/EventsScreen';
 import theme from '../styles/theme.style';
 
 const EventsStack = createStackNavigator({
-  Home: EventsScreen,
+  Events: EventsScreen,
 }, { headerMode: "none" });
 
 EventsStack.navigationOptions = {
@@ -34,7 +35,8 @@ EventsStack.navigationOptions = {
 };
 
 const GroupsStack = createStackNavigator({
-  Links: GroupsScreen,
+  Groups: GroupsScreen,
+  // CreateGroup: CreateGroupScreen
 }, { headerMode: "none" });
 
 GroupsStack.navigationOptions = {
