@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux'
 import theme from '../../../styles/theme.style.js'
 import {updateTrip} from './../../services/Trip';
+import Images from '../../../constants/Images'
 
 
 const TripDataScreen = ({navigation},props)=>{
@@ -47,7 +48,7 @@ const TripDataScreen = ({navigation},props)=>{
 	return(
 		<View style={styles.container}>
 			<View style={styles.dataContainer}>
-				<Image source={require('./../../assets/images/raul.png')} style={styles.profilePhoto}/>
+				<Image source={Images['raul']} style={styles.profilePhoto}/>
 				<View style={styles.subDataContainer}>
 					<View style={styles.groupNameContainer}>
 						<MyText numberOfLines={1} fontStyle="semibold" style={styles.groupNameText}> {actualEvent.person} </MyText>

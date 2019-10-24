@@ -60,7 +60,7 @@ const LoginScreen = () => {
       >
         <Image
           style={styles.logo}
-          source={require ('../../../assets/images/Logo.png')}
+          source={Images['logo']}
         />
         <Form style={styles.mainForm}>
           {loading && <Spinner color={theme.PRIMARY_COLOR} />}

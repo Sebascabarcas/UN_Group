@@ -3,12 +3,13 @@ import styles from './styles.js'
 import {View, Image} from 'react-native'
 import {Badge, Card} from 'native-base'
 import MyText from '../MyText';
+import Images from '../../constants/Images.js';
 
 const CardEvent = ({ name, time, date, groupName, price, distance, source, description}) => {
 	return(
 		<Card style={styles.container}>
 			<View style={styles.dataContainer}>
-				<Image source={require('./../../../assets/images/big_check.png')} style={styles.profilePhoto}/>
+				<Image source={Images['big_check']} style={styles.profilePhoto}/>
 				<View style={styles.subDataContainer}>
 					<View style={styles.groupNameContainer}>
 						<MyText numberOfLines={1} fontStyle="semibold" style={styles.groupNameText}> {name} </MyText>

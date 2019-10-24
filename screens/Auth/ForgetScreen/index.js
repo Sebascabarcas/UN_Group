@@ -6,6 +6,7 @@ import { Container, Icon, Form, Item, Input, Label, CheckBox, Button } from 'nat
 import styles from './styles.js';
 import {KeyboardAvoidingView} from 'react-native';
 import {useNavigation} from 'react-navigation-hooks'
+import Images from '../../../constants/Images';
 
 
 const ForgetScreen = () => {
@@ -18,8 +19,8 @@ const ForgetScreen = () => {
 	}
 	return (
 		<KeyboardAvoidingView behavior="padding" style={styles.containerBack}>
-			<ImageBackground style={styles.fullImage} source={require('../../../assets/images/Image_Background.png')}>
-				<Image style={styles.logo} source={require('../../../assets/images/Logo.png')} />
+			<ImageBackground style={styles.fullImage} source={Images['dashboard_bg_image']}>
+				<Image style={styles.logo} source={Images['logo']} />
 				<Form style={styles.mainForm}>
 					<Item style={styles.itemForm}>
 						<Input placeholder="Correo" value={emailForgot} onChange={handleChange} placeholderTextColor="#FFF" style={styles.input} rightIcon/>
