@@ -17,6 +17,7 @@ import MyText from '../../../components/MyText';
 import styles from './styles.js';
 import theme from '../../../styles/theme.style';
 import {register} from '../../../services/Session';
+import Images from '../../../constants/Images';
 
 const SignUpScreen = () => {
   const dispatch = useDispatch ();
@@ -49,7 +50,7 @@ const SignUpScreen = () => {
 
   return (
       <ImageBackground
-        source={require ('../../../assets/images/Image_Background.png')}
+        source={Images['auth_bg_image']}
         style={styles.fullImage}
         // blurRadius={0.5}
         // tintColor={"rgba(0, 0, 0, .75)"}

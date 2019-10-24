@@ -26,6 +26,7 @@ import {useNavigation} from 'react-navigation-hooks';
 import {login} from '../../../services/Session';
 import Storage from '../../../services/Storage';
 import {useDispatch} from 'react-redux';
+import Images from '../../../constants/Images';
 
 const LoginScreen = () => {
   const dispatch = useDispatch ();
@@ -55,7 +56,7 @@ const LoginScreen = () => {
     <KeyboardAvoidingView behavior="padding" style={styles.containerBack}>
       <ImageBackground
         style={styles.fullImage}
-        source={require ('../../../assets/images/Image_Background.png')}
+        source={Images['auth_bg_image']}
       >
         <Image
           style={styles.logo}
