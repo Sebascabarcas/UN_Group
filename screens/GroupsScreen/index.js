@@ -25,6 +25,7 @@ import {
 import {getOrders} from '../../services/Order';
 import TripBox from '../../components/TripBox';
 import CardEvent from '../../components/CardEvent/index.js';
+import CardGroup from '../../components/CardGroup/index.js';
 
 const {height: fullHeight} = Dimensions.get ('window');
 
@@ -187,7 +188,7 @@ GroupsScreen = () => {
     <View style={styles.container}>
       <Divider style={{marginBottom: 5}} />
       {/* <ScrollView > */}
-      <View style={styles.tripsContainer}>
+      <View style={styles.groupsContainer}>
         {/* <FlatList
           // style={styles.scroller}
           data={filtering ? ordersFiltered : orders}
@@ -200,7 +201,7 @@ GroupsScreen = () => {
           onEndReached={!noMorePages && !filtering && _fetchOrdersOnEnd}
           onEndReachedThreshold={0.2}
         /> */}
-        <CardEvent name="Evento 1" time="04:20 PM" date="04/02/19" groupName="W-STEM" source="Soledad" description="Breve descripción" />
+        <CardGroup/>
       </View>
     </View>
     </ImageBackground>

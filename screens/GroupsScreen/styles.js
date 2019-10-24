@@ -92,7 +92,7 @@ export default StyleSheet.create ({
       fontSize: theme.FONT_SIZE_LARGE,
       fontWeight: "bold"
     },
-    tripsContainer: {
+    groupsContainer: {
       // backgroundColor: "red",
       // overflow: 'hidden',
       flexDirection: 'column',

@@ -187,7 +187,7 @@ EventsScreen = () => {
     <View style={styles.container}>
       <Divider style={{marginBottom: 5}} />
       {/* <ScrollView > */}
-      <View style={styles.tripsContainer}>
+      <View style={styles.groupsContainer}>
         {/* <FlatList
           // style={styles.scroller}
           data={filtering ? ordersFiltered : orders}
