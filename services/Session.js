@@ -25,7 +25,7 @@ export async function login(auth, { skipLoading } = {}) {
   return Requests.post('users/login', auth, { skipLoading }).then(session => session.data)
 }
 
-export async function register(newUser) {
+export async function register(newUser, {skipLoading} = {}) {
   return Requests.post('users/', newUser, { skipLoading }).then(user => user.data)
 }
 
@@ -46,7 +46,9 @@ export async function deleteUser(userID, { skipLoading }) {
 }
 
 export async function currentAccount() {
-  return (await Storage.get('Session')).user
+  let session = (await Storage.get('Session'))
+  if (session) return session.user
+  return null 
 }
 
 export async function logout({ skipLoading }) {
