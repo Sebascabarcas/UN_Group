@@ -83,7 +83,7 @@ export default StyleSheet.create({
 		padding: 0,
 		color: theme.COMPLEMENTARY_COLOR
 	},
-	tripData:{
+	eventData:{
 		paddingBottom: 15,
 		paddingTop: 10,
 		width: '100%',
@@ -93,7 +93,7 @@ export default StyleSheet.create({
 		borderBottomWidth: 1,
 		borderColor: '#EFEFF4'
 	},
-	labelTrip: {
+	labelEvent: {
 		marginLeft: wp(3),
 		color: theme.GRAY_COLOR,
 		fontSize: theme.FONT_SIZE_SMALL

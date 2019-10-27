@@ -30,12 +30,12 @@ const CardEvent = ({ name, time, date, groupName, price, distance, source, descr
 					</View>
 				</View>
 			</View>
-			<View style={styles.tripData}>
-				<MyText fontStyle="bold" style={styles.labelTrip}>LUGAR DEL EVENTO</MyText>
+			<View style={styles.eventData}>
+				<MyText fontStyle="bold" style={styles.labelEvent}>LUGAR DEL EVENTO</MyText>
 				<MyText style={styles.labelAddress}>{source}</MyText>
 			</View>
-			<View style={styles.tripData}>
-				<MyText fontStyle="bold" style={styles.labelTrip}>DESCRIPCIÓN</MyText>
+			<View style={styles.eventData}>
+				<MyText fontStyle="bold" style={styles.labelEvent}>DESCRIPCIÓN</MyText>
 				<MyText style={styles.labelAddress}>{description}</MyText>
 			</View>
 		</Card>

@@ -25,13 +25,14 @@ import {
 import {getGroups} from '../../../services/Groups';
 import TripBox from '../../../components/TripBox';
 import CardEvent from '../../../components/CardEvent/index.js';
+import Images from '../../../constants/Images.js';
 
 const {height: fullHeight} = Dimensions.get ('window');
 
 EventsScreen = () => {
-  const searchHeader = useRef (null);
+  // const searchHeader = useRef (null);
   const [offSet, _setOffSet] = useState (0);
-  const flatList = useRef (null);
+  // const flatList = useRef (null);
   const {navigate, setParams} = navigationHooks.useNavigation ();
   const [groups, _setGroups] = useState ([]);
   const [groupsFiltered, _setGroupsFiltered] = useState ([]);
@@ -150,15 +151,13 @@ EventsScreen = () => {
   }) => {
     const offset = fullHeight - height;
     _setOffSet(offset);
-    console.log(`Offset: ${offset}`);
-    
   }
 
   return (
     <ImageBackground
         onLayout={onLayout}  
         style={styles.fullImage}
-        source={require ('../../assets/images/dashboard_image.png')}
+        source={Images['dashboard_bg_image']}
       >
     <View style={styles.container}>
       <Divider style={{marginBottom: 5}} />
@@ -170,7 +169,7 @@ EventsScreen = () => {
           keyExtractor={group => group.id.toString ()}
           renderItem={_renderOrder}
           showsVerticalScrollIndicator={false}
-          ref={flatList}
+          ref={flatList}import { as wp} from 'react-native-responsive-screen';
           refreshing={refreshing}
           onRefresh={!filtering && _onRefresh}
           onEndReached={!noMorePages && !filtering && _fetchGroupsOnEnd}
@@ -183,20 +182,20 @@ EventsScreen = () => {
   );
 };
 
-EventsScreen.navigationOptions = ({navigation}) => {
-  const searchHeader = navigation.getParam('search_header', null)
-  return {
-    headerRight: (
-      <Button iconRight transparent onPress={() => searchHeader.current.show ()}
-      style={{marginRight: 20}}
-      >
-        <Ionicons
-          name="md-search"
-          color={theme.HEADER_MENU_TITLE_COLOR}
-          size={theme.ICON_SIZE_MEDIUM}
-        />
-      </Button>
-    ),
-  }
-};
+// EventsScreen.navigationOptions = ({navigation}) => {
+//   const searchHeader = navigation.getParam('search_header', null)
+//   return {
+//     headerRight: (
+//       <Button iconRight transparent onPress={() => searchHeader.current.show ()}
+//       style={{marginRight: 20}}
+//       >
+//         <Ionicons
+//           name="md-search"
+//           color={theme.HEADER_MENU_TITLE_COLOR}
+//           size={theme.ICON_SIZE_MEDIUM}
+//         />
+//       </Button>
+//     ),
+//   }
+// };
 export default EventsScreen;

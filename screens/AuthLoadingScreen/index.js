@@ -17,11 +17,13 @@ export default class AuthLoadingScreen extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    const userToken = await Storage.get ('Session');
+    const sessionInfo = await Storage.get ('Session');
     let {status} = await Permissions.getAsync (Permissions.LOCATION);
     console.log(status)
-    if (userToken) {
-      this.props.navigation.navigate (status === 'granted' ? 'App' : 'Intro');
+    this.props.navigation.navigate ('App');
+    if (sessionInfo) {
+      this.props.navigation.navigate('App');
+      // this.props.navigation.navigate (status === 'granted' ? 'App' : 'Intro');
     } else {
       this.props.navigation.navigate ('Auth');
     }
