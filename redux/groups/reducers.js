@@ -1,19 +1,23 @@
 import actions from './actions'
 
 const initialState = {
+  loading: false,
+  refreshing: false,
   groups: [],
-  current_group: {}
+  current_group: {groupPictures: []},
+  new_group: {},
+  more_pages: false,
 }
 
 export default function tripReducer(state = initialState, action) {
   switch (action.type) {
     case actions.RESET_APP:
       return initialState
-    // case actions.ADD_LOCATION: {
-    //   const locations = state.locations.concat(action.payload.new_location)
-    //   state.locations = locations
-    //   return state
-    // }
+    case actions.CONCAT_GROUPS: {
+      const groups = state.groups.concat(action.payload.groups)
+      state.groups = groups
+      return state
+    }
     // case actions.POP_LOCATION: {
     //   const locations = state.locations.filter((location, i) => i !== action.payload.index)
     //   state.locations = locations
