@@ -33,7 +33,6 @@ const MenuDrawer = () => {
   const dispatch = useDispatch()
   const {navigate} = navigationHooks.useNavigation ();
   const user = useSelector(state => state.session.current_user)
-  console.log(user);
   
   useEffect (() => {
     const fetchUserInfo = async () => {
@@ -94,7 +93,7 @@ const MenuDrawer = () => {
         <View style={styles.profile}>
           <TouchableWithoutFeedback style={styles.imgView} onPress={() => navigate ('MyProfile')}>
             {/* <View style={styles.imgView}> */}
-              <Image style={styles.img} source={images["123456789"]} />
+              <Image style={styles.img} resizeMode="cover" source={user.profileImg ? images["123456789"] : images["no-profile-picture"]} />
             {/* </View> */}
           </TouchableWithoutFeedback>
           <View style={styles.profileText}>
@@ -104,13 +103,13 @@ const MenuDrawer = () => {
                 white
                 style={styles.roleBadge}
               >
-                  <AntDesign
-                    name="star"
+                  {/* <AntDesign
+                    name=""
                     color={theme.PRIMARY_COLOR}
                     size={theme.ICON_SIZE_SUPER_EXTRA_SMALL}
-                  />
+                  /> */}
                   <MyText style={styles.roleText}>
-                    {user.group || 'Sin Grupo'}
+                    {user.username}
                   </MyText>
               </Badge>
               <FontAwesome

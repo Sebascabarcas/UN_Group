@@ -74,8 +74,8 @@ export default StyleSheet.create ({
         // backgroundColor: 'red',
     },
     img: {
-        height: 90,
-        width: 90,
+        height: 80,
+        width: 80,
         borderRadius: 90,
         borderColor: 'white',
         borderWidth: 2,
