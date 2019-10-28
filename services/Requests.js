@@ -1,20 +1,31 @@
 import axios from 'axios'
-const urlGlobal = "https://invimarefactory.desarrollodeprueba.com:6053/";
+import Storage from './Storage';
+const urlGlobal = "http://192.168.1.23:4936/UNGroup/API/";
 
 const httpClient = axios 
 httpClient.interceptors.request.use(
   async config => {
-    console.log('hola request interceptor');
-    // console.log(config);
-    
-    // const sessionInfo = await Storage.get ('Session');
+    console.info('--------------------------');
+    console.info('--------------------------');
+    console.info('--------------------------');
+    console.info('--------REQUEST-----------');
+    console.info('-Url-');
+    console.info(config.url);
+    console.info('-Headers-');
+    console.info(config.headers);
+    console.info('-data-');
+    console.info(config.data);
+    console.info('<///////REQUEST/////>');
+    console.info('<////////////////////>');
+    console.info('<////////////////////>');
+    console.info('<////////////////////>');
+    const sessionInfo = await Storage.get ('Session');
     // if (!config.skipLoading) document.body.classList.add('loading-indicator')
-
-    // if (sessionInfo.token) {
-    //   config.headers.Authorization = `Token token=${
-    //     sessionInfo.token
-    //   }`
-    // }
+    if (sessionInfo) {
+      config.headers.Authorization = `Bearer ${
+        sessionInfo.secret
+      }`
+    }
     return config
   },
   error => Promise.reject(error),
@@ -22,13 +33,37 @@ httpClient.interceptors.request.use(
 
 httpClient.interceptors.response.use(
   response => {
-    console.log('hola response interceptor');
+    console.info('+++++++++++++++++++++++++')
+    console.info('+++++++++++++++++++++++++')
+    console.info('+++++++++++++++++++++++++')
+    console.info('++++++++RESPONSE+++++++++');
+    console.info('-Url-');
+    console.log(response.config.url);
+    console.info('-Status-');
+    console.log(response.status);
+    console.info('-Body-');
+    console.log(response.data);
+    console.info('</////RESPONSE////////>');
+    console.info('<////////////////////>');
+    console.info('<////////////////////>');
+    console.info('<////////////////////>');
+    
     return response
   },
   err => {
-    console.log('hola err response interceptor');
-    console.log(err.response);
-    
+    // console.error(err);
+    console.info('xxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+    console.info('xxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+    console.info('xxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+    console.info('xxxxxxxxxxxRESPONSExxxxxxxxxx');
+    console.info('-Status-');
+    console.error(err.status);
+    console.info('-Body-');
+    console.error(err.data);
+    console.info('</////RESPONSE////////>');
+    console.info('<////////////////////>');
+    console.info('<////////////////////>');
+    console.info('<////////////////////>');
     // setTimeout(() => {
     //   document.body.classList.remove('loading-indicator')
     // }, 2000)
