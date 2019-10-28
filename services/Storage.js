@@ -1,6 +1,6 @@
 import {AsyncStorage} from 'react-native';
 
-const StoreKey = '@InvimaFunctionaryStore:'
+const StoreKey = '@UNGroupStore:'
 const Storage = {
   get: async (key, callback) => {
     try {
