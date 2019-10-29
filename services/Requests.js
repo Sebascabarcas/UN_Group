@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Storage from './Storage';
-const urlGlobal = "http://192.168.1.23:4936/UNGroup/API/";
+const urlGlobal = "http://10.20.36.141:4936/UNGroup/API/";
 
 const httpClient = axios 
 httpClient.interceptors.request.use(
@@ -9,6 +9,8 @@ httpClient.interceptors.request.use(
     console.info('--------------------------');
     console.info('--------------------------');
     console.info('--------REQUEST-----------');
+    console.info('-Method-');
+    console.info(config.method);
     console.info('-Url-');
     console.info(config.url);
     console.info('-Headers-');
@@ -37,6 +39,8 @@ httpClient.interceptors.response.use(
     console.info('+++++++++++++++++++++++++')
     console.info('+++++++++++++++++++++++++')
     console.info('++++++++RESPONSE+++++++++');
+    console.info('-Method-');
+    console.log(response.config.method);
     console.info('-Url-');
     console.log(response.config.url);
     console.info('-Status-');
