@@ -4,6 +4,7 @@ import { login, currentAccount, logout, register, updateUser } from '../../servi
 import jwt_decode from 'jwt-decode';
 import Storage from '../../services/Storage';
 import actions from './actions'
+import fromJsonToFormData from '../../services/helpers';
 // import { errorMessage } from '../../services/helpers'
 
 export function* LOGIN({ payload }) {
@@ -15,16 +16,15 @@ export function* LOGIN({ payload }) {
     },
   })
   try {
-    const success = yield call(
+    const {token} = yield call(
       login,
       auth,
       { skipLoading },
     )
-    console.log(success)
+    console.log(token)
     // const {secret, tokenable_id: user_id, tokenable_type: role} = success
-    const {data: token} = success
     const {user} = jwt_decode(token);
-    console.log(user);
+    // console.log(jwt_result);
     
     // console.log(secret,
     //   user_id,
@@ -101,15 +101,14 @@ export function* UPDATE_PROFILE({payload}) {
     },
   })
   try {
-    const {user, skipLoading, navigate } = payload
+    var {user, skipLoading, navigate } = payload
+    user = fromJsonToFormData(user)
+    // user.password = "123456" //Por motivos de pruebas
     console.log(user);
-    user.password = "123456" //Por motivos de pruebas
-    // console.log(_user);
     
     const success = yield call(
       updateUser,
       user,
-      user.id,
       { skipLoading },
     )
     console.log(success)
@@ -172,27 +171,14 @@ export function* LOAD_CURRENT_ACCOUNT() {
       loading: true,
     },
   })
-  const response = yield call(currentAccount)
-
-  if (response) {
-    const { id, email, photoURL: avatar, role, name, phone, isSuperAdmin } = response
+  const current_user = yield call(currentAccount)
+  if (current_user) {
+    const {isSuperAdmin} = current_user
     yield put({
       type: 'session/SET_STATE',
       payload: {
-        id,
-        name,
-        email,
-        phone,
-        avatar,
-        role,
+        current_user,
         isSuperAdmin,
-        authorized: true,
-      },
-    })
-    yield put({
-      type: 'menu/CHANGE_MENU',
-      payload: {
-        role,
       },
     })
   }
