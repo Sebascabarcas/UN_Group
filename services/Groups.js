@@ -1,53 +1,63 @@
 import Requests from './Requests'
+import Storage from './Storage';
 
 export async function getGroups({ skipLoading } = {}) {
     return Requests.get(`groups`).then(groups => groups.data)
 }
 
 export async function getGroup(id, { skipLoading } = {}) {
-    return Requests.get(`groups/${id}]`).then(group => group.data)
+    return Requests.get(`groups/${id}`).then(group => group.data)
 }
 
 export async function createGroup(newGroup, { skipLoading } = {}) {
-    return Requests.post(`groups`, newGroup, { skipLoading }).then(group => group.data)
+    // return Requests.post(`groups`, newGroup, { skipLoading, headers: {'Content-Type': 'multipart/form-data'}}).then(group => group.data)
+    let {secret} = await Storage.get('Session')
+    return fetch('http://10.20.36.141:4936/UNGroup/API/groups', {
+        method: 'POST',
+        body: newGroup,
+        headers: {
+          'content-type': 'multipart/form-data',
+          'authorization': `Bearer ${secret}`
+        },
+      });
 }
 
-export async function sendGroupMemberRequest(groupName, { skipLoading } = {}) {
-    return Requests.post(`groups/${groupName}/join`, { skipLoading }).then(group => group)
+export async function sendGroupMemberRequest(id, { skipLoading } = {}) {
+    return Requests.post(`groups/${id}/join`, { skipLoading }).then(group => group)
 }
 
-export async function addMember(groupName, newMember, { skipLoading } = {}) {
-    return Requests.put(`groups/${groupName}/addMember/${newMember}`, { skipLoading }).then(group => group)
+export async function addMember(id, userID, { skipLoading } = {}) {
+    return Requests.put(`groups/${id}/addMember/${userID}`, { skipLoading }).then(group => group)
 }
 
-export async function acceptMember(groupName, newCandidate, { skipLoading } = {}) {
-    return Requests.put(`groups/${groupName}/acceptCandidate/${newCandidate}`, { skipLoading }).then(group => group)
+export async function acceptMember(id, userID, { skipLoading } = {}) {
+    return Requests.put(`groups/${id}/acceptCandidate/${userID}`, { skipLoading }).then(group => group)
 }
 
-export async function increasePrivileges(groupName, member, { skipLoading } = {}) {
-    return Requests.put(`groups/${groupName}/increasePrivileges/${member}`, { skipLoading }).then(group => group)
+export async function increasePrivileges(id, userID, { skipLoading } = {}) {
+    return Requests.put(`groups/${id}/increasePrivileges/${userID}`, { skipLoading }).then(group => group)
 }
 
-export async function reducePrivileges(groupName, member, { skipLoading } = {}) {
-    return Requests.put(`groups/${groupName}/reducePrivileges/${member}`, { skipLoading }).then(group => group)
+export async function reducePrivileges(id, userID, { skipLoading } = {}) {
+    return Requests.put(`groups/${id}/reducePrivileges/${userID}`, { skipLoading }).then(group => group)
 }
 
-export async function addAdminMember(groupName, newAdmin, { skipLoading } = {}) {
-    return Requests.post(`groups/${groupName}/addAsAdmin/${newAdmin}`, { skipLoading }).then(group => group)
+export async function addAdminMember(id, userID, { skipLoading } = {}) {
+    return Requests.post(`groups/${id}/addAsAdmin/${userID}`, { skipLoading }).then(group => group)
 }
 
-export async function leaveGroup(groupName, member, { skipLoading } = {}) {
-    return Requests.delete(`groups/${groupName}/kick/${member}`, { skipLoading }).then(group => group)
+export async function leaveGroup(id, userID, { skipLoading } = {}) {
+    return Requests.delete(`groups/${id}/kick/${userID}`, { skipLoading }).then(group => group)
 }
 
-export async function kickGroupMember(groupName, { skipLoading } = {}) {
-    return Requests.delete(`groups/${groupName}/leave`, { skipLoading }).then(group => group)
+export async function kickGroupMember(id, { skipLoading } = {}) {
+    return Requests.delete(`groups/${id}/leave`, { skipLoading }).then(group => group)
 }
 
-export async function getGroupMembers(groupName, { skipLoading } = {}) {
-    return Requests.get(`groups/${groupName}/members`, { skipLoading }).then(group => group.data)
+export async function getGroupMembers(id, { skipLoading } = {}) {
+    return Requests.get(`groups/${id}/members`, { skipLoading }).then(group => group.data)
 }
 
-export async function getGroupCandidates(groupName, { skipLoading } = {}) {
-    return Requests.get(`groups/${groupName}/candidates`, { skipLoading }).then(group => group.data)
+export async function getGroupCandidates(id, { skipLoading } = {}) {
+    return Requests.get(`groups/${id}/candidates`, { skipLoading }).then(group => group.data)
 }
