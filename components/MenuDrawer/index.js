@@ -36,14 +36,15 @@ const MenuDrawer = () => {
   
   useEffect (() => {
     const fetchUserInfo = async () => {
-      const {user: userInfo, profileImg} = await Storage.get ('Session');
+      const sessionInfo = await Storage.get ('Session');
+      if (!sessionInfo) return null
       try {
         // const userInfo = await showUser (userID);
         // Object.entries (userInfo).map (
         //   ([key, value]) =>
         //     (userInfo[key] = userInfo[key] ? value.toString () : null)
         // );
-        dispatch({type: 'session/SET_STATE', payload: {current_user: userInfo}});
+        dispatch({type: 'session/SET_STATE', payload: {current_user: sessionInfo.user}});
         _setReady (true);
       } catch (error) {
         console.log (error);
@@ -93,7 +94,7 @@ const MenuDrawer = () => {
         <View style={styles.profile}>
           <TouchableWithoutFeedback style={styles.imgView} onPress={() => navigate ('MyProfile')}>
             {/* <View style={styles.imgView}> */}
-              <Image style={styles.img} resizeMode="cover" source={user.profileImg ? images["123456789"] : images["no-profile-picture"]} />
+              <Image style={styles.img} resizeMode="cover" source={user.profileImg ? images["123456789"] : images["no-profile-photo"]} />
             {/* </View> */}
           </TouchableWithoutFeedback>
           <View style={styles.profileText}>
@@ -135,11 +136,11 @@ const MenuDrawer = () => {
           />
         )}
         {navLink (
-          'MyProfile',
-          'Mi Perfil',
+          'MyGroup',
+          'Mi Grupo',
           <Entypo
             style={styles.iconLink}
-            name="wallet"
+            name="users"
             color={theme.GRAY_COLOR}
             size={theme.ICON_SIZE_SMALL}
           />,
