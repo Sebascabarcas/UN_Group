@@ -9,14 +9,15 @@ import {
  widthPercentageToDP as wp,
  heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import Images from '../../constants/Images';
 // https://dbits.netlify.com/assets/img/teamAlbeiro.min.jpg
 
-const CardGroup = ({groupName}) => {
+const CardGroup = ({name: groupName, image, onPress}) => {
     return(
         <Card style={styles.container}>
             <View style={styles.dataContainer}>
                 <View style={styles.groupPrincipalInfo}>
-                    <Image style={styles.image} source={{uri:'https://dbits.netlify.com/assets/img/teamAlbeiro.min.jpg'}}></Image>
+                    {image && <Image style={styles.image} source={{uri: `http://10.20.36.141:4936${image.groupPictureName}`}}/>}
                     <View style={styles.nameContainer}>
                         <MyText numberOfLines={1} style={styles.groupName}>{groupName}</MyText>
                         <Badge style={styles.badgeRate}>
@@ -47,7 +48,7 @@ const CardGroup = ({groupName}) => {
             </View>
             <View style={{borderBottomColor: '#EFEFF4', borderBottomWidth: 1, width:'100%'}}/>
             <View style={styles.acceptContainer}>
-                <Button full iconLeft style={styles.buttonView}>
+                <Button onPress={onPress} full iconLeft style={styles.buttonView}>
                     <AntDesign
                         name="eye"
                         color={'rgba(36, 46, 66, 0.3)'}
