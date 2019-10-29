@@ -5,6 +5,7 @@ const initialState = {
   refreshing: false,
   groups: [],
   current_group: {groupPictures: []},
+  current_group_members: [],
   new_group: {},
   more_pages: false,
 }
@@ -25,8 +26,6 @@ export default function tripReducer(state = initialState, action) {
     // }
     case actions.SET_STATE:
       // console.log({ ...state, ...action.payload })
-      return { ...state, ...action.payload }
-    case actions.PLACE_PRESSED:
       return { ...state, ...action.payload }
     default:
       return state
