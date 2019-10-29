@@ -1,35 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {
   View,
-  ImageBackground,
-  Modal,
   Dimensions,
-  ScrollView,
   Image,
 } from 'react-native';
 import {useNavigation} from 'react-navigation-hooks';
-import theme from '../../../styles/theme.style';
 import styles from './styles.js';
-import images from '../../../constants/Images';
 import MyText from '../../../components/MyText';
-import ConfirmButton from '../../../components/ConfirmEditProfile';
 import {Input, Button, List, ListItem, Form, Item, Badge} from 'native-base';
-import Storage from '../../../services/Storage';
 import {
   Ionicons,
   FontAwesome,
-  Foundation,
-  MaterialIcons,
-  AntDesign
 } from '@expo/vector-icons';
-import {Permissions} from 'expo';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
-import {USER_FACING_NOTIFICATIONS} from 'expo-permissions';
 import {useDispatch, useSelector} from 'react-redux';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import Images from '../../../constants/Images.js';
 import CardGroupInfo from '../../../components/CardGroupInfo';
 
 const {height: fullHeight} = Dimensions.get ('window');
@@ -41,16 +24,27 @@ const ShowGroupScreen = () => {
     loading,
     refreshing
   } = useSelector (state => state.groups);
+  const {
+    isSuperAdmin
+  } = useSelector (state => state.session);
   const dispatch = useDispatch ();
   const {navigate, getParam} = useNavigation ();
-  const user_id = getParam('id');
+  const group_id = getParam('id');
 
   useEffect (() => {
     dispatch({
       type: 'groups/GET_GROUP',
-      payload: {id: user_id}
+      payload: {id: group_id}
     })
   }, [dispatch]);
+
+  sendGroupRequest = () => {
+    const {id} = current_group
+    dispatch({
+      type: 'groups/SEND_GROUP_REQUEST',
+      payload: {id}
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -60,7 +54,7 @@ const ShowGroupScreen = () => {
         style={styles.imageCar}
         source={{
           // uri: 'https://www.indiacarnews.com/wp-content/uploads/2017/03/Renault-Duster-petrol-automatic-cvt-compressed.jpg',
-          uri: current_group.groupPictures.length > 0 ? `http://192.168.1.11:4936${current_group.groupPictures[0].groupPictureName}` : 'https://www.indiacarnews.com/wp-content/uploads/2017/03/Renault-Duster-petrol-automatic-cvt-compressed.jpg',
+          uri: current_group.groupPictures > 0 ? `http://10.20.36.141:4936${current_group.groupPictures.groupPictureName}` : 'https://www.indiacarnews.com/wp-content/uploads/2017/03/Renault-Duster-petrol-automatic-cvt-compressed.jpg',
         }}
       />
       <Button style={styles.arriveButton}>
@@ -71,15 +65,15 @@ const ShowGroupScreen = () => {
       <View style={{marginHorizontal: 20}}>
         <CardGroupInfo description={current_group.description} />
       </View>
-      <View style={styles.containerButtons}>
-        <Button style={styles.buttonItem}>
+      {!isSuperAdmin && <View style={styles.containerButtons}>
+        <Button onPress={sendGroupRequest} style={styles.buttonItem}>
           <MyText fontStyle="bold" style={styles.textItemButton}>
-            Ver Eventos
+            Quiero Unirme
           </MyText>
         </Button>
-      </View>
+      </View>}
       <View style={styles.actionTrip}>
-        <Button transparent style={styles.buttonAction}>
+        <Button transparent onPress={() => {navigate('GroupMembers')}} style={styles.buttonAction}>
           <FontAwesome name="users" size={30} color="white" />
           <MyText fontStyle="semibold" style={styles.buttonTextIcon}>
             Miembros
