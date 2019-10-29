@@ -14,14 +14,7 @@ import styles from './styles.js';
 import images from '../../../constants/Images';
 import MyText from '../../../components/MyText';
 import {Body, Button, List, ListItem, Left, Right} from 'native-base';
-import Storage from '../../../services/Storage';
-// import {Input, CheckBox, Button, Header} from 'react-native-elements';
 import {Ionicons, FontAwesome, Foundation} from '@expo/vector-icons';
-import EditButton from '../../../components/EditProfile';
-import {USER_FACING_NOTIFICATIONS} from 'expo-permissions';
-import {watchPositionAsync} from 'expo-location';
-import {updateUser} from '../../../services/Session';
-import {showUser} from '../../../services/Session';
 import {useSelector, useDispatch} from 'react-redux';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 

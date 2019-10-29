@@ -11,31 +11,18 @@ import {
 } from 'react-native';
 import * as Location from 'expo-location';
 import { Divider} from 'react-native-elements';
-import {Badge, Picker, Button} from 'native-base';
 import styles from './styles.js';
 import MyText from '../../../components/MyText';
-import Spinner from 'react-native-loading-spinner-overlay';
-import {FontAwesome, Ionicons} from '@expo/vector-icons';
-import SearchHeader from 'react-native-search-header';
-import theme from '../../../styles/theme.style';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-import {getGroups} from '../../../services/Groups';
-import TripBox from '../../../components/TripBox';
 import CardEvent from '../../../components/CardEvent/index.js';
 import Images from '../../../constants/Images.js';
 
 const {height: fullHeight} = Dimensions.get ('window');
 
 EventsScreen = () => {
-  // const searchHeader = useRef (null);
   const [offSet, _setOffSet] = useState (0);
   // const flatList = useRef (null);
   const {navigate, setParams} = navigationHooks.useNavigation ();
   const [groups, _setGroups] = useState ([]);
-  const [groupsFiltered, _setGroupsFiltered] = useState ([]);
   const [page, _setPage] = useState (1);
   const [noMorePages, _setNoMorePages] = useState (false);
   const [filtering, _setFiltering] = useState (false);
@@ -43,24 +30,6 @@ EventsScreen = () => {
   const [refreshing, _setRefreshing] = useState (false);
   const [filter, _setFilter] = useState ('all');
   // const [groups, _setGroups] = useState ([]);
-
-  // useEffect (() => {
-  //   const fetchActualLocation = async () => {
-  //     let location = await Location.getCurrentPositionAsync ({});
-  //     const {coords: {latitude, longitude}} = location;
-  //     const response = await fetch (
-  //       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_APIKEY}&sessiontoken=1234567890`,
-  //       {
-  //         method: `get`,
-  //       }
-  //     );
-  //     const data = await response.json ();
-  //     const place = data.results[0].formatted_address.split (/,(.+)/)[0];
-  //     _setActualPosition (place);
-  //   };
-
-  //   fetchActualLocation ();
-  // }, []);
 
   useEffect (
     () => {
@@ -182,20 +151,21 @@ EventsScreen = () => {
   );
 };
 
-// EventsScreen.navigationOptions = ({navigation}) => {
-//   const searchHeader = navigation.getParam('search_header', null)
-//   return {
-//     headerRight: (
-//       <Button iconRight transparent onPress={() => searchHeader.current.show ()}
-//       style={{marginRight: 20}}
-//       >
-//         <Ionicons
-//           name="md-search"
-//           color={theme.HEADER_MENU_TITLE_COLOR}
-//           size={theme.ICON_SIZE_MEDIUM}
-//         />
-//       </Button>
-//     ),
-//   }
-// };
+EventsScreen.navigationOptions = ({navigation}) => {
+  // const searchHeader = navigation.getParam('search_header', null)
+  return {
+    title: 'W STEM'
+    // headerRight: (
+    //   <Button iconRight transparent onPress={() => searchHeader.current.show ()}
+    //   style={{marginRight: 20}}
+    //   >
+    //     <Ionicons
+    //       name="md-search"
+    //       color={theme.HEADER_MENU_TITLE_COLOR}
+    //       size={theme.ICON_SIZE_MEDIUM}
+    //     />
+    //   </Button>
+    // ),
+  }
+};
 export default EventsScreen;
