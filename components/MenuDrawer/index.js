@@ -32,7 +32,7 @@ const MenuDrawer = () => {
   const [isReady, _setReady] = useState (false);
   const dispatch = useDispatch()
   const {navigate} = navigationHooks.useNavigation ();
-  const user = useSelector(state => state.session.current_user)
+  const {current_user: user,  myGroups} = useSelector(state => state.session)
   
   useEffect (() => {
     const fetchUserInfo = async () => {
@@ -135,7 +135,7 @@ const MenuDrawer = () => {
             size={theme.ICON_SIZE_SMALL}
           />
         )}
-        {navLink (
+        { myGroups.length > 0 && navLink (
           'MyGroup',
           'Mi Grupo',
           <Entypo

@@ -42,11 +42,15 @@ export function* LOGIN({ payload }) {
       secret: token,
       user
     }, ()  => navigate('Home'))
+    const payload = {
+      current_user: user, 
+      isSuperAdmin: user.isSuperAdmin, 
+      myGroups: user.userGroupRelations
+    }
+    if (user.userGroupRelations.length > 0) payload.current_group = user.userGroupRelations[0]  
     yield put({
       type: 'session/SET_STATE',
-      payload: {
-        isSuperAdmin: user.isSuperAdmin
-      },
+      payload
     })
     ToastAndroid.show ('Bienvenido a la aplicación!', ToastAndroid.SHORT);
     console.log('guardado');

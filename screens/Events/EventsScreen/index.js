@@ -153,8 +153,8 @@ EventsScreen = () => {
 
 EventsScreen.navigationOptions = ({navigation}) => {
   // const searchHeader = navigation.getParam('search_header', null)
-  return {
-    title: 'W STEM'
+  // return {
+    // title: 'W STEM'
     // headerRight: (
     //   <Button iconRight transparent onPress={() => searchHeader.current.show ()}
     //   style={{marginRight: 20}}
@@ -166,6 +166,6 @@ EventsScreen.navigationOptions = ({navigation}) => {
     //     />
     //   </Button>
     // ),
-  }
+  // }
 };
 export default EventsScreen;

@@ -10,7 +10,7 @@ const initialState = {
   more_pages: false,
 }
 
-export default function tripReducer(state = initialState, action) {
+export default function groupsReducer(state = initialState, action) {
   switch (action.type) {
     case actions.RESET_APP:
       return initialState

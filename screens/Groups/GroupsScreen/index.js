@@ -154,19 +154,19 @@ GroupsScreen = () => {
 };
 
 GroupsScreen.navigationOptions = ({navigation}) => {
-  const searchHeader = navigation.getParam('search_header', null)
-  return {
-    headerRight: (
-      <Button iconRight transparent onPress={() => searchHeader.current.show ()}
-      style={{marginRight: 20}}
-      >
-        <Ionicons
-          name="md-search"
-          color={theme.HEADER_MENU_TITLE_COLOR}
-          size={theme.ICON_SIZE_MEDIUM}
-        />
-      </Button>
-    ),
-  }
+  // const searchHeader = navigation.getParam('search_header', null)
+  // return {
+  //   headerRight: (
+  //     <Button iconRight transparent onPress={() => searchHeader.current.show ()}
+  //     style={{marginRight: 20}}
+  //     >
+  //       <Ionicons
+  //         name="md-search"
+  //         color={theme.HEADER_MENU_TITLE_COLOR}
+  //         size={theme.ICON_SIZE_MEDIUM}
+  //       />
+  //     </Button>
+  //   ),
+  // }
 };
 export default GroupsScreen;

@@ -2,8 +2,10 @@ import actions from './actions'
 
 const initialState = {
   current_user: {},
+  current_group: {},
   current_user_edition: {},
   isSuperAdmin: false,
+  myGroups: [],
   loading: false,
 }
 
