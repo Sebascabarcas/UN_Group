@@ -28,7 +28,7 @@ const EditProfileScreen = () => {
   const {navigate} = navigationHooks.useNavigation ();
   const [loading, _setLoading] = useState (false);
   const [showImageModal, _setShowImageModal] = useState (false);
-  const user = useSelector (state => state.session.current_user_edition);
+  const {current_user_edition: user} = useSelector (state => state.session)
   const dispatch = useDispatch ();
 
   useEffect (() => {
@@ -48,40 +48,52 @@ const EditProfileScreen = () => {
   };
 
   _pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync ({
+    let file = await ImagePicker.launchImageLibraryAsync ({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
     });
 
-    console.log (result);
-
-    if (!result.cancelled) {
+    if (!file.cancelled) {
       _setShowImageModal (false);
+      let localUri = file.uri;
+      let filename = localUri.split('/').pop();
+
+      // Infer the type of the image
+      let match = /\.(\w+)$/.exec(filename);
+      file = { type: match ? `image/${match[1]}` : `image`, filename, uri: localUri}
+      console.log (file);
       dispatch ({
         type: 'session/SET_STATE',
-        payload: {current_user_edition: {...user, profileImg: result.uri}},
+        payload: {current_user_edition: {...user, file}},
       });
     }
   };
 
   _takePhoto = async () => {
-    let result = await ImagePicker.launchCameraAsync ({
+    const file = await ImagePicker.launchCameraAsync ({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
     });
 
-    console.log (result);
+    console.log (file);
 
-    if (!result.cancelled) {
+    if (!file.cancelled) {
       _setShowImageModal (false);
+      let localUri = file.uri;
+      let filename = localUri.split('/').pop();
+
+      // Infer the type of the image
+      let match = /\.(\w+)$/.exec(filename);
+      file.type = match ? `image/${match[1]}` : `image`;
       dispatch ({
         type: 'session/SET_STATE',
-        payload: {current_user_edition: {...user, profileImg: result.uri}},
+        payload: {current_user_edition: {...user, file}},
       });
     }
   };
+
 
   return (
     <View style={styles.container}>
@@ -89,10 +101,6 @@ const EditProfileScreen = () => {
         animationType="fade"
         transparent={true}
         visible={showImageModal}
-        // onShow={}
-        // onRequestClose={() => {
-        //   Alert.alert ('Modal has been closed.');
-        // }}
       >
         <View
           style={{
@@ -159,9 +167,9 @@ const EditProfileScreen = () => {
               imageStyle={{borderRadius: 100}}
               style={styles.profileImg}
               source={
-                user.profileImg
-                  ? {uri: user.profileImg}
-                  : images[user.identification]
+                user.file
+                  ? {uri: user.file.uri}
+                  : images['no-profile-photo']
               }
             >
               <View style={styles.profileImgOverlay}>
@@ -184,25 +192,25 @@ const EditProfileScreen = () => {
         <Form style={styles.profileNameForm}>
           <Item>
             <Input
-              onChangeText={name =>
+              onChangeText={firstName =>
                 dispatch ({
                   type: 'session/SET_STATE',
-                  payload: {current_user_edition: {...user, name}},
+                  payload: {current_user_edition: {...user, firstName}},
                 })}
               style={styles.input}
-              value={user.name}
+              value={user.firstName}
               placeholder="Nombres"
             />
           </Item>
           <Item>
             <Input
-              onChangeText={last_name =>
+              onChangeText={lastName =>
                 dispatch ({
                   type: 'session/SET_STATE',
-                  payload: {current_user_edition: {...user, last_name}},
+                  payload: {current_user_edition: {...user, lastName}},
                 })}
               style={styles.input}
-              value={user.last_name}
+              value={user.lastName}
               placeholder="Apellidos"
             />
           </Item>

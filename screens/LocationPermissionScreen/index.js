@@ -29,10 +29,10 @@ const LocationScreen = () => {
   return (
     <View style={styles.mainContent}>
       {/* <SvgUri style={styles.logoIntroSlider} source={require('./../../assets/images/splash_4.svg')}/> */}
-      <Image
+      {/* <Image
         style={styles.logoIntroSlider}
         source={require ('./../../assets/images/splash_4.png')}
-      />
+      /> */}
       <View>
         <MyText style={styles.mainTitle} fontStyle="semibold">
           {' '}Activa tu Ubicación{' '}
