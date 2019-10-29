@@ -37,8 +37,18 @@ export async function showUser(userID, { skipLoading }) {
   return Requests.get(`users/id/${userID}`, { skipLoading }).then(user => user.data)
 }
 
-export async function updateUser(user, userID, { skipLoading }) {
-  return Requests.put(`users/id/${userID}`, user, { skipLoading }).then(user => user.data)
+export async function updateUser(user, { skipLoading }) {
+  // return Requests.put(``, user, { skipLoading }).then(user => user.data)
+  console.log(user);
+  let {secret} = await Storage.get('Session')
+  return fetch('http://10.20.36.141:4936/UNGroup/API/users/update', {
+      method: 'PUT',
+      body: user,
+      headers: {
+        'content-type': 'multipart/form-data',
+        'authorization': `Bearer ${secret}`
+      },
+    });
 }
 
 export async function deleteUser(userID, { skipLoading }) {
