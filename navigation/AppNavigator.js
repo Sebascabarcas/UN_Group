@@ -51,6 +51,10 @@ import NotificationsScreen from '../screens/Configuration/NotificationsScreen';
 import WalletScreen from '../screens/Profile/WalletScreen';
 import PaymentMethodScreen from '../screens/Profile/PaymentMethodScreen';
 import AddCreditCardScreen from '../screens/Profile/AddCreditCardScreen';
+import CreateGroupScreen from '../screens/Groups/CreateGroupScreen';
+import ShowGroupScreen from '../screens/Groups/ShowGroupScreen';
+import GroupMembers from '../screens/Groups/GroupMembers';
+import GroupTabNavigator from './GroupTabNavigator';
 
 // import { Divider, Button } from 'react-native-elements';
 
@@ -61,6 +65,36 @@ import AddCreditCardScreen from '../screens/Profile/AddCreditCardScreen';
 
 // Implementation of HomeScreen, OtherScreen, SignInScreen, AuthLoadingScreen
 // goes here.
+
+const defaultStackConfig = {
+  // initialRouteName: 'EditProfile',
+  headerLayoutPreset: 'center',
+  defaultNavigationOptions: ({navigation}) => ({
+    headerStyle: {
+      backgroundColor: theme.PRIMARY_COLOR,
+    },
+    headerLeft: (
+      <Button
+        // block
+        style={{marginLeft: 20}}
+        iconLeft transparent
+        onPress={() => navigation.openDrawer()}
+      >
+        <FontAwesome
+            name="navicon"
+            color={theme.HEADER_MENU_TITLE_COLOR}
+            size={theme.ICON_SIZE_SMALL}
+          />
+      </Button>
+    ),
+    headerTintColor: theme.HEADER_MENU_TITLE_COLOR,
+    headerTitleStyle: {
+      fontFamily: theme.FONT_FAMILY_BOLD,
+      fontSize: theme.FONT_SIZE_LARGE,
+      color: theme.HEADER_MENU_TITLE_COLOR
+    }
+  }),
+}
 
 const AppStack = createStackNavigator(
   {
@@ -80,38 +114,28 @@ const AppStack = createStackNavigator(
     Home: {
       screen: MainTabNavigator,
       navigationOptions: {
-        title: 'W STEM',
-        headerTransparent: true,
-        headerStyle: {
-          // backgroundColor: 'transparent',
-          // position: 'absolute',
-          // backgroundColor: 'transparent',
-          // zIndex: 100,
-          // top: 0,
-          // left: 0,
-          // right: 0,
-          // elevation: 0,
-          // shadowOpacity: 0,
-          // borderBottomWidth: 0,
-        },
-        // headerLeft: ({navigation}) => (
-        //   <Button
-        //     iconLeft transparent
-        //     onPress={() => navigation.openDrawer()}
-        //   >
-        //     <FontAwesome
-        //         name="navicon"
-        //         color={theme.HEADER_MENU_TITLE_COLOR}
-        //         size={theme.ICON_SIZE_SMALL}
-        //       />
-        //   </Button>
-        // ),
+        header: null
+      //   title: 'W STEM',
+      //   headerTransparent: true,
+      //   headerStyle: {}
       },
     },
-    Configuration: {
-      screen: ConfigurationScreen,
+    CreateGroup: {
+      screen: CreateGroupScreen,
       navigationOptions: {
-        title: 'Configuración',
+        title: 'Nuevo Grupo',
+      },
+    },
+    ShowGroup: {
+      screen: ShowGroupScreen,
+      navigationOptions: {
+        header: null
+      },
+    },
+    GroupMembers: {
+      screen: GroupMembers,
+      navigationOptions: {
+        header: null
       },
     },
     Notifications: {
@@ -119,6 +143,17 @@ const AppStack = createStackNavigator(
     },
     MyProfile: {
       screen: MyProfileScreen,
+    },
+    MyGroup: {
+      screen: GroupTabNavigator,
+      // navigationOptions: {
+      //   title: 'W STEM',
+      //   headerTransparent: true,
+      //   headerStyle: {}
+      // }
+      navigationOptions: {
+        header: null
+      },
     },
     EditProfile: {
       screen: EditProfileScreen,
@@ -153,35 +188,7 @@ const AppStack = createStackNavigator(
       },
     },
   },
-  {
-    // initialRouteName: 'EditProfile',
-    headerLayoutPreset: 'center',
-    defaultNavigationOptions: ({navigation}) => ({
-      headerStyle: {
-        backgroundColor: theme.PRIMARY_COLOR,
-      },
-      headerLeft: (
-        <Button
-          // block
-          style={{marginLeft: 20}}
-          iconLeft transparent
-          onPress={() => navigation.openDrawer()}
-        >
-          <FontAwesome
-              name="navicon"
-              color={theme.HEADER_MENU_TITLE_COLOR}
-              size={theme.ICON_SIZE_SMALL}
-            />
-        </Button>
-      ),
-      headerTintColor: theme.HEADER_MENU_TITLE_COLOR,
-      headerTitleStyle: {
-        fontFamily: theme.FONT_FAMILY_BOLD,
-        fontSize: theme.FONT_SIZE_LARGE,
-        color: theme.HEADER_MENU_TITLE_COLOR
-      }
-    }),
-  }
+  defaultStackConfig
 );
 
 const AppDrawerNavigator = createDrawerNavigator (
@@ -208,11 +215,10 @@ export default createAppContainer (
   createAnimatedSwitchNavigator (
     {
       AuthLoading: AuthLoadingScreen,
-      App: AppDrawerNavigator,
       Auth: AuthStack,
+      App: AppDrawerNavigator,
       Intro: IntroSlider,
       LocationPermissions: LocationPermissionsScreen,
-      // App: AppDrawerNavigator,
     },
     {
       // initialRouteName: 'AuthLoading',
