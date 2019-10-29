@@ -14,11 +14,8 @@ export default function fromJsonToFormData(obj, form, namespace, k) {
     } else {
       formKey = keys[i]
     }
-    if (typeof obj[keys[i]] === 'object' && (!(obj[keys[i]] instanceof File) && !obj[keys[i]].uri)) {
+    if (obj[keys[i]] && typeof obj[keys[i]] === 'object' && (!(obj[keys[i]] instanceof File) && keys.indexOf('uri') === -1)) {
       fromJsonToFormData(obj[keys[i]], fd, formKey, Object.keys(obj[keys[i]]))
-    } else if (obj[keys[i]].uri) {
-      // if it's a string or a File object
-      fd.append(formKey, obj[keys[i]])
     } else {
       fd.append(formKey, obj[keys[i]])
     }
