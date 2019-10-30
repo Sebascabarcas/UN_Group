@@ -28,13 +28,13 @@ export default (
             style={{fontSize: theme.FONT_SIZE_LARGE}}
             color={theme.HEADER_MENU_TITLE_COLOR}
           >
-            {current_group.groupName ? current_group.groupName : 'UNGROUP'}
+            {current_group ? current_group.groupName : 'UNGROUP'}
           </MyText>
-          <AntDesign
+          { current_group && <AntDesign
             name="caretdown"
             color={theme.HEADER_MENU_TITLE_COLOR}
             size={theme.ICON_SIZE_SUPER_EXTRA_SMALL}
-          />
+          />}
           
         </Button>
     );
