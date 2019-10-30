@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import styles from './styles';
+import MyText from '../MyText';
 
 export default class SliderEntry extends Component {
 
@@ -38,12 +39,12 @@ export default class SliderEntry extends Component {
         const { data: { title, subtitle }, even } = this.props;
 
         const uppercaseTitle = title ? (
-            <Text
+            <MyText
               style={[styles.title, even ? styles.titleEven : {}]}
               numberOfLines={2}
             >
                 { title.toUpperCase() }
-            </Text>
+            </MyText>
         ) : false;
 
         return (
@@ -59,12 +60,12 @@ export default class SliderEntry extends Component {
                 </View>
                 <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
                     { uppercaseTitle }
-                    <Text
+                    <MyText
                       style={[styles.subtitle, even ? styles.subtitleEven : {}]}
                       numberOfLines={2}
                     >
                         { subtitle }
-                    </Text>
+                    </MyText>
                 </View>
             </TouchableOpacity>
         );
