@@ -20,7 +20,6 @@ export default (
             navigate('SelectGroup');
           }}
           iconRight
-          onPress={() => navigate('EditProfile')}
           style={styles.actionHeaderButton}
         >
           <MyText
