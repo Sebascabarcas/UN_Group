@@ -19,7 +19,7 @@ export default StyleSheet.create ({
 	},
 	listItemContainer: {
 		justifyContent: 'center',
-		// marginVertical: 20,
+		marginVertical: 1,
 		paddingVertical: 10,
 		// margin: 20,
 		elevation: 1,
