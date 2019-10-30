@@ -55,6 +55,7 @@ import CreateGroupScreen from '../screens/Groups/CreateGroupScreen';
 import ShowGroupScreen from '../screens/Groups/ShowGroupScreen';
 import GroupMembers from '../screens/Groups/GroupMembers';
 import GroupTabNavigator from './GroupTabNavigator';
+import SelectGroupModal from '../screens/SelectGroupModal';
 
 // import { Divider, Button } from 'react-native-elements';
 
@@ -167,9 +168,8 @@ const AppStack = createStackNavigator(
     AddCreditCard: {
       screen: AddCreditCardScreen,
     },
-    
-    TripPreview: {
-      screen: TripPreviewScreen,
+    SelectGroup: {
+      screen: SelectGroupModal,
       navigationOptions: {
         mode: 'modal',
         headerMode: 'none',
