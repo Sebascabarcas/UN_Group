@@ -1,6 +1,6 @@
 import { all, takeEvery, takeLatest, put, call } from 'redux-saga/effects'
 import {ToastAndroid} from 'react-native'
-import { login, currentAccount, logout, register, updateUser } from '../../services/Session';
+import { login, currentAccount, logout, register, updateUser, currentSession } from '../../services/Session';
 import jwt_decode from 'jwt-decode';
 import Storage from '../../services/Storage';
 import actions from './actions'
@@ -38,16 +38,20 @@ export function* LOGIN({ payload }) {
     //   },
     // })
     // console.log(storeSession);
-    yield call (Storage.set, 'Session', {
-      secret: token,
-      user
-    }, ()  => navigate('Home'))
     const payload = {
       current_user: user, 
       isSuperAdmin: user.isSuperAdmin, 
       myGroups: user.userGroupRelations
     }
-    if (user.userGroupRelations.length > 0) payload.current_group = user.userGroupRelations[0]  
+    user.userGroupRelations = user.userGroupRelations.map(groupRelation => groupRelation.group)
+    if (user.userGroupRelations.length > 0) {
+      payload.current_group = user.userGroupRelations[0]
+      user.current_group = payload.current_group
+    }  
+    yield call (Storage.set, 'Session', {
+      secret: token,
+      user
+    }, ()  => navigate('Home'))
     yield put({
       type: 'session/SET_STATE',
       payload
@@ -168,6 +172,37 @@ export function* LOGOUT({ payload: { skipLoading, navigate } }) {
 }
 
 
+export function* CHANGE_CURRENT_GROUP({payload: {group, goBack}}) {
+  yield put({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  const current_session = yield call(currentSession)
+  if (current_session) {
+    current_session.user.current_group = group
+    yield call (Storage.set, 'Session', {
+      current_session
+    }, ()  => {
+      yield put({
+        type: 'session/SET_STATE',
+        payload: {
+          current_group: group
+        }
+      })
+      goBack();
+    }
+    )
+  }
+  yield put({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
 export function* LOAD_CURRENT_ACCOUNT() {
   yield put({
     type: 'session/SET_STATE',
@@ -176,14 +211,21 @@ export function* LOAD_CURRENT_ACCOUNT() {
     },
   })
   const current_user = yield call(currentAccount)
+  // console.log('El usuario', current_user);
+  
   if (current_user) {
-    const {isSuperAdmin} = current_user
+    let {isSuperAdmin, userGroupRelations: myGroups} = current_user
+    // console.log('');
+    myGroups = myGroups.map(groupRelation => groupRelation.group)
+    const payload = {
+      current_user,
+      isSuperAdmin,
+      myGroups
+    }
+    if (myGroups.length > 0) payload.current_group = myGroups[0]
     yield put({
       type: 'session/SET_STATE',
-      payload: {
-        current_user,
-        isSuperAdmin,
-      },
+      payload
     })
   }
   yield put({
