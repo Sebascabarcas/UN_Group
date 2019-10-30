@@ -53,6 +53,10 @@ export function* LOGIN({payload}) {
       payload.current_group = user.userGroupRelations[0];
       user.current_group = payload.current_group;
     }
+    yield put ({
+      type: 'session/SET_STATE',
+      payload,
+    });
     yield call (
       Storage.set,
       'Session',
@@ -62,10 +66,6 @@ export function* LOGIN({payload}) {
       },
       () => navigate ('Home')
     );
-    yield put ({
-      type: 'session/SET_STATE',
-      payload,
-    });
     ToastAndroid.show ('Bienvenido a la aplicación!', ToastAndroid.SHORT);
     console.log ('guardado');
   } catch (error) {
