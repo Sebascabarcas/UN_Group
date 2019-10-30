@@ -222,15 +222,13 @@ export function* LOAD_CURRENT_ACCOUNT () {
   // console.log('El usuario', current_user);
 
   if (current_user) {
-    let {isSuperAdmin, userGroupRelations: myGroups} = current_user;
-    // console.log('');
-    myGroups = myGroups.map (groupRelation => groupRelation.group);
+    let {isSuperAdmin, userGroupRelations: myGroups, current_group} = current_user;
     const payload = {
       current_user,
       isSuperAdmin,
       myGroups,
     };
-    if (myGroups.length > 0) payload.current_group = myGroups[0];
+    if (current_group) payload.current_group = current_group;
     yield put ({
       type: 'session/SET_STATE',
       payload,
