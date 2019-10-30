@@ -25,7 +25,8 @@ const {height: fullHeight} = Dimensions.get ('window');
 Solicitudes = () => {
   const dispatch = useDispatch()
   const {
-    isSuperAdmin
+    isSuperAdmin,
+    current_group
   } = useSelector (state => state.session);
   const {
     current_group_requests: requests,
@@ -45,7 +46,7 @@ Solicitudes = () => {
       // flatList.current.scrollToOffset ({animated: true, offset: 0});
       dispatch({
         type: 'groups/GET_GROUP_CANDIDATES',
-        payload: {id: 1}
+        payload: {id: current_group.id}
       })
     },
     [dispatch]
@@ -55,7 +56,7 @@ Solicitudes = () => {
     try {
       dispatch({
         type: 'groups/GET_GROUP_CANDIDATES',
-        payload: {id: 1},
+        payload: {id: current_group.id},
         concat: true
       })
     } catch (error) {
@@ -68,7 +69,7 @@ Solicitudes = () => {
     try {
       dispatch({
         type: 'groups/GET_GROUP_CANDIDATES',
-        payload: {id: 1}
+        payload: {id: current_group.id}
       })
     } catch (error) {
       console.log (error);
