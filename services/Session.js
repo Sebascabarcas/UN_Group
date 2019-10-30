@@ -61,6 +61,12 @@ export async function currentAccount() {
   return null 
 }
 
+export async function currentSession() {
+  let session = (await Storage.get('Session'))
+  if (session) return session
+  return null 
+}
+
 export async function logout({ skipLoading }) {
   return Requests.delete('users/logout', { skipLoading }).then(session => session.data.data)
 }
