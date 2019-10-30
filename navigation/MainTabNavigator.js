@@ -7,11 +7,16 @@ import theme from '../styles/theme.style';
 import TabBarIcon from '../components/TabBarIcon';
 
 /* Screens */
-import WalletScreen from '../screens/Profile/WalletScreen';
 import GroupsScreen from '../screens/Groups/GroupsScreen';
-import CreateGroupScreen from '../screens/Groups/CreateGroupScreen';
 import AddCreditCardScreen from '../screens/Profile/AddCreditCardScreen';
 import EventsScreen from '../screens/Events/EventsScreen';
+import SelectGroupButton from '../components/SelectGroupButton';
+
+const headerTitleStyle = {
+  fontFamily: theme.FONT_FAMILY_BOLD,
+  fontSize: theme.FONT_SIZE_LARGE,
+  color: theme.HEADER_MENU_TITLE_COLOR,
+}
 
 const defaultStackConfig = {
   headerLayoutPreset: 'center',
@@ -35,11 +40,9 @@ const defaultStackConfig = {
       </Button>
     ),
     // headerTintColor: theme.HEADER_MENU_TITLE_COLOR,
-    headerTitleStyle: {
-      fontFamily: theme.FONT_FAMILY_BOLD,
-      fontSize: theme.FONT_SIZE_LARGE,
-      color: theme.HEADER_MENU_TITLE_COLOR,
-    },
+    headerTitle: (
+      <SelectGroupButton/>
+    ),
   }),
 };
 
