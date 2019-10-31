@@ -17,7 +17,7 @@ export default (
           transparent
           onPress={() =>
             {
-            navigate('SelectGroup');
+              current_group && navigate('SelectGroup');
           }}
           iconRight
           style={styles.actionHeaderButton}
