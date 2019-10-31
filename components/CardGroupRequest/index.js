@@ -9,15 +9,16 @@ import {
  widthPercentageToDP as wp,
  heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import Images from '../../constants/Images';
+import getEnvVars from '../../environment';
 // https://dbits.netlify.com/assets/img/teamAlbeiro.min.jpg
+const {apiUrl} = getEnvVars();
 
-const CardGroupRequest = ({name, username, onAccept, onReject}) => {
+const CardGroupRequest = ({name, username, image, onAccept, onReject}) => {
     return(
         <Card style={styles.container}>
             <View style={styles.dataContainer}>
                 <View style={styles.groupPrincipalInfo}>
-                    <Image style={styles.image} source={Images['big_check']}></Image>
+                    <Image style={styles.image} source={image ? {uri: `${apiUrl}${image.pictureName}`} : images['no-profile-photo']}></Image>
                     <View style={styles.nameContainer}>
                         <MyText numberOfLines={1} style={styles.groupName}>{name}</MyText>
                         <Badge style={styles.badgeRate}>

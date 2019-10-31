@@ -16,11 +16,13 @@ import getEnvVars from '../../environment';
 const { apiUrl } = getEnvVars();
 
 const CardGroup = ({name: groupName, image, onPress}) => {
+    console.log(image);
+    
     return(
         <Card style={styles.container}>
             <View style={styles.dataContainer}>
                 <View style={styles.groupPrincipalInfo}>
-                    {image && <Image style={styles.image} source={{uri: `${apiUrl}${image.groupPictureName}`}}/>}
+                    <Image style={styles.image} source={image ? {uri: `${apiUrl}${image.groupPictureName}`} : images['no-circle-photo']}/>
                     <View style={styles.nameContainer}>
                         <MyText numberOfLines={1} style={styles.groupName}>{groupName}</MyText>
                         <Badge style={styles.badgeRate}>

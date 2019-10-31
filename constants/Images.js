@@ -4,6 +4,7 @@ export default images = {
     "123456789": require('../assets/images/jefe_invima.png'),
     "default": require('../assets/images/robot-dev.png'),
     "no-profile-picture": require('../assets/images/no-profile-image.jpg'),
+    "no-circle-photo": require('../assets/images/no-circle-photo.png'),
     "no-profile-photo": require('../assets/images/no-profile-photo.png'),
     "dashboard_bg_image": require ('../assets/images/dashboard_image.png'),
     "auth_bg_image": require ('../assets/images/Image_Background.png'),
