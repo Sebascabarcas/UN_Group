@@ -93,7 +93,7 @@ function request(path, method, data, { _headers, skipLoading, skipToken }) {
   return httpClient({
     method,
     headers,
-    url: `${apiUrl}${path}`,
+    url: `${apiUrl}/${path}`,
     baseURL: `${apiUrl}`,
     data,
     skipLoading,
