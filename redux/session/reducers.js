@@ -2,7 +2,7 @@ import actions from './actions'
 
 const initialState = {
   current_user: {},
-  current_group: {},
+  current_group: null,
   current_user_edition: {},
   isSuperAdmin: false,
   myGroups: [],
