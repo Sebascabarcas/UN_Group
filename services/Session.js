@@ -5,7 +5,9 @@
 // import 'firebase/storage'
 import Requests from './Requests'
 import Storage from './Storage';
+import getEnvVars from '../environment';
 
+const { apiUrl } = getEnvVars();
 // const firebaseConfig = {
 //   apiKey: 'AIzaSyAE5G0RI2LwzwTBizhJbnRKIKbiXQIA1dY',
 //   authDomain: 'cleanui-72a42.firebaseapp.com',
@@ -41,7 +43,7 @@ export async function updateUser(user, { skipLoading }) {
   // return Requests.put(``, user, { skipLoading }).then(user => user.data)
   console.log(user);
   let {secret} = await Storage.get('Session')
-  return fetch('http://10.20.36.141:4936/UNGroup/API/users/update', {
+  return fetch('${apiUrl}/UNGroup/API/users/update', {
       method: 'PUT',
       body: user,
       headers: {

@@ -14,10 +14,13 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 const GOOGLE_MAPS_APIKEY = 'AIzaSyCWPrODz1hIw-3g2gX94dTJTspvq768GOw';
 const {width, height} = Dimensions.get ('window');
 
-export default TripPreviewScreen = () => {
+export default SelectGroupModal = () => {
   const {goBack} = useNavigation ();
   const dispatch = useDispatch();
   const {myGroups, current_group} = useSelector(state => state.session)
+  console.log(current_group);
+  console.log(myGroups);
+  
   // const originMarker = {lat: originLocation.coords.latitude, lng: originLocation.coords.longitude}
   // const destinyMarker = {lat: destinyLocation.coords.latitude, lng: destinyLocation.coords.longitude}
   const [loading, _setLoading] = useState (false)
@@ -39,7 +42,7 @@ export default TripPreviewScreen = () => {
             (<BigListItem key={group.id}
             leftItem={
                 <TouchableWithoutFeedback style={styles.imgView} onPress={() => selectGroup(group)}>
-                    <Image style={styles.img} resizeMode="cover" source={{uri: `http://10.20.36.141:4936${group.groupPicture.groupPictureName}`}}/>
+                    <Image style={styles.img} resizeMode="cover" source={{uri: `${apiUrl}${group.groupPicture.groupPictureName}`}}/>
                 </TouchableWithoutFeedback>
                 }
                 primaryText={group.groupName}

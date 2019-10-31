@@ -1,6 +1,8 @@
 import axios from 'axios'
 import Storage from './Storage';
-const urlGlobal = "http://10.20.36.141:4936/UNGroup/API/";
+import getEnvVars from '../environment';
+
+const { apiUrl } = getEnvVars();
 
 const httpClient = axios 
 httpClient.interceptors.request.use(
@@ -91,8 +93,8 @@ function request(path, method, data, { _headers, skipLoading, skipToken }) {
   return httpClient({
     method,
     headers,
-    url: `${urlGlobal}${path}`,
-    baseURL: `${urlGlobal}`,
+    url: `${apiUrl}${path}`,
+    baseURL: `${apiUrl}`,
     data,
     skipLoading,
     skipToken,

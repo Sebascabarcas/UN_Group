@@ -14,9 +14,10 @@ import {
 } from '@expo/vector-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import CardGroupInfo from '../../../components/CardGroupInfo';
+import getEnvVars from '../../../environment.js';
 
 const {height: fullHeight} = Dimensions.get ('window');
-
+const { apiUrl } = getEnvVars();
 const ShowGroupScreen = () => {
   const {
     current_group,
@@ -54,7 +55,7 @@ const ShowGroupScreen = () => {
         style={styles.imageCar}
         source={{
           // uri: 'https://www.indiacarnews.com/wp-content/uploads/2017/03/Renault-Duster-petrol-automatic-cvt-compressed.jpg',
-          uri: current_group.groupPictures > 0 ? `http://10.20.36.141:4936${current_group.groupPictures.groupPictureName}` : 'https://www.indiacarnews.com/wp-content/uploads/2017/03/Renault-Duster-petrol-automatic-cvt-compressed.jpg',
+          uri: current_group.groupPictures > 0 ? `${apiUrl}${current_group.groupPictures.groupPictureName}` : 'https://www.indiacarnews.com/wp-content/uploads/2017/03/Renault-Duster-petrol-automatic-cvt-compressed.jpg',
         }}
       />
       <Button style={styles.arriveButton}>

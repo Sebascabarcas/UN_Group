@@ -10,14 +10,17 @@ import {
  heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Images from '../../constants/Images';
+import getEnvVars from '../../environment';
 // https://dbits.netlify.com/assets/img/teamAlbeiro.min.jpg
+
+const { apiUrl } = getEnvVars();
 
 const CardGroup = ({name: groupName, image, onPress}) => {
     return(
         <Card style={styles.container}>
             <View style={styles.dataContainer}>
                 <View style={styles.groupPrincipalInfo}>
-                    {image && <Image style={styles.image} source={{uri: `http://10.20.36.141:4936${image.groupPictureName}`}}/>}
+                    {image && <Image style={styles.image} source={{uri: `${apiUrl}${image.groupPictureName}`}}/>}
                     <View style={styles.nameContainer}>
                         <MyText numberOfLines={1} style={styles.groupName}>{groupName}</MyText>
                         <Badge style={styles.badgeRate}>

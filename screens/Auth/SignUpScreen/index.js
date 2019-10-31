@@ -1,13 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {
-  AsyncStorage,
-  Image,
+  Platform,
   ImageBackground,
-  StyleSheet,
   View,
   KeyboardAvoidingView,
-  ToastAndroid,
-  Picker,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from 'react-navigation-hooks';
@@ -29,15 +25,19 @@ const SignUpScreen = () => {
   // const [password, _setPassword] = useState (null);
   // const [user, _setUser] = useState ({});
   const [user, _setUser] = useState ( {
+    "email": "hpedy123@gmail.com",
     "username": "tester",
     "firstName": "John",
     "middleName": "Deivis",
+    "gender": "male",
+    "phone": "3007838569",
     "lastName": "Barbosa",
     "job_title": "Colla",
     "pwd": "123456",
     "pwd_confirmation": "123456"
   });
 
+  const platformIcons = Platform.OS === 'ios' ? 'ios' : 'md'
   useEffect (() => {
     console.log ('SignUp');
   }, []);
@@ -65,6 +65,21 @@ const SignUpScreen = () => {
           >
           <Item white style={styles.itemForm}>
             <Input
+              placeholder="Correo"
+              placeholderTextColor="#FFF"
+              style={styles.input}
+              onChangeText={email => _setUser ({...user, email})}
+              value={user.email}
+            />
+            <Ionicons
+              style={styles.iconInput}
+              name={`${platformIcons}-mail`}
+              color="#FFF"
+              size={theme.ICON_SIZE_SMALL}
+            />
+          </Item>
+          <Item white style={styles.itemForm}>
+            <Input
               placeholder="Nombre de Usuario"
               placeholderTextColor="#FFF"
               style={styles.input}
@@ -73,7 +88,7 @@ const SignUpScreen = () => {
             />
             <Ionicons
               style={styles.iconInput}
-              name="ios-mail"
+              name={`${platformIcons}-happy`}
               color="#FFF"
               size={theme.ICON_SIZE_SMALL}
             />
@@ -88,7 +103,7 @@ const SignUpScreen = () => {
             />
             <Ionicons
               style={styles.iconInput}
-              name="ios-mail"
+              name={`${platformIcons}-person`}
               color="#FFF"
               size={theme.ICON_SIZE_SMALL}
             />
@@ -103,7 +118,7 @@ const SignUpScreen = () => {
             />
             <Ionicons
               style={styles.iconInput}
-              name="ios-mail"
+              name={`${platformIcons}-person`}
               color="#FFF"
               size={theme.ICON_SIZE_SMALL}
             />
@@ -118,9 +133,25 @@ const SignUpScreen = () => {
             />
             <Ionicons
               style={styles.iconInput}
-              name="ios-mail"
+              name={`${platformIcons}-person`}
               color="#FFF"
               size={theme.ICON_SIZE_SMALL}
+            />
+          </Item>
+          <Item white style={styles.itemForm}>
+            <Input
+              placeholder="Celular"
+              placeholderTextColor="#FFF"
+              onChangeText={phone =>
+                _setUser ({...user, phone})}
+              value={user.phone}
+              keyboardType="number-pad"
+              style={styles.input}
+            />
+            <AntDesign
+              name="phone"
+              size={theme.ICON_SIZE_SMALL}
+              color="white"
             />
           </Item>
           <Item white style={styles.itemForm}>
@@ -149,7 +180,7 @@ const SignUpScreen = () => {
                 />}
           </Item>
           </KeyboardAvoidingView>
-          {/* <View style={styles.checksContainer}>
+          <View style={styles.checksContainer}>
             <View style={styles.checkContainer}>
               <CheckBox
                 center
@@ -182,7 +213,7 @@ const SignUpScreen = () => {
                 Mujer
               </MyText>
             </View>
-          </View> */}
+          </View>
           <Button
             onPress={_signUpAsync}
             rounded

@@ -9,7 +9,8 @@ import {
   sliderWidth,
   itemWidth,
 } from '../../../components/SliderEntry/styles.js';
-
+import getEnvVars from '../../../environment.js';
+const { apiUrl } = getEnvVars();
 const {height: fullHeight} = Dimensions.get ('window');
 
 const Members = () => {
@@ -17,6 +18,7 @@ const Members = () => {
   const {current_group_members, more_pages, loading, refreshing} = useSelector (
     state => state.groups
   );
+  let _current_group_members = [...current_group_members, ...current_group_members, ...current_group_members]
   console.log ('LA   VAINA   JASJ  AJA ASKJASJDKAS');
   console.log (current_group_members);
 
@@ -57,7 +59,7 @@ const Members = () => {
       //     {title}
       //   </MyText>
         <Carousel
-          data={current_group_members}
+          data={_current_group_members}
           renderItem={_renderItem}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
