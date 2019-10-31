@@ -61,6 +61,7 @@ EventsStack.navigationOptions = {
   tabBarIcon: ({focused}) => (
     <TabBarIcon
       focused={focused}
+      focusedColor={theme.PRIMARY_COLOR}
       name={
         Platform.OS === 'ios'
           ? `ios-calendar-${focused ? '' : '-outline'}`
@@ -85,6 +86,7 @@ GroupsStack.navigationOptions = {
   tabBarIcon: ({focused}) => (
     <TabBarIcon
       focused={focused}
+      focusedColor={theme.PRIMARY_COLOR}
       name={Platform.OS === 'ios' ? 'ios-people' : 'md-people'}
     />
   ),
@@ -105,6 +107,7 @@ SettingsStack.navigationOptions = {
   tabBarIcon: ({focused}) => (
     <TabBarIcon
       focused={focused}
+      focusedColor={theme.PRIMARY_COLOR}
       name={Platform.OS === 'ios' ? 'ios-star' : 'md-star'}
     />
   ),
