@@ -147,14 +147,11 @@ const AppStack = createStackNavigator(
     },
     MyGroup: {
       screen: GroupTabNavigator,
-      // navigationOptions: {
-      //   title: 'W STEM',
-      //   headerTransparent: true,
-      //   headerStyle: {}
-      // }
       navigationOptions: {
-        header: null
-      },
+        title: 'GRUPO',
+        // headerTransparent: true,
+        // headerStyle: {}
+      }
     },
     EditProfile: {
       screen: EditProfileScreen,
