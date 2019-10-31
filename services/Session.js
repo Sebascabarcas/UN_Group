@@ -43,7 +43,7 @@ export async function updateUser(user, { skipLoading }) {
   // return Requests.put(``, user, { skipLoading }).then(user => user.data)
   console.log(user);
   let {secret} = await Storage.get('Session')
-  return fetch('${apiUrl}/UNGroup/API/users/update', {
+  return fetch(`${apiUrl}/UNGroup/API/users/update`, {
       method: 'PUT',
       body: user,
       headers: {

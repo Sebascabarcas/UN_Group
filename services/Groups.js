@@ -15,7 +15,7 @@ export async function getGroup(id, { skipLoading } = {}) {
 export async function createGroup(newGroup, { skipLoading } = {}) {
     // return Requests.post(`groups`, newGroup, { skipLoading, headers: {'Content-Type': 'multipart/form-data'}}).then(group => group.data)
     let {secret} = await Storage.get('Session')
-    return fetch('${apiUrl}/UNGroup/API/groups', {
+    return fetch(`${apiUrl}/UNGroup/API/groups`, {
         method: 'POST',
         body: newGroup,
         headers: {
