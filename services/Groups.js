@@ -32,35 +32,35 @@ export async function sendGroupMemberRequest(id, { skipLoading } = {}) {
 }
 
 export async function addMember(id, userID, { skipLoading } = {}) {
-    return Requests.put(`groups/${id}/addMember/${userID}`, { skipLoading }).then(group => group)
+    return Requests.put(`groups/${id}/addMember/${userID}`, { skipLoading }).then(group => group.data)
 }
 
 export async function acceptMember(id, userID, { skipLoading } = {}) {
-    return Requests.put(`groups/${id}/acceptCandidate/${userID}`, { skipLoading }).then(group => group)
+    return Requests.put(`groups/${id}/acceptCandidate/${userID}`, { skipLoading }).then(group => group.data)
 }
 
 export async function rejectMember(id, userID, { skipLoading } = {}) {
-    return Requests.put(`groups/${id}/rejectCandidate/${userID}`, { skipLoading }).then(group => group)
+    return Requests.put(`groups/${id}/rejectCandidate/${userID}`, { skipLoading }).then(group => group.data)
 }
 
 export async function increasePrivileges(id, userID, { skipLoading } = {}) {
-    return Requests.put(`groups/${id}/increasePrivileges/${userID}`, { skipLoading }).then(group => group)
+    return Requests.put(`groups/${id}/increasePrivileges/${userID}`, { skipLoading }).then(group => group.data)
 }
 
 export async function reducePrivileges(id, userID, { skipLoading } = {}) {
-    return Requests.put(`groups/${id}/reducePrivileges/${userID}`, { skipLoading }).then(group => group)
+    return Requests.put(`groups/${id}/reducePrivileges/${userID}`, { skipLoading }).then(group => group.data)
 }
 
 export async function addAdminMember(id, userID, { skipLoading } = {}) {
-    return Requests.post(`groups/${id}/addAsAdmin/${userID}`, { skipLoading }).then(group => group)
+    return Requests.post(`groups/${id}/addAsAdmin/${userID}`, { skipLoading }).then(group => group.data)
 }
 
 export async function leaveGroup(id, userID, { skipLoading } = {}) {
-    return Requests.delete(`groups/${id}/kick/${userID}`, { skipLoading }).then(group => group)
+    return Requests.delete(`groups/${id}/kick/${userID}`, { skipLoading }).then(group => group.data)
 }
 
 export async function kickGroupMember(id, { skipLoading } = {}) {
-    return Requests.delete(`groups/${id}/leave`, { skipLoading }).then(group => group)
+    return Requests.delete(`groups/${id}/leave`, { skipLoading }).then(group => group.data)
 }
 
 export async function getGroupMembers(id, { skipLoading } = {}) {
