@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, Image } from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator,
@@ -11,13 +11,14 @@ import WalletScreen from '../screens/Profile/WalletScreen';
 import GroupsScreen from '../screens/Groups/GroupsScreen';
 import CreateGroupScreen from '../screens/Groups/CreateGroupScreen';
 import AddCreditCardScreen from '../screens/Profile/AddCreditCardScreen';
-import EventsScreen from '../screens/Events/EventsScreen';
 import theme from '../styles/theme.style';
 import Solicitudes from '../screens/MyGroup/Solicitudes';
 import Members from '../screens/MyGroup/Members';
+import Events from '../screens/MyGroup/Events/Events';
+import GroupProfile from '../screens/MyGroup/GroupProfile';
 
 const GroupStack = createStackNavigator({
-  Events: EventsScreen,
+  GroupProfile: GroupProfile,
 }, { headerMode: "none" });
 
 GroupStack.navigationOptions = {
@@ -25,16 +26,16 @@ GroupStack.navigationOptions = {
   tabBarOptions: {
     showIcon: true,
     showLabel: false,
-    activeTintColor: theme.PRIMARY_COLOR
+    activeTintColor: 'white',
+    style: {
+      backgroundColor: theme.PRIMARY_COLOR,
+    }
   },
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-calendar-${focused ? '' : '-outline'}`
-          : 'md-calendar'
-      }
+    <Image
+      source={images['logo']}
+      fadeDuration={0}
+      style={{width: 26, height: 26}}
     />
   ),
 };
@@ -49,18 +50,22 @@ MembersStack.navigationOptions = {
   tabBarOptions: {
     showIcon: true,
     showLabel: false,
-    activeTintColor: theme.PRIMARY_COLOR
+    activeTintColor: 'white',
+    style: {
+      backgroundColor: theme.PRIMARY_COLOR,
+    }
   },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
+      focusedColor="white"
       name={Platform.OS === 'ios' ? 'ios-contacts' : 'md-contacts'}
     />
   ),
 };
 
 const EventsStack = createStackNavigator({
-  Settings: AddCreditCardScreen,
+  Events: Events,
 }, { headerMode: "none" });
 
 EventsStack.navigationOptions = {
@@ -68,12 +73,21 @@ EventsStack.navigationOptions = {
   tabBarOptions: {
     showIcon: true,
     showLabel: false,
-    activeTintColor: theme.PRIMARY_COLOR
+    activeTintColor: 'white',
+    style: {
+      backgroundColor: theme.PRIMARY_COLOR,
+    }
   },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-checkmark-circle${focused ? '' : '-outline'}` : `md-checkmark-circle${focused ? '' : '-outline'}`}
+      focusedColor="white"
+      name={
+        Platform.OS === 'ios'
+          ? `ios-calendar-${focused ? '' : '-outline'}`
+          : 'md-calendar'
+      }
+      // name={Platform.OS === 'ios' ? `ios-checkmark-circle${focused ? '' : '-outline'}` : `md-checkmark-circle${focused ? '' : '-outline'}`}
     />
   ),
 };
@@ -87,11 +101,15 @@ SolicitudesStack.navigationOptions = {
   tabBarOptions: {
     showIcon: true,
     showLabel: false,
-    activeTintColor: theme.PRIMARY_COLOR
+    activeTintColor: 'white',
+    style: {
+      backgroundColor: theme.PRIMARY_COLOR,
+    }
   },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
+      focusedColor="white"
       name={Platform.OS === 'ios' ? `ios-mail` : `md-mail`}
     />
   ),
