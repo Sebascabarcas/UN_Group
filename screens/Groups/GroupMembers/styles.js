@@ -8,14 +8,21 @@ import {
 export default StyleSheet.create({
 	container: {
 		backgroundColor: theme.GRAY_COLOR,
-		height: '100%',
-		width: '100%',
+		flex: 1,
 		// justifyContent: 'space-evenly',
 		// alignItems: 'center'
 	},
     scrollview: {
         flex: 1
     },
+    scrollviewContainer:{
+        flex: 1,
+        // alignContent: 'flex-end',
+        // flexGrow: 1,
+        justifyContent : 'center',
+        // justifyContent: 'space-around',
+        // alignItems: 'baseline',
+	},
 	// containerButtons:{
 	// 	flexDirection: 'column',
 	// 	justifyContent: 'center',
