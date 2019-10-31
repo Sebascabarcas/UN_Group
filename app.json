@@ -27,7 +27,7 @@
       "bundleIdentifier": "com.wstem.ungroup"
     },
     "android": {
-      "package": "com.wstem.ungroup",
+      "package": "com.wstem.ungroup"
     }
   }
 }
