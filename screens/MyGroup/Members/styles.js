@@ -12,9 +12,6 @@ export default StyleSheet.create({
 		backgroundColor: theme.GRAY_COLOR,
 		// height: '100%',
 		// width: '100%',
-        justifyContent: 'flex-end',
-        alignContent: 'flex-end',
-		alignItems: 'flex-end',
 	},
     scrollview: {
         // flex: 1,
