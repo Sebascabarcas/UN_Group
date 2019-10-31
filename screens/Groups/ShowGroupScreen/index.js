@@ -53,10 +53,10 @@ const ShowGroupScreen = () => {
       <Image
         resizeMode="cover"
         style={styles.imageCar}
-        source={{
+        source={
           // uri: 'https://www.indiacarnews.com/wp-content/uploads/2017/03/Renault-Duster-petrol-automatic-cvt-compressed.jpg',
-          uri: current_group.groupPictures > 0 ? `${apiUrl}${current_group.groupPictures.groupPictureName}` : 'https://www.indiacarnews.com/wp-content/uploads/2017/03/Renault-Duster-petrol-automatic-cvt-compressed.jpg',
-        }}
+          current_group.groupPictures ? {uri: `${apiUrl}${current_group.groupPictures.groupPictureName}`} : images['no-circle-photo']
+        }
       />
       <Button style={styles.arriveButton}>
         <MyText style={{textAlign: 'center'}} fontStyle="bold">
