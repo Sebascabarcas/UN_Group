@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   AsyncStorage,
   ActivityIndicator,
@@ -8,39 +8,32 @@ import {
 import styles from "./styles.js";
 import Storage from '../../services/Storage';
 import * as Permissions from 'expo-permissions';
+import {useDispatch} from 'react-redux';
 
-export default class AuthLoadingScreen extends React.Component {
-  constructor () {
-    super ();
-    this._bootstrapAsync ();
-  }
-
-  // Fetch the token from storage then navigate to our appropriate place
+export default AuthLoadingScreen = (props) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    _bootstrapAsync()
+  }, [dispatch])
+  // Fetch the token from storage then navigate to our appropriate places
   _bootstrapAsync = async () => {
     const sessionInfo = await Storage.get ('Session');
     console.log('Session Info: ', sessionInfo);
-    let {status} = await Permissions.getAsync (Permissions.LOCATION);
-    console.log(status)
-    this.props.navigation.navigate ('App');
+    // let {status} = await Permissions.getAsync (Permissions.LOCATION);
     if (sessionInfo) {
-      this.props.navigation.navigate('App');
-      // this.props.navigation.navigate (status === 'granted' ? 'App' : 'Intro');
+      dispatch({type: 'session/SET_STATE', payload: {current_user: sessionInfo.user}});
+      props.navigation.navigate('App');
+      // props.navigation.navigate (status === 'granted' ? 'App' : 'Intro');
     } else {
-      this.props.navigation.navigate ('Auth');
+      props.navigation.navigate ('Auth');
     }
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.z
-    /////////////////////////
-    
   };
 
   // Render any loading content that you like here
-  render () {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator />
-        <StatusBar barStyle="default" />
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator />
+      <StatusBar barStyle="default" />
+    </View>
+  );
 }

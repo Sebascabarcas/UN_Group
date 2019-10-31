@@ -24,7 +24,9 @@ import {
 import theme from '../../styles/theme.style';
 import {useDispatch, useSelector} from 'react-redux';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import getEnvVars from '../../environment.js';
 
+const { apiUrl } = getEnvVars();
 const WIDTH = Dimensions.get ('window').width;
 const HEIGHT = Dimensions.get ('window').height;
 
@@ -33,8 +35,10 @@ const MenuDrawer = () => {
   const dispatch = useDispatch()
   const {navigate} = navigationHooks.useNavigation ();
   const {current_user: user,  myGroups} = useSelector(state => state.session)
+  console.log(user);
   
-  useEffect (() => {
+  
+ /*  useEffect (() => {
     const fetchUserInfo = async () => {
       const sessionInfo = await Storage.get ('Session');
       if (!sessionInfo) return null
@@ -53,7 +57,7 @@ const MenuDrawer = () => {
     // setTimeout(() => {
     fetchUserInfo ();
     // }, 10000);
-  }, []);
+  }, []); */
 
   _signOutAsync = async () => {
     // await logout();
@@ -94,7 +98,7 @@ const MenuDrawer = () => {
         <View style={styles.profile}>
           <TouchableWithoutFeedback style={styles.imgView} onPress={() => navigate ('MyProfile')}>
             {/* <View style={styles.imgView}> */}
-              <Image style={styles.img} resizeMode="cover" source={user.profileImg ? images["123456789"] : images["no-profile-photo"]} />
+              <Image style={styles.img} resizeMode="cover" source={user.picture ? {uri: `${apiUrl}${user.picture.pictureName}`} : images["no-profile-photo"]} />
             {/* </View> */}
           </TouchableWithoutFeedback>
           <View style={styles.profileText}>
