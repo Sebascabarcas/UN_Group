@@ -14,6 +14,8 @@ export async function getGroup(id, { skipLoading } = {}) {
 
 export async function createGroup(newGroup, { skipLoading } = {}) {
     // return Requests.post(`groups`, newGroup, { skipLoading, headers: {'Content-Type': 'multipart/form-data'}}).then(group => group.data)
+    console.log('newGroup:', newGroup);
+    
     let {secret} = await Storage.get('Session')
     return fetch(`${apiUrl}/UNGroup/API/groups`, {
         method: 'POST',
@@ -35,6 +37,10 @@ export async function addMember(id, userID, { skipLoading } = {}) {
 
 export async function acceptMember(id, userID, { skipLoading } = {}) {
     return Requests.put(`groups/${id}/acceptCandidate/${userID}`, { skipLoading }).then(group => group)
+}
+
+export async function rejectMember(id, userID, { skipLoading } = {}) {
+    return Requests.put(`groups/${id}/rejectCandidate/${userID}`, { skipLoading }).then(group => group)
 }
 
 export async function increasePrivileges(id, userID, { skipLoading } = {}) {
