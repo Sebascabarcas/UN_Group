@@ -26,8 +26,7 @@ export function* CREATE_GROUP({ payload: { group, navigate, skipLoading } }) {
     navigate('Groups')
     console.log(success);
   } catch (error) {
-    console.log(error);
-    
+    console.log('CREATE_GROUP, ERROR:', error);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
     ToastAndroid.show ('Error creando grupo!', ToastAndroid.SHORT);
   }
@@ -55,7 +54,7 @@ export function* GET_GROUPS({skipLoading, concat}) {
       },
     })
   } catch (error) {
-    console.log(error);
+    console.log('GET_GROUPS, ERROR:', error);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -82,6 +81,7 @@ export function* GET_GROUP({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
+    console.log('GET_GROUP, ERROR:', error);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -108,6 +108,7 @@ export function* GET_GROUP_MEMBERS({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
+    console.log('GET_GROUP_MEMBERS, ERROR:', error);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -133,8 +134,8 @@ export function* GET_GROUP_CANDIDATES({ payload: { id, skipLoading } }) {
         current_group_requests: relations,
       }
     });
-    console.log(res);
   } catch (error) {
+    console.log('GET_GROUP_CANDIDATES, ERROR:', error);
     ToastAndroid.show ('Error en envío de solicitud de unión al grupo', ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
@@ -157,6 +158,7 @@ export function* SEND_GROUP_REQUEST({ payload: { id, skipLoading } }) {
     yield call(sendGroupMemberRequest, id, { skipLoading })
     ToastAndroid.show ('Solicitud de unión al grupo enviada!', ToastAndroid.SHORT);
   } catch (error) {
+    console.log('SEND_GROUP_REQUEST, ERROR:', error);
     ToastAndroid.show ('Error en envío de solicitud de unión al grupo', ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
@@ -179,7 +181,32 @@ export function* ACCEPT_GROUP_REQUEST({ payload: { id, userID, skipLoading } }) 
     yield call(acceptMember, id, userID, { skipLoading })
     ToastAndroid.show ('Solicitud de unión al grupo aceptada!', ToastAndroid.SHORT);
   } catch (error) {
-    ToastAndroid.show ('Error en envío de solicitud de unión al grupo', ToastAndroid.SHORT);
+    console.log('ACCEPT_GROUP_REQUEST, ERROR:', error);
+    ToastAndroid.show ('Error en aceptación de solicitud de unión al grupo', ToastAndroid.SHORT);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
+export function* REJECT_GROUP_REQUEST({ payload: { id, userID, skipLoading } }) {
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    yield call(rejectMember, id, userID, { skipLoading })
+    ToastAndroid.show ('Solicitud de unión al grupo rechazada!', ToastAndroid.SHORT);
+  } catch (error) {
+    console.log('REJECT_GROUP_REQUEST, ERROR:', error);
+    
+    ToastAndroid.show ('Error en rechazo de solicitud de unión al grupo', ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -197,6 +224,7 @@ export default function* rootSaga() {
     takeLatest(actions.GET_GROUP, GET_GROUP),
     takeLatest(actions.GET_GROUP_MEMBERS, GET_GROUP_MEMBERS),
     takeLatest(actions.SEND_GROUP_REQUEST, SEND_GROUP_REQUEST),
+    takeLatest(actions.REJECT_GROUP_REQUEST, REJECT_GROUP_REQUEST),
     takeLatest(actions.ACCEPT_GROUP_REQUEST, ACCEPT_GROUP_REQUEST),
     takeLatest(actions.GET_GROUP_CANDIDATES, GET_GROUP_CANDIDATES),
     // takeEvery(actions.GET_LOCATIONS, GET_LOCATIONS),
