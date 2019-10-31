@@ -89,10 +89,17 @@ Solicitudes = () => {
     })
   }
 
+  _rejectRequest = (request) => {
+    dispatch({
+      type: 'groups/REJECT_GROUP_REQUEST',
+      payload: {id: request.groupId, userID: request.user.id}
+    })
+  }
+
   _renderRequest = ({item: request, index}) => {
     return (
-      <CardGroupRequest name={`${request.user.firstName} ${request.user.lastName}`} username={request.user.username} 
-      onAccept={() => _acceptRequest(request)}
+      <CardGroupRequest name={`${request.user.firstName} ${request.user.lastName}`} image={request.user.picture} username={request.user.username} 
+      onAccept={() => _acceptRequest(request)} onReject={() => _rejectRequest(request)}
       //  onReject={}  
        />
     );
