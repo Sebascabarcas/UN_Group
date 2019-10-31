@@ -17,7 +17,7 @@ export default function fromJsonToFormData(obj, form, namespace, k) {
     if (obj[keys[i]] && typeof obj[keys[i]] === 'object' && (!(obj[keys[i]] instanceof File) && keys.indexOf('uri') === -1)) {
       fromJsonToFormData(obj[keys[i]], fd, formKey, Object.keys(obj[keys[i]]))
     } else {
-      fd.append(formKey, obj[keys[i]])
+      if (obj[keys[i]]) fd.append(formKey, obj[keys[i]])
     }
     //   }
   }

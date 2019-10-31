@@ -50,7 +50,7 @@ export async function updateUser(user, { skipLoading }) {
         'content-type': 'multipart/form-data',
         'authorization': `Bearer ${secret}`
       },
-    });
+    }).then(res => res.json());
 }
 
 export async function deleteUser(userID, { skipLoading }) {

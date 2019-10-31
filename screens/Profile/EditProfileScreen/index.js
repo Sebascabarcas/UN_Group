@@ -21,14 +21,18 @@ import Constants from 'expo-constants';
 import {USER_FACING_NOTIFICATIONS} from 'expo-permissions';
 import {useDispatch, useSelector} from 'react-redux';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import getEnvVars from '../../../environment';
 
 const WIDTH = Dimensions.get ('window').width;
 const HEIGHT = Dimensions.get ('window').height;
+const {apiUrl} = getEnvVars();
 const EditProfileScreen = () => {
   const {navigate} = navigationHooks.useNavigation ();
   const [loading, _setLoading] = useState (false);
   const [showImageModal, _setShowImageModal] = useState (false);
   const {current_user_edition: user} = useSelector (state => state.session)
+  console.log('EditProfileScreen user:', user);
+  
   const dispatch = useDispatch ();
 
   useEffect (() => {
@@ -62,10 +66,11 @@ const EditProfileScreen = () => {
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
       file = { type: match ? `image/${match[1]}` : `image`, filename, uri: localUri}
+      user.file = file
       console.log (file);
       dispatch ({
         type: 'session/SET_STATE',
-        payload: {current_user_edition: {...user, file}},
+        payload: {current_user_edition: user},
       });
     }
   };
@@ -87,9 +92,10 @@ const EditProfileScreen = () => {
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
       file.type = match ? `image/${match[1]}` : `image`;
+      user.file = file
       dispatch ({
         type: 'session/SET_STATE',
-        payload: {current_user_edition: {...user, file}},
+        payload: {current_user_edition: user},
       });
     }
   };
@@ -168,7 +174,7 @@ const EditProfileScreen = () => {
               style={styles.profileImg}
               source={
                 user.file
-                  ? {uri: user.file.uri}
+                  ? {uri: user.file.pictureName ? `${apiUrl}${user.file.pictureName}` : user.file.uri} 
                   : images['no-profile-photo']
               }
             >

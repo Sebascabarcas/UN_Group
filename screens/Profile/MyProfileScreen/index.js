@@ -19,7 +19,9 @@ import {Ionicons, FontAwesome} from '@expo/vector-icons';
 import EditProfileButton from '../../../components/EditProfileButton';
 import {updateUser} from '../../../services/Session';
 import {useSelector, useDispatch} from 'react-redux';
+import getEnvVars from '../../../environment';
 
+const { apiUrl } = getEnvVars();
 const WIDTH = Dimensions.get ('window').width;
 const HEIGHT = Dimensions.get ('window').height;
 const MyProfileScreen = () => {
@@ -72,7 +74,9 @@ const MyProfileScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.profileImgContainer}>
-        <Image style={styles.profileImg} source={user.profileImg ? images["123456789"] : images["no-profile-photo"]} />
+        <View style={styles.imgView}>
+          <Image style={styles.profileImg} source={user.picture ? {uri: `${apiUrl}${user.picture.pictureName}`} : images["no-profile-photo"]} />
+        </View>
         <MyText fontStyle="bold" style={styles.name}>{user.firstName} {user.lastName}</MyText>
         <MyText style={styles.role}> {user.username} </MyText>
       </View>

@@ -118,25 +118,27 @@ export function* UPDATE_PROFILE({payload}) {
     },
   });
   try {
+    const current_session = yield call (currentSession);
     var {user, skipLoading, navigate} = payload;
     user = fromJsonToFormData (user);
     // user.password = "123456" //Por motivos de pruebas
-    console.log (user);
-
-    const success = yield call (updateUser, user, {skipLoading});
-    console.log (success);
-    const user_edited = success;
-
+    const {user: user_edited} = yield call (updateUser, user, {skipLoading});
+    // console.log('User edited:', user_edited);
+    
+    current_session.user = {...current_session.user, ...user_edited}
+    yield call (
+      Storage.set,
+      'Session',
+      current_session,
+    );
     yield put ({
       type: 'session/SET_STATE',
       payload: {
         current_user: user_edited,
       },
     });
-
     ToastAndroid.show ('Usuario actualizado!', ToastAndroid.SHORT);
     navigate ('MyProfile');
-    console.log ('guardado');
   } catch (error) {
     console.log (error);
     ToastAndroid.show ('Error actualizando usuario', ToastAndroid.SHORT);
@@ -195,9 +197,7 @@ export function* CHANGE_CURRENT_GROUP({payload: {group, goBack}}) {
     yield call (
       Storage.set,
       'Session',
-      {
-        current_session,
-      },
+      current_session,
       () => {
         goBack ();
       }

@@ -23,7 +23,7 @@ export default StyleSheet.create ({
 		justifyContent: 'center',
 		// margin: 20,
 		elevation: 1,
-		// backgroundColor: 'red',
+		// backgroundColor: 'white',
 		borderColor: 'transparent',
 		borderBottomWidth: 1,
 		flex: 0.5,
@@ -39,6 +39,9 @@ export default StyleSheet.create ({
 		// marginBottom: 15,
 		height: 125,
 		width: 125,
+        borderColor: theme.GRAY_COLOR,
+        borderWidth: 2,
+        overflow: 'hidden'
 		// justifyContent: 'space-between'
 	},
 	name: {
