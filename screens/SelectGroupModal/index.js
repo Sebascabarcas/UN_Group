@@ -1,18 +1,20 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useNavigation} from 'react-navigation-hooks';
 import {Ionicons} from '@expo/vector-icons';
-import theme from '../../styles/theme.style';
 // import {Divider, Button} from 'react-native-elements';
 import {Button, CheckBox} from 'native-base';
 import {View, Dimensions, Image} from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import {useSelector, useDispatch} from 'react-redux';
+import theme from '../../styles/theme.style';
 import styles from './styles.js';
 import MyText from '../../components/MyText';
-import {useSelector, useDispatch} from 'react-redux';
 import BigListItem from '../../components/BigListItem/index.js';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import getEnvVars from '../../environment';
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyCWPrODz1hIw-3g2gX94dTJTspvq768GOw';
 const {width, height} = Dimensions.get ('window');
+const { apiUrl } = getEnvVars();
 
 export default SelectGroupModal = () => {
   const {goBack} = useNavigation ();
@@ -42,7 +44,7 @@ export default SelectGroupModal = () => {
             (<BigListItem key={group.id}
             leftItem={
                 <TouchableWithoutFeedback style={styles.imgView} onPress={() => selectGroup(group)}>
-                    <Image style={styles.img} resizeMode="cover" source={{uri: `${apiUrl}${group.groupPicture.groupPictureName}`}}/>
+                    <Image style={styles.img} resizeMode="cover" source={ group.groupPicture ? {uri: `${apiUrl}${group.groupPicture.groupPictureName}`} : images['no-circle-photo']}/>
                 </TouchableWithoutFeedback>
                 }
                 primaryText={group.groupName}
