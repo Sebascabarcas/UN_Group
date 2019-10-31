@@ -23,11 +23,12 @@ export function* LOGIN({payload}) {
     },
   });
   try {
-    const {token} = yield call (login, auth, {skipLoading});
+    let {token, groups, relations} = yield call (login, auth, {skipLoading});
     console.log (token);
+    console.log (groups);
     // const {secret, tokenable_id: user_id, tokenable_type: role} = success
-    const {user} = jwt_decode (token);
-    // console.log(jwt_result);
+    let {user, user: {isSuperAdmin, userGroupRelations}} = jwt_decode (token);
+    console.log('token Decoded:', jwt_decode (token));
 
     // console.log(secret,
     //   user_id,
@@ -41,21 +42,22 @@ export function* LOGIN({payload}) {
     //   },
     // })
     // console.log(storeSession);
-    const payload = {
-      current_user: user,
-      isSuperAdmin: user.isSuperAdmin,
-      myGroups: user.userGroupRelations,
-    };
-    user.userGroupRelations = user.userGroupRelations.map (
-      groupRelation => groupRelation.group
-    );
-    if (user.userGroupRelations.length > 0) {
-      payload.current_group = user.userGroupRelations[0];
-      user.current_group = payload.current_group;
+    let current_group = null
+    if (relations) {
+      relations = relations.map (
+        groupRelation => groupRelation.group
+      );
+      current_group = relations[0];
     }
+    if (groups) current_group = groups[0];
     yield put ({
       type: 'session/SET_STATE',
-      payload,
+      payload: {
+        current_user: user,
+        isSuperAdmin: isSuperAdmin,
+        myGroups: isSuperAdmin ?  groups : userGroupRelations,
+        current_group
+      }
     });
     yield call (
       Storage.set,
@@ -63,6 +65,8 @@ export function* LOGIN({payload}) {
       {
         secret: token,
         user,
+        groups: isSuperAdmin ? groups : userGroupRelations ,
+        current_group
       },
       () => navigate ('Home')
     );
@@ -187,7 +191,7 @@ export function* CHANGE_CURRENT_GROUP({payload: {group, goBack}}) {
   });
   const current_session = yield call (currentSession);
   if (current_session) {
-    current_session.user.current_group = group;
+    current_session.current_group = group;
     yield put ({
       type: 'session/SET_STATE',
       payload: {
@@ -218,15 +222,15 @@ export function* LOAD_CURRENT_ACCOUNT () {
       loading: true,
     },
   });
-  const current_user = yield call (currentAccount);
+  const current_session = yield call (currentSession);
   // console.log('El usuario', current_user);
 
-  if (current_user) {
-    let {isSuperAdmin, userGroupRelations: myGroups, current_group} = current_user;
+  if (current_session) {
+    let {user: current_user, user: {isSuperAdmin}, groups, current_group} = current_session;
     const payload = {
       current_user,
       isSuperAdmin,
-      myGroups,
+      myGroups: groups,
     };
     if (current_group) payload.current_group = current_group;
     yield put ({
@@ -248,6 +252,7 @@ export default function* rootSaga () {
     takeLatest (actions.REGISTER, REGISTER),
     takeLatest (actions.UPDATE_PROFILE, UPDATE_PROFILE),
     takeLatest (actions.LOGOUT, LOGOUT),
+    takeLatest (actions.CHANGE_CURRENT_GROUP, CHANGE_CURRENT_GROUP),
     // takeEvery(actions.LOAD_CURRENT_ACCOUNT, LOAD_CURRENT_ACCOUNT),
     // takeEvery(actions.UNAUTH_USER, UNAUTH_USER),
     LOAD_CURRENT_ACCOUNT (),
