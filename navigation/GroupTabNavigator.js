@@ -16,6 +16,7 @@ import Solicitudes from '../screens/MyGroup/Solicitudes';
 import Members from '../screens/MyGroup/Members';
 import Events from '../screens/MyGroup/Events/Events';
 import GroupProfile from '../screens/MyGroup/GroupProfile';
+import Member from '../screens/MyGroup/Member';
 
 const GroupStack = createStackNavigator({
   GroupProfile: GroupProfile,
@@ -42,6 +43,7 @@ GroupStack.navigationOptions = {
 
 const MembersStack = createStackNavigator({
   Groups: Members,
+  Member: Member
   
 }, { headerMode: "none" });
 
