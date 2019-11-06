@@ -10,11 +10,22 @@ const initialState = {
 }
 
 export default function sessionReducer(state = initialState, action) {
-  switch (action.type) {
+  const {type, payload} = action
+  switch (type) {
     case actions.RESET_APP:
       return initialState
     case actions.SET_STATE:
-      return { ...state, ...action.payload }
+      return { ...state, ...payload }
+    case actions.DELETE_ARRAY_ELEMENT: {
+        const newArray = state[`${payload.arrayName}`].filter((element, i) => i !== payload.index)
+        state[`${payload.arrayName}`] = newArray
+        return state
+      }
+    case actions.ADD_ARRAY_ELEMENT: {
+        const newArray = state[`${payload.arrayName}`].concat(payload.newElement)
+        state[`${payload.arrayName}`] = newArray
+        return state
+      }
     default:
       return state
   }
