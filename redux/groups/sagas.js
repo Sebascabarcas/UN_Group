@@ -54,8 +54,10 @@ export function* GET_GROUPS({skipLoading, concat}) {
   try {
     const {groups} = yield call(getGroups, { skipLoading })
     yield put({
-      type: `groups/${concat ? 'CONCAT_GROUPS' : 'SET_STATE' }`,
+      type: `groups/${concat ? 'ADD_ARRAY_ELEMENT' : 'SET_STATE' }`,
       payload: {
+        arrayName: 'groups',
+        newElement: groups,
         groups
       },
     })
