@@ -1,6 +1,6 @@
 import { put, call, all, takeEvery, takeLatest } from 'redux-saga/effects'
 import {
-  createGroup, getGroups, getGroup, getGroupMembers, sendGroupMemberRequest, getGroupCandidates, acceptMember
+  createGroup, getGroups, getGroup, getGroupMembers, sendGroupMemberRequest, getGroupCandidates, acceptMember, kickGroupMember, increasePrivileges, reducePrivileges
 } from '../../services/Groups'
 import {ToastAndroid} from 'react-native'
 import actions from './actions'
@@ -19,9 +19,15 @@ export function* CREATE_GROUP({ payload: { group, navigate, skipLoading } }) {
     group = fromJsonToFormData(group)
     console.log(group);
     
-    const success = yield call(createGroup, group, {skipLoading});
+    const {group: new_group} = yield call(createGroup, group, {skipLoading});
     console.log(success);
-    
+    yield put({
+      type: 'groups/ADD_ARRAY_ELEMENT',
+      payload: {
+        arrayName: 'groups',
+        newElement: new_group
+      },
+    })
     ToastAndroid.show ('Grupo creado correctamente!', ToastAndroid.SHORT);
     navigate('Groups')
     console.log(success);
@@ -170,7 +176,53 @@ export function* SEND_GROUP_REQUEST({ payload: { id, skipLoading } }) {
   })
 }
 
-export function* ACCEPT_GROUP_REQUEST({ payload: { id, userID, skipLoading } }) {
+export function* INCREASE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    yield call(increasePrivileges, id, userID, { skipLoading })
+    ToastAndroid.show ('Incremento de privilegios!', ToastAndroid.SHORT);
+  } catch (error) {
+    console.log('ACCEPT_GROUP_REQUEST, ERROR:', error);
+    ToastAndroid.show ('Error en incrementación de privilegios', ToastAndroid.SHORT);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
+export function* REDUCE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    yield call(reducePrivileges, id, userID, { skipLoading })
+    ToastAndroid.show ('Incremento de privilegios!', ToastAndroid.SHORT);
+  } catch (error) {
+    console.log('REDUCE_PRIVILEGES, ERROR:', error);
+    ToastAndroid.show ('Error en incrementación de privilegios', ToastAndroid.SHORT);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
+export function* ACCEPT_GROUP_REQUEST({ payload: { id, index, userID, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
     payload: {
@@ -179,6 +231,13 @@ export function* ACCEPT_GROUP_REQUEST({ payload: { id, userID, skipLoading } }) 
   })
   try {
     yield call(acceptMember, id, userID, { skipLoading })
+    yield put({
+      type: 'groups/DELETE_ARRAY_ELEMENT',
+      payload: {
+        index,
+        arrayName: 'current_group_requests'
+      },
+    })
     ToastAndroid.show ('Solicitud de unión al grupo aceptada!', ToastAndroid.SHORT);
   } catch (error) {
     console.log('ACCEPT_GROUP_REQUEST, ERROR:', error);
@@ -193,7 +252,7 @@ export function* ACCEPT_GROUP_REQUEST({ payload: { id, userID, skipLoading } }) 
   })
 }
 
-export function* REJECT_GROUP_REQUEST({ payload: { id, userID, skipLoading } }) {
+export function* REJECT_GROUP_REQUEST({ payload: { id, index, userID, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
     payload: {
@@ -202,11 +261,48 @@ export function* REJECT_GROUP_REQUEST({ payload: { id, userID, skipLoading } }) 
   })
   try {
     yield call(rejectMember, id, userID, { skipLoading })
+    yield put({
+      type: 'groups/DELETE_ARRAY_ELEMENT',
+      payload: {
+        index,
+        arrayName: 'current_group_requests'
+      },
+    })
     ToastAndroid.show ('Solicitud de unión al grupo rechazada!', ToastAndroid.SHORT);
   } catch (error) {
     console.log('REJECT_GROUP_REQUEST, ERROR:', error);
     
     ToastAndroid.show ('Error en rechazo de solicitud de unión al grupo', ToastAndroid.SHORT);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
+export function* DELETE_GROUP_MEMBER({ payload: { id, index, userID, skipLoading } }) {
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    yield call(kickGroupMember, id, userID, { skipLoading })
+    yield put({
+      type: 'groups/DELETE_ARRAY_ELEMENT',
+      payload: {
+        index,
+        arrayName: 'current_group_members'
+      },
+    })
+    ToastAndroid.show ('Miembro eliminado del grupo!', ToastAndroid.SHORT);
+  } catch (error) {
+    console.log('DELETE_GROUP_MEMBER, ERROR:', error);
+    ToastAndroid.show ('Error en eliminación de miemrbo del grupo', ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -224,9 +320,12 @@ export default function* rootSaga() {
     takeLatest(actions.GET_GROUP, GET_GROUP),
     takeLatest(actions.GET_GROUP_MEMBERS, GET_GROUP_MEMBERS),
     takeLatest(actions.SEND_GROUP_REQUEST, SEND_GROUP_REQUEST),
+    takeLatest(actions.INCREASE_PRIVILEGES, INCREASE_PRIVILEGES),
+    takeLatest(actions.REDUCE_PRIVILEGES, REDUCE_PRIVILEGES),
     takeLatest(actions.REJECT_GROUP_REQUEST, REJECT_GROUP_REQUEST),
     takeLatest(actions.ACCEPT_GROUP_REQUEST, ACCEPT_GROUP_REQUEST),
     takeLatest(actions.GET_GROUP_CANDIDATES, GET_GROUP_CANDIDATES),
+    takeLatest(actions.DELETE_GROUP_MEMBER, DELETE_GROUP_MEMBER),
     // takeEvery(actions.GET_LOCATIONS, GET_LOCATIONS),
     // takeEvery(actions.GET_LOCATION, GET_LOCATION),
     // takeEvery(actions.UPDATE_LOCATION, UPDATE_LOCATION),

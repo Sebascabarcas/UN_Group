@@ -6,27 +6,35 @@ const initialState = {
   groups: [],
   current_group: {groupPictures: []},
   current_group_members: [],
+  current_group_member: {},
+  current_group_requests: [],
   new_group: {},
   more_pages: false,
 }
 
 export default function groupsReducer(state = initialState, action) {
-  switch (action.type) {
+  const {type, payload} = action
+  switch (type) {
     case actions.RESET_APP:
       return initialState
     case actions.CONCAT_GROUPS: {
-      const groups = state.groups.concat(action.payload.groups)
+      const groups = state.groups.concat(payload.groups)
       state.groups = groups
       return state
     }
-    // case actions.POP_LOCATION: {
-    //   const locations = state.locations.filter((location, i) => i !== action.payload.index)
-    //   state.locations = locations
-    //   return state
-    // }
+    case actions.DELETE_ARRAY_ELEMENT: {
+      const newArray = state[`${payload.arrayName}`].filter((element, i) => i !== payload.index)
+      state[`${payload.arrayName}`] = newArray
+      return state
+    }
+    case actions.ADD_ARRAY_ELEMENT: {
+      const newArray = state[`${payload.arrayName}`].concat(payload.newElement)
+      state[`${payload.arrayName}`] = newArray
+      return state
+    }
     case actions.SET_STATE:
-      // console.log({ ...state, ...action.payload })
-      return { ...state, ...action.payload }
+      // console.log({ ...state, ...payload })
+      return { ...state, ...payload }
     default:
       return state
   }
