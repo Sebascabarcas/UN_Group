@@ -37,6 +37,7 @@
     "react-native-maps": "^0.24.2",
     "react-native-modal-datetime-picker": "^7.4.2",
     "react-native-picker-select": "^6.2.0",
+    "react-native-raw-bottom-sheet": "^2.0.5",
     "react-native-reanimated": "^1.0.1",
     "react-native-responsive-screen": "^1.2.2",
     "react-native-search-header": "^0.3.2",
