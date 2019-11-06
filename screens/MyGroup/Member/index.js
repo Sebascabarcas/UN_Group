@@ -1,30 +1,38 @@
-import React, {useEffect, useState} from 'react';
-import {View, Dimensions, ScrollView, Image} from 'react-native';
-import {useNavigation} from 'react-navigation-hooks';
-import styles from './styles';
-import {useDispatch, useSelector} from 'react-redux';
-import Carousel from 'react-native-snap-carousel';
-import SliderEntry from '../../../components/SliderEntry/index.js';
+import React, {useEffect, useState, useRef} from 'react';
 import {
-  sliderWidth,
-  itemWidth,
-} from '../../../components/SliderEntry/styles.js';
+  View,
+  Dimensions,
+  ScrollView,
+  Image,
+  ImageBackground,
+} from 'react-native';
+import {Button, Switch} from 'native-base';
+import {useNavigation} from 'react-navigation-hooks';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import {useDispatch, useSelector} from 'react-redux';
 import getEnvVars from '../../../environment.js';
 import MyText from '../../../components/MyText';
-const { apiUrl } = getEnvVars();
+import Images from '../../../constants/Images';
+import styles from './styles';
+
+const {apiUrl} = getEnvVars ();
 const {height: fullHeight} = Dimensions.get ('window');
 
 const Member = () => {
-  const {current_group} = useSelector (state => state.session);
-  const {current_group_member, more_pages, loading, refreshing} = useSelector (
-    state => state.groups
-  );
-  console.log (current_group_member);
+  const _RBSheetRef = useRef (null);
+  const {current_group: {id: groupId}} = useSelector (state => state.session);
+  const {
+    current_group_member: {user, isAdmin},
+    more_pages,
+    loading,
+    refreshing,
+  } = useSelector (state => state.groups);
+  console.log ('current_group_member:', user);
 
   const dispatch = useDispatch ();
   const {navigate, getParam} = useNavigation ();
 
-/*   useEffect (
+  /*   useEffect (
     () => {
       dispatch ({
         type: 'groups/GET_GROUP_MEMBERS',
@@ -34,29 +42,114 @@ const Member = () => {
     [dispatch]
   ); */
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.containerProfileImage}>
-        <Image/>
-        <MyText></MyText>
+  const BottomSheetComponent = () => (
+    <View>
+      <View style={{alignItems: 'center'}}>
+        <MyText fontStyle="bold">Acciones</MyText>
       </View>
-      <View style={styles.containerUsername}>
-        <MyText></MyText>
+      <View
+        style={{...styles.containerBottomAction, ...{flexDirection: 'row'}}}
+      >
+        <MyText>Admin</MyText>
+        <Switch onChange={() => 
+            dispatch({
+              type: 'groups/INCREASE_PRIVILEGES',
+              payload: {id: groupId, userID: user.id}
+            })} 
+            value={isAdmin} 
+            />
       </View>
-      <View style={styles.containerSecondaryInfo}>
-        <View style={styles.secondaryInfo}>
-          <MyText style={styles.secondaryInfoTitle}></MyText>
-          <MyText style={styles.secondaryInfoText}></MyText>
-        </View>
+      <View style={styles.containerBottomAction}>
+        <Button
+          onPress={() => {
+            dispatch({
+              type: 'groups/DELETE_GROUP_MEMBER',
+              payload: {}
+            })
+          }}
+          full
+        >
+          <MyText>Eliminar del Grupo</MyText>
+        </Button>
       </View>
     </View>
+  );
+
+
+  return (
+    <ImageBackground source={Images['abstractgradient4']} style={{flex: 1}}>
+      <View style={styles.container}>
+        <View style={styles.containerProfileImg}>
+          <Image
+            style={styles.profileImg}
+            resizeMode="cover"
+            source={
+              user.picture
+                ? {uri: `${apiUrl}${user.picture.pictureName}`}
+                : images['no-profile-photo']
+            }
+          />
+          <MyText fontStyle="bold" style={styles.memberName}>
+            {user.firstName} {user.lastName}
+          </MyText>
+        </View>
+        <View style={styles.containerUsername}>
+          <MyText fontStyle="bold" style={styles.usernameText}>
+            {user.username}{' '}
+          </MyText>
+          <MyText fontStyle="semibold" style={styles.secondaryInfoTitle}>
+            Usuario
+          </MyText>
+        </View>
+        <View style={styles.containerSecondaryInfo}>
+          <View style={styles.secondaryInfo}>
+            <MyText fontStyle="semibold" style={styles.secondaryInfoTitle}>
+              Género
+            </MyText>
+            <MyText fontStyle="bold" style={styles.secondaryInfoText}>
+              {user.gender === 'male' ? 'Masculino' : 'Femenino'}
+            </MyText>
+          </View>
+          <View style={styles.secondaryInfo}>
+            <MyText fontStyle="semibold" style={styles.secondaryInfoTitle}>
+              Correo
+            </MyText>
+            <MyText fontStyle="bold" style={styles.secondaryInfoText}>
+              {user.email}
+            </MyText>
+          </View>
+        </View>
+        <Button
+          onPress={() => {
+            _RBSheetRef.current.open ();
+          }}
+        >
+          <MyText>Abreme</MyText>
+        </Button>
+        <RBSheet
+          ref={_RBSheetRef}
+          height={150}
+          duration={250}
+          customStyles={{
+            container: {
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+              padding: 20,
+              // justifyContent: "center",
+            },
+          }}
+        >
+          <BottomSheetComponent/>
+        </RBSheet>
+      </View>
+    </ImageBackground>
   );
 };
 
 Member.navigationOptions = ({navigation}) => {
   return {
     // title: '',
-    header: null,
+    // header: null,
     // headerLeft: (
     //   <Button
     //     // block
