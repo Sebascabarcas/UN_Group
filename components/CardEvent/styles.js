@@ -7,6 +7,7 @@ import {
 
 export default StyleSheet.create({
 	container: {
+		borderRadius: 20,
 		width: '100%',
 		backgroundColor: theme.COMPLEMENTARY_COLOR,
 	},
@@ -66,12 +67,14 @@ export default StyleSheet.create({
 		height: 20,
 		justifyContent: 'center',
 		alignItems: 'center',
+		flexDirection: 'row',
 		backgroundColor: theme.PRIMARY_COLOR,
 		marginLeft: 5,
 	},
 	badgeItemGray:{
 		padding: 0,
 		height: 20,
+		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: theme.GRAY_COLOR,
@@ -90,8 +93,6 @@ export default StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'flex-start',
-		borderBottomWidth: 1,
-		borderColor: '#EFEFF4'
 	},
 	labelEvent: {
 		marginLeft: wp(3),

@@ -8,6 +8,7 @@ import {
 export default StyleSheet.create({
 	container: {
 		width: '100%',
+		borderRadius: 20,
 		backgroundColor: theme.COMPLEMENTARY_COLOR,
 	},
 	dataContainer:{
@@ -85,8 +86,6 @@ export default StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'flex-start',
-		borderBottomWidth: 1,
-		borderColor: '#EFEFF4'
 	},
 	labelGroup: {
 		marginLeft: wp(3),

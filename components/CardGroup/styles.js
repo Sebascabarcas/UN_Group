@@ -7,9 +7,10 @@ import theme from '../../styles/theme.style';
 
 export default StyleSheet.create({
     container:{
-        width: '90%',
+        width: '100%',
         height: hp(30),
         justifyContent: 'center',
+        borderRadius: 20,
         alignItems: 'center',
         alignSelf: 'center'
     },

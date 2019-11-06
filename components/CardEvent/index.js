@@ -2,8 +2,10 @@ import React from 'react'
 import styles from './styles.js'
 import {View, Image} from 'react-native'
 import {Badge, Card} from 'native-base'
+import {AntDesign, Ionicons} from '@expo/vector-icons'
 import MyText from '../MyText';
 import Images from '../../constants/Images.js';
+import theme from '../../styles/theme.style.js'
 
 const CardEvent = ({ name, time, date, groupName, price, distance, source, description}) => {
 	return(
@@ -21,9 +23,19 @@ const CardEvent = ({ name, time, date, groupName, price, distance, source, descr
 								<MyText fontStyle="semibold" style={styles.textTime}>{groupName}</MyText>
 							</Badge>
 							<Badge style={styles.badgeItemGray}>
+								{/* <AntDesign
+									name="calendar"
+									color={theme.COMPLEMENTARY_COLOR}
+									size={theme.ICON_SIZE_SUPER_EXTRA_SMALL}
+								/> */}
 								<MyText fontStyle="semibold" style={styles.textTime}>{date}</MyText>
 							</Badge>
 							<Badge style={styles.badgeItemBlue}>
+								{/* <AntDesign
+									name="clockcircle"
+									color={theme.COMPLEMENTARY_COLOR}
+									size={theme.ICON_SIZE_SUPER_EXTRA_SMALL}
+								/> */}
 								<MyText fontStyle="semibold" style={styles.textTime}>{time}</MyText>
 							</Badge>
 						</View>
