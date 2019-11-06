@@ -8,7 +8,7 @@ import { combineReducers } from 'redux'
 // import offices from './offices/reducers'
 // import extras from './extras/reducers'
 import session from './session/reducers'
-import location from './location/reducers'
+import events from './events/reducers'
 import groups from './groups/reducers'
 
 export default
@@ -22,6 +22,6 @@ export default
     // steps,
     // offices,
     // extras,
-    location,
+    events,
     groups,
   })
