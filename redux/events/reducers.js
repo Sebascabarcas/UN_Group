@@ -1,6 +1,9 @@
 import actions from './actions'
 
 const initialState = {
+  current_event: {},
+  current_event_invitations: [],
+  events: []
 }
 
 export default function eventsReducer(state = initialState, action) {
