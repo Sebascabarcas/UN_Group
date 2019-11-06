@@ -24,7 +24,7 @@ export async function createGroup(newGroup, { skipLoading } = {}) {
           'content-type': 'multipart/form-data',
           'authorization': `Bearer ${secret}`
         },
-      });
+      }).then(res => res.json());
 }
 
 export async function sendGroupMemberRequest(id, { skipLoading } = {}) {
@@ -55,11 +55,11 @@ export async function addAdminMember(id, userID, { skipLoading } = {}) {
     return Requests.post(`groups/${id}/addAsAdmin/${userID}`, { skipLoading }).then(group => group.data)
 }
 
-export async function leaveGroup(id, userID, { skipLoading } = {}) {
+export async function kickGroupMember(id, userID, { skipLoading } = {}) {
     return Requests.delete(`groups/${id}/kick/${userID}`, { skipLoading }).then(group => group.data)
 }
 
-export async function kickGroupMember(id, { skipLoading } = {}) {
+export async function leaveGroup(id, { skipLoading } = {}) {
     return Requests.delete(`groups/${id}/leave`, { skipLoading }).then(group => group.data)
 }
 
