@@ -9,12 +9,15 @@ import {
   // Picker,
   FlatList,
 } from 'react-native';
+import {AntDesign} from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import { Divider} from 'react-native-elements';
+import { Fab } from 'native-base';
 import styles from './styles.js';
 import MyText from '../../../../components/MyText';
 import CardEvent from '../../../../components/CardEvent/index.js';
 import Images from '../../../../constants/Images.js';
+import theme from '../../../../styles/theme.style.js';
 
 const {height: fullHeight} = Dimensions.get ('window');
 
@@ -145,6 +148,13 @@ Events = () => {
           onEndReachedThreshold={0.2}
         /> */}
         <CardEvent name="Evento 1" time="04:20 PM" date="04/02/19" groupName="W-STEM" source="Soledad" description="Breve descripción" />
+        <Fab
+            direction="up"
+            style={{ backgroundColor: theme.PRIMARY_COLOR }}
+            position="bottomRight"
+            onPress={() => navigate("CreateEvent")}>
+            <AntDesign name="plus" />
+        </Fab>
       </View>
     </View>
     </ImageBackground>
