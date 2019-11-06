@@ -248,11 +248,11 @@ export function* LOAD_CURRENT_ACCOUNT () {
 
 export default function* rootSaga () {
   yield all ([
+    takeLatest (actions.CHANGE_CURRENT_GROUP, CHANGE_CURRENT_GROUP),
     takeLatest (actions.LOGIN, LOGIN),
+    takeLatest (actions.LOGOUT, LOGOUT),
     takeLatest (actions.REGISTER, REGISTER),
     takeLatest (actions.UPDATE_PROFILE, UPDATE_PROFILE),
-    takeLatest (actions.LOGOUT, LOGOUT),
-    takeLatest (actions.CHANGE_CURRENT_GROUP, CHANGE_CURRENT_GROUP),
     // takeEvery(actions.LOAD_CURRENT_ACCOUNT, LOAD_CURRENT_ACCOUNT),
     // takeEvery(actions.UNAUTH_USER, UNAUTH_USER),
     LOAD_CURRENT_ACCOUNT (),

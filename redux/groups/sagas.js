@@ -315,17 +315,17 @@ export function* DELETE_GROUP_MEMBER({ payload: { id, index, userID, skipLoading
 
 export default function* rootSaga() {
   yield all([
+    takeLatest(actions.ACCEPT_GROUP_REQUEST, ACCEPT_GROUP_REQUEST),
     takeLatest(actions.CREATE_GROUP, CREATE_GROUP),
+    takeLatest(actions.DELETE_GROUP_MEMBER, DELETE_GROUP_MEMBER),
     takeLatest(actions.GET_GROUPS, GET_GROUPS),
     takeLatest(actions.GET_GROUP, GET_GROUP),
     takeLatest(actions.GET_GROUP_MEMBERS, GET_GROUP_MEMBERS),
-    takeLatest(actions.SEND_GROUP_REQUEST, SEND_GROUP_REQUEST),
+    takeLatest(actions.GET_GROUP_CANDIDATES, GET_GROUP_CANDIDATES),
     takeLatest(actions.INCREASE_PRIVILEGES, INCREASE_PRIVILEGES),
     takeLatest(actions.REDUCE_PRIVILEGES, REDUCE_PRIVILEGES),
     takeLatest(actions.REJECT_GROUP_REQUEST, REJECT_GROUP_REQUEST),
-    takeLatest(actions.ACCEPT_GROUP_REQUEST, ACCEPT_GROUP_REQUEST),
-    takeLatest(actions.GET_GROUP_CANDIDATES, GET_GROUP_CANDIDATES),
-    takeLatest(actions.DELETE_GROUP_MEMBER, DELETE_GROUP_MEMBER),
+    takeLatest(actions.SEND_GROUP_REQUEST, SEND_GROUP_REQUEST),
     // takeEvery(actions.GET_LOCATIONS, GET_LOCATIONS),
     // takeEvery(actions.GET_LOCATION, GET_LOCATION),
     // takeEvery(actions.UPDATE_LOCATION, UPDATE_LOCATION),

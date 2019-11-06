@@ -1,6 +1,8 @@
 const actions = {
   RESET_APP: 'RESET_APP',
   SET_STATE: 'session/SET_STATE',
+  ADD_ARRAY_ELEMENT: 'session/ADD_ARRAY_ELEMENT',
+  DELETE_ARRAY_ELEMENT: 'session/DELETE_ARRAY_ELEMENT',
   LOGIN: 'session/LOGIN',
   UPDATE_PROFILE: 'session/UPDATE_PROFILE',
   REGISTER: 'session/REGISTER',
