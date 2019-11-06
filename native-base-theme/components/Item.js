@@ -56,6 +56,7 @@ export default (variables /* : * */ = variable) => {
         right: null,
         paddingTop: 5,
         alignSelf: 'flex-start',
+        color: theme.GRAY_COLOR2,
         fontSize: variables.inputFontSize - 2
       },
       'NativeBase.Icon': {
@@ -76,7 +77,8 @@ export default (variables /* : * */ = variable) => {
         }
       },
       flexDirection: null,
-      minHeight: variables.inputHeightBase + 15
+      minHeight: variables.inputHeightBase + 15,
+      borderColor: theme.GRAY_COLOR2
     },
     '.stackedLabelRoundedInput': {
       'NativeBase.Label': {

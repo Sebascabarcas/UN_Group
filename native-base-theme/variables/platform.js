@@ -235,12 +235,12 @@ export default {
   // InputGroup
   // inputFontSize: theme.FONT_SIZE_LARGE,
   inputFontSize: 17,
-  inputBorderColor: '#D9D5DC',
+  inputBorderColor: theme.GRAY_COLOR,
   inputSuccessBorderColor: '#2b8339',
   inputWhiteBorderColor: '#FFF',
   inputBlackTextColor: '#030303',
-  inputGrayBorderColor: '#e0e0e0',
-  inputGrayPlaceholderColor: '#BEC2CE',
+  inputGrayBorderColor: '#000',
+  inputGrayPlaceholderColor: '#000',
   inputErrorBorderColor: '#ed2f2f',
   inputHeightBase: theme.INPUT_HEIGHT_BASE,
   get inputColor() {
