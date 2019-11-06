@@ -25,13 +25,23 @@ const Members = () => {
   const dispatch = useDispatch ();
   const {navigate, getParam} = useNavigation ();
 
+  const _onPressMember = (member) => {
+    dispatch({
+      type: 'groups/SET_STATE',
+      payload: {
+        current_group_member: member
+      }
+    })
+    navigate('Member');
+  }
+
   const _renderItem = ({item, index}) => {
     const {user} = item;
     return <SliderEntry data={{
       title: `${user.firstName} ${user.lastName}`,
       subtitle: user.isAdmin ? 'Administrador' : 'Miembro',
-      illustration: user.picture ? `${apiUrl}${user.picture.pictureName}` : 'https://i.imgur.com/SsJmZ9jl.jpg',
-    }} even={(index + 1) % 2 === 0} />;
+      illustration: user.picture ? `${apiUrl}${user.picture.pictureName}` : 'https://i.imgur.com/SsJmZ9jl.jpg'
+    }} even={(index + 1) % 2 === 0} onPress={() => _onPressMember(item)} />;
   };
 
   useEffect (
