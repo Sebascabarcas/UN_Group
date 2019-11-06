@@ -42,9 +42,7 @@ GroupStack.navigationOptions = {
 };
 
 const MembersStack = createStackNavigator({
-  Groups: Members,
-  Member: Member
-  
+  Groups: Members
 }, { headerMode: "none" });
 
 MembersStack.navigationOptions = {

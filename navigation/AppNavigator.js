@@ -56,6 +56,8 @@ import ShowGroupScreen from '../screens/Groups/ShowGroupScreen';
 import GroupMembers from '../screens/Groups/GroupMembers';
 import GroupTabNavigator from './GroupTabNavigator';
 import SelectGroupModal from '../screens/SelectGroupModal';
+import Member from '../screens/MyGroup/Member';
+import CreateEvent from '../screens/MyGroup/Events/CreateEvent';
 
 // import { Divider, Button } from 'react-native-elements';
 
@@ -151,6 +153,35 @@ const AppStack = createStackNavigator(
         title: 'GRUPO',
         // headerTransparent: true,
         // headerStyle: {}
+      }
+    },
+    Member: {
+      screen: Member,
+      navigationOptions: ({navigation}) => ({
+        headerTransparent: true,
+        headerStyle: {
+          backgroundColor: 'transparent',
+        },
+        headerLeft: (
+          <Button
+            // block
+            style={{marginLeft: 20}}
+            iconLeft transparent
+            onPress={() => navigation.goBack()}
+          >
+            <FontAwesome
+                name="arrow-left"
+                color={theme.DARK_COLOR}
+                size={theme.ICON_SIZE_SMALL}
+              />
+          </Button>
+        )
+      })
+    },
+    CreateEvent: {
+      screen: CreateEvent,
+      navigationOptions: {
+        header: null
       }
     },
     EditProfile: {
