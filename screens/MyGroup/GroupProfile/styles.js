@@ -7,7 +7,8 @@ import {
 
 export default StyleSheet.create({
 	container: {
-		backgroundColor: theme.GRAY_COLOR,
+        backgroundColor: theme.GRAY_COLOR,
+        paddingHorizontal: wp(5),
 		height: '100%',
 		width: '100%',
 		justifyContent: 'space-evenly',

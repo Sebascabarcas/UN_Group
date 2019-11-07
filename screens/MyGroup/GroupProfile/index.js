@@ -9,18 +9,22 @@ import styles from './styles.js';
 import MyText from '../../../components/MyText';
 import {Input, Button, List, ListItem, Form, Item, Badge} from 'native-base';
 import {
+  AntDesign,
   Ionicons,
   FontAwesome,
 } from '@expo/vector-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import CardGroupInfo from '../../../components/CardGroupInfo';
 import getEnvVars from '../../../environment.js';
+import theme from '../../../styles/theme.style.js';
 
 const {height: fullHeight} = Dimensions.get ('window');
 const { apiUrl } = getEnvVars();
 const GroupProfile = () => {
   const {
     current_group,
+    isAdmin,
+    isSuperAdmin,
     more_pages,
     loading,
     refreshing
@@ -35,6 +39,15 @@ const GroupProfile = () => {
     })
   }, [dispatch]);
 
+  handleEditButton = () => {
+    current_group.file = current_group.groupPicture
+    dispatch({
+      type: 'groups/SET_STATE',
+      payload: {editing_group: current_group}
+    })
+    navigate('EditGroup')
+  }
+
   return (
     <View style={styles.container}>
       {/* <StatusBar hidden={true}/> */}
@@ -43,7 +56,7 @@ const GroupProfile = () => {
         style={styles.imageCar}
         source={
           // uri: 'https://www.indiacarnews.com/wp-content/uploads/2017/03/Renault-Duster-petrol-automatic-cvt-compressed.jpg',
-          current_group.groupPictures ? {uri: `${apiUrl}${current_group.groupPictures.groupPictureName}`} : images['no-circle-photo']
+          current_group.groupPictures ? {uri: `${apiUrl}${current_group.groupPictures.groupPictureName}`} : images['logo']
         }
       />
       <Button style={styles.arriveButton}>
@@ -51,7 +64,7 @@ const GroupProfile = () => {
           {current_group.groupName}
         </MyText>
       </Button>
-      <View style={{marginHorizontal: 20}}>
+      <View>
         <CardGroupInfo description={current_group.description} />
       </View>
      {/*  <View style={styles.actionTrip}>
@@ -68,6 +81,14 @@ const GroupProfile = () => {
           </MyText>
         </Button>
       </View> */}
+      {isAdmin || isSuperAdmin && <Button primary iconRight block superRounded onPress={handleEditButton}>
+            <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">Editar</MyText>
+            <AntDesign
+              name="form"
+              color="white"
+              size={theme.ICON_SIZE_SMALL}
+            />
+      </Button>}
     </View>
   );
 };
