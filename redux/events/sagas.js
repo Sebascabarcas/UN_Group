@@ -1,6 +1,12 @@
+import { ToastAndroid } from 'react-native';
 import { put, call, all, takeEvery, takeLatest } from 'redux-saga/effects'
 import actions from './actions'
 import { createEvent, getEvent, getEvents, getEventAttendees } from '../../services/Events';
+import fromJsonToFormData from '../../services/helpers';
+import moment from 'moment';
+// import moment from 'moment-timezone'
+// import 'moment/locale/es'  // without this line it didn't work
+// moment.locale('es')
 // import { errorMessage } from '../../services/helpers'
 
 
@@ -13,28 +19,23 @@ export function* CREATE_EVENT({ payload: { groupId, event, navigate, skipLoading
   })
   
   try {
-    event = fromJsonToFormData(event)
-    console.log(event);
-    
-    const {event: new_event} = yield call(createEvent, groupId, event, {skipLoading});
-    console.log(success);
-    yield put({
-      type: 'events/ADD_ARRAY_ELEMENT',
-      payload: {
-        arrayName: 'events',
-        newElement: new_event
-      },
-    })
+    // event.date = moment.tz(`${event.date}, ${event.time}`, 'YYYY-MM-DD, hh:mm A', 'America/Bogota')._d
+    // event.date = moment(`${event.date}, ${event.time}`, 'YYYY-MM-DD, hh:mm A').format()
+    event.date = moment(`${event.date}, ${event.time}`, 'YYYY-MM-DD, hh:mm A').format()
+    // console.log(event.date);
+    // event = fromJsonToFormData(event)
+    // console.log(event);
+    const success = yield call(createEvent, groupId, event, {skipLoading});
     ToastAndroid.show ('Evento creado correctamente!', ToastAndroid.SHORT);
     navigate('Events')
-    console.log(success);
+    // console.log(success);
   } catch (error) {
     console.log('CREATE_EVENT, ERROR:', error);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
     ToastAndroid.show ('Error creando evento!', ToastAndroid.SHORT);
   }
   yield put({
-    type: 'eventss/SET_STATE',
+    type: 'events/SET_STATE',
     payload: {
       loading: false,
     },
@@ -68,7 +69,7 @@ export function* GET_EVENT({ payload: { id, skipLoading } }) {
   })
 }
 
-export function* GET_EVENTS({skipLoading, concat}) {
+export function* GET_EVENTS({isSuperAdmin, skipLoading, concat}) {
   yield put({
     type: 'events/SET_STATE',
     payload: {
@@ -76,7 +77,7 @@ export function* GET_EVENTS({skipLoading, concat}) {
     },
   })
   try {
-    const {events} = yield call(getEvents, { skipLoading })
+    const {events} = yield call(isSuperAdmin ? getEvents : getUserEvents, { skipLoading })
     yield put({
       type: `events/${concat ? 'CONCAT_EVENTS' : 'SET_STATE' }`,
       payload: {

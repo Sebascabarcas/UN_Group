@@ -1,6 +1,10 @@
 import actions from './actions'
 
 const initialState = {
+  loading: false,
+  refreshing: false,
+  more_pages: false,
+  new_event: {eventName: 'Nombre del Evento', date: null, time: null},
   current_event: {},
   current_event_invitations: [],
   events: []
