@@ -3,13 +3,14 @@ import actions from './actions'
 const initialState = {
   loading: false,
   refreshing: false,
+  more_pages: false,
   groups: [],
   current_group: {groupPictures: []},
   current_group_members: [],
   current_group_member: {},
   current_group_requests: [],
   new_group: {},
-  more_pages: false,
+  editing_group: {},
 }
 
 export default function groupsReducer(state = initialState, action) {
@@ -29,6 +30,11 @@ export default function groupsReducer(state = initialState, action) {
     }
     case actions.ADD_ARRAY_ELEMENT: {
       const newArray = state[`${payload.arrayName}`].concat(payload.newElement)
+      state[`${payload.arrayName}`] = newArray
+      return state
+    }
+    case actions.REPLACE_ARRAY_ELEMENT: {
+      const newArray = state[`${payload.arrayName}`][payload.index]
       state[`${payload.arrayName}`] = newArray
       return state
     }

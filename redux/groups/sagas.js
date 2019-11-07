@@ -1,10 +1,15 @@
 import { put, call, all, takeEvery, takeLatest } from 'redux-saga/effects'
 import {
-  createGroup, getGroups, getGroup, getGroupMembers, sendGroupMemberRequest, getGroupCandidates, acceptMember, kickGroupMember, increasePrivileges, reducePrivileges
+  createGroup, getGroups, getGroup, getGroupMembers, sendGroupMemberRequest, getGroupCandidates, acceptMember, kickGroupMember, increasePrivileges, reducePrivileges, updateGroup, leaveGroup
 } from '../../services/Groups'
+import {
+  currentSession,
+} from '../../services/Session';
+import Storage from '../../services/Storage';
 import {ToastAndroid} from 'react-native'
 import actions from './actions'
 import fromJsonToFormData from '../../services/helpers';
+import { element } from 'prop-types';
 // import { errorMessage } from '../../services/helpers'
 
 export function* CREATE_GROUP({ payload: { group, navigate, skipLoading } }) {
@@ -20,7 +25,6 @@ export function* CREATE_GROUP({ payload: { group, navigate, skipLoading } }) {
     console.log(group);
     
     const {group: new_group} = yield call(createGroup, group, {skipLoading});
-    console.log(success);
     yield put({
       type: 'groups/ADD_ARRAY_ELEMENT',
       payload: {
@@ -30,7 +34,40 @@ export function* CREATE_GROUP({ payload: { group, navigate, skipLoading } }) {
     })
     ToastAndroid.show ('Grupo creado correctamente!', ToastAndroid.SHORT);
     navigate('Groups')
-    console.log(success);
+  } catch (error) {
+    console.log('CREATE_GROUP, ERROR:', error);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    ToastAndroid.show ('Error creando grupo!', ToastAndroid.SHORT);
+  }
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
+export function* UPDATE_GROUP({ payload: { group, navigate, skipLoading } }) {
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  
+  try {
+    group = fromJsonToFormData(group)
+    console.log(group);
+    
+    const {group: new_group} = yield call(updateGroup, group, {skipLoading});
+    yield put({
+      type: 'session/SET_STATE',
+      payload: {
+        current_group: new_group
+      },
+    })
+    ToastAndroid.show ('Grupo modificado correctamente!', ToastAndroid.SHORT);
+    navigate('Groups')
   } catch (error) {
     console.log('CREATE_GROUP, ERROR:', error);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
@@ -285,7 +322,7 @@ export function* REJECT_GROUP_REQUEST({ payload: { id, index, userID, skipLoadin
   })
 }
 
-export function* DELETE_GROUP_MEMBER({ payload: { id, index, userID, skipLoading } }) {
+export function* DELETE_GROUP_MEMBER({ payload: { id, index, userID, goBack, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
     payload: {
@@ -302,9 +339,68 @@ export function* DELETE_GROUP_MEMBER({ payload: { id, index, userID, skipLoading
       },
     })
     ToastAndroid.show ('Miembro eliminado del grupo!', ToastAndroid.SHORT);
+    goBack();
   } catch (error) {
     console.log('DELETE_GROUP_MEMBER, ERROR:', error);
     ToastAndroid.show ('Error en eliminación de miemrbo del grupo', ToastAndroid.SHORT);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
+export function* LEAVE_GROUP({ payload: { id, navigate, skipLoading } }) {
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    yield call(leaveGroup, id, { skipLoading })
+    const current_session = yield call (currentSession);
+    if (current_session) {
+      current_session.groups = current_session.groups.filter(group => group.id !== id) 
+      delete current_session.current_group
+      delete current_session.user.isAdmin
+      if (current_session.groups.length > 0) {
+        current_session.current_group = current_session.groups[0]
+        current_session.user.isAdmin = current_session.current_group.isAdmin
+        yield put ({
+          type: 'session/SET_STATE',
+          payload: {
+            myGroups: current_session.groups,
+            current_group: current_session.current_group,
+            isAdmin: current_session.user.isAdmin
+          },
+        });
+      } else {
+        yield put ({
+          type: 'session/SET_STATE',
+          payload: {
+            current_group: null,
+            isAdmin: false
+          },
+        });
+      }
+      yield call (
+        Storage.set,
+        'Session',
+        current_session,
+        () => {
+          navigate ('Events');
+        }
+      );
+    }
+    ToastAndroid.show ('Has dejado el grupo!', ToastAndroid.SHORT);
+    navigate('Events');
+  } catch (error) {
+    console.log('DELETE_GROUP_MEMBER, ERROR:', error);
+    ToastAndroid.show ('Error dejando el grupo', ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -328,6 +424,7 @@ export default function* rootSaga() {
     takeLatest(actions.REDUCE_PRIVILEGES, REDUCE_PRIVILEGES),
     takeLatest(actions.REJECT_GROUP_REQUEST, REJECT_GROUP_REQUEST),
     takeLatest(actions.SEND_GROUP_REQUEST, SEND_GROUP_REQUEST),
+    takeLatest(actions.LEAVE_GROUP, LEAVE_GROUP),
     // takeEvery(actions.GET_LOCATIONS, GET_LOCATIONS),
     // takeEvery(actions.GET_LOCATION, GET_LOCATION),
     // takeEvery(actions.UPDATE_LOCATION, UPDATE_LOCATION),
