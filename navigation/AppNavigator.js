@@ -58,6 +58,8 @@ import GroupTabNavigator from './GroupTabNavigator';
 import SelectGroupModal from '../screens/SelectGroupModal';
 import Member from '../screens/MyGroup/Member';
 import CreateEvent from '../screens/MyGroup/Events/CreateEvent';
+import EditGroup from '../screens/MyGroup/EditGroup';
+import ShowEvent from '../screens/Events/ShowEvent';
 
 // import { Divider, Button } from 'react-native-elements';
 
@@ -135,6 +137,18 @@ const AppStack = createStackNavigator(
         header: null
       },
     },
+    ShowEvent: {
+      screen: ShowEvent,
+      navigationOptions: {
+        header: null
+      },
+    },
+    EditGroup: {
+      screen: EditGroup,
+      // navigationOptions: {
+      //   header: null
+      // },
+    },
     GroupMembers: {
       screen: GroupMembers,
       navigationOptions: {
@@ -171,7 +185,7 @@ const AppStack = createStackNavigator(
           >
             <FontAwesome
                 name="arrow-left"
-                color={theme.DARK_COLOR}
+                color="white"
                 size={theme.ICON_SIZE_SMALL}
               />
           </Button>
