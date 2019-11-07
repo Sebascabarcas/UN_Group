@@ -20,9 +20,9 @@ const {height: fullHeight} = Dimensions.get ('window');
 
 const Member = () => {
   const _RBSheetRef = useRef (null);
-  const {current_group: {id: groupId}} = useSelector (state => state.session);
+  const {current_group: {id: groupId}, current_user: {id: current_user_id}, isSuperAdmin} = useSelector (state => state.session);
   const {
-    current_group_member: {user, isAdmin},
+    current_group_member: {user, isAdmin, index},
     more_pages,
     loading,
     refreshing,
@@ -30,7 +30,7 @@ const Member = () => {
   console.log ('current_group_member:', user);
 
   const dispatch = useDispatch ();
-  const {navigate, getParam} = useNavigation ();
+  const {navigate, goBack, getParam} = useNavigation ();
 
   /*   useEffect (
     () => {
@@ -47,31 +47,40 @@ const Member = () => {
       <View style={{alignItems: 'center'}}>
         <MyText fontStyle="bold">Acciones</MyText>
       </View>
-      <View
-        style={{...styles.containerBottomAction, ...{flexDirection: 'row'}}}
-      >
-        <MyText>Admin</MyText>
-        <Switch onChange={() => 
-            dispatch({
-              type: 'groups/INCREASE_PRIVILEGES',
-              payload: {id: groupId, userID: user.id}
-            })} 
-            value={isAdmin} 
-            />
-      </View>
-      <View style={styles.containerBottomAction}>
-        <Button
-          onPress={() => {
-            dispatch({
-              type: 'groups/DELETE_GROUP_MEMBER',
-              payload: {}
-            })
-          }}
-          full
+      { isSuperAdmin &&
+        <View
+          style={{...styles.containerBottomAction, ...{flexDirection: 'row'}}}
         >
-          <MyText>Eliminar del Grupo</MyText>
-        </Button>
-      </View>
+          <MyText>Admin</MyText>
+          <Switch onChange={() => 
+              dispatch({
+                type: 'groups/INCREASE_PRIVILEGES',
+                payload: {id: groupId, userID: user.id}
+              })} 
+              value={isAdmin} 
+              />
+        </View>
+      }
+        <View style={styles.containerBottomAction}>
+          <Button
+            onPress={() => {
+              current_user_id === user.id ? 
+              dispatch({
+                type: 'groups/DELETE_GROUP_MEMBER',
+                payload: {id: groupId, index, userID: user.id, goBack}
+              })
+              :
+              dispatch({
+                type: 'groups/LEAVE_GROUP',
+                payload: {id: groupId, navigate}
+              })
+            }}
+            full
+          >
+            <MyText>{current_user_id === user.id ? "Eliminar del Grupo" : "Dejar el grupo"}</MyText>
+          </Button>
+        </View>
+      
     </View>
   );
 
@@ -124,7 +133,7 @@ const Member = () => {
             _RBSheetRef.current.open ();
           }}
         >
-          <MyText>Abreme</MyText>
+          <MyText>Acciones</MyText>
         </Button>
         <RBSheet
           ref={_RBSheetRef}
