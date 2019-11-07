@@ -15,9 +15,14 @@ export default StyleSheet.create ({
     justifyContent: 'space-between'
     // backgroundColor: 'red',
   },
-  groupInfoContainer: {
+  headerContainer: {
+
     flexDirection: 'row',
-    // backgroundColor: 'red'
+    justifyContent: 'space-between',
+  },
+  groupInfoContainer: {
+    // flex: 1,
+    flexDirection: 'row',
   },
   imageGroup: {
     width: 50,
