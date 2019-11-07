@@ -93,17 +93,18 @@ GroupsScreen = () => {
     }
   };
 
+  _renderGroup = ({item: group, index}) => {
+    return (
+      <CardGroup {...group} onPress={() => _onPressGroup(group)} />
+    );
+  };
+  
   _onPressGroup = ({id}) => {
     navigate ('ShowGroup', {
       id
     });
   };
 
-  _renderOrder = ({item: group, index}) => {
-    return (
-      <CardGroup name={group.groupName} image={group.groupPicture} onPress={() => _onPressGroup(group)} />
-    );
-  };
 
   onLayout = ({
     nativeEvent: { layout: { height } },
@@ -127,7 +128,7 @@ GroupsScreen = () => {
           data={groups}
           // data={filtering ? GroupsFiltered : Groups}
           keyExtractor={group => group.id.toString ()}
-          renderItem={_renderOrder}
+          renderItem={_renderGroup}
           showsVerticalScrollIndicator={false}
           ref={flatList}
           refreshing={refreshing}
