@@ -27,6 +27,21 @@ export async function createGroup(newGroup, { skipLoading } = {}) {
       }).then(res => res.json());
 }
 
+export async function updateGroup(id, newGroup, { skipLoading } = {}) {
+    // return Requests.post(`groups`, newGroup, { skipLoading, headers: {'Content-Type': 'multipart/form-data'}}).then(group => group.data)
+    console.log('newGroup:', newGroup);
+    
+    let {secret} = await Storage.get('Session')
+    return fetch(`${apiUrl}/UNGroup/API/groups/${id}`, {
+        method: 'PUT',
+        body: newGroup,
+        headers: {
+          'content-type': 'multipart/form-data',
+          'authorization': `Bearer ${secret}`
+        },
+      }).then(res => res.json());
+}
+
 export async function sendGroupMemberRequest(id, { skipLoading } = {}) {
     return Requests.post(`groups/${id}/join`, { skipLoading }).then(group => group)
 }
