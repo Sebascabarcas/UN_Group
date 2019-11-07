@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import * as navigationHooks from 'react-navigation-hooks';
+import {useNavigation} from 'react-navigation-hooks';
 import {
   View,
   Dimensions,
@@ -11,39 +11,42 @@ import {
 } from 'react-native';
 import * as Location from 'expo-location';
 import { Divider} from 'react-native-elements';
+import {useDispatch, useSelector} from 'react-redux';
+import getEnvVars from '../../../environment.js';
 import styles from './styles.js';
 import MyText from '../../../components/MyText';
 import CardEvent from '../../../components/CardEvent/index.js';
 import Images from '../../../constants/Images.js';
+import moment from 'moment';
 
+const {apiUrl} = getEnvVars ();
 const {height: fullHeight} = Dimensions.get ('window');
 
 EventsScreen = () => {
+  const dispatch = useDispatch()
+  const {navigate, setParams} = useNavigation ();
   const [offSet, _setOffSet] = useState (0);
-  // const flatList = useRef (null);
-  const {navigate, setParams} = navigationHooks.useNavigation ();
-  const [groups, _setGroups] = useState ([]);
-  const [page, _setPage] = useState (1);
-  const [noMorePages, _setNoMorePages] = useState (false);
+  const flatList = useRef (null);
+  const {
+    events,
+    more_pages,
+    loading,
+    refreshing
+  } = useSelector (state => state.events);
+  const {isSuperAdmin} = useSelector (state => state.session);
   const [filtering, _setFiltering] = useState (false);
-  const [loading, _setLoading] = useState (false);
-  const [refreshing, _setRefreshing] = useState (false);
   const [filter, _setFilter] = useState ('all');
-  // const [groups, _setGroups] = useState ([]);
-
+  // const [events, _setEvents] = useState ([]);
+ 
+  /* 
   useEffect (
     () => {
-      const fetchGroups = async () => {
+      const fetchEvents = async () => {
         // _setLoading (true);
         try {
           flatList.current.scrollToOffset ({animated: true, offset: 0});
-          const _groups = await getGroup ()
-          // ({
-          //   index_tag: filter !== 'all' ? 'status' : 'all',
-          //   flag: filter !== 'all' ? filter : null,
-          // });
-          // console.log(_groups);
-          _setGroups (_groups);
+          const _events = await getEvent ()
+          _setEvents (_events);
           _setPage (1);
           _setNoMorePages (false);
         } catch (error) {
@@ -52,29 +55,26 @@ EventsScreen = () => {
         // _setLoading (false);
       };
 
-      fetchGroups ();
+      fetchEvents ();
     },
     [filter]
-  );
+  ); */
+ 
+  useEffect (() => {
+    dispatch({
+      type: 'events/GET_EVENTS',
+      isSuperAdmin
+    })
+  }, [dispatch]);
 
-  _fetchGroupsOnEnd = async () => {
-    // console.log(groups);
-
-    _setLoading (true);
-    console.log ('Render on group');
+  _fetchEventsOnEnd = async () => {
+    // console.log(events);
     try {
-      const _groups = await getGroup ()
-      // ({
-      //   index_tag: filter !== 'all' ? 'status' : 'all',
-      //   page: page + 1,
-      //   flag: filter !== 'all' ? filter : null,
-      // });
-      if (_groups.length !== 0) {
-        _setGroups (groups.concat (_groups));
-        _setPage (page + 1);
-      } else {
-        _setNoMorePages (true);
-      }
+      dispatch({
+        type: 'events/GET_EVENTS',
+        isSuperAdmin,
+        concat: true
+      })
     } catch (error) {
       console.log (error);
     }
@@ -82,38 +82,32 @@ EventsScreen = () => {
   };
 
   _onRefresh = async () => {
-    _setRefreshing (true);
-    console.log ('Render on refresh');
     try {
-      const _groups = await getGroup ()
-      // ({
-      //   index_tag: filter !== 'all' ? 'status' : 'all',
-      //   page: 1,
-      //   flag: filter !== 'all' ? filter : null,
-      // });
-      _setPage (1);
-      _setGroups (_groups);
+      dispatch({
+        type: 'events/GET_EVENTS',
+        isSuperAdmin
+      })
     } catch (error) {
       console.log (error);
     }
-    _setRefreshing (false);
   };
 
-  _showNotifications = () => {
-    navigate ('Notifications');
-  };
-
-  _onPressTrip = group => {
-    navigate ('ShowOrder', {
-      group,
-    });
-  };
-
-  _renderOrder = ({item: group, index}) => {
+  _renderEvent = ({item: event, index}) => {
+    console.log(event)
     return (
-      <CardEvent name="Evento 1" time="04:20 PM" date="04/02/19" groupName="W-STEM" source="Soledad" description="Breve descripción" />
+      <CardEvent {...event} onPress={() => _onPressEvent(event)} />
+      // <CardEvent groupName="W-STEM" location={event.location} name={event.eventName} time={moment(event.date).format('hh:mm A')} date={moment(event.date).format('YYYY-MM-DD')} description={event.description} onPress={() => _onPressEvent(event)} />
     );
   };
+
+  _onPressEvent = (event) => {
+    dispatch({
+      type: 'events/SET_STATE',
+      payload: { current_event: event }
+    })
+    navigate ('ShowEvent');
+  };
+
 
   onLayout = ({
     nativeEvent: { layout: { height } },
@@ -131,20 +125,19 @@ EventsScreen = () => {
     <View style={styles.container}>
       <Divider style={{marginBottom: 5}} />
       {/* <ScrollView > */}
-      <View style={styles.groupsContainer}>
-        {/* <FlatList
+      <View style={styles.eventsContainer}>
+        <FlatList
           // style={styles.scroller}
-          data={filtering ? groupsFiltered : groups}
-          keyExtractor={group => group.id.toString ()}
-          renderItem={_renderOrder}
+          data={events}
+          keyExtractor={event => event.id.toString ()}
+          renderItem={_renderEvent}
           showsVerticalScrollIndicator={false}
-          ref={flatList}import { as wp} from 'react-native-responsive-screen';
+          ref={flatList}
           refreshing={refreshing}
-          onRefresh={!filtering && _onRefresh}
-          onEndReached={!noMorePages && !filtering && _fetchGroupsOnEnd}
-          onEndReachedThreshold={0.2}
-        /> */}
-        <CardEvent name="Evento 1" time="04:20 PM" date="04/02/19" groupName="W-STEM" source="Soledad" description="Breve descripción" />
+          onRefresh={_onRefresh}
+          // onEndReached={!noMorePages && _fetchEventsOnEnd}
+          // onEndReachedThreshold={0.2}
+        />
       </View>
     </View>
     </ImageBackground>
