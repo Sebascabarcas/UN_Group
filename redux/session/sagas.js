@@ -8,8 +8,8 @@ import {
   updateUser,
   currentSession,
 } from '../../services/Session';
-import jwt_decode from 'jwt-decode';
 import Storage from '../../services/Storage';
+import jwt_decode from 'jwt-decode';
 import actions from './actions';
 import fromJsonToFormData from '../../services/helpers';
 // import { errorMessage } from '../../services/helpers'
@@ -54,11 +54,13 @@ export function* LOGIN({payload}) {
       type: 'session/SET_STATE',
       payload: {
         current_user: user,
-        isSuperAdmin: isSuperAdmin,
+        isAdmin: current_group.isAdmin || false,
+        isSuperAdmin,
         myGroups: isSuperAdmin ?  groups : userGroupRelations,
         current_group
       }
     });
+    user.isAdmin = current_group.isAdmin || false
     yield call (
       Storage.set,
       'Session',
@@ -192,6 +194,7 @@ export function* CHANGE_CURRENT_GROUP({payload: {group, goBack}}) {
   const current_session = yield call (currentSession);
   if (current_session) {
     current_session.current_group = group;
+    current_session.user.isAdmin = group.isAdmin
     yield put ({
       type: 'session/SET_STATE',
       payload: {
