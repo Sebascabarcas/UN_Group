@@ -21,7 +21,7 @@ import {
   Ionicons,
   MaterialIcons,
 } from '@expo/vector-icons';
-import {Permissions} from 'expo';
+import * as Permissions from 'expo-permissions';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Constants from 'expo-constants';
 import {useDispatch, useSelector} from 'react-redux';

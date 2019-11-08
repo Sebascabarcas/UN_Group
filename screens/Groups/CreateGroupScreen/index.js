@@ -20,7 +20,7 @@ import {
   Foundation,
   MaterialIcons,
 } from '@expo/vector-icons';
-import {Permissions} from 'expo';
+import * as Permissions from 'expo-permissions';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';

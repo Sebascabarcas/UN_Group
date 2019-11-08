@@ -15,7 +15,7 @@ import ConfirmButton from '../../../components/ConfirmEditProfile';
 import {Input, Button, List, ListItem, Form, Item} from 'native-base';
 import Storage from '../../../services/Storage';
 import {Ionicons, FontAwesome, MaterialIcons} from '@expo/vector-icons';
-import {Permissions} from 'expo';
+import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import {USER_FACING_NOTIFICATIONS} from 'expo-permissions';
