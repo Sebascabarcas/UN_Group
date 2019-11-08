@@ -147,7 +147,7 @@ Events = () => {
           onEndReached={!noMorePages && !filtering && _fetchGroupsOnEnd}
           onEndReachedThreshold={0.2}
         /> */}
-        <CardEvent name="Evento 1" time="04:20 PM" date="04/02/19" groupName="W-STEM" source="Soledad" description="Breve descripción" />
+        {/* <CardEvent name="Evento 1" time="04:20 PM" date="04/02/19" groupName="W-STEM" source="Soledad" description="Breve descripción" /> */}
         <Fab
             direction="up"
             style={{ backgroundColor: theme.PRIMARY_COLOR }}

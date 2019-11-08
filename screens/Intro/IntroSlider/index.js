@@ -3,7 +3,7 @@ import styles from './styles';
 import {View, Image} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import MyText from '../../../components/MyText';
-import SvgUri from 'react-native-svg-uri';
+// import SvgUri from 'react-native-svg-uri';
 import {Button} from 'native-base';
 import {useNavigation} from 'react-navigation-hooks';
 import * as Permissions from 'expo-permissions';

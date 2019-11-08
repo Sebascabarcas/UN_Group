@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles';
 import {View, Image, ToastAndroid} from 'react-native';
-import SvgUri from 'react-native-svg-uri';
+// import SvgUri from 'react-native-svg-uri';
 import {useNavigation} from 'react-navigation-hooks';
 import * as Permissions from 'expo-permissions';
 import {Button} from 'native-base';

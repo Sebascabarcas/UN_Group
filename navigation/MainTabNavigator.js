@@ -56,6 +56,7 @@ const EventsStack = createStackNavigator (
 EventsStack.navigationOptions = {
   tabBarLabel: 'Eventos',
   tabBarOptions: {
+    // showLabel: false,
     activeTintColor: theme.PRIMARY_COLOR,
   },
   tabBarIcon: ({focused}) => (
@@ -81,6 +82,7 @@ const GroupsStack = createStackNavigator (
 GroupsStack.navigationOptions = {
   tabBarLabel: 'Grupos',
   tabBarOptions: {
+    // showLabel: false,
     activeTintColor: theme.PRIMARY_COLOR,
   },
   tabBarIcon: ({focused}) => (
@@ -102,6 +104,7 @@ const SettingsStack = createStackNavigator (
 SettingsStack.navigationOptions = {
   tabBarLabel: 'No se',
   tabBarOptions: {
+    // showLabel: false,
     activeTintColor: theme.PRIMARY_COLOR,
   },
   tabBarIcon: ({focused}) => (

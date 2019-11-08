@@ -2,7 +2,7 @@ import React from 'react'
 import { ImageBackground, View, Image } from 'react-native'
 import styles from './styles.js'
 import MyText from '../../../components/MyText'
-import SvgUri from 'react-native-svg-uri';
+// import SvgUri from 'react-native-svg-uri';
 import {Button} from 'native-base'
 import {useNavigation}  from 'react-navigation-hooks';
 import Images from '../../../constants/Images.js';
