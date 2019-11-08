@@ -19,8 +19,9 @@ const {apiUrl} = getEnvVars ();
 export default (SelectGroupModal = () => {
   const {goBack} = useNavigation ();
   const dispatch = useDispatch ();
-  const {myGroups, current_group} = useSelector (state => state.session);
-  console.log (current_group);
+  var {myGroups, current_group, isSuperAdmin} = useSelector (state => state.session);
+  if (!isSuperAdmin) myGroups = myGroups.map(relation => relation.group)
+  console.log (myGroups);
   // console.log (myGroups);
 
   // const originMarker = {lat: originLocation.coords.latitude, lng: originLocation.coords.longitude}
@@ -54,7 +55,7 @@ export default (SelectGroupModal = () => {
                         ? {
                             uri: `${apiUrl}${group.groupPicture.groupPictureName}`,
                           }
-                        : images['no-circle-photo']
+                        : images['logo']
                     }
                   />
                 </View>
