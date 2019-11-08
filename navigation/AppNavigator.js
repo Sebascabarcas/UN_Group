@@ -60,6 +60,7 @@ import Member from '../screens/MyGroup/Member';
 import CreateEvent from '../screens/MyGroup/Events/CreateEvent';
 import EditGroup from '../screens/MyGroup/EditGroup';
 import ShowEvent from '../screens/Events/ShowEvent';
+import Invitations from '../screens/Invitations';
 
 // import { Divider, Button } from 'react-native-elements';
 
@@ -160,6 +161,12 @@ const AppStack = createStackNavigator(
     },
     MyProfile: {
       screen: MyProfileScreen,
+    },
+    MyInvitations: {
+      screen: Invitations,
+      navigationOptions: {
+        header: null
+      },
     },
     MyGroup: {
       screen: GroupTabNavigator,
