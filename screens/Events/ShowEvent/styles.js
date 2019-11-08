@@ -79,9 +79,15 @@ export default StyleSheet.create ({
     // alignSelf: ''
   },
   actionButtonContainer: {
-    alignSelf: 'flex-end',
+    // alignSelf: 'c',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    // alignSelf: 'flex-end',
     padding: 5,
     // margin: 20,
     // flex: 0.5
+  },
+  cancelButton: {
+    marginRight: 5
   }
 });

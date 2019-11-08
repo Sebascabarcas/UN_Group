@@ -30,11 +30,27 @@ const {height: fullHeight} = Dimensions.get ('window');
 const {apiUrl} = getEnvVars();
 
 const ShowEvent = () => {
-  const {navigate, goBack} = useNavigation ();
+  const {navigate, goBack, getParam} = useNavigation ();
   // const {new_group: group} = useSelector (state => state.groups);
+  const {current_user: {id: userId}} = useSelector (state => state.session);
   const {current_event: event} = useSelector (state => state.events);
   const { group } = event
   const dispatch = useDispatch ();
+  const invitationId = getParam('invitationId')
+
+  const handleAcceptEvent = () => {
+    dispatch({
+      type: "session/ACCEPT_EVENT_INVITATION",
+      payload: {id: invitationId, eventId: event.id, navigate}
+    })
+  }
+
+  const handleCancelEvent = () => {
+    dispatch({
+      type: "session/ACCEPT_EVENT_INVITATION",
+      payload: {id: invitationId, eventId: event.id}
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -45,7 +61,7 @@ const ShowEvent = () => {
               resizeMode="cover"
               style={styles.imageGroup}
               source={
-                group.groupPicture ? {uri: `${apiUrl}${group.groupPictures.groupPictureName}`} : images['logo']
+                group.groupPicture ? {uri: `${apiUrl}${group.groupPicture.groupPictureName}`} : images['logo']
               }
             />
             <View>
@@ -123,18 +139,25 @@ const ShowEvent = () => {
       }
       />
       {/* <View style={styles.footerContainer}>
-        <MyText fontStyle="bold">{group.groupName}/Nuevo Evento</MyText>
-        <View style={styles.actionButtonContainer}> */}
-          {/* <Button warning iconRight block superRounded>
-            <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">Continuar</MyText>
-            <AntDesign
-              name="rightcircle"
-              color="white"
-              size={theme.ICON_SIZE_SMALL}
+        <MyText fontStyle="bold">{group.groupName}/Nuevo Evento</MyText> */}
+        { invitationId !== undefined && <View style={styles.actionButtonContainer}> 
+          <Button onPress={handleCancelEvent} style={styles.cancelButton} danger block superRounded>
+            <Icon
+              type="AntDesign"
+              name="close"
+              style={{color: "white", fontSize: theme.ICON_SIZE_SMALL}}
             />
-          </Button> */}
-        {/* </View>
-      </View> */}
+          </Button>
+          <Button primary iconRight block superRounded>
+            <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} onPress={handleAcceptEvent} fontStyle="bold">¡Asistiré!</MyText>
+            <Icon
+              type="AntDesign"
+              name="rightcircle"
+              style={{color: "white", fontSize: theme.ICON_SIZE_SMALL}}
+            />
+          </Button>
+        </View>}
+      {/* </View> */}
     </View>
   );
 };
