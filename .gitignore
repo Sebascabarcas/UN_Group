@@ -11,3 +11,5 @@ web-report/
 package-lock.json
 environment.js
 package-lock.json
+report.*
+assets/images/versions.json
