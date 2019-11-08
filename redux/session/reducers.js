@@ -6,6 +6,8 @@ const initialState = {
   current_user_edition: {},
   isSuperAdmin: false,
   myGroups: [],
+  myEvents: [],
+  myInvitations: [],
   loading: false,
 }
 

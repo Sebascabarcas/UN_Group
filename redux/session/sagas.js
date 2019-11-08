@@ -7,6 +7,9 @@ import {
   register,
   updateUser,
   currentSession,
+  getUserInvitations,
+  getUserEvents,
+  acceptEventInvitation,
 } from '../../services/Session';
 import Storage from '../../services/Storage';
 import jwt_decode from 'jwt-decode';
@@ -43,24 +46,29 @@ export function* LOGIN({payload}) {
     // })
     // console.log(storeSession);
     let current_group = null
-    if (relations) {
+    if (!isSuperAdmin && relations.length > 0) {
       relations = relations.map (
         groupRelation => groupRelation.group
       );
       current_group = relations[0];
+      // current_group.isAdmin = relations[0].isAdmin;
     }
-    if (groups) current_group = groups[0];
+    if (groups) {
+      current_group = groups[0];
+    }
+    console.log(current_group);
+    
     yield put ({
       type: 'session/SET_STATE',
       payload: {
         current_user: user,
-        isAdmin: current_group.isAdmin || false,
+        // isAdmin: current_group.isAdmin || false,
         isSuperAdmin,
         myGroups: isSuperAdmin ?  groups : userGroupRelations,
         current_group
       }
     });
-    user.isAdmin = current_group.isAdmin || false
+    user.isAdmin = current_group ? current_group.isAdmin : false
     yield call (
       Storage.set,
       'Session',
@@ -249,6 +257,119 @@ export function* LOAD_CURRENT_ACCOUNT () {
   });
 }
 
+export function* GET_USER_INVITATIONS({ payload: { id, skipLoading } }) {
+  yield put({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    const {invitations} = yield call(getUserInvitations, id, { skipLoading })
+    yield put({
+      type: 'session/SET_STATE',
+      payload: {
+        myInvitations: invitations,
+      },
+    })
+  } catch (error) {
+    console.log('GET_USER_INVITATIONS, ERROR:', error);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'events/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
+export function* GET_USER_EVENTS({ payload: { id, skipLoading } }) {
+  yield put({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: true,
+    }
+  })
+  try {
+    const {atendees} = yield call(getUserEvents, id, { skipLoading })
+    yield put({
+      type: 'events/SET_STATE',
+      payload: {
+        events
+      }
+    })
+  } catch (error) {
+    console.log('GET_USER_INVITATIONS, ERROR:', error);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'events/SET_STATE',
+    payload: {
+      loading: false,
+    }
+  })
+}
+
+export function* ACCEPT_EVENT_INVITATION({ payload: { id, eventId, navigate, skipLoading } }) {
+  yield put({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    const success = yield call(acceptEventInvitation, id, eventId, { skipLoading })
+    console.log(success);
+    navigate('Home')
+    /* yield put({
+      type: 'session/SET_STATE',
+      payload: {
+        myInvitations: invitations,
+      },
+    }) */
+  } catch (error) {
+    console.log('ACCEPT_EVENT_INVITATION, ERROR:', error);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'events/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
+export function* REJECT_EVENT_INVITATION({ payload: { id, eventId, skipLoading } }) {
+  yield put({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    const success = yield call(rejectUserInvitation, id, eventId, { skipLoading })
+    console.log(success);
+    
+    /* yield put({
+      type: 'session/SET_STATE',
+      payload: {
+        myInvitations: invitations,
+      },
+    }) */
+  } catch (error) {
+    console.log('ACCEPT_EVENT_INVITATION, ERROR:', error);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'events/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
+
 export default function* rootSaga () {
   yield all ([
     takeLatest (actions.CHANGE_CURRENT_GROUP, CHANGE_CURRENT_GROUP),
@@ -256,6 +377,9 @@ export default function* rootSaga () {
     takeLatest (actions.LOGOUT, LOGOUT),
     takeLatest (actions.REGISTER, REGISTER),
     takeLatest (actions.UPDATE_PROFILE, UPDATE_PROFILE),
+    takeLatest (actions.GET_USER_INVITATIONS, GET_USER_INVITATIONS),
+    takeLatest (actions.GET_USER_EVENTS, GET_USER_EVENTS),
+    takeLatest (actions.ACCEPT_EVENT_INVITATION, ACCEPT_EVENT_INVITATION),
     // takeEvery(actions.LOAD_CURRENT_ACCOUNT, LOAD_CURRENT_ACCOUNT),
     // takeEvery(actions.UNAUTH_USER, UNAUTH_USER),
     LOAD_CURRENT_ACCOUNT (),

@@ -72,3 +72,15 @@ export async function currentSession() {
 export async function logout({ skipLoading }) {
   return Requests.delete('users/logout', { skipLoading }).then(session => session.data.data)
 }
+
+export async function getUserInvitations(id, { skipLoading } = {}) {
+  return Requests.get(`users/${id}/invitations`).then(eventAttendees => eventAttendees.data)
+}
+
+export async function acceptEventInvitation(id, eventId, { skipLoading } = {}) {
+  return Requests.put(`users/${id}/acceptEventInvitation/${eventId}`, {}).then(eventAccepted => eventAccepted.data)
+}
+
+export async function getUserEvents(id, { skipLoading } = {}) {
+  return Requests.get(`users/${id}/atendees/`, {}).then(eventAccepted => eventAccepted.data)
+}
