@@ -18,7 +18,7 @@ const Members = () => {
   const {current_group_members, more_pages, loading, refreshing} = useSelector (
     state => state.groups
   );
-  let _current_group_members = [...current_group_members, ...current_group_members, ...current_group_members]
+  // let _current_group_members = [...current_group_members, ...current_group_members, ...current_group_members]
   console.log ('LA   VAINA   JASJ  AJA ASKJASJDKAS');
   console.log (current_group_members);
 
@@ -70,7 +70,7 @@ const Members = () => {
       //     {title}
       //   </MyText>
         <Carousel
-          data={_current_group_members}
+          data={current_group_members}
           renderItem={_renderItem}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}

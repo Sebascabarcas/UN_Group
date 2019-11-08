@@ -34,7 +34,8 @@ export default function groupsReducer(state = initialState, action) {
       return state
     }
     case actions.REPLACE_ARRAY_ELEMENT: {
-      const newArray = state[`${payload.arrayName}`][payload.index]
+      const newArray = state[`${payload.arrayName}`]
+      newArray[payload.index] = payload.newElement
       state[`${payload.arrayName}`] = newArray
       return state
     }
@@ -44,4 +45,5 @@ export default function groupsReducer(state = initialState, action) {
     default:
       return state
   }
+  
 }

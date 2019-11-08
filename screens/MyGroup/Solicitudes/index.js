@@ -82,24 +82,24 @@ Solicitudes = () => {
     });
   };
 
-  _acceptRequest = (request) => {
+  _acceptRequest = (request, index) => {
     dispatch({
       type: 'groups/ACCEPT_GROUP_REQUEST',
-      payload: {id: request.groupId, userID: request.user.id}
+      payload: {id: request.groupId, index, userID: request.user.id}
     })
   }
 
-  _rejectRequest = (request) => {
+  _rejectRequest = (request, index) => {
     dispatch({
       type: 'groups/REJECT_GROUP_REQUEST',
-      payload: {id: request.groupId, userID: request.user.id}
+      payload: {id: request.groupId, index, userID: request.user.id}
     })
   }
 
   _renderRequest = ({item: request, index}) => {
     return (
       <CardGroupRequest name={`${request.user.firstName} ${request.user.lastName}`} image={request.user.picture} username={request.user.username} 
-      onAccept={() => _acceptRequest(request)} onReject={() => _rejectRequest(request)}
+      onAccept={() => _acceptRequest(request, index)} onReject={() => _rejectRequest(request, index)}
       //  onReject={}  
        />
     );

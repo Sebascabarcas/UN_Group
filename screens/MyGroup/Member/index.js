@@ -54,8 +54,8 @@ const Member = () => {
           <MyText>Admin</MyText>
           <Switch onChange={() => 
               dispatch({
-                type: 'groups/INCREASE_PRIVILEGES',
-                payload: {id: groupId, userID: user.id}
+                type: isAdmin ? 'groups/REDUCE_PRIVILEGES' : 'groups/INCREASE_PRIVILEGES',
+                payload: {id: groupId, userID: user.id, index}
               })} 
               value={isAdmin} 
               />
@@ -66,18 +66,18 @@ const Member = () => {
             onPress={() => {
               current_user_id === user.id ? 
               dispatch({
-                type: 'groups/DELETE_GROUP_MEMBER',
-                payload: {id: groupId, index, userID: user.id, goBack}
+                type: 'groups/LEAVE_GROUP',
+                payload: {id: groupId, navigate}
               })
               :
               dispatch({
-                type: 'groups/LEAVE_GROUP',
-                payload: {id: groupId, navigate}
+                type: 'groups/DELETE_GROUP_MEMBER',
+                payload: {id: groupId, index, userID: user.id, goBack}
               })
             }}
             full
           >
-            <MyText>{current_user_id === user.id ? "Eliminar del Grupo" : "Dejar el grupo"}</MyText>
+            <MyText>{current_user_id === user.id ? "Dejar el grupo" : "Eliminar del Grupo"}</MyText>
           </Button>
         </View>
       

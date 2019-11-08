@@ -215,7 +215,7 @@ export function* SEND_GROUP_REQUEST({ payload: { id, skipLoading } }) {
   })
 }
 
-export function* INCREASE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
+export function* INCREASE_PRIVILEGES({ payload: { id, userID, index, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
     payload: {
@@ -223,7 +223,21 @@ export function* INCREASE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
     },
   })
   try {
-    yield call(increasePrivileges, id, userID, { skipLoading })
+    const {relation} = yield call(increasePrivileges, id, userID, { skipLoading })
+    yield put({
+      type: 'groups/SET_STATE',
+      payload: {
+        current_group_member: {...relation, index}
+      },
+    })
+    yield put({
+      type: 'groups/REPLACE_ARRAY_ELEMENT',
+      payload: {
+        newElement: relation,
+        arrayName: 'current_group_members',
+        index
+      },
+    })
     ToastAndroid.show ('Incremento de privilegios!', ToastAndroid.SHORT);
   } catch (error) {
     console.log('ACCEPT_GROUP_REQUEST, ERROR:', error);
@@ -238,7 +252,7 @@ export function* INCREASE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
   })
 }
 
-export function* REDUCE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
+export function* REDUCE_PRIVILEGES({ payload: { id, userID, index, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
     payload: {
@@ -246,7 +260,21 @@ export function* REDUCE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
     },
   })
   try {
-    yield call(reducePrivileges, id, userID, { skipLoading })
+    const {relation} = yield call(reducePrivileges, id, userID, { skipLoading })
+    yield put({
+      type: 'groups/SET_STATE',
+      payload: {
+        current_group_member: {...relation, index}
+      },
+    })
+    yield put({
+      type: 'groups/REPLACE_ARRAY_ELEMENT',
+      payload: {
+        newElement: relation,
+        arrayName: 'current_group_members',
+        index
+      },
+    })
     ToastAndroid.show ('Incremento de privilegios!', ToastAndroid.SHORT);
   } catch (error) {
     console.log('REDUCE_PRIVILEGES, ERROR:', error);
@@ -269,12 +297,19 @@ export function* ACCEPT_GROUP_REQUEST({ payload: { id, index, userID, skipLoadin
     },
   })
   try {
-    yield call(acceptMember, id, userID, { skipLoading })
+    const {relation} = yield call(acceptMember, id, userID, { skipLoading })
     yield put({
       type: 'groups/DELETE_ARRAY_ELEMENT',
       payload: {
         index,
         arrayName: 'current_group_requests'
+      },
+    })
+    yield put({
+      type: 'groups/ADD_ARRAY_ELEMENT',
+      payload: {
+        newElement: relation,
+        arrayName: 'current_group_members'
       },
     })
     ToastAndroid.show ('Solicitud de unión al grupo aceptada!', ToastAndroid.SHORT);
