@@ -4,6 +4,7 @@ import actions from './actions'
 import { createEvent, getEvent, getEvents, getEventAttendees } from '../../services/Events';
 import fromJsonToFormData from '../../services/helpers';
 import moment from 'moment';
+import { getUserEvents } from '../../services/Session';
 // import moment from 'moment-timezone'
 // import 'moment/locale/es'  // without this line it didn't work
 // moment.locale('es')
@@ -69,7 +70,7 @@ export function* GET_EVENT({ payload: { id, skipLoading } }) {
   })
 }
 
-export function* GET_EVENTS({isSuperAdmin, skipLoading, concat}) {
+export function* GET_EVENTS({isSuperAdmin, userId, skipLoading, concat}) {
   yield put({
     type: 'events/SET_STATE',
     payload: {
@@ -77,11 +78,11 @@ export function* GET_EVENTS({isSuperAdmin, skipLoading, concat}) {
     },
   })
   try {
-    const {events} = yield call(isSuperAdmin ? getEvents : getUserEvents, { skipLoading })
+    const {events, atendees} = yield call(isSuperAdmin ? getEvents : getUserEvents, userId, { skipLoading })
     yield put({
       type: `events/${concat ? 'CONCAT_EVENTS' : 'SET_STATE' }`,
       payload: {
-        events
+        events: isSuperAdmin ? events : atendees
       },
     })
   } catch (error) {
@@ -122,7 +123,6 @@ export function* GET_EVENT_ATTENDEES({ payload: { id, skipLoading } }) {
     },
   })
 }
-
 
 export default function* rootSaga() {
   yield all([

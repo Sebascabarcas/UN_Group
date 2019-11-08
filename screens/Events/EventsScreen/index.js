@@ -33,7 +33,7 @@ EventsScreen = () => {
     loading,
     refreshing
   } = useSelector (state => state.events);
-  const {isSuperAdmin} = useSelector (state => state.session);
+  const {isSuperAdmin, current_user: {id: userId}} = useSelector (state => state.session);
   const [filtering, _setFiltering] = useState (false);
   const [filter, _setFilter] = useState ('all');
   // const [events, _setEvents] = useState ([]);
@@ -63,6 +63,7 @@ EventsScreen = () => {
   useEffect (() => {
     dispatch({
       type: 'events/GET_EVENTS',
+      userId,
       isSuperAdmin
     })
   }, [dispatch]);
@@ -72,6 +73,7 @@ EventsScreen = () => {
     try {
       dispatch({
         type: 'events/GET_EVENTS',
+        userId,
         isSuperAdmin,
         concat: true
       })
@@ -85,6 +87,7 @@ EventsScreen = () => {
     try {
       dispatch({
         type: 'events/GET_EVENTS',
+        userId,
         isSuperAdmin
       })
     } catch (error) {
@@ -94,6 +97,7 @@ EventsScreen = () => {
 
   _renderEvent = ({item: event, index}) => {
     console.log(event)
+    if (!isSuperAdmin) event = event.event 
     return (
       <CardEvent {...event} onPress={() => _onPressEvent(event)} />
       // <CardEvent groupName="W-STEM" location={event.location} name={event.eventName} time={moment(event.date).format('hh:mm A')} date={moment(event.date).format('YYYY-MM-DD')} description={event.description} onPress={() => _onPressEvent(event)} />
