@@ -34,8 +34,8 @@ const MenuDrawer = () => {
   const [isReady, _setReady] = useState (false);
   const dispatch = useDispatch()
   const {navigate} = navigationHooks.useNavigation ();
-  const {current_user: user,  myGroups} = useSelector(state => state.session)
-  console.log(user);
+  const {current_user: user,  myGroups, isSuperAdmin} = useSelector(state => state.session)
+  // console.log(user);
   
   
  /*  useEffect (() => {
@@ -150,12 +150,12 @@ const MenuDrawer = () => {
           />,
           {user}
         )}
-        {navLink (
-          'Orders',
-          'Mis Eventos',
+        { !isSuperAdmin && navLink (
+          'MyInvitations',
+          'Mis Invitaciones',
           <MaterialIcons
             style={styles.iconLink}
-            name="update"
+            name="mail"
             color={theme.GRAY_COLOR}
             size={theme.ICON_SIZE_SMALL}
           />
