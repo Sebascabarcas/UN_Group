@@ -86,5 +86,5 @@ export default StyleSheet.create ({
     padding: 5,
     // margin: 20,
     // flex: 0.5
-  }
+  },
 });

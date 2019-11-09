@@ -18,6 +18,8 @@ import MyText from '../../../components/MyText';
 import CardEvent from '../../../components/CardEvent/index.js';
 import Images from '../../../constants/Images.js';
 import moment from 'moment';
+import NoResults from '../../../components/NoResults/index.js';
+import { Content } from 'native-base';
 
 const {apiUrl} = getEnvVars ();
 const {height: fullHeight} = Dimensions.get ('window');
@@ -126,10 +128,10 @@ EventsScreen = () => {
         style={styles.fullImage}
         source={Images['dashboard_bg_image']}
       >
-    <View style={styles.container}>
+    <Content contentContainerStyle={styles.container} padder>
       <Divider style={{marginBottom: 5}} />
       {/* <ScrollView > */}
-      <View style={styles.eventsContainer}>
+      {events.length > 0 ? <View style={styles.eventsContainer}>
         <FlatList
           // style={styles.scroller}
           data={events}
@@ -142,8 +144,9 @@ EventsScreen = () => {
           // onEndReached={!noMorePages && _fetchEventsOnEnd}
           // onEndReachedThreshold={0.2}
         />
-      </View>
-    </View>
+      </View> :
+      <NoResults lottieProps={{style: {width: 200}}} animationName="empty-gabinete" primaryText="¡No hay resultados!" secondaryText="No hay invitaciones pendientes para ti, vuelve más tarde" secondaryTextStyles={{color: 'white'}}/>}
+    </Content>
     </ImageBackground>
   );
 };
