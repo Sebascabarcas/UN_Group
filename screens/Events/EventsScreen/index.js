@@ -82,7 +82,6 @@ EventsScreen = () => {
     } catch (error) {
       console.log (error);
     }
-    _setLoading (false);
   };
 
   _onRefresh = async () => {
@@ -98,8 +97,8 @@ EventsScreen = () => {
   };
 
   _renderEvent = ({item: event, index}) => {
-    console.log(event)
     if (!isSuperAdmin) event = event.event 
+    console.log(event)
     return (
       <CardEvent {...event} onPress={() => _onPressEvent(event)} />
       // <CardEvent groupName="W-STEM" location={event.location} name={event.eventName} time={moment(event.date).format('hh:mm A')} date={moment(event.date).format('YYYY-MM-DD')} description={event.description} onPress={() => _onPressEvent(event)} />

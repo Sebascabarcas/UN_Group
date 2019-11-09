@@ -18,7 +18,7 @@ export default AuthLoadingScreen = (props) => {
   // Fetch the token from storage then navigate to our appropriate places
   _bootstrapAsync = async () => {
     const sessionInfo = await Storage.get ('Session');
-    console.log('Session Info: ', sessionInfo);
+    // console.log('Session Info: ', sessionInfo);
     // let {status} = await Permissions.getAsync (Permissions.LOCATION);
     if (sessionInfo) {
       const {user: current_user, user: {isSuperAdmin, isAdmin}, current_group, groups} = sessionInfo
