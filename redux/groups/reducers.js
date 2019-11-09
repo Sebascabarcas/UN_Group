@@ -5,7 +5,7 @@ const initialState = {
   refreshing: false,
   more_pages: false,
   groups: [],
-  current_group: {groupPictures: []},
+  current_group: {groupPicture: null},
   current_group_members: [],
   current_group_member: {},
   current_group_requests: [],
