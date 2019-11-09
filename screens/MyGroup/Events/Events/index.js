@@ -9,6 +9,7 @@ import {
   // Picker,
   FlatList,
 } from 'react-native';
+import {useSelector} from 'react-redux'
 import {AntDesign} from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import { Divider} from 'react-native-elements';
@@ -27,12 +28,15 @@ Events = () => {
   const {navigate, setParams} = navigationHooks.useNavigation ();
   const [groups, _setGroups] = useState ([]);
   const [page, _setPage] = useState (1);
-  const [noMorePages, _setNoMorePages] = useState (false);
   const [filtering, _setFiltering] = useState (false);
-  const [loading, _setLoading] = useState (false);
-  const [refreshing, _setRefreshing] = useState (false);
   const [filter, _setFilter] = useState ('all');
   // const [groups, _setGroups] = useState ([]);
+  const {
+    isAdmin,
+    more_pages,
+    loading,
+    refreshing
+  } = useSelector (state => state.session);
 
   useEffect (
     () => {
@@ -148,13 +152,13 @@ Events = () => {
           onEndReachedThreshold={0.2}
         /> */}
         {/* <CardEvent name="Evento 1" time="04:20 PM" date="04/02/19" groupName="W-STEM" source="Soledad" description="Breve descripción" /> */}
-        <Fab
+        { isAdmin && <Fab
             direction="up"
             style={{ backgroundColor: theme.PRIMARY_COLOR }}
             position="bottomRight"
             onPress={() => navigate("CreateEvent")}>
             <AntDesign name="plus" />
-        </Fab>
+        </Fab> }
       </View>
     </View>
     </ImageBackground>
