@@ -69,6 +69,7 @@ const CreateEvent = () => {
   }
   _pickImage = async () => {
     let file = await ImagePicker.launchImageLibraryAsync ({
+      base64: true,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
@@ -80,12 +81,9 @@ const CreateEvent = () => {
       let filename = localUri.split ('/').pop ();
 
       // Infer the type of the image
-      let match = /\.(\w+)$/.exec (filename);
-      file = {
-        type: match ? `image/${match[1]}` : `image`,
-        filename,
-        uri: localUri,
-      };
+      let match = /\.(\w+)$/.exec(filename);
+      let type = match ? `image/${match[1]}` : `image`
+      file = { type, filename, uri: localUri,data: `data:${type};base64,${file.base64}`}
       dispatch ({
         type: 'events/SET_STATE',
         payload: {new_group: {...group, file}},
@@ -95,6 +93,7 @@ const CreateEvent = () => {
 
   _takePhoto = async () => {
     const file = await ImagePicker.launchCameraAsync ({
+      base64: true,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
@@ -106,8 +105,9 @@ const CreateEvent = () => {
       let filename = localUri.split ('/').pop ();
 
       // Infer the type of the image
-      let match = /\.(\w+)$/.exec (filename);
-      file.type = match ? `image/${match[1]}` : `image`;
+      let match = /\.(\w+)$/.exec(filename);
+      let type = match ? `image/${match[1]}` : `image`
+      file = { type, filename, uri: localUri,data: `data:${type};base64,${file.base64}`}
       dispatch ({
         type: 'events/SET_STATE',
         payload: {new_group: {...group, file}},

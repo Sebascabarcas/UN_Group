@@ -145,7 +145,7 @@ EventsScreen = () => {
           // onEndReachedThreshold={0.2}
         />
       </View> :
-      <NoResults lottieProps={{style: {width: 200}}} animationName="empty-gabinete" primaryText="¡No hay resultados!" secondaryText="No hay invitaciones pendientes para ti, vuelve más tarde" secondaryTextStyles={{color: 'white'}}/>}
+      <NoResults lottieProps={{style: {width: 200}}} animationName="empty-gabinete" primaryText="¡No hay resultados!" secondaryText="No hay eventos pendientes para ti, vuelve más tarde" secondaryTextStyles={{color: 'white'}}/>}
     </Content>
     </ImageBackground>
   );

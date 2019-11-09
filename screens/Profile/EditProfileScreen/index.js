@@ -53,6 +53,7 @@ const EditProfileScreen = () => {
 
   _pickImage = async () => {
     let file = await ImagePicker.launchImageLibraryAsync ({
+      base64: true,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
@@ -65,9 +66,9 @@ const EditProfileScreen = () => {
 
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
-      file = { type: match ? `image/${match[1]}` : `image`, filename, uri: localUri}
+      let type = match ? `image/${match[1]}` : `image`
+      file = { type, filename, uri: localUri,data: `data:${type};base64,${file.base64}`}
       user.file = file
-      console.log (file);
       dispatch ({
         type: 'session/SET_STATE',
         payload: {current_user_edition: user},
@@ -77,6 +78,7 @@ const EditProfileScreen = () => {
 
   _takePhoto = async () => {
     const file = await ImagePicker.launchCameraAsync ({
+      base64: true,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
@@ -91,7 +93,8 @@ const EditProfileScreen = () => {
 
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
-      file.type = match ? `image/${match[1]}` : `image`;
+      let type = match ? `image/${match[1]}` : `image`
+      file = { type, filename, uri: localUri,data: `data:${type};base64,${file.base64}`}
       user.file = file
       dispatch ({
         type: 'session/SET_STATE',

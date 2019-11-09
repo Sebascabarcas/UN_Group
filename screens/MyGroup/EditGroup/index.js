@@ -36,11 +36,11 @@ const EditGroup = () => {
   const [showImageModal, _setShowImageModal] = useState (false);
   const {editing_group: group} = useSelector (state => state.groups);
   const dispatch = useDispatch ();
-
+  
   useEffect (() => {
     getPermissionAsync ();
   }, []);
-
+  
   getPermissionAsync = async () => {
     if (Constants.platform.ios) {
       const {status} = await Permissions.askAsync (
@@ -55,29 +55,32 @@ const EditGroup = () => {
 
   _pickImage = async () => {
     let file = await ImagePicker.launchImageLibraryAsync ({
+      base64: true,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
     });
-
+    
     if (!file.cancelled) {
       _setShowImageModal (false);
       let localUri = file.uri;
       let filename = localUri.split('/').pop();
-
+      
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
-      file = { type: match ? `image/${match[1]}` : `image`, filename, uri: localUri}
+      let type = match ? `image/${match[1]}` : `image`
+      file = { type, filename, uri: localUri,data: `data:${type};base64,${file.base64}`}
       dispatch ({
         type: 'groups/SET_STATE',
         payload: {editing_group: {...group, file}},
       });
     }
   };
-
+  
   _takePhoto = async () => {
     const file = await ImagePicker.launchCameraAsync ({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      base64: true,
       allowsEditing: true,
       aspect: [4, 3],
     });
@@ -89,7 +92,8 @@ const EditGroup = () => {
 
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
-      file.type = match ? `image/${match[1]}` : `image`;
+      let type = match ? `image/${match[1]}` : `image`
+      file = { type, filename, uri: localUri,data: `data:${type};base64,${file.base64}`}
       dispatch ({
         type: 'groups/SET_STATE',
         payload: {editing_group: {...group, file}},
@@ -249,7 +253,7 @@ const EditGroup = () => {
           primary
           full
           onPress={() => {
-            dispatch ({type: 'groups/UPDATE_GROUP', payload: {group, navigate}});
+            dispatch ({type: 'groups/UPDATE_GROUP', payload: {id: group.id, group, navigate}});
             // navigate ('Groups');
           }}
           // onPress={() => navigate('EditProfile')}
