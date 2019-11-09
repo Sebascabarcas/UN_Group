@@ -39,11 +39,11 @@ export async function showUser(userID, { skipLoading }) {
   return Requests.get(`users/id/${userID}`, { skipLoading }).then(user => user.data)
 }
 
-export async function updateUser(user, { skipLoading }) {
-  // return Requests.put(``, user, { skipLoading }).then(user => user.data)
+export async function updateUser(id, user, { skipLoading }) {
+  // return Requests.put(`users/${id}`, user, { skipLoading }).then(user => user.data)
   console.log(user);
   let {secret} = await Storage.get('Session')
-  return fetch(`${apiUrl}/UNGroup/API/users/update`, {
+  return fetch(`${apiUrl}/UNGroup/API/users/${id}`, {
       method: 'PUT',
       body: user,
       headers: {
