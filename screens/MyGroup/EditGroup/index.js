@@ -28,9 +28,10 @@ import {USER_FACING_NOTIFICATIONS} from 'expo-permissions';
 import {useDispatch, useSelector} from 'react-redux';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import Images from '../../../constants/Images.js';
+import getEnvVars from '../../../environment';
 
 const {height: fullHeight} = Dimensions.get ('window');
-
+const {apiUrl} = getEnvVars();
 const EditGroup = () => {
   const {navigate} = useNavigation ();
   const [showImageModal, _setShowImageModal] = useState (false);
@@ -172,7 +173,7 @@ const EditGroup = () => {
               imageStyle={{borderRadius: 100}}
               style={styles.profileImg}
               source={
-                group.file ? {uri: group.file.uri} : Images['raul']
+                group.file ? {uri: group.file.uri} : group.groupPicture ? {uri: `${apiUrl}${group.groupPicture.groupPictureName}`} : images['logo']
               }
             >
               <View style={styles.profileImgOverlay}>
@@ -253,7 +254,7 @@ const EditGroup = () => {
           primary
           full
           onPress={() => {
-            dispatch ({type: 'groups/UPDATE_GROUP', payload: {id: group.id, group, navigate}});
+            dispatch ({type: 'groups/UPDATE_GROUP', payload: {id: group.id, group, current_group: true, navigate}});
             // navigate ('Groups');
           }}
           // onPress={() => navigate('EditProfile')}

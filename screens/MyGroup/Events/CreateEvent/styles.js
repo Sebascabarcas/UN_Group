@@ -26,7 +26,8 @@ export default StyleSheet.create ({
   },
   imageGroup: {
     width: 50,
-    height: 50
+    height: 50,
+    borderRadius: 20
   },
   inputContainer: {
     // flex: 1,

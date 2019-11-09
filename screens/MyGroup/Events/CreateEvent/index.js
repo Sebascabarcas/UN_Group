@@ -220,7 +220,7 @@ const CreateEvent = () => {
             resizeMode="cover"
             style={styles.imageGroup}
             source={
-              group.groupPicture ? {uri: `${apiUrl}${group.groupPictures.groupPictureName}`} : images['logo']
+              group.groupPicture ? {uri: `${apiUrl}${group.groupPicture.groupPictureName}`} : images['logo']
             }
           />
           <View>

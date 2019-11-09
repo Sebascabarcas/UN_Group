@@ -55,7 +55,7 @@ const ShowGroupScreen = () => {
         style={styles.imageCar}
         source={
           // uri: 'https://www.indiacarnews.com/wp-content/uploads/2017/03/Renault-Duster-petrol-automatic-cvt-compressed.jpg',
-          current_group.groupPictures ? {uri: `${apiUrl}${current_group.groupPictures.groupPictureName}`} : images['no-circle-photo']
+          current_group.groupPicture ? {uri: `${apiUrl}${current_group.groupPicture.groupPictureName}`} : images['no-circle-photo']
         }
       />
       <Button style={styles.arriveButton}>
