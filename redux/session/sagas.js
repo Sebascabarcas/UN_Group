@@ -185,10 +185,7 @@ export function* LOGOUT({payload: {skipLoading, navigate}}) {
     ToastAndroid.show ('Error cerrando sesión', ToastAndroid.SHORT);
   }
   yield put ({
-    type: 'session/SET_STATE',
-    payload: {
-      loading: false,
-    },
+    type: 'RESET_APP',
   });
 }
 
