@@ -47,7 +47,7 @@ export function* CREATE_GROUP({ payload: { group, navigate, skipLoading } }) {
   })
 }
 
-export function* UPDATE_GROUP({ payload: { group, navigate, skipLoading } }) {
+export function* UPDATE_GROUP({ payload: { id, group, current_group, navigate, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
     payload: {
@@ -56,20 +56,23 @@ export function* UPDATE_GROUP({ payload: { group, navigate, skipLoading } }) {
   })
   
   try {
-    group = fromJsonToFormData(group)
+    // group = fromJsonToFormData(group)
     console.log(group);
-    
-    const {group: new_group} = yield call(updateGroup, group, {skipLoading});
+    const {group: modified_group} = yield call(updateGroup, id, group, {skipLoading});
     yield put({
-      type: 'session/SET_STATE',
+      type: 'groups/SET_STATE',
       payload: {
-        current_group: new_group
+        current_group: modified_group
       },
     })
+    if (current_group) {
+      const current_session = yield call (currentSession);
+      current_session.current_group = modified_group
+    }
     ToastAndroid.show ('Grupo modificado correctamente!', ToastAndroid.SHORT);
     navigate('Groups')
   } catch (error) {
-    console.log('CREATE_GROUP, ERROR:', error);
+    console.log('UPDATE_GROUP, ERROR:', error);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
     ToastAndroid.show ('Error creando grupo!', ToastAndroid.SHORT);
   }
@@ -388,7 +391,7 @@ export function* DELETE_GROUP_MEMBER({ payload: { id, index, userID, goBack, ski
   })
 }
 
-export function* LEAVE_GROUP({ payload: { id, navigate, skipLoading } }) {
+export function* LEAVE_GROUP({ payload: { id, navigate, resetNavigationStack, dispatchNavigation, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
     payload: {
@@ -397,42 +400,32 @@ export function* LEAVE_GROUP({ payload: { id, navigate, skipLoading } }) {
   })
   try {
     yield call(leaveGroup, id, { skipLoading })
+    dispatchNavigation(resetNavigationStack)
     const current_session = yield call (currentSession);
     if (current_session) {
-      current_session.groups = current_session.groups.filter(group => group.id !== id) 
+      console.log('current_groups1:', current_session.groups);
+      current_session.groups = current_session.groups.filter(group => group.groupId !== id) 
+      console.log('current_groups2:', current_session.groups);
+      
       delete current_session.current_group
       delete current_session.user.isAdmin
-      if (current_session.groups.length > 0) {
-        current_session.current_group = current_session.groups[0]
-        current_session.user.isAdmin = current_session.current_group.isAdmin
-        yield put ({
-          type: 'session/SET_STATE',
-          payload: {
-            myGroups: current_session.groups,
-            current_group: current_session.current_group,
-            isAdmin: current_session.user.isAdmin
-          },
-        });
-      } else {
-        yield put ({
-          type: 'session/SET_STATE',
-          payload: {
-            current_group: null,
-            isAdmin: false
-          },
-        });
-      }
+      current_session.current_group = current_session.groups.length > 0 ? current_session.groups[0].group : null
+      current_session.user.isAdmin = current_session.current_group ? current_session.current_group.isAdmin : false
       yield call (
         Storage.set,
         'Session',
         current_session,
-        () => {
-          navigate ('Events');
-        }
       );
+      yield put ({
+        type: 'session/SET_STATE',
+        payload: {
+          myGroups: current_session.groups,
+          current_group: current_session.current_group,
+          isAdmin: current_session.user.isAdmin
+        },
+      });
     }
     ToastAndroid.show ('Has dejado el grupo!', ToastAndroid.SHORT);
-    navigate('Events');
   } catch (error) {
     console.log('DELETE_GROUP_MEMBER, ERROR:', error);
     ToastAndroid.show ('Error dejando el grupo', ToastAndroid.SHORT);
@@ -450,6 +443,7 @@ export default function* rootSaga() {
   yield all([
     takeLatest(actions.ACCEPT_GROUP_REQUEST, ACCEPT_GROUP_REQUEST),
     takeLatest(actions.CREATE_GROUP, CREATE_GROUP),
+    takeLatest(actions.UPDATE_GROUP, UPDATE_GROUP),
     takeLatest(actions.DELETE_GROUP_MEMBER, DELETE_GROUP_MEMBER),
     takeLatest(actions.GET_GROUPS, GET_GROUPS),
     takeLatest(actions.GET_GROUP, GET_GROUP),

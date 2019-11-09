@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import {Button, Switch} from 'native-base';
 import {useNavigation} from 'react-navigation-hooks';
+// import {NavigationAction} from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {useDispatch, useSelector} from 'react-redux';
 import getEnvVars from '../../../environment.js';
@@ -19,6 +21,7 @@ const {apiUrl} = getEnvVars ();
 const {height: fullHeight} = Dimensions.get ('window');
 
 const Member = () => {
+  console.log ('MyGroup/Member:');
   const _RBSheetRef = useRef (null);
   const {current_group: {id: groupId}, current_user: {id: current_user_id}, isSuperAdmin} = useSelector (state => state.session);
   const {
@@ -27,10 +30,8 @@ const Member = () => {
     loading,
     refreshing,
   } = useSelector (state => state.groups);
-  console.log ('current_group_member:', user);
-
   const dispatch = useDispatch ();
-  const {navigate, goBack, getParam} = useNavigation ();
+  const {navigate, goBack, reset, dispatch: dispatchNavigation, getParam} = useNavigation ();
 
   /*   useEffect (
     () => {
@@ -41,6 +42,10 @@ const Member = () => {
     },
     [dispatch]
   ); */
+  const resetNavigationStack = StackActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({ routeName: 'Home' })],
+  });
 
   const BottomSheetComponent = () => (
     <View>
@@ -67,7 +72,7 @@ const Member = () => {
               current_user_id === user.id ? 
               dispatch({
                 type: 'groups/LEAVE_GROUP',
-                payload: {id: groupId, navigate}
+                payload: {id: groupId, navigate, resetNavigationStack, dispatchNavigation}
               })
               :
               dispatch({
