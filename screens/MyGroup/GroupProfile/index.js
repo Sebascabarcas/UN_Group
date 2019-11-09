@@ -22,7 +22,10 @@ const {height: fullHeight} = Dimensions.get ('window');
 const { apiUrl } = getEnvVars();
 const GroupProfile = () => {
   const {
-    current_group,
+    current_group
+  } = useSelector (state => state.groups);
+
+  const {
     isAdmin,
     isSuperAdmin,
     more_pages,
@@ -40,7 +43,6 @@ const GroupProfile = () => {
   }, [dispatch]);
 
   handleEditButton = () => {
-    current_group.file = current_group.groupPicture
     dispatch({
       type: 'groups/SET_STATE',
       payload: {editing_group: current_group}
@@ -56,7 +58,7 @@ const GroupProfile = () => {
         style={styles.imageCar}
         source={
           // uri: 'https://www.indiacarnews.com/wp-content/uploads/2017/03/Renault-Duster-petrol-automatic-cvt-compressed.jpg',
-          current_group.groupPictures ? {uri: `${apiUrl}${current_group.groupPictures.groupPictureName}`} : images['logo']
+          current_group.groupPicture ? {uri: `${apiUrl}${current_group.groupPicture.uri}`} : images['logo']
         }
       />
       <Button style={styles.arriveButton}>

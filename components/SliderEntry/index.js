@@ -19,7 +19,7 @@ export default class SliderEntry extends Component {
 
         return parallax ? (
             <ParallaxImage
-              source={{ uri: illustration }}
+              source={illustration.uri ? { uri: illustration.uri } : illustration}
               containerStyle={[styles.imageContainer, even ? styles.imageContainerEven : {}]}
               style={styles.image}
               parallaxFactor={0.35}
@@ -29,7 +29,7 @@ export default class SliderEntry extends Component {
             />
         ) : (
             <Image
-              source={{ uri: illustration }}
+              source={ illustration.uri ? { uri: illustration.uri } : illustration}
               style={styles.image}
             />
         );

@@ -34,7 +34,7 @@ const MenuDrawer = () => {
   const [isReady, _setReady] = useState (false);
   const dispatch = useDispatch()
   const {navigate} = navigationHooks.useNavigation ();
-  const {current_user: user,  myGroups, isSuperAdmin} = useSelector(state => state.session)
+  const {current_user: user, current_group,  myGroups, isSuperAdmin} = useSelector(state => state.session)
   // console.log(user);
   
   
@@ -66,11 +66,27 @@ const MenuDrawer = () => {
     
   };
 
+  _handleMyGroup = async () => {
+    // await logout();
+    navigate('MyGroup')
+    dispatch({type: 'groups/SET_STATE', payload: {current_group}})
+    
+  };
+
   navLink = (nav, text, icon, options = {}) => {
     switch (nav) {
       case 'Log Out':
         return (
           <TouchableOpacity style={styles.linkContainer} onPress={_signOutAsync}>
+            {icon}
+            <MyText fontStyle="regular" style={styles.link}>
+              {text}
+            </MyText>
+          </TouchableOpacity>
+        );
+      case 'MyGroup':
+        return (
+          <TouchableOpacity style={styles.linkContainer} onPress={_handleMyGroup}>
             {icon}
             <MyText fontStyle="regular" style={styles.link}>
               {text}
@@ -98,7 +114,7 @@ const MenuDrawer = () => {
         <View style={styles.profile}>
           <TouchableWithoutFeedback style={styles.imgView} onPress={() => navigate ('MyProfile')}>
             {/* <View style={styles.imgView}> */}
-              <Image style={styles.img} resizeMode="cover" source={user.picture ? {uri: `${apiUrl}${user.picture.pictureName}`} : images["no-profile-photo"]} />
+              <Image style={styles.img} resizeMode="cover" source={user.picture ? {uri: `${apiUrl}${user.picture.uri}`} : images["no-profile-photo"]} />
             {/* </View> */}
           </TouchableWithoutFeedback>
           <View style={styles.profileText}>

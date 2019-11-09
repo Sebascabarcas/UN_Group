@@ -15,7 +15,7 @@ const CardEvent = ({ eventName, date, group: {groupName, groupPicture}, location
 	return(
 		<TouchableOpacity style={styles.container} onPress={onPress}>
 			<View style={styles.dataContainer}>
-				<Image source={groupPicture ? {uri: `${apiUrl}${groupPicture.groupPictureName}`} : images['logo']} style={styles.profilePhoto}/>
+				<Image source={groupPicture ? {uri: `${apiUrl}${groupPicture.uri}`} : images['logo']} style={styles.profilePhoto}/>
 				<View style={styles.subDataContainer}>
 					<View style={styles.groupNameContainer}>
 						<MyText numberOfLines={1} fontStyle="semibold" style={styles.groupNameText}> {eventName} </MyText>

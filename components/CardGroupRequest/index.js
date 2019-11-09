@@ -18,7 +18,7 @@ const CardGroupRequest = ({name, username, image, onAccept, onReject}) => {
         <Card style={styles.container}>
             <View style={styles.dataContainer}>
                 <View style={styles.groupPrincipalInfo}>
-                    <Image style={styles.image} source={image ? {uri: `${apiUrl}${image.pictureName}`} : images['no-profile-photo']}></Image>
+                    <Image style={styles.image} source={image ? {uri: `${apiUrl}${image.uri}`} : images['no-profile-photo']}></Image>
                     <View style={styles.nameContainer}>
                         <MyText numberOfLines={1} style={styles.groupName}>{name}</MyText>
                         <Badge style={styles.badgeRate}>

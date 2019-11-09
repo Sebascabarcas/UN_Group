@@ -61,7 +61,7 @@ const ShowEvent = () => {
               resizeMode="cover"
               style={styles.imageGroup}
               source={
-                group.groupPicture ? {uri: `${apiUrl}${group.groupPicture.groupPictureName}`} : images['logo']
+                group.groupPicture ? {uri: `${apiUrl}${group.groupPicture.uri}`} : images['logo']
               }
             />
             <View>

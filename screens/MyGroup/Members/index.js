@@ -14,14 +14,12 @@ const { apiUrl } = getEnvVars();
 const {height: fullHeight} = Dimensions.get ('window');
 
 const Members = () => {
+  console.log ('MyGroup/Members:');
   const {current_group} = useSelector (state => state.session);
   const {current_group_members, more_pages, loading, refreshing} = useSelector (
     state => state.groups
   );
   // let _current_group_members = [...current_group_members, ...current_group_members, ...current_group_members]
-  console.log ('LA   VAINA   JASJ  AJA ASKJASJDKAS');
-  console.log (current_group_members);
-
   const dispatch = useDispatch ();
   const {navigate, getParam} = useNavigation ();
 
@@ -41,7 +39,7 @@ const Members = () => {
     return <SliderEntry data={{
       title: `${user.firstName} ${user.lastName}`,
       subtitle: user.isAdmin ? 'Administrador' : 'Miembro',
-      illustration: user.picture ? `${apiUrl}${user.picture.pictureName}` : 'https://i.imgur.com/SsJmZ9jl.jpg'
+      illustration: user.picture ? {uri: `${apiUrl}${user.picture.uri}`} : {uri: 'https://i.imgur.com/SsJmZ9jl.jpg'}
     }} even={(index + 1) % 2 === 0} onPress={() => _onPressMember(item, index)} />;
   };
 

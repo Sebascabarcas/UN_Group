@@ -53,7 +53,7 @@ export default (SelectGroupModal = () => {
                     source={
                       group.groupPicture
                         ? {
-                            uri: `${apiUrl}${group.groupPicture.groupPictureName}`,
+                            uri: `${apiUrl}${group.groupPicture.uri}`,
                           }
                         : images['logo']
                     }

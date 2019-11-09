@@ -94,7 +94,7 @@ const Member = () => {
             resizeMode="cover"
             source={
               user.picture
-                ? {uri: `${apiUrl}${user.picture.pictureName}`}
+                ? {uri: `${apiUrl}${user.picture.uri}`}
                 : images['no-profile-photo']
             }
           />

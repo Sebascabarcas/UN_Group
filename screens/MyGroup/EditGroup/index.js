@@ -173,7 +173,7 @@ const EditGroup = () => {
               imageStyle={{borderRadius: 100}}
               style={styles.profileImg}
               source={
-                group.file ? {uri: group.file.uri} : group.groupPicture ? {uri: `${apiUrl}${group.groupPicture.groupPictureName}`} : images['logo']
+                group.file ? {uri: group.file.uri} : group.groupPicture ? {uri: `${apiUrl}${group.groupPicture.uri}`} : images['logo']
               }
             >
               <View style={styles.profileImgOverlay}>

@@ -75,7 +75,7 @@ const MyProfileScreen = () => {
     <View style={styles.container}>
       <View style={styles.profileImgContainer}>
         <View style={styles.imgView}>
-          <Image style={styles.profileImg} source={user.picture ? {uri: `${apiUrl}${user.picture.pictureName}`} : images["no-profile-photo"]} />
+          <Image style={styles.profileImg} source={user.picture ? {uri: `${apiUrl}${user.picture.uri}`} : images["no-profile-photo"]} />
         </View>
         <MyText fontStyle="bold" style={styles.name}>{user.firstName} {user.lastName}</MyText>
         <MyText style={styles.role}> {user.username} </MyText>

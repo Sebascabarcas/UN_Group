@@ -177,7 +177,7 @@ const EditProfileScreen = () => {
               style={styles.profileImg}
               source={
                 user.file
-                  ? {uri: user.file.pictureName ? `${apiUrl}${user.file.pictureName}` : user.file.uri} 
+                  ? {uri: user.file.uri} : user.picture ? {uri : `${apiUrl}${user.picture.uri}`}  
                   : images['no-profile-photo']
               }
             >
