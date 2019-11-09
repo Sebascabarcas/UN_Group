@@ -11,7 +11,7 @@ import {
 import {useNavigation} from 'react-navigation-hooks';
 import theme from '../../styles/theme.style';
 import styles from './styles';
-import {Button, Input, Item, Label, Icon} from 'native-base';
+import {Button, Input, Item, Label, Icon, Content} from 'native-base';
 import {
   AntDesign,
   FontAwesome,
@@ -23,6 +23,9 @@ import getEnvVars from '../../environment';
 import moment from 'moment';
 import BigListItem from '../../components/BigListItem';
 import MyText from '../../components/MyText';
+import animations from '../../constants/Animations';
+import NoResults from '../../components/NoResults';
+
 
 const {height: fullHeight} = Dimensions.get ('window');
 const {apiUrl} = getEnvVars();
@@ -83,44 +86,56 @@ const Invitations = () => {
           </View>
         </View>
       </View>
-      {
-        invitations.map(({id, event, event: { group: {groupName, groupPicture}, eventName}}, i) => (
-          <BigListItem 
-            key={id}
-            onPress={() => _onPressInvitation(id, event, i)}
-            touchContainerStyles={{marginVertical: 5}}
-            listContainerStyles={{
-              borderRadius: 20,
-              borderWidth: 1,
-              borderColor: '#EFEFF4',
-              elevation: 1,
-            }}
-            leftItem={
-                <Image
-                  resizeMode="cover"
-                  style={styles.imageGroup}
-                  source={
-                    groupPicture ? {uri: `${apiUrl}${groupPicture.pictureName}`} : images['logo']
-                  }
-                />
-            }
-            primaryText={eventName}
-            primaryTextStyles={{paddingTop: 5, paddingBottom: 2}}
-            secondaryText={groupName}
-            rightItem={
-              <Button large style={{ backgroundColor: '#7DC623', borderRadius: 50, padding: 20}}>
-                <AntDesign
-                  color="white"
-                  size={theme.ICON_SIZE_MEDIUM}
-                  active
-                  name="eye"
-                />
-              </Button>
-            }
-          />
+      <Content padder>
+        { invitations.length > 0 ?
+          invitations.map(({id, event, event: { group: {groupName, groupPicture}, eventName}}, i) => (
+            <BigListItem 
+              key={id}
+              onPress={() => _onPressInvitation(id, event, i)}
+              touchContainerStyles={{marginVertical: 5}}
+              listContainerStyles={{
+                borderRadius: 20,
+                borderWidth: 1,
+                borderColor: '#EFEFF4',
+                elevation: 1,
+              }}
+              leftItem={
+                  <Image
+                    resizeMode="cover"
+                    style={styles.imageGroup}
+                    source={
+                      groupPicture ? {uri: `${apiUrl}${groupPicture.pictureName}`} : images['logo']
+                    }
+                  />
+              }
+              primaryText={eventName}
+              primaryTextStyles={{paddingTop: 5, paddingBottom: 2}}
+              secondaryText={groupName}
+              rightItem={
+                <Button large style={{ backgroundColor: '#7DC623', borderRadius: 50, padding: 20}}>
+                  <AntDesign
+                    color="white"
+                    size={theme.ICON_SIZE_MEDIUM}
+                    active
+                    name="eye"
+                  />
+                </Button>
+              }
+            />
+          )
         )
-      )
-      }
+        :
+        <NoResults lottieProps={{autoSize: true}} animationName="error-tv" primaryText="¡No hay resultados!" secondaryText="No hay invitaciones pendientes para ti, vuelve más tarde"/>
+        }
+        {/* <Button primary iconRight block superRounded>
+          <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} onPress={() => {}} fontStyle="bold">¡Actualizar!</MyText>
+          <Icon
+            type="AntDesign"
+            name="rightcircle"
+            style={{color: "white", fontSize: theme.ICON_SIZE_SMALL}}
+          />
+        </Button> */}
+      </Content>
     </View>
   );
 };
