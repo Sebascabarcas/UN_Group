@@ -9,7 +9,7 @@ export default StyleSheet.create({
 	container: {
         flex: 1,
         // flexDirection: 'column',
-		backgroundColor: theme.GRAY_COLOR,
+		backgroundColor: theme.GRAY_LIGHT_COLOR,
 		// height: '100%',
 		// width: '100%',
 	},
