@@ -28,18 +28,18 @@ export async function createGroup(newGroup, { skipLoading } = {}) {
 }
 
 export async function updateGroup(id, newGroup, { skipLoading } = {}) {
-    // return Requests.post(`groups`, newGroup, { skipLoading, headers: {'Content-Type': 'multipart/form-data'}}).then(group => group.data)
-    console.log('newGroup:', newGroup);
+    return Requests.put(`groups/${id}`, newGroup, { skipLoading}).then(group => group.data)
+    // console.log('Updated group:', newGroup);
     
-    let {secret} = await Storage.get('Session')
-    return fetch(`${apiUrl}/UNGroup/API/groups/${id}`, {
-        method: 'PUT',
-        body: newGroup,
-        headers: {
-          'content-type': 'multipart/form-data',
-          'authorization': `Bearer ${secret}`
-        },
-      }).then(res => res.json());
+    // let {secret} = await Storage.get('Session')
+    // return fetch(`${apiUrl}/UNGroup/API/groups/${id}`, {
+    //     method: 'PUT',
+    //     body: newGroup,
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //       'authorization': `Bearer ${secret}`
+    //     },
+    //   }).then(res => res.json());
 }
 
 export async function sendGroupMemberRequest(id, { skipLoading } = {}) {
@@ -47,7 +47,7 @@ export async function sendGroupMemberRequest(id, { skipLoading } = {}) {
 }
 
 export async function addMember(id, userID, { skipLoading } = {}) {
-    return Requests.put(`groups/${id}/addMember/${userID}`, { skipLoading }).then(group => group.data)
+    return Requests.post(`groups/${id}/addMember/${userID}`, { skipLoading }).then(group => group.data)
 }
 
 export async function acceptMember(id, userID, { skipLoading } = {}) {
