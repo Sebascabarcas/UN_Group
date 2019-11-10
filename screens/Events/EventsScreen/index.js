@@ -128,7 +128,6 @@ EventsScreen = () => {
         source={Images['dashboard_bg_image']}
       >
     <Content contentContainerStyle={styles.container} padder>
-      <Divider style={{marginBottom: 5}} />
       {/* <ScrollView > */}
       {events.length > 0 ? <View style={styles.eventsContainer}>
         <FlatList

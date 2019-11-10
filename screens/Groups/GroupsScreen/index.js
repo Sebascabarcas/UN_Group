@@ -120,7 +120,6 @@ GroupsScreen = () => {
         source={Images['dashboard_bg_image']}
       >
     <View style={styles.container}>
-      <Divider style={{marginBottom: 5}} />
       {/* <ScrollView > */}
       <View style={styles.groupsContainer}>
         { <FlatList
