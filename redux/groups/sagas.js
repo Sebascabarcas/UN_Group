@@ -1,6 +1,6 @@
 import { put, call, all, takeEvery, takeLatest } from 'redux-saga/effects'
 import {
-  createGroup, getGroups, getGroup, getGroupMembers, sendGroupMemberRequest, getGroupCandidates, acceptMember, kickGroupMember, increasePrivileges, reducePrivileges, updateGroup, leaveGroup
+  createGroup, getGroups, getGroup, getGroupMembers, sendGroupMemberRequest, getGroupCandidates, acceptMember, kickGroupMember, increasePrivileges, reducePrivileges, updateGroup, leaveGroup, addMember
 } from '../../services/Groups'
 import {
   currentSession,
@@ -292,6 +292,37 @@ export function* REDUCE_PRIVILEGES({ payload: { id, userID, index, skipLoading }
   })
 }
 
+export function* ADD_GROUP_MEMBER({ payload: { id, userID, goBack, skipLoading } }) {
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    const {relation} = yield call(addMember, id, userID, { skipLoading })
+    yield put({
+      type: 'groups/ADD_ARRAY_ELEMENT',
+      payload: {
+        newElement: relation,
+        arrayName: 'current_group_members'
+      },
+    })
+    ToastAndroid.show ('Nuevo miembro de grupo añadido!', ToastAndroid.SHORT);
+    goBack()
+  } catch (error) {
+    console.log('ADD_GROUP_MEMBER, ERROR:', error);
+    ToastAndroid.show ('Error en añadición de nuevo miembro del grupo', ToastAndroid.SHORT);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
 export function* ACCEPT_GROUP_REQUEST({ payload: { id, index, userID, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
@@ -442,6 +473,7 @@ export function* LEAVE_GROUP({ payload: { id, navigate, resetNavigationStack, di
 export default function* rootSaga() {
   yield all([
     takeLatest(actions.ACCEPT_GROUP_REQUEST, ACCEPT_GROUP_REQUEST),
+    takeLatest(actions.ADD_GROUP_MEMBER, ADD_GROUP_MEMBER),
     takeLatest(actions.CREATE_GROUP, CREATE_GROUP),
     takeLatest(actions.UPDATE_GROUP, UPDATE_GROUP),
     takeLatest(actions.DELETE_GROUP_MEMBER, DELETE_GROUP_MEMBER),

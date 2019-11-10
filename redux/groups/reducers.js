@@ -7,6 +7,7 @@ const initialState = {
   groups: [],
   current_group: {groupPicture: null},
   current_group_members: [],
+  current_members_search: [],
   current_group_member: {},
   current_group_requests: [],
   new_group: {},
