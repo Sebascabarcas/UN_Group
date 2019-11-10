@@ -10,6 +10,8 @@ export default StyleSheet.create({
 		borderRadius: 20,
 		width: '100%',
 		backgroundColor: theme.COMPLEMENTARY_COLOR,
+		borderBottomWidth: 3,
+		borderColor: '#EFEFF4'
 	},
 	dataContainer:{
 		display: 'flex',
@@ -19,8 +21,6 @@ export default StyleSheet.create({
 		alignItems: 'center',
 		padding: wp(3),
 		flexDirection: 'row',
-		borderBottomWidth: 1,
-		borderColor: '#EFEFF4'
 	},
 	subDataContainer:{
 		flexDirection: 'column',
