@@ -114,7 +114,7 @@ const MenuDrawer = () => {
         <View style={styles.profile}>
           <TouchableWithoutFeedback style={styles.imgView} onPress={() => navigate ('MyProfile')}>
             {/* <View style={styles.imgView}> */}
-              <Image style={styles.img} resizeMode="cover" source={user.picture ? {uri: `${apiUrl}${user.picture.uri}`} : images["no-profile-photo"]} />
+              <Image style={styles.img} resizeMode="cover" source={user.picture ? {uri: `${user.picture.uri}`} : images["no-profile-photo"]} />
             {/* </View> */}
           </TouchableWithoutFeedback>
           <View style={styles.profileText}>

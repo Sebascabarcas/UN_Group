@@ -34,8 +34,8 @@ const LoginScreen = () => {
   // const [checked, _setChecked] = useState (true);
   const [showPassword, _setShowPassword] = useState (false);
   const [loading, _setLoading] = useState (false);
-  const [username, _setUsername] = useState ('tester');
-  const [pwd, _setPassword] = useState ('123456');
+  const [username, _setUsername] = useState ('demarchenac');
+  const [pwd, _setPassword] = useState ('tester');
 
   _signInAsync = async () => {
     _setLoading (true);
@@ -51,7 +51,7 @@ const LoginScreen = () => {
     _setLoading (false);
     // await AsyncStorage.setItem ('userToken', 'abc');
   };
-
+  
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.containerBack}>
       <ImageBackground

@@ -99,7 +99,7 @@ const Member = () => {
             resizeMode="cover"
             source={
               user.picture
-                ? {uri: `${apiUrl}${user.picture.uri}`}
+                ? {uri: `${user.picture.uri}`}
                 : images['no-profile-photo']
             }
           />

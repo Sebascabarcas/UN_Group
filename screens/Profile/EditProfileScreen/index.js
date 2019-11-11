@@ -77,7 +77,7 @@ const EditProfileScreen = () => {
   };
 
   _takePhoto = async () => {
-    const file = await ImagePicker.launchCameraAsync ({
+    let file = await ImagePicker.launchCameraAsync ({
       base64: true,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -177,7 +177,7 @@ const EditProfileScreen = () => {
               style={styles.profileImg}
               source={
                 user.file
-                  ? {uri: user.file.uri} : user.picture ? {uri : `${apiUrl}${user.picture.uri}`}  
+                  ? {uri: user.file.uri} : user.picture ? {uri : `${user.picture.uri}`}  
                   : images['no-profile-photo']
               }
             >

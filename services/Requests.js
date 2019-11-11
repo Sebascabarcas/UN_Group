@@ -93,7 +93,7 @@ function request(path, method, data, { _headers, skipLoading, skipToken }) {
   return httpClient({
     method,
     headers,
-    url: `${apiUrl}/UNGroup/API/${path}`,
+    url: `/UNGroup/API/${path}`,
     baseURL: `${apiUrl}`,
     data,
     skipLoading,

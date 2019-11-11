@@ -17,7 +17,7 @@ const CardUser = ({firstName, picture, firstLastname, onPress}) => {
       <View style={styles.shadow} />
       <View style={[styles.imageContainer]}>
         <Image
-          source={picture ? {uri: `${apiUrl}${picture.uri}`} : Images['no-profile-picture']}
+          source={picture ? {uri: `${picture.uri}`} : Images['no-profile-picture']}
           style={styles.image}
         />
         <View style={[styles.radiusMask]} />

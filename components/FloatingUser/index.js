@@ -16,7 +16,8 @@ const FloatingUser = ({firstName, picture, lastName, onPress}) => {
     >
       <View style={[styles.imageContainer]}>
         <Image
-          source={picture ? {uri: `${apiUrl}${picture.uri}`} : Images['no-profile-picture']}
+          resizeMode="cover"
+          source={picture ? {uri: `${picture.uri}`} : Images['no-profile-photo']}
           style={styles.image}
         />
       </View>

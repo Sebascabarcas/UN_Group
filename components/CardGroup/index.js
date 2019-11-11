@@ -20,7 +20,7 @@ const CardGroup = ({groupName, groupPicture, onPress}) => {
         <Card style={styles.container}>
             <View style={styles.dataContainer}>
                 <View style={styles.groupPrincipalInfo}>
-                    <Image style={styles.image} source={groupPicture ? {uri: `${apiUrl}${groupPicture.uri}`} : images['no-circle-photo']}/>
+                    <Image style={styles.image} source={groupPicture ? {uri: `${groupPicture.uri}`} : images['logo']}/>
                     <View style={styles.nameContainer}>
                         <MyText numberOfLines={1} style={styles.groupName}>{groupName}</MyText>
                         <Badge style={styles.badgeRate}>

@@ -66,7 +66,7 @@ const Invitations = () => {
               resizeMode="cover"
               style={styles.imageGroup}
               source={
-                user.picture ? {uri: `${apiUrl}${user.picture.uri}`} : images['no-profile-photo']
+                user.picture ? {uri: `${user.picture.uri}`} : images['no-profile-photo']
               }
             />
             <View>
@@ -104,7 +104,7 @@ const Invitations = () => {
                     resizeMode="cover"
                     style={styles.imageGroup}
                     source={
-                      groupPicture ? {uri: `${apiUrl}${groupPicture.uri}`} : images['logo']
+                      groupPicture ? {uri: `${groupPicture.uri}`} : images['logo']
                     }
                   />
               }

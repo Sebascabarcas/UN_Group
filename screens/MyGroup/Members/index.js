@@ -48,7 +48,7 @@ const Members = () => {
     return <SliderEntry data={{
       title: `${user.firstName} ${user.lastName}`,
       subtitle: user.isAdmin ? 'Administrador' : 'Miembro',
-      illustration: user.picture ? {uri: `${apiUrl}${user.picture.uri}`} : {uri: 'https://i.imgur.com/SsJmZ9jl.jpg'}
+      illustration: user.picture ? {uri: `${user.picture.uri}`} : {uri: 'https://i.imgur.com/SsJmZ9jl.jpg'}
     }} even={(index + 1) % 2 === 0} onPress={() => _onPressMember(item, index)} />;
   };
 
