@@ -27,7 +27,12 @@
       "bundleIdentifier": "com.wstem.ungroup"
     },
     "android": {
-      "package": "com.wstem.ungroup"
+      "package": "com.wstem.ungroup",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBcA6nehY8hx2kMll0bM3yhdrlxpNhqYSk"
+        }
+      }
     }
   }
 }
