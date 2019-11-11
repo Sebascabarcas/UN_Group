@@ -10,6 +10,7 @@ import {
   getUserInvitations,
   getUserEvents,
   acceptEventInvitation,
+  searchUsers,
 } from '../../services/Session';
 import Storage from '../../services/Storage';
 import jwt_decode from 'jwt-decode';
@@ -47,6 +48,7 @@ export function* LOGIN({payload}) {
     // console.log(storeSession);
     let current_group = null
     if (!isSuperAdmin && relations.length > 0) {
+      relations[0].group.isAdmin = relations[0].isAdmin;
       relations = relations.map (
         groupRelation => groupRelation.group
       );
@@ -62,12 +64,14 @@ export function* LOGIN({payload}) {
       type: 'session/SET_STATE',
       payload: {
         current_user: user,
-        // isAdmin: current_group.isAdmin || false,
+        isAdmin: current_group.isAdmin || false,
         isSuperAdmin,
         myGroups: isSuperAdmin ?  groups : userGroupRelations,
         current_group
       }
     });
+    console.log('current_group:   ', current_group);
+    
     user.isAdmin = current_group ? current_group.isAdmin : false
     yield call (
       Storage.set,
@@ -136,7 +140,7 @@ export function* UPDATE_PROFILE({payload}) {
     var {user, skipLoading, navigate} = payload;
     user = fromJsonToFormData (user);
     // user.password = "123456" //Por motivos de pruebas
-    const {user: user_edited} = yield call (updateUser, user, {skipLoading});
+    const {user: user_edited} = yield call (updateUser, user.id, user, {skipLoading});
     // console.log('User edited:', user_edited);
     
     current_session.user = {...current_session.user, ...user_edited}
@@ -308,6 +312,34 @@ export function* GET_USER_EVENTS({ payload: { id, skipLoading } }) {
   })
 }
 
+export function* SEARCH_USERS({ payload: { querySearch, skipLoading } }) {
+  yield put({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: true,
+    }
+  })
+  try {
+    const {users} = yield call(searchUsers, querySearch, { skipLoading })
+    
+    yield put({
+      type: 'session/SET_STATE',
+      payload: {
+        users_searched: users
+      }
+    })
+  } catch (error) {
+    console.log('GET_USER_INVITATIONS, ERROR:', error);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'events/SET_STATE',
+    payload: {
+      loading: false,
+    }
+  })
+}
+
 export function* ACCEPT_EVENT_INVITATION({ payload: { id, eventId, navigate, skipLoading } }) {
   yield put({
     type: 'session/SET_STATE',
@@ -374,6 +406,7 @@ export default function* rootSaga () {
     takeLatest (actions.LOGOUT, LOGOUT),
     takeLatest (actions.REGISTER, REGISTER),
     takeLatest (actions.UPDATE_PROFILE, UPDATE_PROFILE),
+    takeLatest (actions.SEARCH_USERS, SEARCH_USERS),
     takeLatest (actions.GET_USER_INVITATIONS, GET_USER_INVITATIONS),
     takeLatest (actions.GET_USER_EVENTS, GET_USER_EVENTS),
     takeLatest (actions.ACCEPT_EVENT_INVITATION, ACCEPT_EVENT_INVITATION),

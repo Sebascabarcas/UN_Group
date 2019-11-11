@@ -4,6 +4,7 @@ const initialState = {
   current_user: {},
   current_group: null,
   current_user_edition: {},
+  users_searched: [],
   isSuperAdmin: false,
   myGroups: [],
   myEvents: [],

@@ -108,7 +108,13 @@ const Members = () => {
         : 
         <NoResults lottieProps={{style: {width: wp(50)}}} animationName="minnion-looking" primaryText="¡Aún no hay miembros!" secondaryText="Anímate a buscar usuarios y convertirlos en miembros de tu grupo"/>
         }
-        <Button primary iconRight block superRounded onPress={() => navigate('AddMember')}>
+        <Button primary iconRight block superRounded onPress={() => {
+          dispatch({
+            type: 'session/SET_STATE',
+            payload: {users_searched: []}
+          })
+          navigate('AddMember')
+        }}>
             <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">Agregar Miembro</MyText>
             <AntDesign
               name="adduser"

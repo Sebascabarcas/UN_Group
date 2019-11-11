@@ -49,6 +49,7 @@ export default StyleSheet.create({
     right: -18
   },
   bodyContainer: {
+    display: 'flex',
     flex: 1,
     borderTopRightRadius: wp(30),
     backgroundColor: theme.SECONDARY_COLOR
@@ -60,7 +61,7 @@ export default StyleSheet.create({
     marginBottom: wp(15),
   },
   userRow: {
-    height: hp(20)
+    flex: 1
   },
   userSelectedContainer: {
     position: 'absolute',
@@ -77,12 +78,16 @@ export default StyleSheet.create({
   userSelectedImageContainer: {
     borderRadius: wp(50),
     height: hp(10),
-    flex: 1
+    width: wp(20),
+    marginRight: 10
+    // flex: 1,
+    // flexDirection: 'row',
   },
   userSelectedImage: {
+    // ...StyleSheet.absoluteFillObject,
     height: hp(10),
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: 'contain',
+    width: wp(20),
+    resizeMode: 'cover',
     borderRadius: wp(50),
   },
   userSelectedNameContainer: {
@@ -96,7 +101,7 @@ export default StyleSheet.create({
   userSelectedActions: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignSelf: 'center'
   },
   cancelButton: {

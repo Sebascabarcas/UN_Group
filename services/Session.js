@@ -31,6 +31,10 @@ export async function register(newUser, {skipLoading} = {}) {
   return Requests.post('users/', newUser, { skipLoading }).then(user => user.data)
 }
 
+export async function searchUsers(searchQuery, {skipLoading} = {}) {
+  return Requests.post('search/users/', {searchQuery}, { skipLoading }).then(user => user.data)
+}
+
 // export async function register(newUser) {
 //   return Requests.get('utils/testSQLConnection/').then(user => user.data)
 // }
