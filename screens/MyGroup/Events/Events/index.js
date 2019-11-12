@@ -9,7 +9,7 @@ import {
   // Picker,
   FlatList,
 } from 'react-native';
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import {AntDesign} from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import { Divider} from 'react-native-elements';
@@ -25,6 +25,7 @@ const {height: fullHeight} = Dimensions.get ('window');
 Events = () => {
   const [offSet, _setOffSet] = useState (0);
   // const flatList = useRef (null);
+  const dispatch = useDispatch();
   const {navigate, setParams} = navigationHooks.useNavigation ();
   const [groups, _setGroups] = useState ([]);
   const [page, _setPage] = useState (1);
@@ -156,7 +157,13 @@ Events = () => {
             direction="up"
             style={{ backgroundColor: theme.PRIMARY_COLOR }}
             position="bottomRight"
-            onPress={() => navigate("CreateEvent")}>
+            onPress={() => {
+              dispatch({
+                type: 'events/SET_STATE',
+                payload: {new_event: {eventName: 'Nombre del Evento', date: null, time: null}}
+              })
+              navigate("CreateEvent")
+            }}>
             <AntDesign name="plus" />
         </Fab> }
       </View>
