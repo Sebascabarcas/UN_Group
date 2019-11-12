@@ -22,7 +22,7 @@ import MainTabNavigator from './MainTabNavigator';
 import { Transition } from 'react-native-reanimated';
 import theme from '../styles/theme.style'
 import MyText from '../components/MyText';
-import {FontAwesome} from '@expo/vector-icons';
+import {FontAwesome, Ionicons} from '@expo/vector-icons';
 import {Button} from 'native-base';
 // Loading Screen
 import AuthLoadingScreen from '../screens/AuthLoadingScreen'
@@ -62,6 +62,9 @@ import EditGroup from '../screens/MyGroup/EditGroup';
 import ShowEvent from '../screens/Events/ShowEvent';
 import Invitations from '../screens/Invitations';
 import AddMember from '../screens/MyGroup/AddMember';
+import AddAdress from '../screens/Events/AddAdress';
+import TypeOfRoad from '../screens/Events/TypeOfRoad';
+import AddLocation from '../screens/Events/AddLocation';
 
 // import { Divider, Button } from 'react-native-elements';
 
@@ -105,9 +108,6 @@ const defaultStackConfig = {
 
 const AppStack = createStackNavigator(
   {
-    // AddCreditCard: {
-    //   screen: AddCreditCardScreen,
-    // },
     // Home: {
     //   screen: HomeScreen,
     //   navigationOptions: {
@@ -211,6 +211,70 @@ const AppStack = createStackNavigator(
       navigationOptions: {
         header: null
       }
+    },
+    AddAdress: {
+      screen: AddAdress,
+      navigationOptions: ({navigation}) => ({
+        title: 'AGREGAR DIRECCIÓN',
+        headerTransparent: true,
+        headerStyle: {
+          backgroundColor: 'transparent',
+        },
+        headerLeft: (
+          <Button
+            // block
+            style={{marginLeft: 20}}
+            iconLeft transparent
+            onPress={() => navigation.goBack()}
+          >
+            <Ionicons
+                name="ios-arrow-back"
+                color={theme.PRIMARY_COLOR}
+                size={theme.ICON_SIZE_SMALL}
+              />
+          </Button>
+        ),
+        headerTitleStyle: {
+          fontFamily: theme.FONT_FAMILY_SEMIBOLD,
+          fontSize: theme.FONT_SIZE_MEDIUM,
+          color: theme.DARK_COLOR
+        }
+      })
+    },
+    SelectTypeOfRoad: {
+      screen: TypeOfRoad,
+      navigationOptions: ({navigation}) => ({
+        title: 'SELECCIONE TIPO DE VÍA',
+        headerTransparent: true,
+        headerStyle: {
+          backgroundColor: 'transparent',
+        },
+        headerLeft: (
+          <Button
+            // block
+            style={{marginLeft: 20}}
+            iconLeft transparent
+            onPress={() => navigation.goBack()}
+          >
+            <Ionicons
+                name="ios-arrow-back"
+                color={theme.PRIMARY_COLOR}
+                size={theme.ICON_SIZE_SMALL}
+              />
+          </Button>
+        ),
+        headerTitleStyle: {
+          fontFamily: theme.FONT_FAMILY_SEMIBOLD,
+          fontSize: theme.FONT_SIZE_MEDIUM,
+          color: theme.DARK_COLOR
+        }
+      })
+    },
+    AddLocation: {
+      screen: AddLocation,
+      // navigationOptions: {
+      //   header: null
+      // }
     },
     EditProfile: {
       screen: EditProfileScreen,
