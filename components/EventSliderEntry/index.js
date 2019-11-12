@@ -38,7 +38,7 @@ export default class EventSliderEntry extends Component {
     }
 
     render () {
-        const { data: { title, subtitle }, even, onPress } = this.props;
+        const { data: { title, subtitle, address }, even, onPress } = this.props;
 
         const uppercaseTitle = title ? (
             <MyText
@@ -83,7 +83,7 @@ export default class EventSliderEntry extends Component {
                         //   fontStyle=""
                         numberOfLines={2}
                         >
-                            Cl 75B # 26D - 39
+                            {address.toUpperCase()}
                         </MyText>
                     </View>
                 </View>

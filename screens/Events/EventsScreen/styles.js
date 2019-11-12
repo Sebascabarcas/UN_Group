@@ -32,5 +32,21 @@ export default StyleSheet.create ({
       flex: 1,
       // marginHorizontal: 10,
     },
+    scrollview: {
+      // flex: 1,
+      position: 'absolute',
+      bottom: hp(2),
+      zIndex: 100000
+    },
+    scrollviewContainer:{
+      zIndex: 100000
+          // flex: 1,
+          // position: 'absolute',
+          // alignContent: 'flex-end',
+          // flexGrow: 1,
+          // justifyContent : 'flex-end',
+          // justifyContent: 'space-around',
+          // alignItems: 'baseline',
+    },
   });
   
