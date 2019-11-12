@@ -62,58 +62,12 @@ const CreateEvent = () => {
   };
 
   handleCreateEvent = async () => {
-    dispatch({
-      type: 'events/CREATE_EVENT', 
-      payload: {groupId: group.id, event}
-    })
+    // dispatch({
+    //   type: 'events/CREATE_EVENT', 
+    //   payload: {groupId: group.id, event}
+    // })
+    navigate('AddAdress')
   }
-  _pickImage = async () => {
-    let file = await ImagePicker.launchImageLibraryAsync ({
-      base64: true,
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-
-    if (!file.cancelled) {
-      _setShowImageModal (false);
-      let localUri = file.uri;
-      let filename = localUri.split ('/').pop ();
-
-      // Infer the type of the image
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`
-      file = { type, filename, uri: localUri,data: `data:${type};base64,${file.base64}`}
-      dispatch ({
-        type: 'events/SET_STATE',
-        payload: {new_group: {...group, file}},
-      });
-    }
-  };
-
-  _takePhoto = async () => {
-    const file = await ImagePicker.launchCameraAsync ({
-      base64: true,
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-
-    if (!file.cancelled) {
-      _setShowImageModal (false);
-      let localUri = file.uri;
-      let filename = localUri.split ('/').pop ();
-
-      // Infer the type of the image
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`
-      file = { type, filename, uri: localUri,data: `data:${type};base64,${file.base64}`}
-      dispatch ({
-        type: 'events/SET_STATE',
-        payload: {new_group: {...group, file}},
-      });
-    }
-  };
 
   showDateTimePicker = mode => {
     _setModeDateTimePicker (mode);
@@ -142,70 +96,8 @@ const CreateEvent = () => {
     // console.log(new Date (date))
   };
   
-  const ImageModal = () => (
-    <Modal animationType="fade" transparent={true} visible={showImageModal}>
-      <View
-        style={{
-          backgroundColor: '#6c6c6ca3',
-          flex: 1,
-          alignContent: 'center',
-          justifyContent: 'flex-end',
-          // marginHorizontal:
-          alignItems: 'center',
-        }}
-      >
-        <Button
-          // block
-          full
-          rounded
-          primary
-          style={{marginTop: 5, marginHorizontal: 10}}
-          onPress={_takePhoto}
-        >
-          <MyText
-            style={{fontSize: theme.FONT_SIZE_LARGE}}
-            color={theme.HEADER_MENU_TITLE_COLOR}
-            onPress={_takePhoto}
-          >
-            Tomar Foto
-          </MyText>
-        </Button>
-        <Button
-          full
-          rounded
-          primary
-          style={{marginTop: 5, marginHorizontal: 10}}
-          onPress={_pickImage}
-        >
-          <MyText
-            style={{fontSize: theme.FONT_SIZE_LARGE}}
-            color={theme.HEADER_MENU_TITLE_COLOR}
-          >
-            Escoger Foto
-          </MyText>
-        </Button>
-        <Button
-          full
-          rounded
-          transparent
-          danger
-          style={{marginVertical: 5, marginHorizontal: 10}}
-          onPress={() => _setShowImageModal (false)}
-        >
-          <MyText
-            style={{fontSize: theme.FONT_SIZE_LARGE}}
-            color={theme.HEADER_MENU_TITLE_COLOR}
-          >
-            Cancelar
-          </MyText>
-        </Button>
-      </View>
-    </Modal>
-  );
-  
   return (
     <View style={styles.container}>
-      <ImageModal/>
       <DateTimePicker
           isVisible={isDateTimePickerVisible}
           onConfirm={handleDatePicked}
@@ -250,12 +142,6 @@ const CreateEvent = () => {
           <Item stackedLabel>
               <Label>Descripción del Evento</Label>
               <Input value={event.description} onChangeText={(description) => dispatch({type: 'events/SET_STATE', payload: { new_event: {...event, description}}})} />
-          </Item>
-      </View>
-      <View style={styles.inputContainer}>
-          <Item stackedLabel>
-              <Label>Lugar del Evento</Label>
-              <Input value={event.location} onChangeText={(location) => dispatch({type: 'events/SET_STATE', payload: { new_event: {...event, location}}})} />
           </Item>
       </View>
       <TouchableWithoutFeedback onPress={() => showDateTimePicker('date')} style={styles.dateTimeContainer}>
