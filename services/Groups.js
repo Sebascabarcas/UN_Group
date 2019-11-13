@@ -4,6 +4,10 @@ import getEnvVars from '../environment';
 
 const { apiUrl } = getEnvVars();
 
+export async function getGroupEvents(id, { skipLoading } = {}) {
+    return Requests.get(`groups/${id}/events`).then(events => events.data)
+}
+
 export async function getGroups({ skipLoading } = {}) {
     return Requests.get(`groups`).then(groups => groups.data)
 }

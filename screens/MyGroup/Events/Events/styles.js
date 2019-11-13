@@ -15,6 +15,7 @@ export default StyleSheet.create ({
       width: '100%',
       height: '100%',
       flex: 1,
+      backgroundColor: '#EFEFF4',
       display: 'flex',
       // marginTop: Platform.OS === 'ios' ? 60 : 80,
       // paddingBottom: Platform.OS === 'ios' ? 60 : 80,
@@ -27,7 +28,7 @@ export default StyleSheet.create ({
     container: {
       flex: 1,
       // alignItems: 'center',
-      justifyContent: 'center',
+      // justifyContent: 'center',
     },
     iconContainer: {
       margin: 10,

@@ -1,6 +1,6 @@
 import { put, call, all, takeEvery, takeLatest } from 'redux-saga/effects'
 import {
-  createGroup, getGroups, getGroup, getGroupMembers, sendGroupMemberRequest, getGroupCandidates, acceptMember, kickGroupMember, increasePrivileges, reducePrivileges, updateGroup, leaveGroup, addMember
+  createGroup, getGroups, getGroup, getGroupMembers, sendGroupMemberRequest, getGroupCandidates, acceptMember, kickGroupMember, increasePrivileges, reducePrivileges, updateGroup, leaveGroup, addMember, getGroupEvents
 } from '../../services/Groups'
 import {
   currentSession,
@@ -75,6 +75,37 @@ export function* UPDATE_GROUP({ payload: { id, group, current_group, navigate, s
     console.log('UPDATE_GROUP, ERROR:', error);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
     ToastAndroid.show ('Error creando grupo!', ToastAndroid.SHORT);
+  }
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
+export function* GET_GROUP_EVENTS({payload: {id, skipLoading, concat}}) {
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    const {events} = yield call(getGroupEvents, id, { skipLoading })
+    console.log(events);
+    
+    yield put({
+      type: `groups/${concat ? 'ADD_ARRAY_ELEMENT' : 'SET_STATE' }`,
+      payload: {
+        arrayName: 'current_group_events',
+        newElement: events,
+        current_group_events: events
+      },
+    })
+  } catch (error) {
+    console.log('GET_GROUP_EVENTS, ERROR:', error);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
     type: 'groups/SET_STATE',
@@ -379,7 +410,6 @@ export function* REJECT_GROUP_REQUEST({ payload: { id, index, userID, skipLoadin
     ToastAndroid.show ('Solicitud de unión al grupo rechazada!', ToastAndroid.SHORT);
   } catch (error) {
     console.log('REJECT_GROUP_REQUEST, ERROR:', error);
-    
     ToastAndroid.show ('Error en rechazo de solicitud de unión al grupo', ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
@@ -477,6 +507,7 @@ export default function* rootSaga() {
     takeLatest(actions.CREATE_GROUP, CREATE_GROUP),
     takeLatest(actions.UPDATE_GROUP, UPDATE_GROUP),
     takeLatest(actions.DELETE_GROUP_MEMBER, DELETE_GROUP_MEMBER),
+    takeLatest(actions.GET_GROUP_EVENTS, GET_GROUP_EVENTS),
     takeLatest(actions.GET_GROUPS, GET_GROUPS),
     takeLatest(actions.GET_GROUP, GET_GROUP),
     takeLatest(actions.GET_GROUP_MEMBERS, GET_GROUP_MEMBERS),
