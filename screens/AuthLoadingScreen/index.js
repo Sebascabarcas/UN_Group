@@ -24,6 +24,7 @@ export default AuthLoadingScreen = (props) => {
       const {user: current_user, user: {isSuperAdmin, isAdmin}, current_group, groups} = sessionInfo
       // console.log('Current group:', current_group);
       dispatch({type: 'session/SET_STATE', payload: {current_user, current_group, myGroups: groups, isSuperAdmin, isAdmin}});
+      dispatch({type: 'groups/SET_STATE', payload: {current_group}});
       props.navigation.navigate('App');
       // props.navigation.navigate (status === 'granted' ? 'App' : 'Intro');
     } else {
