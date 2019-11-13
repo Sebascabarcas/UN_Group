@@ -6,6 +6,14 @@ import {
   } from 'react-native-responsive-screen';
   
 export default StyleSheet.create ({
+	touchContainerStyles: {
+		borderColor: '#EFEFF4',
+        shadowColor: '#000',
+		shadowOffset: { width: 0, height: 1 },
+		shadowOpacity: 0.1,
+		shadowRadius: 1.5,
+		elevation: 2, 
+	},
 	leftContainer: {
 		alignItems: 'center', marginHorizontal: 15
 	},
