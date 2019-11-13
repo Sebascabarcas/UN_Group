@@ -31,7 +31,7 @@ const SignUpScreen = () => {
     "middleName": "Deivis",
     "gender": "male",
     "phone": "3007838569",
-    "lastName": "Barbosa",
+    "firstLastname": "Barbosa",
     "job_title": "Colla",
     "pwd": "123456",
     "pwd_confirmation": "123456"
@@ -128,8 +128,8 @@ const SignUpScreen = () => {
               placeholder="Primer Apellido"
               placeholderTextColor="#FFF"
               style={styles.input}
-              onChangeText={lastName => _setUser ({...user, lastName})}
-              value={user.lastName}
+              onChangeText={firstLastname => _setUser ({...user, firstLastname})}
+              value={user.firstLastname}
             />
             <Ionicons
               style={styles.iconInput}

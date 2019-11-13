@@ -213,13 +213,13 @@ const EditProfileScreen = () => {
           </Item>
           <Item>
             <Input
-              onChangeText={lastName =>
+              onChangeText={firstLastname =>
                 dispatch ({
                   type: 'session/SET_STATE',
-                  payload: {current_user_edition: {...user, lastName}},
+                  payload: {current_user_edition: {...user, firstLastname}},
                 })}
               style={styles.input}
-              value={user.lastName}
+              value={user.firstLastname}
               placeholder="Apellidos"
             />
           </Item>

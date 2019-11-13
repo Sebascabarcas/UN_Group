@@ -116,8 +116,6 @@ EventsScreen = () => {
   }, [dispatch]);
 
   useEffect (() => {
-    console.log('useEffect eventsssssss: ', events);
-    console.log('useEffect eventsssssss: ', events[0]);
     if (events[0] && !eventsReady) {
       let {latitude, longitude} = events[0] 
       latitude = parseFloat(latitude)
@@ -180,8 +178,6 @@ EventsScreen = () => {
   }
 
   const _renderItem = ({item: event, index}) => {
-    console.log(event);
-    const {latitude, longitude} = event
     // _setMapRegion({...mapRegion, latitude, longitude})
     return <EventSliderEntry data={{
       title: `${event.eventName}`,

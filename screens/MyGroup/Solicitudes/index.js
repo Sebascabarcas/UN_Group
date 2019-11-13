@@ -98,7 +98,7 @@ Solicitudes = () => {
 
   _renderRequest = ({item: request, index}) => {
     return (
-      <CardGroupRequest name={`${request.user.firstName} ${request.user.lastName}`} image={request.user.picture} username={request.user.username} 
+      <CardGroupRequest name={`${request.user.firstName} ${request.user.firstLastname}`} image={request.user.picture} username={request.user.username} 
       onAccept={() => _acceptRequest(request, index)} onReject={() => _rejectRequest(request, index)}
       //  onReject={}  
        />

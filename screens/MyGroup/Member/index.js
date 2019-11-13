@@ -104,7 +104,7 @@ const Member = () => {
             }
           />
           <MyText fontStyle="bold" style={styles.memberName}>
-            {user.firstName} {user.lastName}
+            {user.firstName} {user.firstLastname}
           </MyText>
         </View>
         <View style={styles.containerUsername}>

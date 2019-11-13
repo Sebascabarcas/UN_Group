@@ -118,7 +118,7 @@ const MenuDrawer = () => {
             {/* </View> */}
           </TouchableWithoutFeedback>
           <View style={styles.profileText}>
-            <MyText style={styles.name}>{user.firstName} {user.lastName}</MyText>
+            <MyText style={styles.name}>{user.firstName} {user.firstLastname}</MyText>
             <View style={styles.settingsContainer}>
               <Badge
                 white

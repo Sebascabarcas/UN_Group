@@ -77,7 +77,7 @@ const MyProfileScreen = () => {
         <View style={styles.imgView}>
           <Image style={styles.profileImg} source={user.picture ? {uri: `${user.picture.uri}`} : images["no-profile-photo"]} />
         </View>
-        <MyText fontStyle="bold" style={styles.name}>{user.firstName} {user.lastName}</MyText>
+        <MyText fontStyle="bold" style={styles.name}>{user.firstName} {user.firstLastname}</MyText>
         <MyText style={styles.role}> {user.username} </MyText>
       </View>
     <ScrollView style={styles.infoContainer}>
@@ -89,7 +89,7 @@ const MyProfileScreen = () => {
             </ListItem>
             <ListItem style={styles.listItem}>
               <MyText>Apellidos</MyText>
-              <MyText color={theme.GRAY_COLOR}>{user.lastName}</MyText>
+              <MyText color={theme.GRAY_COLOR}>{user.firstLastname}</MyText>
             </ListItem>
             <ListItem style={styles.listItem}>
               <MyText>E-mail</MyText>
