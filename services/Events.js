@@ -30,6 +30,20 @@ export async function createEvent(groupId, newEvent, { skipLoading } = {}) {
     //   }).then(res => res.json());
 }
 
+export async function createTask(eventId, newTask, { skipLoading } = {}) {
+    return Requests.post(`events/${eventId}/addTask`, newTask, { skipLoading}).then(new_task => new_task.data)
+    
+    // let {secret} = await Storage.get('Session')
+    // return fetch(`${apiUrl}/UNGroup/API/groups/${groupId}/addEvent`, {
+    //     method: 'POST',
+    //     body: newEvent,
+    //     headers: {
+    //       'content-type': 'multipart/form-data',
+    //       'authorization': `Bearer ${secret}`
+    //     },
+    //   }).then(res => res.json());
+}
+
 export async function getEventAttendees(id, { skipLoading } = {}) {
     return Requests.get(`events/${id}/attendees`).then(eventAttendees => eventAttendees.data)
 }
