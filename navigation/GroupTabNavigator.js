@@ -120,4 +120,6 @@ export default createMaterialTopTabNavigator({
   MembersStack,
   EventsStack,
   SolicitudesStack,
+}, {
+  lazy: true
 });

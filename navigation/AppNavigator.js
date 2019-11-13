@@ -65,6 +65,11 @@ import AddMember from '../screens/MyGroup/AddMember';
 import AddAdress from '../screens/Events/AddAdress';
 import TypeOfRoad from '../screens/Events/TypeOfRoad';
 import AddLocation from '../screens/Events/AddLocation';
+import GroupProfile from '../screens/MyGroup/GroupProfile';
+import Members from '../screens/MyGroup/Members';
+import Events from '../screens/MyGroup/Events/Events';
+import Solicitudes from '../screens/MyGroup/Solicitudes';
+import CreateTask from '../screens/MyGroup/CreateTask';
 
 // import { Divider, Button } from 'react-native-elements';
 
@@ -118,6 +123,9 @@ const AppStack = createStackNavigator(
     //     },
     //   },
     // },
+    // MyGroup: {
+    //   screen: GroupProfile,
+    // },
     Home: {
       screen: MainTabNavigator,
       navigationOptions: {
@@ -170,13 +178,25 @@ const AppStack = createStackNavigator(
       },
     },
     MyGroup: {
-      screen: GroupTabNavigator,
-      navigationOptions: {
-        title: 'GRUPO',
-        // headerTransparent: true,
-        // headerStyle: {}
-      }
+      screen: GroupProfile,
     },
+    MyEvents: {
+      screen: Events
+    },
+    MyMembers: {
+      screen: Members
+    },
+    MySolicitudes: {
+      screen: Solicitudes
+    },
+    // MyGroup: {
+    //   screen: GroupTabNavigator,
+    //   navigationOptions: {
+    //     title: 'GRUPO',
+    //     // headerTransparent: true,
+    //     // headerStyle: {}
+    //   }
+    // },
     AddMember: {
       screen: AddMember,
       navigationOptions: {
@@ -208,6 +228,12 @@ const AppStack = createStackNavigator(
     },
     CreateEvent: {
       screen: CreateEvent,
+      navigationOptions: {
+        header: null
+      }
+    },
+    CreateTask: {
+      screen: CreateTask,
       navigationOptions: {
         header: null
       }

@@ -120,4 +120,10 @@ export default createBottomTabNavigator ({
   EventsStack,
   GroupsStack,
   SettingsStack,
-});
+}
+
+// , {
+//   animationEnabled: true,
+//   lazy: false
+// }
+);
