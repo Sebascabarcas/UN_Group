@@ -89,5 +89,24 @@ export default StyleSheet.create ({
   },
   cancelButton: {
     marginRight: 5
-  }
+  },
+  actionEvent:{
+		width: '100%',
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+    marginVertical: 10,
+	},
+  buttonAction:{
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: theme.BORDER_RADIUS_MEDIUM,
+		marginHorizontal: 5,
+		width: '30%'
+	},
+	buttonTextIcon:{
+    fontSize: theme.FONT_SIZE_MEDIUM,
+    color: theme.DARK_COLOR
+	},
 });

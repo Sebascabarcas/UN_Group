@@ -13,7 +13,7 @@ import theme from '../../../styles/theme.style';
 import styles from './styles';
 import images from '../../../constants/Images';
 import MyText from '../../../components/MyText';
-import {Button, Input, Item, Label, Icon} from 'native-base';
+import {Button, Input, Item, Label, Icon, Content} from 'native-base';
 import {
   AntDesign,
   FontAwesome,
@@ -32,11 +32,12 @@ const {apiUrl} = getEnvVars();
 const ShowEvent = () => {
   const {navigate, goBack, getParam} = useNavigation ();
   // const {new_group: group} = useSelector (state => state.groups);
-  const {current_user: {id: userId}} = useSelector (state => state.session);
+  const {current_user: {id: userId}, isAdmin} = useSelector (state => state.session);
   const {current_event: event} = useSelector (state => state.events);
   const { group } = event
   const dispatch = useDispatch ();
   const invitationId = getParam('invitationId')
+  const isGroupEvent = getParam('isGroupEvent')
 
   const handleAcceptEvent = () => {
     dispatch({
@@ -103,61 +104,79 @@ const ShowEvent = () => {
             </View>
         </View>
       </View>
-      <View style={styles.descriptionContainer}>
-        <View>
-          <MyText style={{fontSize: theme.FONT_SIZE_LARGE}} fontStyle="bold">Descripción</MyText>
-          <MyText>{event.description}</MyText>
+      <Content padder>
+        <View style={styles.descriptionContainer}>
+          <View>
+            <MyText style={{fontSize: theme.FONT_SIZE_LARGE}} fontStyle="bold">Descripción</MyText>
+            <MyText>{event.description}</MyText>
+          </View>
         </View>
-      </View>
-      <BigIconItem 
-      leftContainerStyles={{backgroundColor: '#68C2BB'}}
-      leftItem={
-        <AntDesign
-          name="calendar"
-          color="white"
-          size={theme.ICON_SIZE_MEDIUM}
+        <BigIconItem 
+        leftContainerStyles={{backgroundColor: '#68C2BB'}}
+        leftItem={
+          <AntDesign
+            name="calendar"
+            color="white"
+            size={theme.ICON_SIZE_MEDIUM}
+          />
+        } 
+        primaryText="Fecha"
+        rightItem={
+          <MyText> {moment(event.date).format('YYYY-MM-DD') }</MyText>
+        }
         />
-      } 
-      primaryText="Fecha"
-      rightItem={
-        <MyText> {moment(event.date).format('YYYY-MM-DD') }</MyText>
-      }
-      />
-      <BigIconItem 
-      touchContainerStyles={{marginVertical: 15}}
-      leftContainerStyles={{backgroundColor: '#F57E55'}}
-      leftItem={
-        <AntDesign
-          name="clockcircle"
-          color="white"
-          size={theme.ICON_SIZE_MEDIUM}
+        <BigIconItem 
+        touchContainerStyles={{marginVertical: 15}}
+        leftContainerStyles={{backgroundColor: '#F57E55'}}
+        leftItem={
+          <AntDesign
+            name="clockcircle"
+            color="white"
+            size={theme.ICON_SIZE_MEDIUM}
+          />
+        } 
+        primaryText="Hora"
+        rightItem={
+          <MyText> {moment(event.date).format('hh:mm A') }</MyText>
+        }
         />
-      } 
-      primaryText="Hora"
-      rightItem={
-        <MyText> {moment(event.date).format('hh:mm A') }</MyText>
-      }
-      />
-      {/* <View style={styles.footerContainer}>
-        <MyText fontStyle="bold">{group.groupName}/Nuevo Evento</MyText> */}
-        { invitationId !== undefined && <View style={styles.actionButtonContainer}> 
-          <Button onPress={handleCancelEvent} style={styles.cancelButton} danger block superRounded>
-            <Icon
-              type="AntDesign"
-              name="close"
-              style={{color: "white", fontSize: theme.ICON_SIZE_SMALL}}
-            />
+        { isGroupEvent !== undefined && <View style={styles.actionEvent}>
+          <Button transparent onPress={() => {navigate('Ateendees')}} style={styles.buttonAction}>
+            <FontAwesome name="users" size={theme.ICON_SIZE_MEDIUM} color={theme.PRIMARY_COLOR} />
+            <MyText fontStyle="semibold" style={styles.buttonTextIcon}>
+              Miembros
+            </MyText>
           </Button>
-          <Button primary iconRight block superRounded>
-            <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} onPress={handleAcceptEvent} fontStyle="bold">¡Asistiré!</MyText>
-            <Icon
-              type="AntDesign"
-              name="rightcircle"
-              style={{color: "white", fontSize: theme.ICON_SIZE_SMALL}}
-            />
+          <Button transparent onPress={() => {
+            navigate('CreateTask')}
+            } style={styles.buttonAction}>
+            <Ionicons name="ios-clipboard" size={theme.ICON_SIZE_MEDIUM} color={theme.PRIMARY_COLOR} />
+            <MyText fontStyle="semibold" style={styles.buttonTextIcon}>
+              Tareas
+            </MyText>
           </Button>
         </View>}
-      {/* </View> */}
+        {/* <View style={styles.footerContainer}>
+          <MyText fontStyle="bold">{group.groupName}/Nuevo Evento</MyText> */}
+          { invitationId !== undefined && <View style={styles.actionButtonContainer}> 
+            <Button onPress={handleCancelEvent} style={styles.cancelButton} danger block superRounded>
+              <Icon
+                type="AntDesign"
+                name="close"
+                style={{color: "white", fontSize: theme.ICON_SIZE_SMALL}}
+              />
+            </Button>
+            <Button primary iconRight block superRounded>
+              <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} onPress={handleAcceptEvent} fontStyle="bold">¡Asistiré!</MyText>
+              <Icon
+                type="AntDesign"
+                name="rightcircle"
+                style={{color: "white", fontSize: theme.ICON_SIZE_SMALL}}
+              />
+            </Button>
+          </View>}
+        {/* </View> */}
+      </Content>
     </View>
   );
 };
