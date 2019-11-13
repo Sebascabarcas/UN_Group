@@ -10,6 +10,7 @@ const initialState = {
   myEvents: [],
   myInvitations: [],
   loading: false,
+  refreshing: false,
 }
 
 export default function sessionReducer(state = initialState, action) {
