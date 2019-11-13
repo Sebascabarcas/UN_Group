@@ -10,8 +10,13 @@ export default StyleSheet.create({
 		borderRadius: 20,
 		width: '100%',
 		backgroundColor: theme.COMPLEMENTARY_COLOR,
-		borderBottomWidth: 3,
-		borderColor: '#EFEFF4'
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.1,
+		shadowRadius: 1.5,
+		elevation: 3,
+		// borderBottomWidth: 3,
+		// borderColor: '#EFEFF4'
 	},
 	dataContainer:{
 		display: 'flex',

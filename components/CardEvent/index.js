@@ -11,9 +11,9 @@ import getEnvVars from '../../environment.js'
 
 const {apiUrl} = getEnvVars ();
 
-const CardEvent = ({ eventName, date, group: {groupName, groupPicture}, location, description, onPress}) => {
+const CardEvent = ({ containerStyles, eventName, date, group: {groupName, groupPicture}, location, description, onPress}) => {
 	return(
-		<TouchableOpacity style={styles.container} onPress={onPress}>
+		<TouchableOpacity style={[styles.container, containerStyles]} onPress={onPress}>
 			<View style={styles.dataContainer}>
 				<Image source={groupPicture ? {uri: `${groupPicture.uri}`} : images['logo']} style={styles.profilePhoto}/>
 				<View style={styles.subDataContainer}>
