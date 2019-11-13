@@ -1,7 +1,7 @@
 import { ToastAndroid } from 'react-native';
 import { put, call, all, takeEvery, takeLatest } from 'redux-saga/effects'
 import actions from './actions'
-import { createEvent, getEvent, getEvents, getEventAttendees } from '../../services/Events';
+import { createEvent, getEvent, getEvents, getEventAttendees, createTask } from '../../services/Events';
 import fromJsonToFormData from '../../services/helpers';
 import moment from 'moment';
 import { getUserEvents } from '../../services/Session';
@@ -67,6 +67,35 @@ export function* CREATE_EVENT({ payload: { groupId, event, navigate, skipLoading
     // event = fromJsonToFormData(event)
     // console.log(event);
     const success = yield call(createEvent, groupId, event, {skipLoading});
+    console.log(success);
+    
+    ToastAndroid.show ('Evento creado correctamente!', ToastAndroid.SHORT);
+    navigate('Events')
+    // console.log(success);
+  } catch (error) {CREATE_EVENT
+    CREATE_EVENT
+    console.log('CREATE_EVENT, ERROR:', error);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    ToastAndroid.show ('Error creando evento!', ToastAndroid.SHORT);
+  }
+  yield put({
+    type: 'events/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
+export function* CREATE_TASK({ payload: { eventId, task, navigate, skipLoading } }) {
+  yield put({
+    type: 'events/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  
+  try {
+    const success = yield call(createTask, eventId, task, {skipLoading});
     console.log(success);
     
     ToastAndroid.show ('Evento creado correctamente!', ToastAndroid.SHORT);
@@ -167,9 +196,38 @@ export function* GET_EVENT_ATTENDEES({ payload: { id, skipLoading } }) {
   })
 }
 
+export function* GET_EVENT_TASKS({ payload: { id, skipLoading } }) {
+  yield put({
+    type: 'events/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    const {tasks} = yield call(getEventTasks, id, { skipLoading })
+    yield put({
+      type: 'events/SET_STATE',
+      payload: {
+        current_event_tasks: tasks,
+      },
+    })
+  } catch (error) {
+    console.log('GET_EVENT_TASKS, ERROR:', error);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'events/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
 export default function* rootSaga() {
   yield all([
     takeLatest(actions.CREATE_EVENT, CREATE_EVENT),
+    takeLatest(actions.CREATE_TASK, CREATE_TASK),
+    takeLatest(actions.GET_EVENT_TASKS, GET_EVENT_TASKS),
     takeLatest(actions.FIND_LOCATION, FIND_LOCATION),
     takeLatest(actions.GET_EVENTS, GET_EVENTS),
     takeLatest(actions.GET_EVENT, GET_EVENT),
