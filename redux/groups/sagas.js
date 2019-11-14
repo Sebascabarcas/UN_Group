@@ -8,11 +8,11 @@ import {
 import Storage from '../../services/Storage';
 import {ToastAndroid} from 'react-native'
 import actions from './actions'
-import fromJsonToFormData from '../../services/helpers';
+import {fromJsonToFormData} from '../../services/helpers';
 import { element } from 'prop-types';
 // import { errorMessage } from '../../services/helpers'
 
-export function* CREATE_GROUP({ payload: { group, navigate, skipLoading } }) {
+export function* CREATE_GROUP({ payload: { group, groups, navigate, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
     payload: {
@@ -22,8 +22,6 @@ export function* CREATE_GROUP({ payload: { group, navigate, skipLoading } }) {
   
   try {
     group = fromJsonToFormData(group)
-    console.log(group);
-    
     const {group: new_group} = yield call(createGroup, group, {skipLoading});
     yield put({
       type: 'groups/ADD_ARRAY_ELEMENT',
@@ -32,6 +30,27 @@ export function* CREATE_GROUP({ payload: { group, navigate, skipLoading } }) {
         newElement: new_group
       },
     })
+    if (groups.length === 0) {
+      const current_session = yield call (currentSession);
+      if (current_session) {
+        groups.push(new_group)
+        current_session.groups = groups;
+        current_session.current_group = new_group;
+        current_session.user.isAdmin = new_group.isAdmin
+        yield put ({
+          type: 'session/SET_STATE',
+          payload: {
+            current_group: group,
+            myGroups: groups
+          },
+        });
+        yield call (
+          Storage.set,
+          'Session',
+          current_session
+        );
+      }
+    }
     ToastAndroid.show ('Grupo creado correctamente!', ToastAndroid.SHORT);
     navigate('Groups')
   } catch (error) {

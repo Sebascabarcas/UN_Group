@@ -7,7 +7,7 @@ import Images from '../../constants/Images.js';
 import getEnvVars from '../../environment.js';
 
 const {apiUrl} = getEnvVars();
-const FloatingUser = ({firstName, picture, firstLastname, onPress}) => {
+const FloatingUser = ({firstName, picture, firstLastName, onPress}) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -29,7 +29,7 @@ const FloatingUser = ({firstName, picture, firstLastname, onPress}) => {
           style={[styles.title]}
           // numberOfLines={2/}
         >
-          {firstName} {firstLastname}
+          {firstName} {firstLastName}
         </MyText>
       </View>
     </TouchableOpacity>

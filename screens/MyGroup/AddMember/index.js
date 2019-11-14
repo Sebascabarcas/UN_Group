@@ -162,7 +162,7 @@ const AddMember = () => {
               style={styles.userSelectedName}
               fontStyle="semibold"
             >
-              {userSelected.firstName} {userSelected.firstLastname}
+              {userSelected.firstName} {userSelected.firstLastName}
             </MyText>
           </View>
           <View style={styles.userSelectedActions}>

@@ -70,7 +70,7 @@ const Invitations = () => {
               }
             />
             <View>
-              <MyText style={{color: 'white'}} fontStyle="bold">{user.firstName} {user.firstLastname}</MyText>
+              <MyText style={{color: 'white'}} fontStyle="bold">{user.firstName} {user.firstLastName}</MyText>
               <MyText style={{color: 'white'}} fontStyle="semibold">Mis Invitaciones</MyText>
             </View>
           </View>

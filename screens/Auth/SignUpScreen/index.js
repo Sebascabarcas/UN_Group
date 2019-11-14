@@ -31,7 +31,8 @@ const SignUpScreen = () => {
     "middleName": "Deivis",
     "gender": "male",
     "phone": "3007838569",
-    "firstLastname": "Barbosa",
+    "firstLastName": "Barbosa",
+    "secondLastName": "Rincones",
     "job_title": "Colla",
     "pwd": "123456",
     "pwd_confirmation": "123456"
@@ -128,8 +129,23 @@ const SignUpScreen = () => {
               placeholder="Primer Apellido"
               placeholderTextColor="#FFF"
               style={styles.input}
-              onChangeText={firstLastname => _setUser ({...user, firstLastname})}
-              value={user.firstLastname}
+              onChangeText={firstLastName => _setUser ({...user, firstLastName})}
+              value={user.firstLastName}
+            />
+            <Ionicons
+              style={styles.iconInput}
+              name={`${platformIcons}-person`}
+              color="#FFF"
+              size={theme.ICON_SIZE_SMALL}
+            />
+          </Item>
+          <Item white style={styles.itemForm}>
+            <Input
+              placeholder="Segundo Apellido"
+              placeholderTextColor="#FFF"
+              style={styles.input}
+              onChangeText={secondLastName => _setUser ({...user, secondLastName})}
+              value={user.secondLastName}
             />
             <Ionicons
               style={styles.iconInput}

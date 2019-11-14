@@ -15,7 +15,7 @@ import {
 import Storage from '../../services/Storage';
 import jwt_decode from 'jwt-decode';
 import actions from './actions';
-import fromJsonToFormData from '../../services/helpers';
+import {fromJsonToFormData, errorMessage} from '../../services/helpers';
 // import { errorMessage } from '../../services/helpers'
 
 export function* LOGIN({payload}) {
@@ -64,7 +64,7 @@ export function* LOGIN({payload}) {
       type: 'session/SET_STATE',
       payload: {
         current_user: user,
-        isAdmin: current_group.isAdmin || false,
+        isAdmin: current_group ? current_group.isAdmin : false,
         isSuperAdmin,
         myGroups: isSuperAdmin ?  groups : userGroupRelations,
         current_group
@@ -87,8 +87,7 @@ export function* LOGIN({payload}) {
     ToastAndroid.show ('Bienvenido a la aplicación!', ToastAndroid.SHORT);
     console.log ('guardado');
   } catch (error) {
-    console.log (error);
-    ToastAndroid.show ('Usuario o contraseña invalidos', ToastAndroid.SHORT);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put ({
     type: 'session/SET_STATE',

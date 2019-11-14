@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import theme from '../../styles/theme.style';
 
 const {apiUrl} = getEnvVars();
-const FloatingUserSelect = ({firstName, selected, picture, firstLastname, onPress}) => {
+const FloatingUserSelect = ({firstName, selected, picture, firstLastName, onPress}) => {
   console.log(selected);
   
   return (
@@ -40,7 +40,7 @@ const FloatingUserSelect = ({firstName, selected, picture, firstLastname, onPres
           style={[styles.title]}
           // numberOfLines={2/}
         >
-          {firstName} {firstLastname}
+          {firstName} {firstLastName}
         </MyText>
       </View>
     </TouchableOpacity>

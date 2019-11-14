@@ -32,7 +32,7 @@ import { AntDesign } from '@expo/vector-icons';
 const {apiUrl} = getEnvVars ();
 const {height: fullHeight} = Dimensions.get ('window');
 
-const HeaderComponent = ({group, taskName, handleTaskName, handleDescription, description, goBack}) => {
+const HeaderComponent = ({group, taskName, description, goBack}) => {
   return (
   <View style={styles.headerContainer}>
     <View style={styles.headerInnerContainer}>
@@ -66,20 +66,18 @@ const HeaderComponent = ({group, taskName, handleTaskName, handleDescription, de
         </Button>
       </View>
     </View>
-    <View style={styles.userTextInputContainer}>
-      <TextInput
-          style={{textAlign: 'center', fontFamily: theme.FONT_FAMILY_BOLD, fontSize: theme.FONT_SIZE_EXTRA_EXTRA_LARGE}}
-          placeholder="Nombre de la Tarea"
-          onChangeText={(taskName) => handleTaskName(taskName)}
-          value={taskName}
+    <MyText
+          style={{textAlign: 'center', fontSize: theme.FONT_SIZE_EXTRA_EXTRA_LARGE}}
           //  autoFocus
-      />
-    </View>
+          fontStyle="bold"
+    >
+      {taskName}
+    </MyText>
     <MyText
       style={[styles.centerText, styles.groupDescriptionText]}
       fontStyle="semibold"
     >
-      {current_group.description}
+      {description}
     </MyText>
   </View>
   );
@@ -87,16 +85,16 @@ const HeaderComponent = ({group, taskName, handleTaskName, handleDescription, de
 
 const ShowTask = () => {
   const [membersSelected, _setMembersSelected] = useState([])
-  const {current_group: group, current_group_members: group_members} = useSelector (state => state.groups);
+  const {current_group: group} = useSelector (state => state.groups);
+  const {current_event_task: task} = useSelector (state => state.events);
   let _group_members = group_members.map((member) => member.user)
   const {new_task: task, current_event: event} = useSelector (state => state.events);
   const dispatch = useDispatch ();
   const {navigate, goBack, getParam} = useNavigation ();
-  const [group_members0, _setGroupMembers0] = useState([])
-  const [group_members1, _setGroupMembers1] = useState([])
-  console.log(group_members0);
   
-  useEffect (
+  console.log(task);
+  
+  /* useEffect (
     () => {
       dispatch ({
         type: 'groups/GET_GROUP_MEMBERS',
@@ -104,65 +102,9 @@ const ShowTask = () => {
       });
     },
     [dispatch]
-  );
-
-  useEffect (
-    () => {
-      _setGroupMembers0(_group_members.slice(0, Math.ceil(_group_members.length / 2)))
-      _setGroupMembers1(_group_members.slice(Math.ceil(_group_members.length / 2), _group_members.length))
-    },
-    [group_members]
-  );
-
-  const handleOnPressUser = (group, member, i) => {
-    let _membersSelected = membersSelected
-    let isSelected = membersSelected.indexOf(member.id) !== -1
-    if (isSelected) {
-      _membersSelected = membersSelected.filter((memberId) => memberId !== member.id)  
-    } else {
-      _membersSelected.push(member.id)
-    }
-    _setMembersSelected(_membersSelected)  
-    let _group_members 
-    switch (group) {
-      case 0:
-        _group_members = group_members0
-        _group_members[i].isSelected = !member.isSelected
-        _setGroupMembers0([..._group_members])
-        // _setGroupMembers0([_group_members])
-        break;
-        case 1:
-          _group_members = group_members1
-          _group_members[i].isSelected = !member.isSelected
-          _setGroupMembers1([..._group_members])
-        break;
-    
-      default:
-        break;
-    }
-  }
-
-  const handleCreateTask = () => {
-    dispatch({
-      type: 'events/CREATE_TASK',
-      payload: {
-        eventId: event.id,
-        task: {...task, atendeeIdList: membersSelected}        
-      }
-    })
-  }
-  
-  const handleTaskName = (taskName) => {
-    dispatch({type: 'events/SET_STATE', payload: { new_task: {...task, taskName}}})
-  }
-
-  const handleDescription = (description) => {
-    dispatch({type: 'events/SET_STATE', payload: { new_task: {...task, description}}})
-  }
+  ); */
 
   const FloatingUsers = () => {
-    console.log('asdkasldkasldskadlaskl');
-    
     return <Row style={styles.userRow}>
       <Col>
         {group_members0.map((member, i) => 
@@ -179,9 +121,9 @@ const ShowTask = () => {
 
   return (
     <View style={styles.container}>
-      <HeaderComponent group={group} taskName={task.taskName} description={task.description} handleTaskName={handleTaskName} handleDescription={handleDescription}  goBack={goBack}/>
+      <HeaderComponent group={group} taskName={task.taskName} description={task.description}  goBack={goBack}/>
         {
-          _group_members.length > 0 ? 
+          task.group_members.length > 0 ? 
             <ScrollView 
               style={styles.bodyContainer}
               keyboardShouldPersistTaps="always"
@@ -191,7 +133,7 @@ const ShowTask = () => {
               </Grid> 
               {
                 membersSelected.length > 0 &&
-                <Button warning iconRight block superRounded style={styles.assignButton} onPress={handleCreateTask}>
+                <Button warning iconRight block superRounded style={styles.assignButton} onPress={handleShowTask}>
                   <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">Asignar</MyText>
                   <AntDesign
                     name="rightcircle"

@@ -31,7 +31,7 @@ const GroupMembers = () => {
   const _renderItem = ({item, index}) => {
     const {user} = item;
     return <SliderEntry data={{
-      title: `${user.firstName} ${user.firstLastname}`,
+      title: `${user.firstName} ${user.firstLastName}`,
       subtitle: user.isAdmin ? 'Administrador' : 'Miembro',
       illustration: user.picture ? `${user.picture.uri}` : 'https://i.imgur.com/SsJmZ9jl.jpg',
     }} even={(index + 1) % 2 === 0} />;

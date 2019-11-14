@@ -7,7 +7,7 @@ import Images from '../../constants/Images.js';
 import getEnvVars from '../../environment.js';
 
 const {apiUrl} = getEnvVars();
-const CardUser = ({firstName, picture, firstLastname, onPress}) => {
+const CardUser = ({firstName, picture, firstLastName, onPress}) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -30,7 +30,7 @@ const CardUser = ({firstName, picture, firstLastname, onPress}) => {
 			style={[styles.title]}
 			// numberOfLines={2/}
 		>
-			{firstName} {firstLastname}
+			{firstName} {firstLastName}
 		</MyText>
       </View>
     </TouchableOpacity>

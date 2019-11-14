@@ -13,21 +13,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import LottieView from 'lottie-react-native';
-// import {NavigationAction} from 'react-navigation';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import {useDispatch, useSelector, createSelector} from 'react-redux';
 import getEnvVars from '../../../environment.js';
 import MyText from '../../../components/MyText';
-import Images from '../../../constants/Images';
 import styles from './styles';
 import theme from '../../../styles/theme.style.js';
 import NoResults from '../../../components/NoResults/index.js';
-import CardUser from '../../../components/CardUser/index.js';
-import FloatingUser from '../../../components/FloatingUser/index.js';
-import animations from '../../../constants/Animations.js';
-import FloatingUserSelect from '../../../components/FloatingUserSelect/index.js';
-import { AntDesign } from '@expo/vector-icons';
 
 const {apiUrl} = getEnvVars ();
 const {height: fullHeight} = Dimensions.get ('window');
