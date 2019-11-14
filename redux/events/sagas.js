@@ -72,11 +72,8 @@ export function* CREATE_EVENT({ payload: { groupId, event, navigate, skipLoading
     ToastAndroid.show ('Evento creado correctamente!', ToastAndroid.SHORT);
     navigate('Events')
     // console.log(success);
-  } catch (error) {CREATE_EVENT
-    CREATE_EVENT
-    console.log('CREATE_EVENT, ERROR:', error);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
-    ToastAndroid.show ('Error creando evento!', ToastAndroid.SHORT);
+  } catch (error) {
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'events/SET_STATE',
@@ -101,11 +98,8 @@ export function* CREATE_TASK({ payload: { eventId, task, navigate, skipLoading }
     ToastAndroid.show ('Evento creado correctamente!', ToastAndroid.SHORT);
     navigate('Events')
     // console.log(success);
-  } catch (error) {CREATE_EVENT
-    CREATE_EVENT
-    console.log('CREATE_EVENT, ERROR:', error);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
-    ToastAndroid.show ('Error creando evento!', ToastAndroid.SHORT);
+  } catch (error) {
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'events/SET_STATE',
@@ -131,8 +125,7 @@ export function* GET_EVENT({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
-    console.log('GET_EVENT, ERROR:', error);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'events/SET_STATE',
@@ -158,8 +151,7 @@ export function* GET_EVENTS({isSuperAdmin, userId, skipLoading, concat}) {
       },
     })
   } catch (error) {
-    console.log('GET_EVENTS, ERROR:', error);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'events/SET_STATE',
@@ -185,8 +177,7 @@ export function* GET_EVENT_ATTENDEES({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
-    console.log('GET_EVENT_ATTENDEES, ERROR:', error);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'events/SET_STATE',
@@ -212,8 +203,7 @@ export function* GET_EVENT_TASKS({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
-    console.log('GET_EVENT_TASKS, ERROR:', error);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'events/SET_STATE',

@@ -146,6 +146,7 @@ export function errorMessage(error) {
         break
     }
   } else {
+    console.log(error)
     return error
   }
   

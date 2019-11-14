@@ -54,9 +54,7 @@ export function* CREATE_GROUP({ payload: { group, groups, navigate, skipLoading 
     ToastAndroid.show ('Grupo creado correctamente!', ToastAndroid.SHORT);
     navigate('Groups')
   } catch (error) {
-    console.log('CREATE_GROUP, ERROR:', error);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
-    ToastAndroid.show ('Error creando grupo!', ToastAndroid.SHORT);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'groups/SET_STATE',
@@ -91,9 +89,7 @@ export function* UPDATE_GROUP({ payload: { id, group, current_group, navigate, s
     ToastAndroid.show ('Grupo modificado correctamente!', ToastAndroid.SHORT);
     navigate('Groups')
   } catch (error) {
-    console.log('UPDATE_GROUP, ERROR:', error);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
-    ToastAndroid.show ('Error creando grupo!', ToastAndroid.SHORT);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'groups/SET_STATE',
@@ -123,8 +119,7 @@ export function* GET_GROUP_EVENTS({payload: {id, skipLoading, concat}}) {
       },
     })
   } catch (error) {
-    console.log('GET_GROUP_EVENTS, ERROR:', error);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'groups/SET_STATE',
@@ -152,8 +147,7 @@ export function* GET_GROUPS({skipLoading, concat}) {
       },
     })
   } catch (error) {
-    console.log('GET_GROUPS, ERROR:', error);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'groups/SET_STATE',
@@ -179,8 +173,7 @@ export function* GET_GROUP({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
-    console.log('GET_GROUP, ERROR:', error);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'groups/SET_STATE',
@@ -206,8 +199,7 @@ export function* GET_GROUP_MEMBERS({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
-    console.log('GET_GROUP_MEMBERS, ERROR:', error);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'groups/SET_STATE',
@@ -233,8 +225,7 @@ export function* GET_GROUP_CANDIDATES({ payload: { id, skipLoading } }) {
       }
     });
   } catch (error) {
-    console.log('GET_GROUP_CANDIDATES, ERROR:', error);
-    ToastAndroid.show ('Error en envío de solicitud de unión al grupo', ToastAndroid.SHORT);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -256,8 +247,7 @@ export function* SEND_GROUP_REQUEST({ payload: { id, skipLoading } }) {
     yield call(sendGroupMemberRequest, id, { skipLoading })
     ToastAndroid.show ('Solicitud de unión al grupo enviada!', ToastAndroid.SHORT);
   } catch (error) {
-    console.log('SEND_GROUP_REQUEST, ERROR:', error);
-    ToastAndroid.show ('Error en envío de solicitud de unión al grupo', ToastAndroid.SHORT);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -293,8 +283,7 @@ export function* INCREASE_PRIVILEGES({ payload: { id, userID, index, skipLoading
     })
     ToastAndroid.show ('Incremento de privilegios!', ToastAndroid.SHORT);
   } catch (error) {
-    console.log('ACCEPT_GROUP_REQUEST, ERROR:', error);
-    ToastAndroid.show ('Error en incrementación de privilegios', ToastAndroid.SHORT);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -330,8 +319,7 @@ export function* REDUCE_PRIVILEGES({ payload: { id, userID, index, skipLoading }
     })
     ToastAndroid.show ('Incremento de privilegios!', ToastAndroid.SHORT);
   } catch (error) {
-    console.log('REDUCE_PRIVILEGES, ERROR:', error);
-    ToastAndroid.show ('Error en incrementación de privilegios', ToastAndroid.SHORT);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -361,8 +349,7 @@ export function* ADD_GROUP_MEMBER({ payload: { id, userID, goBack, skipLoading }
     ToastAndroid.show ('Nuevo miembro de grupo añadido!', ToastAndroid.SHORT);
     goBack()
   } catch (error) {
-    console.log('ADD_GROUP_MEMBER, ERROR:', error);
-    ToastAndroid.show ('Error en añadición de nuevo miembro del grupo', ToastAndroid.SHORT);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -398,8 +385,7 @@ export function* ACCEPT_GROUP_REQUEST({ payload: { id, index, userID, skipLoadin
     })
     ToastAndroid.show ('Solicitud de unión al grupo aceptada!', ToastAndroid.SHORT);
   } catch (error) {
-    console.log('ACCEPT_GROUP_REQUEST, ERROR:', error);
-    ToastAndroid.show ('Error en aceptación de solicitud de unión al grupo', ToastAndroid.SHORT);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -428,9 +414,7 @@ export function* REJECT_GROUP_REQUEST({ payload: { id, index, userID, skipLoadin
     })
     ToastAndroid.show ('Solicitud de unión al grupo rechazada!', ToastAndroid.SHORT);
   } catch (error) {
-    console.log('REJECT_GROUP_REQUEST, ERROR:', error);
-    ToastAndroid.show ('Error en rechazo de solicitud de unión al grupo', ToastAndroid.SHORT);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'groups/SET_STATE',
@@ -459,9 +443,7 @@ export function* DELETE_GROUP_MEMBER({ payload: { id, index, userID, goBack, ski
     ToastAndroid.show ('Miembro eliminado del grupo!', ToastAndroid.SHORT);
     goBack();
   } catch (error) {
-    console.log('DELETE_GROUP_MEMBER, ERROR:', error);
-    ToastAndroid.show ('Error en eliminación de miemrbo del grupo', ToastAndroid.SHORT);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
     type: 'groups/SET_STATE',
@@ -507,8 +489,7 @@ export function* LEAVE_GROUP({ payload: { id, navigate, resetNavigationStack, di
     }
     ToastAndroid.show ('Has dejado el grupo!', ToastAndroid.SHORT);
   } catch (error) {
-    console.log('DELETE_GROUP_MEMBER, ERROR:', error);
-    ToastAndroid.show ('Error dejando el grupo', ToastAndroid.SHORT);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({

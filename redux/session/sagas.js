@@ -113,11 +113,7 @@ export function* REGISTER({payload}) {
     );
     navigate ('SignIn');
   } catch (error) {
-    console.log (error);
-    ToastAndroid.show (
-      'Error en creación de usuario, verifique los campos',
-      ToastAndroid.SHORT
-    );
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put ({
     type: 'session/SET_STATE',
@@ -157,8 +153,7 @@ export function* UPDATE_PROFILE({payload}) {
     ToastAndroid.show ('Usuario actualizado!', ToastAndroid.SHORT);
     navigate ('MyProfile');
   } catch (error) {
-    console.log (error);
-    ToastAndroid.show ('Error actualizando usuario', ToastAndroid.SHORT);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put ({
     type: 'session/SET_STATE',
@@ -185,7 +180,7 @@ export function* LOGOUT({payload: {skipLoading, navigate}}) {
     // yield call(logout, { skipLoading })
     yield call (Storage.delete, 'Session', () => navigate ('Auth'));
   } catch (error) {
-    ToastAndroid.show ('Error cerrando sesión', ToastAndroid.SHORT);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put ({
     type: 'RESET_APP',
@@ -273,7 +268,7 @@ export function* GET_USER_INVITATIONS({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
-    console.log('GET_USER_INVITATIONS, ERROR:', error);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -300,7 +295,7 @@ export function* GET_USER_EVENTS({ payload: { id, skipLoading } }) {
       }
     })
   } catch (error) {
-    console.log('GET_USER_INVITATIONS, ERROR:', error);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -328,7 +323,7 @@ export function* SEARCH_USERS({ payload: { querySearch, skipLoading } }) {
       }
     })
   } catch (error) {
-    console.log('GET_USER_INVITATIONS, ERROR:', error);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -357,7 +352,7 @@ export function* ACCEPT_EVENT_INVITATION({ payload: { id, eventId, navigate, ski
       },
     }) */
   } catch (error) {
-    console.log('ACCEPT_EVENT_INVITATION, ERROR:', error);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
@@ -386,7 +381,7 @@ export function* REJECT_EVENT_INVITATION({ payload: { id, eventId, skipLoading }
       },
     }) */
   } catch (error) {
-    console.log('ACCEPT_EVENT_INVITATION, ERROR:', error);
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
