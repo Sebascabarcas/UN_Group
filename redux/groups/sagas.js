@@ -8,7 +8,7 @@ import {
 import Storage from '../../services/Storage';
 import {ToastAndroid} from 'react-native'
 import actions from './actions'
-import {fromJsonToFormData} from '../../services/helpers';
+import {fromJsonToFormData, errorMessage} from '../../services/helpers';
 import { element } from 'prop-types';
 // import { errorMessage } from '../../services/helpers'
 
