@@ -63,9 +63,9 @@ httpClient.interceptors.response.use(
     console.info('xxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
     console.info('xxxxxxxxxxxRESPONSExxxxxxxxxx');
     console.info('-Status-');
-    console.error(err.status);
+    console.info(err.status);
     console.info('-Body-');
-    console.error(err.data);
+    console.info(err.data);
     console.info('</////RESPONSE////////>');
     console.info('<////////////////////>');
     console.info('<////////////////////>');
