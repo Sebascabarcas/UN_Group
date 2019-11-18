@@ -21,7 +21,7 @@ const FloatingUserSelect = ({firstName, selected, picture, firstLastName, onPres
       {selected && <View style={[styles.selectIconContainer]}>
         <Ionicons
           name="ios-checkmark-circle"
-          color="green"
+          color="white"
           size={theme.ICON_SIZE_MEDIUM}
         />
       </View>}

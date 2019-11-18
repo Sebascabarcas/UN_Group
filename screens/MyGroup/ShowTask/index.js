@@ -23,11 +23,9 @@ import Images from '../../../constants/Images';
 import styles from './styles';
 import theme from '../../../styles/theme.style.js';
 import NoResults from '../../../components/NoResults/index.js';
-import CardUser from '../../../components/CardUser/index.js';
-import FloatingUser from '../../../components/FloatingUser/index.js';
-import animations from '../../../constants/Animations.js';
+import { FloatingAction } from "react-native-floating-action";
 import FloatingUserSelect from '../../../components/FloatingUserSelect/index.js';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 
 const {apiUrl} = getEnvVars ();
 const {height: fullHeight} = Dimensions.get ('window');
@@ -85,35 +83,87 @@ const HeaderComponent = ({group, taskName, description, goBack}) => {
 
 const ShowTask = () => {
   const [membersSelected, _setMembersSelected] = useState([])
+  const {isAdmin} = useSelector (state => state.session);
   const {current_group: group} = useSelector (state => state.groups);
   const {current_event_task: task} = useSelector (state => state.events);
-  let _group_members = group_members.map((member) => member.user)
-  const {new_task: task, current_event: event} = useSelector (state => state.events);
+  // const {current_event: event} = useSelector (state => state.events);
   const dispatch = useDispatch ();
   const {navigate, goBack, getParam} = useNavigation ();
-  
+  const [group_members0, _setGroupMembers0] = useState([])
+  const [group_members1, _setGroupMembers1] = useState([])
   console.log(task);
   
-  /* useEffect (
+  useEffect (
+    () => {
+      if (task.responsibles) {
+        _setGroupMembers0(task.responsibles.slice(0, Math.ceil(task.responsibles.length / 2)))
+        _setGroupMembers1(task.responsibles.slice(Math.ceil(task.responsibles.length / 2), task.responsibles.length))
+      }
+    },
+    [task] 
+  );
+
+  useEffect (
     () => {
       dispatch ({
-        type: 'groups/GET_GROUP_MEMBERS',
-        payload: {id: group.id},
+        type: 'events/GET_EVENT_TASK',
+        payload: {id: task.id},
       });
     },
     [dispatch]
-  ); */
+  );
+
+  const handleOnPressEdit = () => {
+    dispatch({
+      type: 'events/SET_STATE',
+      payload: {editing_task: task}
+    })
+    navigate('EditTask')
+  }
+
+  const handleOnPressDelete = () => {
+    dispatch({
+      type: 'events/DELETE_TASK',
+      payload: {taskId: task.id, navigate}
+    })
+  }
+
+  const actions = [
+    {
+      name: 'Delete button',
+      render: () => 
+      <Button key="deleting" transparent onPress={handleOnPressDelete}>
+        <MaterialCommunityIcons name="delete-circle" color={theme.DANGER_COLOR} size={theme.ICON_SIZE_MEDIUM} />
+      </Button>
+    },
+    {
+      name: 'Edit button',
+      render: () => 
+      <Button key="edit" transparent onPress={handleOnPressEdit}>
+        <MaterialCommunityIcons name="circle-edit-outline" color={theme.WARNING_COLOR} size={theme.ICON_SIZE_MEDIUM} />  
+      </Button>
+    },
+    {
+      name: 'Accept button',
+      render: () => 
+      <Button key="accepting" transparent onPress={() => console.log('editinggggggggggg')}>
+        <MaterialCommunityIcons name="checkbox-marked-circle-outline" color={theme.SUCCESS_COLOR} size={theme.ICON_SIZE_MEDIUM} />
+      </Button>
+    },
+  ];
 
   const FloatingUsers = () => {
     return <Row style={styles.userRow}>
       <Col>
-        {group_members0.map((member, i) => 
-          <FloatingUserSelect onPress={() => handleOnPressUser(0, member, i)} selected={member.isSelected} key={member.id} {...member}/>
+        {group_members0.map(({taskCompleted, atendee: {user: member}}, i) =>{
+          console.log(taskCompleted);
+         return <FloatingUserSelect selected={taskCompleted} key={member.id} {...member}/>
+        }
         )}
       </Col>
       <Col>
-        {group_members1.map((member, i) => 
-          <FloatingUserSelect onPress={() => handleOnPressUser(1, member, i)} selected={member.isSelected} key={member.id} {...member}/>
+        {group_members1.map(({taskCompleted, atendee: {user: member}}, i) => 
+          <FloatingUserSelect selected={taskCompleted} key={member.id} {...member}/>
         )}
       </Col>
     </Row>
@@ -123,7 +173,7 @@ const ShowTask = () => {
     <View style={styles.container}>
       <HeaderComponent group={group} taskName={task.taskName} description={task.description}  goBack={goBack}/>
         {
-          task.group_members.length > 0 ? 
+          task.responsibles.length > 0 ? 
             <ScrollView 
               style={styles.bodyContainer}
               keyboardShouldPersistTaps="always"
@@ -131,23 +181,18 @@ const ShowTask = () => {
               <Grid style={styles.usersContainer}>
                 <FloatingUsers/>
               </Grid> 
-              {
-                membersSelected.length > 0 &&
-                <Button warning iconRight block superRounded style={styles.assignButton} onPress={handleShowTask}>
-                  <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">Asignar</MyText>
-                  <AntDesign
-                    name="rightcircle"
-                    color="white"
-                    size={theme.ICON_SIZE_SMALL}
-                  />
-                </Button>
-              }
           </ScrollView>
           :
           <View style={styles.bodyContainer}>
             <NoResults lottieProps={{autoSize: true, style:{width: wp(30)}}} animationName="user-scanning" primaryText="¡No se ha encontrado ningún usuario!" primaryTextStyles={{color: 'white'}} secondaryText="Verifique su busqueda o ingrese otro nombre"/>
           </View>
         }
+        {isAdmin && <FloatingAction
+          actions={actions}
+          onPressItem={name => {
+            console.log(`selected button: ${name}`);
+          }}
+        />}
     </View>
   );
 };

@@ -70,6 +70,14 @@ import Members from '../screens/MyGroup/Members';
 import Events from '../screens/MyGroup/Events/Events';
 import Solicitudes from '../screens/MyGroup/Solicitudes';
 import CreateTask from '../screens/MyGroup/CreateTask';
+import ShowTasks from '../screens/MyGroup/ShowTasks';
+import ShowTask from '../screens/MyGroup/ShowTask';
+import EditTask from '../screens/MyGroup/EditTask';
+import EditEvent from '../screens/MyGroup/Events/EditEvent';
+import MyTasks from '../screens/MyGroup/MyTasks';
+import MyTask from '../screens/MyGroup/MyTask';
+import Atendees from '../screens/MyGroup/Atendees';
+import MyUsers from '../screens/MyUsers';
 
 // import { Divider, Button } from 'react-native-elements';
 
@@ -143,9 +151,9 @@ const AppStack = createStackNavigator(
     },
     ShowGroup: {
       screen: ShowGroupScreen,
-      navigationOptions: {
-        header: null
-      },
+      // navigationOptions: {
+      //   header: null
+      // },
     },
     ShowEvent: {
       screen: ShowEvent,
@@ -171,6 +179,12 @@ const AppStack = createStackNavigator(
     MyProfile: {
       screen: MyProfileScreen,
     },
+    MyUsers: {
+      screen: MyUsers,
+      navigationOptions: {
+        header: null
+      },
+    },
     MyInvitations: {
       screen: Invitations,
       navigationOptions: {
@@ -180,23 +194,9 @@ const AppStack = createStackNavigator(
     MyGroup: {
       screen: GroupProfile,
     },
-    MyEvents: {
-      screen: Events
-    },
     MyMembers: {
       screen: Members
     },
-    MySolicitudes: {
-      screen: Solicitudes
-    },
-    // MyGroup: {
-    //   screen: GroupTabNavigator,
-    //   navigationOptions: {
-    //     title: 'GRUPO',
-    //     // headerTransparent: true,
-    //     // headerStyle: {}
-    //   }
-    // },
     AddMember: {
       screen: AddMember,
       navigationOptions: {
@@ -226,14 +226,26 @@ const AppStack = createStackNavigator(
         )
       })
     },
-    CreateEvent: {
-      screen: CreateEvent,
+    MySolicitudes: {
+      screen: Solicitudes
+    },
+    MyEvents: {
+      screen: Events
+    },
+    Atendees: {
+      screen: Atendees,
       navigationOptions: {
         header: null
       }
     },
-    CreateTask: {
-      screen: CreateTask,
+    EditEvent: {
+      screen: EditEvent,
+      navigationOptions: {
+        header: null
+      }
+    },
+    CreateEvent: {
+      screen: CreateEvent,
       navigationOptions: {
         header: null
       }
@@ -301,6 +313,42 @@ const AppStack = createStackNavigator(
       // navigationOptions: {
       //   header: null
       // }
+    },
+    MyTasks: {
+      screen: MyTasks,
+      navigationOptions: {
+        header: null
+      }
+    },
+    MyTask: {
+      screen: MyTask,
+      navigationOptions: {
+        header: null
+      }
+    },
+    CreateTask: {
+      screen: CreateTask,
+      navigationOptions: {
+        header: null
+      }
+    },
+    EditTask: {
+      screen: EditTask,
+      navigationOptions: {
+        header: null
+      }
+    },
+    ShowTasks: {
+      screen: ShowTasks,
+      navigationOptions: {
+        header: null
+      }
+    },
+    ShowTask: {
+      screen: ShowTask,
+      navigationOptions: {
+        header: null
+      }
     },
     EditProfile: {
       screen: EditProfileScreen,

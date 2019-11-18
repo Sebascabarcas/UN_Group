@@ -9,7 +9,6 @@ import {
 import {Button, Switch} from 'native-base';
 import {useNavigation} from 'react-navigation-hooks';
 // import {NavigationAction} from 'react-navigation';
-import { NavigationActions, StackActions } from 'react-navigation';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {useDispatch, useSelector} from 'react-redux';
 import getEnvVars from '../../../environment.js';
@@ -23,15 +22,19 @@ const {height: fullHeight} = Dimensions.get ('window');
 const Member = () => {
   console.log ('MyGroup/Member:');
   const _RBSheetRef = useRef (null);
-  const {current_group: {id: groupId}, current_user: {id: current_user_id}, isSuperAdmin} = useSelector (state => state.session);
   const {
-    current_group_member: {user, isAdmin, index},
+    current_group: {id: groupId},
+    current_user: {id: current_user_id},
+    isSuperAdmin,
+  } = useSelector (state => state.session);
+  const {
+    current_group_member: {user, isAdmin, id: relationId},
     more_pages,
     loading,
     refreshing,
   } = useSelector (state => state.groups);
   const dispatch = useDispatch ();
-  const {navigate, goBack, reset, dispatch: dispatchNavigation, getParam} = useNavigation ();
+  const {navigate, goBack} = useNavigation ();
 
   /*   useEffect (
     () => {
@@ -42,53 +45,46 @@ const Member = () => {
     },
     [dispatch]
   ); */
-  const resetNavigationStack = StackActions.reset({
-    index: 0,
-    actions: [NavigationActions.navigate({ routeName: 'Home' })],
-  });
-
   const BottomSheetComponent = () => (
     <View>
       <View style={{alignItems: 'center'}}>
         <MyText fontStyle="bold">Acciones</MyText>
       </View>
-      { isSuperAdmin &&
-        <View
-          style={{...styles.containerBottomAction, ...{flexDirection: 'row'}}}
+      <View
+        style={{...styles.containerBottomAction, ...{flexDirection: 'row'}}}
+      >
+        <MyText>Admin</MyText>
+        <Switch
+          onChange={() =>
+            dispatch ({
+              type: isAdmin
+                ? 'groups/REDUCE_PRIVILEGES'
+                : 'groups/INCREASE_PRIVILEGES',
+              payload: {id: groupId, userID: user.id},
+            })}
+          value={isAdmin}
+        />
+      </View>
+      <View style={styles.containerBottomAction}>
+        <Button
+          onPress={() => {
+            dispatch ({
+              type: 'groups/DELETE_GROUP_MEMBER',
+              payload: {id: groupId, relationId, userID: user.id, goBack},
+            });
+          }}
+          full
         >
-          <MyText>Admin</MyText>
-          <Switch onChange={() => 
-              dispatch({
-                type: isAdmin ? 'groups/REDUCE_PRIVILEGES' : 'groups/INCREASE_PRIVILEGES',
-                payload: {id: groupId, userID: user.id, index}
-              })} 
-              value={isAdmin} 
-              />
-        </View>
-      }
-        <View style={styles.containerBottomAction}>
-          <Button
-            onPress={() => {
-              current_user_id === user.id ? 
-              dispatch({
-                type: 'groups/LEAVE_GROUP',
-                payload: {id: groupId, navigate, resetNavigationStack, dispatchNavigation}
-              })
-              :
-              dispatch({
-                type: 'groups/DELETE_GROUP_MEMBER',
-                payload: {id: groupId, index, userID: user.id, goBack}
-              })
-            }}
-            full
-          >
-            <MyText>{current_user_id === user.id ? "Dejar el grupo" : "Eliminar del Grupo"}</MyText>
-          </Button>
-        </View>
-      
+          <MyText>
+            {current_user_id === user.id
+              ? 'Dejar el grupo'
+              : 'Eliminar del Grupo'}
+          </MyText>
+        </Button>
+      </View>
+
     </View>
   );
-
 
   return (
     <ImageBackground source={Images['abstractgradient4']} style={{flex: 1}}>
@@ -133,13 +129,14 @@ const Member = () => {
             </MyText>
           </View>
         </View>
-        <Button
-          onPress={() => {
-            _RBSheetRef.current.open ();
-          }}
-        >
-          <MyText>Acciones</MyText>
-        </Button>
+        {isSuperAdmin &&
+          <Button
+            onPress={() => {
+              _RBSheetRef.current.open ();
+            }}
+          >
+            <MyText>Acciones</MyText>
+          </Button>}
         <RBSheet
           ref={_RBSheetRef}
           height={150}
@@ -153,7 +150,7 @@ const Member = () => {
             },
           }}
         >
-          <BottomSheetComponent/>
+          <BottomSheetComponent />
         </RBSheet>
       </View>
     </ImageBackground>

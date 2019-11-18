@@ -6,12 +6,7 @@ import {
 } from 'react-native-responsive-screen';
 
 export default StyleSheet.create ({
-    tripBox: {
-      // margin: 20,
-      // marginBottom: 0,
-      // padding: 5,
-    },
-    fullImage: {
+    container: {
       width: '100%',
       height: '100%',
       flex: 1,
@@ -20,6 +15,27 @@ export default StyleSheet.create ({
       // paddingBottom: Platform.OS === 'ios' ? 60 : 80,
       // justifyContent: 'space-evenly',
       // alignItems: 'center',
+    },
+    headerContainer: {
+      width: wp (100),
+      paddingHorizontal: wp (5),
+      paddingTop: Platform.OS === 'ios' ? 60 : 80,
+      paddingBottom: 25,
+      borderBottomStartRadius: 20,
+      borderBottomEndRadius: 20,
+      backgroundColor: theme.PRIMARY_COLOR,
+    },
+    headerInnerContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    groupInfoContainer: {
+      // flex: 1,
+      flexDirection: 'row',
+    },
+    imageGroup: {
+      width: 50,
+      height: 50,
     },
     scroller: {
       flex: 1,
@@ -31,76 +47,6 @@ export default StyleSheet.create ({
     },
     iconContainer: {
       margin: 10,
-    },
-    footerText: {
-      color: 'white',
-    },
-    footerTextContainer: {
-      flexDirection: 'column',
-    },
-    footerContainer: {
-      backgroundColor: '#00AACD',
-      flexDirection: 'row',
-      flexBasis: 60,
-      // flex: 02,
-    },
-    footerInfoContainer: {
-      // backgroundColor: 'blue',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      flexWrap: 'nowrap',
-      // margin: 4,
-  
-      flex: 1,
-    },
-    badgesContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      margin: 15,
-      marginRight: 0,
-      justifyContent: 'flex-start',
-      // backgroundColor: 'blue',
-    },
-    pickerContainer: {
-      // position: 'absolute',
-      // right: 0,
-      flex: 1,
-      // justifyContent: "flex-end",
-      // alignContent: "flex-end",
-    },
-    picker: {
-      flex: 1,
-      // height: 50,
-      // width: 100,
-      // alignSelf: "flex-end",
-    },
-    badge: {
-      // backgroundColor: 'blue',
-      margin: 10,
-      marginRight: 0,
-      borderRadius: 20,
-      width: theme.ICON_SIZE_SMALL,
-      height: theme.ICON_SIZE_SMALL,
-    },
-    badgeText: {
-      margin: 10,
-      fontSize: theme.FONT_SIZE_MEDIUM,
-    },
-    pickerItem: {
-      fontSize: theme.FONT_SIZE_LARGE,
-      fontWeight: "bold"
-    },
-    groupsContainer: {
-      // backgroundColor: "red",
-      // overflow: 'hidden',
-      flexDirection: 'column',
-      flex: 1,
-      marginHorizontal: 10,
-    },
-    spinnerTextStyle: {
-      color: '#FFF',
-      fontFamily: theme.FONT_FAMILY_BOLD
-    },
+    }
   });
   

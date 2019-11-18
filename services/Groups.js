@@ -16,34 +16,20 @@ export async function getGroup(id, { skipLoading } = {}) {
     return Requests.get(`groups/${id}`).then(group => group.data)
 }
 
+export async function getUserTasks(userId, groupId, { skipLoading } = {}) {
+    return Requests.get(`users/${userId}/tasksAt/${groupId}`).then(tasks => tasks.data)
+}
+
 export async function createGroup(newGroup, { skipLoading } = {}) {
-    // return Requests.post(`groups`, newGroup, { skipLoading, headers: {'Content-Type': 'multipart/form-data'}}).then(group => group.data)
-    console.log('newGroup:', newGroup);
-    
-    let {secret} = await Storage.get('Session')
-    return fetch(`${apiUrl}/UNGroup/API/groups`, {
-        method: 'POST',
-        body: newGroup,
-        headers: {
-          'content-type': 'multipart/form-data',
-          'authorization': `Bearer ${secret}`
-        },
-      }).then(res => res.json());
+    return Requests.post(`groups`, newGroup, { skipLoading}).then(group => group.data)
 }
 
 export async function updateGroup(id, newGroup, { skipLoading } = {}) {
     return Requests.put(`groups/${id}`, newGroup, { skipLoading}).then(group => group.data)
-    // console.log('Updated group:', newGroup);
-    
-    // let {secret} = await Storage.get('Session')
-    // return fetch(`${apiUrl}/UNGroup/API/groups/${id}`, {
-    //     method: 'PUT',
-    //     body: newGroup,
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //       'authorization': `Bearer ${secret}`
-    //     },
-    //   }).then(res => res.json());
+}
+
+export async function deleteGroup(id, { skipLoading } = {}) {
+    return Requests.delete(`groups/${id}`, { skipLoading }).then(group => group.data)
 }
 
 export async function sendGroupMemberRequest(id, { skipLoading } = {}) {

@@ -1,4 +1,4 @@
-import {StyleSheet, PixelRatio} from 'react-native';
+import {StyleSheet, PixelRatio, Platform} from 'react-native';
 import theme from '../../../styles/theme.style';
 import {
   widthPercentageToDP as wp,
@@ -7,65 +7,56 @@ import {
 
 export default StyleSheet.create({
 	container: {
-		backgroundColor: theme.GRAY_COLOR,
-		flex: 1,
-		// justifyContent: 'space-evenly',
-		// alignItems: 'center'
-	},
-    scrollview: {
-        flex: 1
-    },
-    scrollviewContainer:{
+        flex: 1,
+        // flexDirection: 'column',
+        backgroundColor: '#EFEFF4',
+        // height: '100%',
+        // width: '100%',
+      },
+      scrollview: {
+        // flex: 1,
+      },
+      scrollviewContainer: {
         flex: 1,
         // alignContent: 'flex-end',
         // flexGrow: 1,
-        justifyContent : 'center',
+        justifyContent: 'center',
         // justifyContent: 'space-around',
         // alignItems: 'baseline',
-	},
-	// containerButtons:{
-	// 	flexDirection: 'column',
-	// 	justifyContent: 'center',
-	// 	alignItems: 'center'
-	// },
-	// buttonItem:{
-	// 	paddingHorizontal: wp(5),
-	// 	borderRadius: theme.BORDER_RADIUS_MEDIUM,
-	// 	backgroundColor: theme.COMPLEMENTARY_COLOR
-	// },
-	textItemButton:{
-		fontSize: theme.FONT_SIZE_MEDIUM,
-        color: theme.SECONDARY_COLOR
-	},
-    
-    ////
-    exampleContainer: {
-        paddingVertical: 30
-    },
-    exampleContainerDark: {
-        backgroundColor: '#1a1917'
-    },
-    exampleContainerLight: {
-        backgroundColor: 'white'
-    },
-    title: {
-        paddingHorizontal: 30,
-        backgroundColor: 'transparent',
-        color: 'rgba(255, 255, 255, 0.9)',
-        fontSize: 20,
-        fontWeight: 'bold',
-        textAlign: 'center'
-    },
-    titleDark: {
-        color: '#1a1917'
-    },
-    subtitle: {
-        marginTop: 5,
-        paddingHorizontal: 30,
-        backgroundColor: 'transparent',
-        color: 'rgba(255, 255, 255, 0.75)',
-        fontSize: 13,
-        fontStyle: 'italic',
-        textAlign: 'center'
-    },
+      },
+      headerContainer: {
+        width: wp (100),
+        paddingHorizontal: wp (5),
+        paddingTop: Platform.OS === 'ios' ? 60 : 80,
+        paddingBottom: 25,
+        borderBottomStartRadius: 20,
+        borderBottomEndRadius: 20,
+        backgroundColor: theme.PRIMARY_COLOR,
+      },
+      headerInnerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      },
+      groupInfoContainer: {
+        // flex: 1,
+        flexDirection: 'row',
+      },
+      imageGroup: {
+        width: 50,
+        height: 50,
+        borderRadius: wp(100),
+        marginRight: 5
+      },
+      sliderContainer: {
+        // backgroundColor: 'red',
+        // flex: 1,
+        // alignContent: 'flex-end',
+        // justifyContent: 'space-around',
+        // alignItems: 'baseline',
+      },
+      slider: {},
+      textItemButton: {
+        fontSize: theme.FONT_SIZE_MEDIUM,
+        color: theme.SECONDARY_COLOR,
+      },
 })

@@ -117,7 +117,7 @@ EventsScreen = () => {
 
   useEffect (() => {
     if (events[0] && !eventsReady) {
-      let {latitude, longitude} = events[0] 
+      let {latitude, longitude} = (!isSuperAdmin) ? events[0].event : events[0] 
       latitude = parseFloat(latitude)
       longitude = parseFloat(longitude)
       _setMapRegion({...mapRegion, latitude, longitude})
@@ -152,15 +152,6 @@ EventsScreen = () => {
     }
   };
 
-  _renderEvent = ({item: event, index}) => {
-    if (!isSuperAdmin) event = event.event 
-    // console.log(event)
-    return (
-      <CardEvent {...event} onPress={() => _onPressEvent(event)} />
-      // <CardEvent groupName="W-STEM" location={event.location} name={event.eventName} time={moment(event.date).format('hh:mm A')} date={moment(event.date).format('YYYY-MM-DD')} description={event.description} onPress={() => _onPressEvent(event)} />
-    );
-  };
-
   _onPressEvent = (event) => {
     dispatch({
       type: 'events/SET_STATE',
@@ -178,12 +169,13 @@ EventsScreen = () => {
   }
 
   const _renderItem = ({item: event, index}) => {
+    if (!isSuperAdmin) event = event.event 
     // _setMapRegion({...mapRegion, latitude, longitude})
     return <EventSliderEntry data={{
       title: `${event.eventName}`,
       subtitle: `${event.description}`,
       address: `${event.location}`,
-      illustration: {uri: 'https://i.imgur.com/SsJmZ9jl.jpg'}
+      illustration: event.group.groupPicture ? {uri: event.group.groupPicture.uri} : Images['logo']
     }} even={(index + 1) % 2 === 0} onPress={() => console.log(event)} />;
   };
 
@@ -193,7 +185,11 @@ EventsScreen = () => {
   };
 
   handleChangeRegion = (eventIndex) => {
-    let {latitude, longitude} = events[eventIndex]
+    console.log(events[eventIndex]);
+    let {latitude, longitude} = (isSuperAdmin) ? events[eventIndex] : events[eventIndex].event 
+    console.log(latitude);
+    console.log(longitude);
+    
     latitude = parseFloat(latitude)
     longitude = parseFloat(longitude)
     // mapRef.current.animateToRegion ({
@@ -221,7 +217,7 @@ EventsScreen = () => {
           directionalLockEnabled={true}
         >
           <View>
-            <SliderCarousel carouselRef={carouselRef} data={events} renderItem={_renderItem} onSnapToItem={handleChangeRegion}/>
+            <SliderCarousel carouselRef={carouselRef} data={events} renderItem={_renderItem} onSnapToItem={(e) => handleChangeRegion(e)}/>
           </View>
         </ScrollView>
         <MapView
@@ -244,8 +240,7 @@ EventsScreen = () => {
           region={mapRegion}
           onMapReady={_onMapReady}
           // onRegionChange={this._handleMapRegionChange}
-          showsUserLocation
-          showsMyLocationButton
+          // showsUserLocation
         >
           { mapReady && eventCoordinates &&
           <MapView.Marker

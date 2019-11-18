@@ -27,6 +27,16 @@ export default StyleSheet.create ({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  groupInfoContainer: {
+    // flex: 1,
+    flexDirection: 'row',
+  },
+  imageGroup: {
+    width: 50,
+    height: 50,
+    borderRadius: wp(100),
+    marginRight: 5
+  },
   eventTitleContainer: {
     marginTop: 20,
     marginBottom: 10,
@@ -37,14 +47,7 @@ export default StyleSheet.create ({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  groupInfoContainer: {
-    // flex: 1,
-    flexDirection: 'row',
-  },
-  imageGroup: {
-    width: 50,
-    height: 50
-  },
+  
   inputContainer: {
     // flex: 1,
     // backgroundColor: '#E4E5E9',
@@ -103,7 +106,7 @@ export default StyleSheet.create ({
 		alignItems: 'center',
 		borderRadius: theme.BORDER_RADIUS_MEDIUM,
 		marginHorizontal: 5,
-		width: '30%'
+		width: '50%'
 	},
 	buttonTextIcon:{
     fontSize: theme.FONT_SIZE_MEDIUM,

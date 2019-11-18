@@ -6,22 +6,23 @@ import { Asset } from 'expo-asset'
 import * as Font from 'expo-font'
 import { Ionicons } from '@expo/vector-icons';
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import reducers from './redux/reducers'
 import sagas from './redux/sagas'
 import * as firebase from 'firebase';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-
+import {composeWithDevTools} from 'redux-devtools-extension'
 import AppNavigator from './navigation/AppNavigator';
 import getTheme from './native-base-theme/components';
 import platform from './native-base-theme/variables/platform';
 import { StyleProvider } from 'native-base';
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const sagaMiddleware = createSagaMiddleware()
 const middlewares = [ sagaMiddleware]
 const store = createStore(reducers,
-  applyMiddleware(...middlewares)
+  composeEnhancers(applyMiddleware(...middlewares))
 );
 
 sagaMiddleware.run(sagas)

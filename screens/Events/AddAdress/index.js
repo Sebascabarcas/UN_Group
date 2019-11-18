@@ -18,8 +18,9 @@ import {useDispatch, useSelector} from 'react-redux';
 const {height: fullHeight} = Dimensions.get ('window');
 
 const AddAdress = () => {
-  const {navigate} = useNavigation ();
-  const {new_event: event} = useSelector (state => state.events);
+  const {navigate, getParam} = useNavigation ();
+  const current_event = getParam('current_event', 'new_event')
+  const {[current_event]: event} = useSelector (state => state.events);
   const [loading, _setLoading] = useState (false);
   const [offSet, _setOffSet] = useState (0);
   const dispatch = useDispatch ();
@@ -30,24 +31,24 @@ const AddAdress = () => {
       <Content padder>
         <Item onPress={() => navigate('SelectTypeOfRoad')} floatingLabel>
           <Label>Tipo de vía</Label>
-          <Input value={event.typeOfRoad} onFocus={() => navigate('SelectTypeOfRoad')} />
+          <Input value={event.typeOfRoad} onFocus={() => navigate('SelectTypeOfRoad', {current_event})} />
           <Icon active color={theme.PRIMARY_COLOR} name="ios-arrow-forward" />
         </Item>
         <View style={styles.inlineForm}>
           <Item style={styles.inlineInput} floatingLabel>
             <Label>Vía Principal</Label>
-            <Input onChangeText={(mainRoad) => dispatch({type: 'events/SET_STATE', payload: {new_event: {...event, mainRoad}}})} value={event.mainRoad} />
+            <Input onChangeText={(mainRoad) => dispatch({type: 'events/SET_STATE', payload: {[current_event]: {...event, mainRoad}}})} value={event.mainRoad} />
           </Item>
           <Item style={styles.inlineInput} floatingLabel>
             <Label>#Vía Secundaria</Label>
-            <Input onChangeText={(secondaryRoad) => dispatch({type: 'events/SET_STATE', payload: {new_event: {...event, secondaryRoad}}})} value={event.secondaryRoad} />
+            <Input onChangeText={(secondaryRoad) => dispatch({type: 'events/SET_STATE', payload: {[current_event]: {...event, secondaryRoad}}})} value={event.secondaryRoad} />
           </Item>
           <View style={{height: 25, marginHorizontal: 10, alignSelf: 'flex-end'}}>
             <MyText>-</MyText>
           </View>
           <Item style={styles.inlineInputNum} floatingLabel>
             <Label>Num</Label>
-            <Input onChangeText={(roadNumber) => dispatch({type: 'events/SET_STATE', payload: {new_event: {...event, roadNumber}}})} value={event.roadNumber} />
+            <Input onChangeText={(roadNumber) => dispatch({type: 'events/SET_STATE', payload: {[current_event]: {...event, roadNumber}}})} value={event.roadNumber} />
           </Item>
         </View>
       </Content>
@@ -55,7 +56,7 @@ const AddAdress = () => {
         primary
         full
         onPress={() => {
-          dispatch ({type: 'events/FIND_LOCATION', payload: {event, navigate}});
+          dispatch ({type: 'events/FIND_LOCATION', payload: {current_event, event, navigate}});
           // navigate ('Groups');
         }}
         // onPress={() => navigate('EditProfile')}

@@ -29,18 +29,15 @@ import BigListItem from '../../../components/BigListItem';
 const {height: fullHeight} = Dimensions.get ('window');
 
 const TypeOfRoad = () => {
-  const {goBack} = useNavigation ();
-  const {new_event: event} = useSelector (state => state.events);
-  const [loading, _setLoading] = useState (false);
-  const [offSet, _setOffSet] = useState (0);
-  const [showImageModal, _setShowImageModal] = useState (false);
-  const {new_group: group} = useSelector (state => state.groups);
+  const {goBack, getParam} = useNavigation ();
+  const current_event = getParam('current_event', 'new_event')
+  const {[current_event]: event} = useSelector (state => state.events);
   const dispatch = useDispatch ();
 
   const handleOnPress = (typeOfRoad) => {
     dispatch({
       type: 'events/SET_STATE',
-      payload: {new_event: {...event, typeOfRoad}}
+      payload: {[current_event]: {...event, typeOfRoad}}
     })
     goBack();
   }

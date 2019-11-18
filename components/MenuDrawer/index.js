@@ -176,13 +176,13 @@ const MenuDrawer = () => {
             size={theme.ICON_SIZE_SMALL}
           />
         )}
-        {navLink (
-          'Wallet',
+        { isSuperAdmin && navLink (
+          'MyUsers',
           // 'Assignment',
           'Mis Usuarios',
           <Entypo
             style={styles.iconLink}
-            name="wallet"
+            name="man"
             color={theme.GRAY_COLOR}
             size={theme.ICON_SIZE_SMALL}
           />

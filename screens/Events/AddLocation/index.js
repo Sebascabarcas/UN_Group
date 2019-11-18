@@ -21,8 +21,10 @@ const {height: fullHeight} = Dimensions.get ('window');
 
 const AddLocation = () => {
   const mapRef = useRef (null);
+  const {navigate, setParams, getParam} = useNavigation ();
   const {current_group: group} = useSelector (state => state.session);
-  const {new_event: event} = useSelector (state => state.events);
+  const current_event = getParam('current_event', 'new_event')
+  const {[current_event]: event} = useSelector (state => state.events);
   var mapRegion = {
     latitude: event.latitude,
     longitude: event.longitude,
@@ -30,10 +32,7 @@ const AddLocation = () => {
     longitudeDelta: 0.00421
   }
   const [marginBottom, _setMarginBottom] = useState (1);
-  const [loading, _setLoading] = useState (false);
-  const [offSet, _setOffSet] = useState (0);
   const dispatch = useDispatch ();
-  const {navigate, setParams} = useNavigation ();
   
   useEffect (() => {
     setParams({'address': event.location})
@@ -48,7 +47,7 @@ const AddLocation = () => {
     dispatch({
       type: 'events/SET_STATE',
       payload: {
-        new_event: {...event, latitude, longitude}
+        [current_event]: {...event, latitude, longitude}
       }
     })
   };
@@ -99,7 +98,7 @@ const AddLocation = () => {
         full
         onPress={() => {
           dispatch({
-            type: 'events/CREATE_EVENT', 
+            type:  `events/${current_event === 'new_event' ? 'CREATE' : 'EDIT'}_EVENT`, 
             payload: {groupId: group.id, event, navigate}
           })
           // navigate ('Groups');

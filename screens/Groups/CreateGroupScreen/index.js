@@ -37,7 +37,7 @@ const CreateGroupScreen = () => {
   const [offSet, _setOffSet] = useState (0);
   const [showImageModal, _setShowImageModal] = useState (false);
   const {new_group: group} = useSelector (state => state.groups);
-  const {groups} = useSelector (state => state.session);
+  const {myGroups: groups} = useSelector (state => state.session);
   const dispatch = useDispatch ();
 
   useEffect (() => {

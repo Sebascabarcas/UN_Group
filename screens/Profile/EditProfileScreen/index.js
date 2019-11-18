@@ -83,14 +83,10 @@ const EditProfileScreen = () => {
       allowsEditing: true,
       aspect: [4, 3],
     });
-
-    console.log (file);
-
     if (!file.cancelled) {
       _setShowImageModal (false);
       let localUri = file.uri;
       let filename = localUri.split('/').pop();
-
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
       let type = match ? `image/${match[1]}` : `image`

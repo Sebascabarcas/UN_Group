@@ -20,9 +20,11 @@ import {
 import {AntDesign, Ionicons, FontAwesome} from '@expo/vector-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import CardGroupInfo from '../../../components/CardGroupInfo';
+import { NavigationActions, StackActions } from 'react-navigation';
 import getEnvVars from '../../../environment.js';
 import theme from '../../../styles/theme.style.js';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import EditGroupButton from '../../../components/EditGroupButton/index.js';
 
 const {height: fullHeight} = Dimensions.get ('window');
 const {apiUrl} = getEnvVars ();
@@ -42,7 +44,7 @@ const GroupProfile = () => {
     state => state.session
   );
   const dispatch = useDispatch ();
-  const {navigate, getParam} = useNavigation ();
+  const {navigate, dispatch: dispatchNavigation, getParam} = useNavigation ();
 
   useEffect (
     () => {
@@ -54,6 +56,11 @@ const GroupProfile = () => {
     [dispatch]
   );
 
+  const resetNavigationStack = StackActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({ routeName: 'Home' })],
+  });
+  
   handleEditButton = () => {
     dispatch ({
       type: 'groups/SET_STATE',
@@ -99,6 +106,7 @@ const GroupProfile = () => {
               {/* B3C2CA */}
               <GroupMenuButton navigate={navigate} route="MyMembers" icon="ios-people" title="Miembros" />
               <GroupMenuButton navigate={navigate} route="RoleModels" icon="ios-man" title="Role Models" />
+              <GroupMenuButton navigate={navigate} route="MyTasks" icon="ios-clipboard" title="Mis tareas" />
             </Col>
             <Col>
               <GroupMenuButton navigate={navigate} route="MyEvents" icon="ios-calendar" title="Eventos" />
@@ -107,14 +115,17 @@ const GroupProfile = () => {
             </Col>
           </Row>
         </Grid>
-        {/* {isAdmin || isSuperAdmin && <Button primary iconRight block superRounded onPress={handleEditButton}>
-              <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">Editar</MyText>
-              <AntDesign
-                name="form"
+        <Button primary iconRight block superRounded onPress={() => dispatch({
+                type: `groups/${isSuperAdmin ? 'DELETE' : 'LEAVE'}_GROUP`,
+                payload: {id: current_group.id, navigate, resetNavigationStack, dispatchNavigation}
+              })}>
+              <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">{isSuperAdmin ? 'Eliminar' : 'Abandonar'} Grupo</MyText>
+              <Ionicons
+                name="ios-close-circle"
                 color="white"
                 size={theme.ICON_SIZE_SMALL}
               />
-        </Button>} */}
+        </Button>
       </Content>
     </Container>
   );
@@ -137,11 +148,12 @@ GroupProfile.navigationOptions = ({navigation}) => {
       >
         <Ionicons
           name="ios-arrow-back"
-          color={theme.PRIMARY_COLOR}
+          color="white"
           size={theme.ICON_SIZE_SMALL}
         />
       </Button>
     ),
+    headerRight: <EditGroupButton color="white"/>,
     headerTitleStyle: {
       fontFamily: theme.FONT_FAMILY_SEMIBOLD,
       fontSize: theme.FONT_SIZE_MEDIUM,

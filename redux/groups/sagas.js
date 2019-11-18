@@ -1,6 +1,6 @@
 import { put, call, all, takeEvery, takeLatest } from 'redux-saga/effects'
 import {
-  createGroup, getGroups, getGroup, getGroupMembers, sendGroupMemberRequest, getGroupCandidates, acceptMember, kickGroupMember, increasePrivileges, reducePrivileges, updateGroup, leaveGroup, addMember, getGroupEvents
+  createGroup, getGroups, getGroup, getGroupMembers, sendGroupMemberRequest, getGroupCandidates, acceptMember, kickGroupMember, increasePrivileges, reducePrivileges, updateGroup, leaveGroup, addMember, getGroupEvents, deleteGroup, getUserTasks
 } from '../../services/Groups'
 import {
   currentSession,
@@ -30,26 +30,23 @@ export function* CREATE_GROUP({ payload: { group, groups, navigate, skipLoading 
         newElement: new_group
       },
     })
-    if (groups.length === 0) {
-      const current_session = yield call (currentSession);
-      if (current_session) {
-        groups.push(new_group)
-        current_session.groups = groups;
-        current_session.current_group = new_group;
-        current_session.user.isAdmin = new_group.isAdmin
-        yield put ({
-          type: 'session/SET_STATE',
-          payload: {
-            current_group: group,
-            myGroups: groups
-          },
-        });
-        yield call (
-          Storage.set,
-          'Session',
-          current_session
-        );
-      }
+    const current_session = yield call (currentSession);
+    if (current_session) {
+      groups.push(new_group)
+      current_session.groups = groups;
+      current_session.current_group = new_group;
+      yield put ({
+        type: 'session/SET_STATE',
+        payload: {
+          current_group: new_group,
+          myGroups: groups
+        },
+      });
+      yield call (
+        Storage.set,
+        'Session',
+        current_session
+      );
     }
     ToastAndroid.show ('Grupo creado correctamente!', ToastAndroid.SHORT);
     navigate('Groups')
@@ -64,7 +61,7 @@ export function* CREATE_GROUP({ payload: { group, groups, navigate, skipLoading 
   })
 }
 
-export function* UPDATE_GROUP({ payload: { id, group, current_group, navigate, skipLoading } }) {
+export function* UPDATE_GROUP({ payload: { id, group, isSuperAdmin, navigate, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
     payload: {
@@ -73,8 +70,8 @@ export function* UPDATE_GROUP({ payload: { id, group, current_group, navigate, s
   })
   
   try {
-    // group = fromJsonToFormData(group)
-    console.log(group);
+    group = fromJsonToFormData(group)
+    // console.log(group);
     const {group: modified_group} = yield call(updateGroup, id, group, {skipLoading});
     yield put({
       type: 'groups/SET_STATE',
@@ -82,10 +79,32 @@ export function* UPDATE_GROUP({ payload: { id, group, current_group, navigate, s
         current_group: modified_group
       },
     })
-    if (current_group) {
-      const current_session = yield call (currentSession);
+    const current_session = yield call (currentSession);
+    console.log(current_session);
+    let _current_group = {...current_session.current_group, ...modified_group}
+    if (isSuperAdmin) {
+      let foundIndex = current_session.groups.findIndex(_group => _group.id == id)
+      current_session.groups[foundIndex] = modified_group
       current_session.current_group = modified_group
+    } else {
+      let foundIndex = current_session.groups.findIndex(relation => relation.groupId == id)
+      current_session.groups[foundIndex].group = _current_group
+      current_session.current_group = _current_group
     }
+    console.log(current_session.groups);
+    
+    yield put({
+      type: 'session/SET_STATE',
+      payload: {
+        myGroups: current_session.groups,
+        current_group: isSuperAdmin ? modified_group : _current_group
+      },
+    })
+    yield call (
+      Storage.set,
+      'Session',
+      current_session
+    );
     ToastAndroid.show ('Grupo modificado correctamente!', ToastAndroid.SHORT);
     navigate('Groups')
   } catch (error) {
@@ -236,6 +255,33 @@ export function* GET_GROUP_CANDIDATES({ payload: { id, skipLoading } }) {
   })
 }
 
+export function* GET_USER_TASKS({ payload: { userId, groupId, skipLoading } }) {
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    const {tasks} = yield call(getUserTasks, userId, groupId, { skipLoading });
+    yield put({
+      type: 'groups/SET_STATE',
+      payload: {
+        current_user_tasks: tasks,
+      }
+    });
+  } catch (error) {
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
 export function* SEND_GROUP_REQUEST({ payload: { id, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
@@ -258,7 +304,7 @@ export function* SEND_GROUP_REQUEST({ payload: { id, skipLoading } }) {
   })
 }
 
-export function* INCREASE_PRIVILEGES({ payload: { id, userID, index, skipLoading } }) {
+export function* INCREASE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
     payload: {
@@ -270,7 +316,7 @@ export function* INCREASE_PRIVILEGES({ payload: { id, userID, index, skipLoading
     yield put({
       type: 'groups/SET_STATE',
       payload: {
-        current_group_member: {...relation, index}
+        current_group_member: {...relation}
       },
     })
     yield put({
@@ -278,7 +324,7 @@ export function* INCREASE_PRIVILEGES({ payload: { id, userID, index, skipLoading
       payload: {
         newElement: relation,
         arrayName: 'current_group_members',
-        index
+        id: relation.id
       },
     })
     ToastAndroid.show ('Incremento de privilegios!', ToastAndroid.SHORT);
@@ -294,7 +340,7 @@ export function* INCREASE_PRIVILEGES({ payload: { id, userID, index, skipLoading
   })
 }
 
-export function* REDUCE_PRIVILEGES({ payload: { id, userID, index, skipLoading } }) {
+export function* REDUCE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
     payload: {
@@ -306,7 +352,7 @@ export function* REDUCE_PRIVILEGES({ payload: { id, userID, index, skipLoading }
     yield put({
       type: 'groups/SET_STATE',
       payload: {
-        current_group_member: {...relation, index}
+        current_group_member: {...relation}
       },
     })
     yield put({
@@ -314,7 +360,7 @@ export function* REDUCE_PRIVILEGES({ payload: { id, userID, index, skipLoading }
       payload: {
         newElement: relation,
         arrayName: 'current_group_members',
-        index
+        id: relation.id
       },
     })
     ToastAndroid.show ('Incremento de privilegios!', ToastAndroid.SHORT);
@@ -424,7 +470,7 @@ export function* REJECT_GROUP_REQUEST({ payload: { id, index, userID, skipLoadin
   })
 }
 
-export function* DELETE_GROUP_MEMBER({ payload: { id, index, userID, goBack, skipLoading } }) {
+export function* DELETE_GROUP_MEMBER({ payload: { id, userID, relationId, goBack, skipLoading } }) {
   yield put({
     type: 'groups/SET_STATE',
     payload: {
@@ -436,7 +482,7 @@ export function* DELETE_GROUP_MEMBER({ payload: { id, index, userID, goBack, ski
     yield put({
       type: 'groups/DELETE_ARRAY_ELEMENT',
       payload: {
-        index,
+        id: relationId,
         arrayName: 'current_group_members'
       },
     })
@@ -500,13 +546,62 @@ export function* LEAVE_GROUP({ payload: { id, navigate, resetNavigationStack, di
   })
 }
 
+export function* DELETE_GROUP({ payload: { id, navigate, resetNavigationStack, dispatchNavigation, skipLoading } }) {
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  try {
+    yield call(deleteGroup, id, { skipLoading })
+    dispatchNavigation(resetNavigationStack)
+    const current_session = yield call (currentSession);
+    if (current_session) {
+      console.log('current_groups1:', current_session.groups);
+      current_session.groups = current_session.groups.filter(group => group.id !== id) 
+      console.log('current_groups2:', current_session.groups);
+      
+      delete current_session.current_group
+      delete current_session.user.isAdmin
+      current_session.current_group = current_session.groups.length > 0 ? current_session.groups[0] : null
+      current_session.user.isAdmin = current_session.current_group ? current_session.current_group.isAdmin : false
+      yield call (
+        Storage.set,
+        'Session',
+        current_session,
+      );
+      yield put ({
+        type: 'session/SET_STATE',
+        payload: {
+          myGroups: current_session.groups,
+          current_group: current_session.current_group,
+          isAdmin: current_session.user.isAdmin
+        },
+      });
+    }
+    ToastAndroid.show ('Has eliminado el grupo!', ToastAndroid.SHORT);
+  } catch (error) {
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+  }
+  yield put({
+    type: 'groups/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
 export default function* rootSaga() {
   yield all([
     takeLatest(actions.ACCEPT_GROUP_REQUEST, ACCEPT_GROUP_REQUEST),
     takeLatest(actions.ADD_GROUP_MEMBER, ADD_GROUP_MEMBER),
     takeLatest(actions.CREATE_GROUP, CREATE_GROUP),
     takeLatest(actions.UPDATE_GROUP, UPDATE_GROUP),
+    takeLatest(actions.DELETE_GROUP, DELETE_GROUP),
     takeLatest(actions.DELETE_GROUP_MEMBER, DELETE_GROUP_MEMBER),
+    takeLatest(actions.GET_USER_TASKS, GET_USER_TASKS),
     takeLatest(actions.GET_GROUP_EVENTS, GET_GROUP_EVENTS),
     takeLatest(actions.GET_GROUPS, GET_GROUPS),
     takeLatest(actions.GET_GROUP, GET_GROUP),

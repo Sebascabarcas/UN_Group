@@ -19,7 +19,8 @@ export default StyleSheet.create({
 		alignItems: 'center',
 	},
 	logo:{
-		width: wp(70)
+		width: wp(50),
+		height: wp(50)
 	},
 	mainForm: {
 		width: wp(80)

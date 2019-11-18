@@ -8,6 +8,7 @@ const initialState = {
   current_group: {groupPicture: null},
   current_group_members: [],
   current_group_events: [],
+  current_user_tasks: [],
   current_members_search: [],
   current_group_member: {},
   current_group_requests: [],
@@ -26,7 +27,10 @@ export default function groupsReducer(state = initialState, action) {
       return state
     }
     case actions.DELETE_ARRAY_ELEMENT: {
-      const newArray = state[`${payload.arrayName}`].filter((element, i) => i !== payload.index)
+      console.log(state[`${payload.arrayName}`]);
+      const newArray = state[`${payload.arrayName}`].filter((element) => element.id !== payload.id)
+      console.log(newArray);
+      
       state[`${payload.arrayName}`] = newArray
       return state
     }
@@ -37,7 +41,11 @@ export default function groupsReducer(state = initialState, action) {
     }
     case actions.REPLACE_ARRAY_ELEMENT: {
       const newArray = state[`${payload.arrayName}`]
-      newArray[payload.index] = payload.newElement
+      console.log(newArray);
+      let foundIndex = newArray.findIndex(e => e.id == payload.id)
+      console.log(foundIndex);
+      
+      newArray[foundIndex] = payload.newElement
       state[`${payload.arrayName}`] = newArray
       return state
     }

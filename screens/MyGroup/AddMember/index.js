@@ -6,6 +6,7 @@ import {
   Image,
   ImageBackground,
   TextInput,
+  Keyboard,
 } from 'react-native';
 import {Button, Switch, Content, Icon, Grid, Row, Col} from 'native-base';
 import {useNavigation} from 'react-navigation-hooks';
@@ -107,8 +108,7 @@ const AddMember = () => {
     [dispatch]
   ); */
   const handleOnPressUser = (member) => {
-    console.log(member);
-    
+    Keyboard.dismiss()
     _setUserSelected(member)  
   }
 

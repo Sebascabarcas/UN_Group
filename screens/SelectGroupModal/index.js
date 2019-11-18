@@ -3,7 +3,7 @@ import {useNavigation} from 'react-navigation-hooks';
 import {Ionicons} from '@expo/vector-icons';
 // import {Divider, Button} from 'react-native-elements';
 import {Button, CheckBox} from 'native-base';
-import {View, Dimensions, Image} from 'react-native';
+import {View, Dimensions, Image, ScrollView} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import theme from '../../styles/theme.style';
@@ -41,36 +41,38 @@ export default (SelectGroupModal = () => {
           <MyText fontStyle="bold" style={styles.detailsTitle}>
             Seleccione su grupo
           </MyText>
-          {myGroups.map (group => (
-            <BigListItem
-              key={group.id}
-              onPress={() => {_selectGroup (group);}}
-              leftItem={
-                <View style={styles.imgView}>
-                  <Image
-                    style={styles.img}
-                    resizeMode="cover"
-                    source={
-                      group.groupPicture
-                        ? {
-                            uri: `${group.groupPicture.uri}`,
-                          }
-                        : images['logo']
-                    }
+          <ScrollView>
+            {myGroups.map (group => (
+              <BigListItem
+                key={group.id}
+                onPress={() => {_selectGroup (group);}}
+                leftItem={
+                  <View style={styles.imgView}>
+                    <Image
+                      style={styles.img}
+                      resizeMode="cover"
+                      source={
+                        group.groupPicture
+                          ? {
+                              uri: `${group.groupPicture.uri}`,
+                            }
+                          : images['logo']
+                      }
+                    />
+                  </View>
+                }
+                primaryText={group.groupName}
+                primaryTextStyles={{paddingTop: 5, paddingBottom: 2}}
+                rightItem={
+                  <CheckBox
+                    color={theme.PRIMARY_COLOR}
+                    // fontFamily={}
+                    checked={group.id === current_group.id}
                   />
-                </View>
-              }
-              primaryText={group.groupName}
-              primaryTextStyles={{paddingTop: 5, paddingBottom: 2}}
-              rightItem={
-                <CheckBox
-                  color={theme.PRIMARY_COLOR}
-                  // fontFamily={}
-                  checked={group.id === current_group.id}
-                />
-              }
-            />
-          ))}
+                }
+              />
+            ))}
+          </ScrollView>
 
         </View>
       </View>

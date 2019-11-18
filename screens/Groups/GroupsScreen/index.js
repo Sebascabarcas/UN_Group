@@ -99,10 +99,14 @@ GroupsScreen = () => {
     );
   };
   
-  _onPressGroup = ({id}) => {
-    navigate ('ShowGroup', {
-      id
-    });
+  _onPressGroup = (group) => {
+    dispatch({
+      type: 'groups/SET_STATE',
+      payload: {
+        current_group: group
+      }
+    })
+    navigate ('ShowGroup');
   };
 
 
@@ -142,7 +146,13 @@ GroupsScreen = () => {
               direction="up"
               style={{ backgroundColor: theme.PRIMARY_COLOR }}
               position="bottomRight"
-              onPress={() => navigate("CreateGroup")}>
+              onPress={() => {
+                dispatch({
+                  type: 'groups/SET_STATE',
+                  payload: {new_group: {}}
+                })
+                navigate("CreateGroup")
+              }}>
               <AntDesign name="plus" />
           </Fab>
         }

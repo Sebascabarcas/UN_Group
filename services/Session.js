@@ -44,21 +44,15 @@ export async function showUser(userID, { skipLoading }) {
 }
 
 export async function updateUser(id, user, { skipLoading }) {
-  // return Requests.put(`users/${id}`, user, { skipLoading }).then(user => user.data)
-  console.log(user);
-  let {secret} = await Storage.get('Session')
-  return fetch(`${apiUrl}/UNGroup/API/users/${id}`, {
-      method: 'PUT',
-      body: user,
-      headers: {
-        'content-type': 'multipart/form-data',
-        'authorization': `Bearer ${secret}`
-      },
-    }).then(res => res.json());
+  return Requests.put(`users/${id}`, user, { skipLoading }).then(user => user.data)
 }
 
 export async function deleteUser(userID, { skipLoading }) {
-  return Requests.delete(`users/id/${userID}`, user, { skipLoading }).then(user => user.data)
+  return Requests.delete(`users/${userID}`, { skipLoading }).then(userDeleted => userDeleted.data)
+}
+
+export async function deleteAccount({ skipLoading }) {
+  return Requests.delete(`users/`, { skipLoading }).then(accountDelete => accountDelete.data)
 }
 
 export async function currentAccount() {
@@ -78,7 +72,7 @@ export async function logout({ skipLoading }) {
 }
 
 export async function getUserInvitations(id, { skipLoading } = {}) {
-  return Requests.get(`users/${id}/invitations`).then(eventAttendees => eventAttendees.data)
+  return Requests.get(`users/${id}/invitations`).then(eventAtendees => eventAtendees.data)
 }
 
 export async function acceptEventInvitation(id, eventId, { skipLoading } = {}) {

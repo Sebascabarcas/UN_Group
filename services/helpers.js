@@ -25,6 +25,16 @@ export function fromJsonToFormData(obj, form, namespace, k) {
   return fd
 }
 
+export function splitAddressComponents(address) {
+  let addressComponents = address.split(' ')
+  return {
+    typeOfRoad: addressComponents[0],
+    mainRoad: addressComponents[1],
+    secondaryRoad: addressComponents[3],
+    roadNumber: addressComponents[5]    
+  }
+}
+
 export function errorMessage(error) {
   if (error.status) {
     if (error.data.errorMsg) return error.data.errorMsg
@@ -68,79 +78,6 @@ export function errorMessage(error) {
       case 400:
         return 'Construcción de petición errada'
         break
-      // case 422:
-      //   Object.keys(error.data).forEach(param => {
-      //     error.data[param].forEach(paramError => {
-      //       switch (paramError) {
-      //         case "can't be blank":
-      //           return `El campo ${toEs(param)} no puede estar vacío`
-      //           break
-      //         case 'must exist':
-      //           return `El campo ${toEs(param)} está errado`
-      //           break
-      //         case 'is not a number':
-      //           return `El/La ${toEs(param)} debe ser un número válido`
-      //           break
-      //         case 'has already been taken':
-      //           return `El/La ${toEs(param)} ya existe, debe ser único/a `
-      //           break
-      //         default:
-      //           return paramError
-      //           break
-      //     ase 422:
-      //   Object.keys(error.data).forEach(param => {
-      //     error.data[param].forEach(paramError => {
-      //       switch (paramError) {
-      //         case "can't be blank":
-      //           return `El campo ${toEs(param)} no puede estar vacío`
-      //           break
-      //         case 'must exist':
-      //           return `El campo ${toEs(param)} está errado`
-      //     ase 422:
-      //   Object.keys(error.data).forEach(param => {
-      //     error.data[param].forEach(paramError => {
-      //       switch (paramError) {
-      //         case "can't be blank":
-      //           return `El campo ${toEs(param)} no puede estar vacío`
-      //           break
-      //         case 'must exist':
-      //           return `El campo ${toEs(param)} está errado`
-      //           break
-      //         case 'is not a number':
-      //           return `El/La ${toEs(param)} debe ser un número válido`
-      //           break
-      //         case 'has already been taken':
-      //           return `El/La ${toEs(param)} ya existe, debe ser único/a `
-      //           break
-      //         default:
-      //           return paramError
-      //           break
-      //       }
-      //       message.error(errorDescription, 10)
-      //     })
-      //   })
-      //   return 'Error'
-      //   break      break
-      //         case 'is not a number':
-      //           return `El/La ${toEs(param)} debe ser un número válido`
-      //           break
-      //         case 'has already been taken':
-      //           return `El/La ${toEs(param)} ya existe, debe ser único/a `
-      //           break
-      //         default:
-      //           return paramError
-      //           break
-      //       }
-      //       message.error(errorDescription, 10)
-      //     })
-      //   })
-      //   return 'Error'
-      //   break  }
-      //       message.error(errorDescription, 10)
-      //     })
-      //   })
-      //   return 'Error'
-      //   break
       default:
         return `Error status ${error.status}`
         break

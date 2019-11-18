@@ -35,6 +35,7 @@ const {apiUrl} = getEnvVars();
 const EditGroup = () => {
   const {navigate} = useNavigation ();
   const [showImageModal, _setShowImageModal] = useState (false);
+  const {isSuperAdmin} = useSelector (state => state.session);
   const {editing_group: group} = useSelector (state => state.groups);
   const dispatch = useDispatch ();
   
@@ -254,7 +255,7 @@ const EditGroup = () => {
           primary
           full
           onPress={() => {
-            dispatch ({type: 'groups/UPDATE_GROUP', payload: {id: group.id, group, current_group: true, navigate}});
+            dispatch ({type: 'groups/UPDATE_GROUP', payload: {id: group.id, group, isSuperAdmin, navigate}});
             // navigate ('Groups');
           }}
           // onPress={() => navigate('EditProfile')}

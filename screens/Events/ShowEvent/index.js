@@ -19,25 +19,34 @@ import {
   FontAwesome,
   Ionicons,
   MaterialIcons,
+  MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import getEnvVars from '../../../environment';
 import moment from 'moment';
 import BigIconItem from '../../../components/BigIconItem';
+import { FloatingAction } from 'react-native-floating-action';
 
 const {height: fullHeight} = Dimensions.get ('window');
 const {apiUrl} = getEnvVars();
 
 const ShowEvent = () => {
-  const {navigate, goBack, getParam} = useNavigation ();
+  const {navigate, replace, goBack, getParam} = useNavigation ();
   // const {new_group: group} = useSelector (state => state.groups);
   const {current_user: {id: userId}, isAdmin} = useSelector (state => state.session);
+  const {current_group: group} = useSelector (state => state.groups);
   const {current_event: event} = useSelector (state => state.events);
-  const { group } = event
   const dispatch = useDispatch ();
   const invitationId = getParam('invitationId')
   const isGroupEvent = getParam('isGroupEvent')
+
+  // useEffect(() => {
+  //   dispatch({
+  //     type: "events/GET_EVENT",
+  //     payload: {id: event.id}
+  //   })
+  // }, [dispatch])
 
   const handleAcceptEvent = () => {
     dispatch({
@@ -52,6 +61,38 @@ const ShowEvent = () => {
       payload: {id: invitationId, eventId: event.id}
     })
   }
+
+  const handleOnPressEdit = () => {
+    dispatch({
+      type: 'events/SET_STATE',
+      payload: {editing_event: {...event,  date: moment (event.date).format ('YYYY-MM-DD'), time: moment (event.date).format ('hh:mm A')}}
+    })
+    navigate('EditEvent')
+  }
+
+  const handleOnPressDelete = () => {
+    dispatch({
+      type: 'events/DELETE_EVENT',
+      payload: {eventId: event.id, navigate}
+    })
+  }
+
+  const actions = [
+    {
+      name: 'Delete button',
+      render: () => 
+      <Button key="deleting" transparent onPress={handleOnPressDelete}>
+        <MaterialCommunityIcons name="delete-circle" color={theme.DANGER_COLOR} size={theme.ICON_SIZE_MEDIUM} />
+      </Button>
+    },
+    {
+      name: 'Edit button',
+      render: () => 
+      <Button key="edit" transparent onPress={handleOnPressEdit}>
+        <MaterialCommunityIcons name="circle-edit-outline" color={theme.WARNING_COLOR} size={theme.ICON_SIZE_MEDIUM} />  
+      </Button>
+    }
+  ];
 
   return (
     <View style={styles.container}>
@@ -71,7 +112,8 @@ const ShowEvent = () => {
             </View>
           </View>
           <View>
-            <Button onPress={() => goBack ()} light rounded>
+            {/* <Button onPress={() => replace ('MyEvents')} light rounded> */}
+            <Button onPress={() => goBack()} light rounded>
                 <Icon
                   type="AntDesign"
                   name="arrowup"
@@ -141,21 +183,28 @@ const ShowEvent = () => {
         }
         />
         { isGroupEvent !== undefined && <View style={styles.actionEvent}>
-          <Button transparent onPress={() => {navigate('Ateendees')}} style={styles.buttonAction}>
+          <Button transparent onPress={() => {navigate('Atendees')}} style={styles.buttonAction}>
             <FontAwesome name="users" size={theme.ICON_SIZE_MEDIUM} color={theme.PRIMARY_COLOR} />
             <MyText fontStyle="semibold" style={styles.buttonTextIcon}>
-              Miembros
+              Asistentes
             </MyText>
           </Button>
           <Button transparent onPress={() => {
-            navigate('CreateTask')}
+            dispatch({
+              type: 'events/SET_STATE',
+              payload: {
+                current_event_tasks: event.tasks
+              }
+            })
+            navigate('ShowTasks')}
             } style={styles.buttonAction}>
             <Ionicons name="ios-clipboard" size={theme.ICON_SIZE_MEDIUM} color={theme.PRIMARY_COLOR} />
             <MyText fontStyle="semibold" style={styles.buttonTextIcon}>
               Tareas
             </MyText>
           </Button>
-        </View>}
+        </View>
+        }
         {/* <View style={styles.footerContainer}>
           <MyText fontStyle="bold">{group.groupName}/Nuevo Evento</MyText> */}
           { invitationId !== undefined && <View style={styles.actionButtonContainer}> 
@@ -174,9 +223,17 @@ const ShowEvent = () => {
                 style={{color: "white", fontSize: theme.ICON_SIZE_SMALL}}
               />
             </Button>
-          </View>}
-        {/* </View> */}
+          </View>
+          }
       </Content>
+          {isGroupEvent !== undefined && isAdmin && 
+            <FloatingAction
+              actions={actions}
+              onPressItem={name => {
+                console.log(`selected button: ${name}`);
+              }}
+            />
+          }
     </View>
   );
 };

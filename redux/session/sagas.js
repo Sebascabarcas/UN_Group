@@ -11,6 +11,8 @@ import {
   getUserEvents,
   acceptEventInvitation,
   searchUsers,
+  deleteAccount,
+  deleteUser,
 } from '../../services/Session';
 import Storage from '../../services/Storage';
 import jwt_decode from 'jwt-decode';
@@ -33,19 +35,6 @@ export function* LOGIN({payload}) {
     // const {secret, tokenable_id: user_id, tokenable_type: role} = success
     let {user, user: {isSuperAdmin, userGroupRelations}} = jwt_decode (token);
     console.log('token Decoded:', jwt_decode (token));
-
-    // console.log(secret,
-    //   user_id,
-    //   role);
-    // yield put({
-    //   type: 'session/SET_STATE',
-    //   payload: {
-    //     secret,
-    //     user_id,
-    //     role
-    //   },
-    // })
-    // console.log(storeSession);
     let current_group = null
     if (!isSuperAdmin && relations.length > 0) {
       relations[0].group.isAdmin = relations[0].isAdmin;
@@ -58,8 +47,6 @@ export function* LOGIN({payload}) {
     if (groups) {
       current_group = groups[0];
     }
-    console.log(current_group);
-    
     yield put ({
       type: 'session/SET_STATE',
       payload: {
@@ -70,8 +57,6 @@ export function* LOGIN({payload}) {
         current_group
       }
     });
-    console.log('current_group:   ', current_group);
-    
     user.isAdmin = current_group ? current_group.isAdmin : false
     yield call (
       Storage.set,
@@ -108,7 +93,7 @@ export function* REGISTER({payload}) {
   try {
     yield call (register, user);
     ToastAndroid.show (
-      'Usuario registrado, porfavor ingrese con su identificación y contraseña',
+      'Usuario registrado, porfavor ingrese a su correo y haga la confirmación de su cuenta',
       ToastAndroid.SHORT
     );
     navigate ('SignIn');
@@ -132,10 +117,10 @@ export function* UPDATE_PROFILE({payload}) {
   });
   try {
     const current_session = yield call (currentSession);
-    var {user, skipLoading, navigate} = payload;
+    var {user: {id: userId}, user, skipLoading, navigate} = payload;
     user = fromJsonToFormData (user);
     // user.password = "123456" //Por motivos de pruebas
-    const {user: user_edited} = yield call (updateUser, user.id, user, {skipLoading});
+    const {user: user_edited} = yield call (updateUser, userId, user, {skipLoading});
     // console.log('User edited:', user_edited);
     
     current_session.user = {...current_session.user, ...user_edited}
@@ -163,6 +148,53 @@ export function* UPDATE_PROFILE({payload}) {
   });
 }
 
+export function* DELETE_ACCOUNT({payload: {skipLoading, navigate}}) {
+  yield put ({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  });
+  try {
+    yield call (deleteAccount, {skipLoading});
+    // yield call(logout, { skipLoading })
+    yield call (Storage.delete, 'Session', () => navigate ('Auth'));
+  } catch (error) {
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+  }
+  yield put ({
+    type: 'RESET_APP',
+  });
+}
+
+export function* DELETE_USER({payload: {userId, skipLoading, navigate}}) {
+  yield put ({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  });
+  try {
+    yield call (deleteUser, userId, {skipLoading});
+    yield put ({
+      type: 'session/SET_STATE',
+      payload: {
+        users_searched: [],
+      },
+    });
+    ToastAndroid.show ('¡Usuario eliminado!', ToastAndroid.SHORT);
+    // yield call(logout, { skipLoading })
+  } catch (error) {
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+  }
+  yield put ({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  });
+}
+
 export function* LOGOUT({payload: {skipLoading, navigate}}) {
   yield put ({
     type: 'session/SET_STATE',
@@ -171,12 +203,6 @@ export function* LOGOUT({payload: {skipLoading, navigate}}) {
     },
   });
   try {
-    yield put ({
-      type: 'session/SET_STATE',
-      payload: {
-        loading: true,
-      },
-    });
     // yield call(logout, { skipLoading })
     yield call (Storage.delete, 'Session', () => navigate ('Auth'));
   } catch (error) {
@@ -342,8 +368,14 @@ export function* ACCEPT_EVENT_INVITATION({ payload: { id, eventId, navigate, ski
     },
   })
   try {
-    const success = yield call(acceptEventInvitation, id, eventId, { skipLoading })
-    console.log(success);
+    const {atendee} = yield call(acceptEventInvitation, id, eventId, { skipLoading })
+    yield put({
+      type: 'events/ADD_ARRAY_ELEMENT',
+      payload: {
+        newElement: atendee,
+        arrayName: 'events'
+      },
+    })
     navigate('Home')
     /* yield put({
       type: 'session/SET_STATE',
@@ -398,6 +430,8 @@ export default function* rootSaga () {
     takeLatest (actions.CHANGE_CURRENT_GROUP, CHANGE_CURRENT_GROUP),
     takeLatest (actions.LOGIN, LOGIN),
     takeLatest (actions.LOGOUT, LOGOUT),
+    takeLatest (actions.DELETE_ACCOUNT, DELETE_ACCOUNT),
+    takeLatest (actions.DELETE_USER, DELETE_USER),
     takeLatest (actions.REGISTER, REGISTER),
     takeLatest (actions.UPDATE_PROFILE, UPDATE_PROFILE),
     takeLatest (actions.SEARCH_USERS, SEARCH_USERS),

@@ -17,7 +17,7 @@ export default StyleSheet.create({
 	},
     imageCar:{
         width: PixelRatio.get()*50,
-        borderRadius: 50,
+        borderRadius: wp(100),
         borderColor: '#fff',
         borderWidth: 2,
         marginVertical: hp(3),
@@ -57,6 +57,7 @@ export default StyleSheet.create({
     },
     iconButtonContainer: {
         alignItems: 'center',
+        backgroundColor: 'white',
         paddingVertical: 10,
         margin: 10,
         borderRadius: 50,

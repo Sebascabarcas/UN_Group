@@ -32,7 +32,7 @@ export default StyleSheet.create({
 		flex: 1,
 		marginLeft: 10,
 	},
-	driverPriceContainer:{
+	groupInfoContainer:{
 		justifyContent: 'flex-start',
 		alignItems: 'flex-start',
 		flexDirection: 'row'
@@ -85,7 +85,7 @@ export default StyleSheet.create({
 		backgroundColor: theme.GRAY_COLOR,
 		marginLeft: 5,
 	},
-	textTime:{
+	groupName:{
 		fontSize: theme.FONT_SIZE_SMALL,
 		margin: 0,
 		padding: 0,
@@ -104,7 +104,13 @@ export default StyleSheet.create({
 		color: theme.GRAY_COLOR,
 		fontSize: theme.FONT_SIZE_SMALL
 	},
-	labelAddress: {
+	completedButton: {
+		backgroundColor: theme.SUCCESS_COLOR, borderRadius: 50, padding: 20
+	},
+	uncompletedButton: {
+		backgroundColor: theme.DANGER_COLOR, borderRadius: 50, padding: 20
+	},
+	labelDescription: {
 		marginHorizontal: wp(3),
 		marginTop: 2,
 		fontSize: theme.FONT_SIZE_INPUT

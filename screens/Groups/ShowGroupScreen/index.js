@@ -3,11 +3,12 @@ import {
   View,
   Dimensions,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from 'react-navigation-hooks';
 import styles from './styles.js';
 import MyText from '../../../components/MyText';
-import {Input, Button, List, ListItem, Form, Item, Badge} from 'native-base';
+import {Input, Button, List, ListItem, Form, Item, Badge, Container, Content, Col, Row, Grid} from 'native-base';
 import {
   Ionicons,
   FontAwesome,
@@ -15,9 +16,21 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import CardGroupInfo from '../../../components/CardGroupInfo';
 import getEnvVars from '../../../environment.js';
+import EditGroupButton from '../../../components/EditGroupButton/index.js';
+import theme from '../../../styles/theme.style.js';
 
 const {height: fullHeight} = Dimensions.get ('window');
 const { apiUrl } = getEnvVars();
+
+const GroupMenuButton = ({route, navigate, icon, title}) => (
+  <TouchableOpacity onPress={() => navigate(route)} style={[styles.iconButtonContainer]}>
+    <Ionicons name={icon} color="#B3C2CA" size={theme.ICON_SIZE_MEDIUM} />
+    <MyText style={[styles.iconButtonTitle]} fontStyle="bold">
+      {title}
+    </MyText>
+  </TouchableOpacity>
+);
+
 const ShowGroupScreen = () => {
   const {
     current_group,
@@ -30,12 +43,11 @@ const ShowGroupScreen = () => {
   } = useSelector (state => state.session);
   const dispatch = useDispatch ();
   const {navigate, getParam} = useNavigation ();
-  const group_id = getParam('id');
 
   useEffect (() => {
     dispatch({
       type: 'groups/GET_GROUP',
-      payload: {id: group_id}
+      payload: {id: current_group.id}
     })
   }, [dispatch]);
 
@@ -48,68 +60,85 @@ const ShowGroupScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
-      {/* <StatusBar hidden={true}/> */}
-      <Image
-        resizeMode="cover"
-        style={styles.imageCar}
-        source={
-          // uri: 'https://www.indiacarnews.com/wp-content/uploads/2017/03/Renault-Duster-petrol-automatic-cvt-compressed.jpg',
-          current_group.groupPicture ? {uri: `${current_group.groupPicture.uri}`} : images['no-circle-photo']
-        }
-      />
-      <Button style={styles.arriveButton}>
-        <MyText style={{textAlign: 'center'}} fontStyle="bold">
+    <Container>
+      <View style={[styles.groupInfoContainer]}>
+        <MyText
+          style={[styles.centerText, styles.groupNameText]}
+          fontStyle="bold"
+        >
           {current_group.groupName}
         </MyText>
-      </Button>
-      <View style={{marginHorizontal: 20}}>
-        <CardGroupInfo description={current_group.description} />
+        <Image
+          resizeMode="cover"
+          style={styles.imageCar}
+          source={
+            current_group.groupPicture
+              ? {uri: `${current_group.groupPicture.uri}`}
+              : images['logo']
+          }
+        />
+        <MyText
+          style={[styles.centerText, styles.groupDescriptionText]}
+          fontStyle="semibold"
+        >
+          {current_group.description}
+        </MyText>
       </View>
-      {!isSuperAdmin && <View style={styles.containerButtons}>
-        <Button onPress={sendGroupRequest} style={styles.buttonItem}>
-          <MyText fontStyle="bold" style={styles.textItemButton}>
-            Quiero Unirme
+      <Content padder contentContainerStyle={styles.container}>
+        {/* <View>
+          <MyText style={[styles.groupSubtitle]} fontStyle="bold">
+            Grupo
           </MyText>
-        </Button>
-      </View>}
-      <View style={styles.actionTrip}>
-        <Button transparent onPress={() => {navigate('GroupMembers')}} style={styles.buttonAction}>
-          <FontAwesome name="users" size={30} color="white" />
-          <MyText fontStyle="semibold" style={styles.buttonTextIcon}>
-            Miembros
-          </MyText>
-        </Button>
-        <Button transparent style={styles.buttonAction}>
-          <Ionicons name="ios-chatbubbles" size={30} color="white" />
-          <MyText fontStyle="semibold" style={styles.buttonTextIcon}>
-            Chat
-          </MyText>
-        </Button>
-      </View>
-    </View>
+        </View> */}
+        <Grid>
+          <Row>
+            <Col>
+              {/* B3C2CA */}
+              <GroupMenuButton navigate={navigate} route="GroupMembers" icon="ios-people" title="Miembros" />
+            </Col>
+          </Row>
+        </Grid>
+        {!isSuperAdmin && <Button primary iconRight block superRounded onPress={sendGroupRequest}>
+              <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">Quiero Unirme</MyText>
+              <Ionicons
+                name="ios-play-circle"
+                color="white"
+                size={theme.ICON_SIZE_SMALL}
+              />
+        </Button>}
+      </Content>
+    </Container>
   );
 };
 
 ShowGroupScreen.navigationOptions = ({navigation}) => {
   return {
-    // title: '',
-    header: null,
-    // headerLeft: (
-    //   <Button
-    //     // block
-    //     style={{marginLeft: 20}}
-    //     iconLeft
-    //     transparent
-    //     onPress={() => navigation.goBack ()}
-    //   >
-    //     <FontAwesome
-    //       name="arrow-left"
-    //       color={theme.HEADER_MENU_TITLE_COLOR}
-    //       size={theme.ICON_SIZE_SMALL}
-    //     />
-    //   </Button>
-    // ),
+    title: '',
+    headerTransparent: true,
+    headerStyle: {
+      backgroundColor: 'transparent',
+    },
+    headerLeft: (
+      <Button
+        // block
+        style={{marginLeft: 20}}
+        iconLeft
+        transparent
+        onPress={() => navigation.goBack ()}
+      >
+        <Ionicons
+          name="ios-arrow-back"
+          color="white"
+          size={theme.ICON_SIZE_SMALL}
+        />
+      </Button>
+    ),
+    // headerRight: <EditGroupButton color="white"/>,
+    headerTitleStyle: {
+      fontFamily: theme.FONT_FAMILY_SEMIBOLD,
+      fontSize: theme.FONT_SIZE_MEDIUM,
+      color: theme.DARK_COLOR,
+    },
   };
 };
 

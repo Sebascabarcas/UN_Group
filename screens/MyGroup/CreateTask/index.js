@@ -75,28 +75,27 @@ const HeaderComponent = ({group, taskName, handleTaskName, handleDescription, de
           //  autoFocus
       />
     </View>
-    <MyText
-      style={[styles.centerText, styles.groupDescriptionText]}
-      fontStyle="semibold"
-    >
-      {current_group.description}
-    </MyText>
+    <View style={styles.inputContainer}>
+        <Item stackedLabel>
+            <Label>Descripción de la tarea</Label>
+            <Input value={description} onChangeText={(description) => handleDescription(description)} />
+        </Item>
+    </View>
   </View>
   );
 };
 
 const ShowTask = () => {
   const [membersSelected, _setMembersSelected] = useState([])
-  const {current_group: group, current_group_members: group_members} = useSelector (state => state.groups);
-  let _group_members = group_members.map((member) => member.user)
-  const {new_task: task, current_event: event} = useSelector (state => state.events);
+  const {current_group: group} = useSelector (state => state.groups);
+  const {new_task: task, current_event: event, current_event_atendees: atendees} = useSelector (state => state.events);
   const dispatch = useDispatch ();
   const {navigate, goBack, getParam} = useNavigation ();
   const [group_members0, _setGroupMembers0] = useState([])
   const [group_members1, _setGroupMembers1] = useState([])
   console.log(group_members0);
   
-  useEffect (
+  /* useEffect (
     () => {
       dispatch ({
         type: 'groups/GET_GROUP_MEMBERS',
@@ -105,35 +104,35 @@ const ShowTask = () => {
     },
     [dispatch]
   );
-
+ */
   useEffect (
     () => {
-      _setGroupMembers0(_group_members.slice(0, Math.ceil(_group_members.length / 2)))
-      _setGroupMembers1(_group_members.slice(Math.ceil(_group_members.length / 2), _group_members.length))
+      _setGroupMembers0(atendees.slice(0, Math.ceil(atendees.length / 2)))
+      _setGroupMembers1(atendees.slice(Math.ceil(atendees.length / 2), atendees.length))
     },
-    [group_members]
+    []
   );
 
-  const handleOnPressUser = (group, member, i) => {
+  const handleOnPressUser = (group, member, i, atendeeId) => {
     let _membersSelected = membersSelected
-    let isSelected = membersSelected.indexOf(member.id) !== -1
+    let isSelected = membersSelected.indexOf(atendeeId) !== -1
     if (isSelected) {
-      _membersSelected = membersSelected.filter((memberId) => memberId !== member.id)  
+      _membersSelected = membersSelected.filter((id) => id !== atendeeId)  
     } else {
-      _membersSelected.push(member.id)
+      _membersSelected.push(atendeeId)
     }
     _setMembersSelected(_membersSelected)  
     let _group_members 
     switch (group) {
       case 0:
         _group_members = group_members0
-        _group_members[i].isSelected = !member.isSelected
+        _group_members[i].isSelected = !isSelected
         _setGroupMembers0([..._group_members])
         // _setGroupMembers0([_group_members])
         break;
         case 1:
           _group_members = group_members1
-          _group_members[i].isSelected = !member.isSelected
+          _group_members[i].isSelected = !isSelected
           _setGroupMembers1([..._group_members])
         break;
     
@@ -146,6 +145,7 @@ const ShowTask = () => {
     dispatch({
       type: 'events/CREATE_TASK',
       payload: {
+        goBack,
         eventId: event.id,
         task: {...task, atendeeIdList: membersSelected}        
       }
@@ -161,17 +161,17 @@ const ShowTask = () => {
   }
 
   const FloatingUsers = () => {
-    console.log('asdkasldkasldskadlaskl');
+    console.log(group_members0);
     
     return <Row style={styles.userRow}>
       <Col>
-        {group_members0.map((member, i) => 
-          <FloatingUserSelect onPress={() => handleOnPressUser(0, member, i)} selected={member.isSelected} key={member.id} {...member}/>
+        {group_members0.map(({user: member, id: atendeeId, isSelected}, i) => 
+          <FloatingUserSelect onPress={() => handleOnPressUser(0, isSelected, i, atendeeId)} selected={isSelected} key={member.id} {...member}/>
         )}
       </Col>
       <Col>
-        {group_members1.map((member, i) => 
-          <FloatingUserSelect onPress={() => handleOnPressUser(1, member, i)} selected={member.isSelected} key={member.id} {...member}/>
+        {group_members1.map(({user: member, id: atendeeId, isSelected}, i) => 
+          <FloatingUserSelect onPress={() => handleOnPressUser(1, isSelected, i, atendeeId)} selected={isSelected} key={member.id} {...member}/>
         )}
       </Col>
     </Row>
@@ -181,7 +181,7 @@ const ShowTask = () => {
     <View style={styles.container}>
       <HeaderComponent group={group} taskName={task.taskName} description={task.description} handleTaskName={handleTaskName} handleDescription={handleDescription}  goBack={goBack}/>
         {
-          _group_members.length > 0 ? 
+          atendees.length > 0 ? 
             <ScrollView 
               style={styles.bodyContainer}
               keyboardShouldPersistTaps="always"
@@ -189,22 +189,23 @@ const ShowTask = () => {
               <Grid style={styles.usersContainer}>
                 <FloatingUsers/>
               </Grid> 
-              {
-                membersSelected.length > 0 &&
-                <Button warning iconRight block superRounded style={styles.assignButton} onPress={handleCreateTask}>
-                  <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">Asignar</MyText>
-                  <AntDesign
-                    name="rightcircle"
-                    color="white"
-                    size={theme.ICON_SIZE_SMALL}
-                  />
-                </Button>
-              }
+              
           </ScrollView>
           :
           <View style={styles.bodyContainer}>
             <NoResults lottieProps={{autoSize: true, style:{width: wp(30)}}} animationName="user-scanning" primaryText="¡No se ha encontrado ningún usuario!" primaryTextStyles={{color: 'white'}} secondaryText="Verifique su busqueda o ingrese otro nombre"/>
           </View>
+        }
+        {
+          membersSelected.length > 0 &&
+          <Button warning iconRight block superRounded style={styles.assignButton} onPress={handleCreateTask}>
+            <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">Asignar</MyText>
+            <AntDesign
+              name="rightcircle"
+              color="white"
+              size={theme.ICON_SIZE_SMALL}
+            />
+          </Button>
         }
     </View>
   );
