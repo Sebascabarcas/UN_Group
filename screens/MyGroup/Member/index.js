@@ -120,7 +120,7 @@ const Member = () => {
               {user.gender === 'male' ? 'Masculino' : 'Femenino'}
             </MyText>
           </View>
-          <View style={styles.secondaryInfo}>
+          <View style={[styles.secondaryInfo, styles.secondaryInfoEmail]}>
             <MyText fontStyle="semibold" style={styles.secondaryInfoTitle}>
               Correo
             </MyText>

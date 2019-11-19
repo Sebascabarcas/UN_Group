@@ -48,6 +48,12 @@ export default StyleSheet.create({
     color: theme.DARK_COLOR
     // fontSize: theme.FONT_SIZE_LARGE
   },
+  secondaryInfo: {
+    width: wp(30)
+  },
+  secondaryInfoEmail: {
+    width: wp(60)
+  },
   secondaryInfoTitle: {
     color: theme.GRAY_LIGHT_COLOR
   },
