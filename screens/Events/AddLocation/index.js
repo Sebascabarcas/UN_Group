@@ -90,18 +90,20 @@ const AddLocation = () => {
         initialRegion={mapRegion}
         onMapReady={_onMapReady}
         // onRegionChange={this._handleMapRegionChange}
-        showsUserLocation
-        showsMyLocationButton
+        // showsUserLocation
+        // showsMyLocationButton
       />
       <Button
         primary
         full
         onPress={() => {
+          current_event === 'new_event' ?
           dispatch({
-            type:  `events/${current_event === 'new_event' ? 'CREATE' : 'EDIT'}_EVENT`, 
+            type:  `events/CREATE_EVENT`, 
             payload: {groupId: group.id, event, navigate}
           })
-          // navigate ('Groups');
+          :
+          navigate ('EditEvent');
         }}
         // onPress={() => navigate('EditProfile')}
         style={styles.actionBottomButton}

@@ -116,8 +116,8 @@ EventsScreen = () => {
   }, [dispatch]);
 
   useEffect (() => {
-    if (events[0] && !eventsReady) {
-      let {latitude, longitude} = (!isSuperAdmin) ? events[0].event : events[0] 
+    if (events[0]) {
+      let {latitude, longitude} = events[0] 
       latitude = parseFloat(latitude)
       longitude = parseFloat(longitude)
       _setMapRegion({...mapRegion, latitude, longitude})
@@ -169,7 +169,7 @@ EventsScreen = () => {
   }
 
   const _renderItem = ({item: event, index}) => {
-    if (!isSuperAdmin) event = event.event 
+    // if (!isSuperAdmin) event = event.event 
     // _setMapRegion({...mapRegion, latitude, longitude})
     return <EventSliderEntry data={{
       title: `${event.eventName}`,
@@ -186,7 +186,7 @@ EventsScreen = () => {
 
   handleChangeRegion = (eventIndex) => {
     console.log(events[eventIndex]);
-    let {latitude, longitude} = (isSuperAdmin) ? events[eventIndex] : events[eventIndex].event 
+    let {latitude, longitude} = events[eventIndex] 
     console.log(latitude);
     console.log(longitude);
     
@@ -244,6 +244,7 @@ EventsScreen = () => {
         >
           { mapReady && eventCoordinates &&
           <MapView.Marker
+            // image={Images['logo']}
             coordinate={eventCoordinates}
             pinColor={'blue'}
             title="My Marker"
