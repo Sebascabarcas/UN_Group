@@ -150,13 +150,13 @@ const ShowTask = () => {
         <MaterialCommunityIcons name="circle-edit-outline" color={theme.WARNING_COLOR} size={theme.ICON_SIZE_MEDIUM} />  
       </Button>
     },
-    // {
-    //   name: 'Accept button',
-    //   render: () => 
-    //   <Button key="accepting" transparent onPress={handleOnToggleCompleted}>
-    //     <MaterialCommunityIcons name="checkbox-marked-circle-outline" color={theme.SUCCESS_COLOR} size={theme.ICON_SIZE_MEDIUM} />
-    //   </Button>
-    // },
+    {
+      name: 'Accept button',
+      render: () => 
+      <Button key="accepting" transparent onPress={handleOnToggleCompleted}>
+        <MaterialCommunityIcons name={task.completed ? 'close-circle-outline' : 'checkbox-marked-circle-outline'} color={task.completed ? theme.DANGER_COLOR : theme.SUCCESS_COLOR} size={theme.ICON_SIZE_MEDIUM} />
+      </Button>
+    },
   ];
 
   const FloatingUsers = () => {

@@ -154,7 +154,8 @@ const EditTask = () => {
       type: 'events/EDIT_TASK',
       payload: {
         goBack,
-        task: {id: task.id, taskName: task.taskName, description: task.description, atendeeIdList: membersSelected, navigate}        
+        navigate,
+        task: {id: task.id, taskName: task.taskName, description: task.description, atendeeIdList: membersSelected}        
       }
     })
   }

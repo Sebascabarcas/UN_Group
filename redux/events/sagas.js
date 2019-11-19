@@ -176,7 +176,7 @@ export function* EDIT_TASK({ payload: {task, goBack, navigate, skipLoading } }) 
     const {task: new_task} = yield call(editTask, task.id, task, {skipLoading});
     // console.log();
     yield put({
-      type: 'groups/REPLACE_ARRAY_ELEMENT',
+      type: 'events/REPLACE_ARRAY_ELEMENT',
       payload: {
         newElement: new_task,
         arrayName: 'current_event_tasks',
@@ -210,11 +210,11 @@ export function* TOGGLE_TASK_COMPLETED({ payload: {taskId, completed, navigate, 
     const {task: new_task} = yield call(editTask, taskId, {completed}, {skipLoading});
     // console.log();
     yield put({
-      type: 'groups/REPLACE_ARRAY_ELEMENT',
+      type: 'events/REPLACE_ARRAY_ELEMENT',
       payload: {
         newElement: new_task,
         arrayName: 'current_event_tasks',
-        id: task.id
+        id: taskId
       },
     })
     ToastAndroid.show ('Tarea editada correctamente!', ToastAndroid.SHORT);
