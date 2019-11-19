@@ -128,6 +128,13 @@ const ShowTask = () => {
     })
   }
 
+  const handleOnToggleCompleted = () => {
+    dispatch({
+      type: 'events/TOGGLE_TASK_COMPLETED',
+      payload: {taskId: task.id, completed: !task.completed, navigate}
+    })
+  }
+
   const actions = [
     {
       name: 'Delete button',
@@ -143,13 +150,13 @@ const ShowTask = () => {
         <MaterialCommunityIcons name="circle-edit-outline" color={theme.WARNING_COLOR} size={theme.ICON_SIZE_MEDIUM} />  
       </Button>
     },
-    {
-      name: 'Accept button',
-      render: () => 
-      <Button key="accepting" transparent onPress={() => console.log('editinggggggggggg')}>
-        <MaterialCommunityIcons name="checkbox-marked-circle-outline" color={theme.SUCCESS_COLOR} size={theme.ICON_SIZE_MEDIUM} />
-      </Button>
-    },
+    // {
+    //   name: 'Accept button',
+    //   render: () => 
+    //   <Button key="accepting" transparent onPress={handleOnToggleCompleted}>
+    //     <MaterialCommunityIcons name="checkbox-marked-circle-outline" color={theme.SUCCESS_COLOR} size={theme.ICON_SIZE_MEDIUM} />
+    //   </Button>
+    // },
   ];
 
   const FloatingUsers = () => {
