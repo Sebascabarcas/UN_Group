@@ -144,7 +144,7 @@ const ShowTasks = () => {
           </Content>
           :
           <View style={styles.bodyContainer}>
-            <NoResults lottieProps={{autoSize: true, style:{width: wp(30)}}} animationName="minnion-looking" primaryText="¡No se ha encontrado ningúna tarea!" primaryTextStyles={{color: 'white'}} secondaryText={`Vuelva más tarde ${isAdmin && 'o presione en el botón flotante para crear una nueva'}`}/>
+            <NoResults lottieProps={{autoSize: true, style:{width: wp(30)}}} animationName="minnion-looking" primaryText="¡No se ha encontrado ningúna tarea!" primaryTextStyles={{color: 'white'}} secondaryText={`Vuelva más tarde ${isAdmin ? 'o presione en el botón flotante para crear una nueva' : ''}`}/>
           </View>
         }
         { isAdmin && atendees.length > 0 &&

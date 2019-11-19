@@ -195,7 +195,7 @@ const EditEvent = () => {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={handleAddressEvent} style={styles.dateTimeContainer}>
           <View>
-            <MyText fontStyle="bold">Donde?</MyText>
+            <MyText fontStyle="bold">¿Donde?</MyText>
             <MyText>Modifique el lugar del evento </MyText>
             {event.location && <MyText>{event.location}</MyText>}
           </View>

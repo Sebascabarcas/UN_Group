@@ -44,6 +44,8 @@ export default StyleSheet.create ({
   imageGroup: {
     width: 50,
     height: 50,
+    borderRadius: wp(100),
+    marginRight: 5
   },
   sliderContainer: {
     // backgroundColor: 'red',
