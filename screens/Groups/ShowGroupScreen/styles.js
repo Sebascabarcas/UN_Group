@@ -57,6 +57,7 @@ export default StyleSheet.create({
     },
     iconButtonContainer: {
         alignItems: 'center',
+        backgroundColor: 'white',
         paddingVertical: 10,
         margin: 10,
         borderRadius: wp(100),
