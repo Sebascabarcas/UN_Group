@@ -43,7 +43,7 @@ export default function eventsReducer(state = initialState, action) {
     }
     case actions.REPLACE_ARRAY_ELEMENT: {
       const newArray = state[`${payload.arrayName}`]
-      let foundIndex = newArray[payload.index].findIndex(e => e.id == payload.id)
+      let foundIndex = newArray.findIndex(e => e.id == payload.id)
       newArray[foundIndex] = payload.newElement
       state[`${payload.arrayName}`] = newArray
       return state

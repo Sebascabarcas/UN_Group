@@ -81,7 +81,7 @@ export function* CREATE_EVENT({ payload: { groupId, event, navigate, skipLoading
   })
 }
 
-export function* UPDATE_EVENT({ payload: { event, navigate, skipLoading } }) {
+export function* UPDATE_EVENT({ payload: { event, userId, navigate, skipLoading } }) {
   yield put({
     type: 'events/SET_STATE',
     payload: {
@@ -97,7 +97,6 @@ export function* UPDATE_EVENT({ payload: { event, navigate, skipLoading } }) {
     // event = fromJsonToFormData(event)
     // console.log(event);
     const {event: new_event} = yield call(editEvent, event.id, event, {skipLoading});
-    console.log('asdkasdka kelly');
     yield put({
       type: 'groups/REPLACE_ARRAY_ELEMENT',
       payload: {
@@ -106,8 +105,14 @@ export function* UPDATE_EVENT({ payload: { event, navigate, skipLoading } }) {
         newElement: new_event
       }
     })
-    console.log('asjdasjdsja');
-    
+    yield put({
+      type: 'events/REPLACE_ARRAY_ELEMENT',
+      payload: {
+        arrayName: 'events',
+        id: event.id,
+        newElement: {...event, ...new_event}
+      }
+    })
     yield put({
       type: 'events/SET_STATE',
       payload: {
@@ -146,7 +151,7 @@ export function* CREATE_TASK({ payload: { eventId, task, goBack, skipLoading } }
       }
     })
     ToastAndroid.show ('Tarea creada correctamente!', ToastAndroid.SHORT);
-    goBack()
+    goBack();
     // console.log(success);
   } catch (error) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
@@ -169,6 +174,40 @@ export function* EDIT_TASK({ payload: {task, goBack, navigate, skipLoading } }) 
   
   try {
     const {task: new_task} = yield call(editTask, task.id, task, {skipLoading});
+    // console.log();
+    yield put({
+      type: 'groups/REPLACE_ARRAY_ELEMENT',
+      payload: {
+        newElement: new_task,
+        arrayName: 'current_event_tasks',
+        id: task.id
+      },
+    })
+    ToastAndroid.show ('Tarea editada correctamente!', ToastAndroid.SHORT);
+    // goBack()
+    navigate('MyEvents');
+    // console.log(success);
+  } catch (error) {
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+  }
+  yield put({
+    type: 'events/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+
+export function* TOGGLE_TASK_COMPLETED({ payload: {taskId, completed, navigate, skipLoading } }) {
+  yield put({
+    type: 'events/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  
+  try {
+    const {task: new_task} = yield call(editTask, taskId, {completed}, {skipLoading});
     // console.log();
     yield put({
       type: 'groups/REPLACE_ARRAY_ELEMENT',
@@ -332,7 +371,7 @@ export function* GET_EVENTS({isSuperAdmin, userId, skipLoading, concat}) {
     yield put({
       type: `events/${concat ? 'CONCAT_EVENTS' : 'SET_STATE' }`,
       payload: {
-        events: isSuperAdmin ? events : atendees
+        events: isSuperAdmin ? events : atendees.map(atendee => atendee.event)
       },
     })
   } catch (error) {
@@ -432,6 +471,7 @@ export default function* rootSaga() {
     takeLatest(actions.UPDATE_EVENT, UPDATE_EVENT),
     takeLatest(actions.DELETE_EVENT, DELETE_EVENT),
     takeLatest(actions.EDIT_TASK, EDIT_TASK),
+    takeLatest(actions.TOGGLE_TASK_COMPLETED, TOGGLE_TASK_COMPLETED),
     takeLatest(actions.COMPLETE_TASK, COMPLETE_TASK),
     takeLatest(actions.CREATE_TASK, CREATE_TASK),
     takeLatest(actions.DELETE_TASK, DELETE_TASK),
