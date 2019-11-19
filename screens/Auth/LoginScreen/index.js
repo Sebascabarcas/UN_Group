@@ -34,8 +34,10 @@ const LoginScreen = () => {
   // const [checked, _setChecked] = useState (true);
   const [showPassword, _setShowPassword] = useState (false);
   const [loading, _setLoading] = useState (false);
-  const [username, _setUsername] = useState ('sebastiancabarcas');
-  const [pwd, _setPassword] = useState ('tester');
+  const [username, _setUsername] = useState (null);
+  const [pwd, _setPassword] = useState (null);
+  // const [username, _setUsername] = useState ('sebastiancabarcas');
+  // const [pwd, _setPassword] = useState ('tester');
 
   _signInAsync = async () => {
     _setLoading (true);
@@ -66,7 +68,7 @@ const LoginScreen = () => {
           {loading && <Spinner color={theme.PRIMARY_COLOR} />}
           <Item style={styles.itemForm}>
             <Input
-              placeholder="Correo"
+              placeholder="Nombre de usuario"
               placeholderTextColor="#FFF"
               style={styles.input}
               onChangeText={text => _setUsername(text)}

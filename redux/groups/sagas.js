@@ -363,7 +363,7 @@ export function* REDUCE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
         id: relation.id
       },
     })
-    ToastAndroid.show ('Incremento de privilegios!', ToastAndroid.SHORT);
+    ToastAndroid.show ('¡Decremento de privilegios!', ToastAndroid.SHORT);
   } catch (error) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })

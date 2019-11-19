@@ -24,19 +24,20 @@ const SignUpScreen = () => {
   // const [email, _setEmail] = useState (null);
   // const [password, _setPassword] = useState (null);
   // const [user, _setUser] = useState ({});
-  const [user, _setUser] = useState ( {
-    "email": "hpedy123@gmail.com",
-    "username": "tester",
-    "firstName": "John",
-    "middleName": "Deivis",
-    "gender": "male",
-    "phone": "3007838569",
-    "firstLastName": "Barbosa",
-    "secondLastName": "Rincones",
-    "job_title": "Colla",
-    "pwd": "123456",
-    "pwd_confirmation": "123456"
-  });
+  const [user, _setUser] = useState ({});
+  // const [user, _setUser] = useState ( {
+  //   "email": "hpedy123@gmail.com",
+  //   "username": "tester",
+  //   "firstName": "John",
+  //   "middleName": "Deivis",
+  //   "gender": "male",
+  //   "phone": "3007838569",
+  //   "firstLastName": "Barbosa",
+  //   "secondLastName": "Rincones",
+  //   "job_title": "Colla",
+  //   "pwd": "123456",
+  //   "pwd_confirmation": "123456"
+  // });
 
   const platformIcons = Platform.OS === 'ios' ? 'ios' : 'md'
   useEffect (() => {
@@ -176,7 +177,7 @@ const SignUpScreen = () => {
               placeholderTextColor="#FFF"
               secureTextEntry={!showPassword}
               style={styles.input}
-              onChangeText={password => _setUser ({...user, pwd})}
+              onChangeText={pwd => _setUser ({...user, pwd})}
               value={user.pwd}
             />
             {!showPassword
