@@ -200,7 +200,7 @@ export function* DELETE_ACTIVITY({ payload: {activityId, goBack, navigate, skipL
         id: activityId
       },
     })
-    ToastAndroid.show ('¡Disponibilidad eliminada correctamente!', ToastAndroid.SHORT);
+    ToastAndroid.show ('¡Actividad eliminada correctamente!', ToastAndroid.SHORT);
     goBack()
     // console.log(success);
   } catch (error) {
