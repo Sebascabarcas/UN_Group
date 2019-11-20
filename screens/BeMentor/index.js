@@ -25,7 +25,7 @@ const HeaderComponent = ({firstName, firstLastName}) => {
   return (
     <View style={styles.headerContainer}>
       <View style={styles.postImgContainer}>
-        <LottieView autoPlay autoSize source={Animations['role-models2']}/>
+        <LottieView style={{width: wp(50), height: wp(50)}} autoPlay source={Animations['mentors']}/>
       </View>
       <View style={styles.userTextInputContainer}>
         <MyText
@@ -35,7 +35,7 @@ const HeaderComponent = ({firstName, firstLastName}) => {
             fontSize: theme.FONT_SIZE_EXTRA_EXTRA_LARGE,
           }}
         >
-          {firstName} Conviertete en un Role Model
+          {firstName} Conviertete en un Mentor
         </MyText>
       </View>
     </View>
@@ -48,7 +48,7 @@ const BeMentor = () => {
   const {navigate, goBack, getParam} = useNavigation ();
 
   const handleBeMentor = () => {
-    dispatch ({type: 'session/BE_ROLE_MODEL', payload: {userId: user.id, navigate}});
+    dispatch ({type: 'session/BE_MENTOR', payload: {userId: user.id, navigate}});
   };
 
   return (
@@ -72,7 +72,7 @@ const BeMentor = () => {
           fontStyle="bold"
           color={theme.HEADER_MENU_TITLE_COLOR}
         >
-          CONVERTIRME EN ROLE MODEL
+          CONVERTIRME EN MENTOR
         </MyText>
       </Button>
     </Container>
@@ -81,7 +81,7 @@ const BeMentor = () => {
 
 BeMentor.navigationOptions = ({navigation}) => {
   return {
-    title: 'Sé un Role Model',
+    title: 'Sé un Mentor',
     headerTransparent: true,
     headerStyle: {
       backgroundColor: 'transparent',
