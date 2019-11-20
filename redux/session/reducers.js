@@ -7,6 +7,7 @@ const initialState = {
   users_searched: [],
   isSuperAdmin: false,
   isRoleModel: false,
+  isMentor: false,
   myGroups: [],
   myEvents: [],
   myInvitations: [],

@@ -1,11 +1,7 @@
 import { ToastAndroid } from 'react-native';
 import { put, call, all, takeEvery, takeLatest } from 'redux-saga/effects'
 import actions from './actions'
-import { createEvent, getEvent, getEvents, getEventAtendees, createTask, editTask, getEventTasks, deleteTask, getEventTask, deleteEvent, editEvent, completeTask } from '../../services/Events';
 import {fromJsonToFormData, errorMessage} from '../../services/helpers';
-import moment from 'moment';
-import { getUserEvents } from '../../services/Session';
-import { getLocation } from '../../services/Location';
 import { createPost, updatePost, deletePost, getRoleModelsPosts, getRoleModels, getRoleModelPosts } from '../../services/RoleModels';
 // import moment from 'moment-timezone'
 // import 'moment/locale/es'  // without this line it didn't work

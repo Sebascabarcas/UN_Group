@@ -10,6 +10,7 @@ import { combineReducers } from 'redux'
 import session from './session/reducers'
 import events from './events/reducers'
 import groups from './groups/reducers'
+import mentors from './mentors/reducers'
 import roleModels from './roleModels/reducers'
 
 export default
@@ -25,5 +26,6 @@ export default
     // extras,
     events,
     roleModels,
+    mentors,
     groups,
   })

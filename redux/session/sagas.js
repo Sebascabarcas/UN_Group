@@ -19,6 +19,7 @@ import jwt_decode from 'jwt-decode';
 import actions from './actions';
 import {fromJsonToFormData, errorMessage} from '../../services/helpers';
 import { toggleIsRoleModel } from '../../services/RoleModels';
+import { toggleIsMentor } from '../../services/Mentors';
 // import { errorMessage } from '../../services/helpers'
 
 export function* LOGIN({payload}) {
@@ -108,6 +109,44 @@ export function* BE_ROLE_MODEL({payload: {userId, navigate, goBack}}) {
     });
     ToastAndroid.show (
       '¡Te has convertido en un Role Model!',
+      ToastAndroid.SHORT
+    );
+    navigate ('Home');
+  } catch (error) {
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+  }
+  yield put ({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  });
+}
+
+export function* BE_MENTOR({payload: {userId, navigate, goBack}}) {
+  yield put ({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  });
+  try {
+    yield call (toggleIsMentor, userId);
+    const current_session = yield call (currentSession);
+    current_session.user.isMentor = true
+    yield call (
+      Storage.set,
+      'Session',
+      current_session,
+    );
+    yield put ({
+      type: 'session/SET_STATE',
+      payload: {
+        isMentor: true
+      },
+    });
+    ToastAndroid.show (
+      '¡Te has convertido en un Mentor!',
       ToastAndroid.SHORT
     );
     navigate ('Home');
@@ -393,7 +432,7 @@ export function* SEARCH_USERS({ payload: { querySearch, skipLoading } }) {
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'session/SET_STATE',
     payload: {
       loading: false,
     }
