@@ -28,6 +28,7 @@ export async function deletePost(postId, { skipLoading } = {}) {
     return Requests.delete(`posts/${postId}`, {skipLoading}).then(post => post.data)
 }
 
-export async function toggleIsRoleModel(userId, { skipLoading } = {}) {
-    return Requests.put(`users/${userId}/toggleIsRoleModel`, {}, {skipLoading}).then(isMentor => isMentor.data)
+export async function toggleIsMentor(userId, { skipLoading } = {}) {
+    return Requests.put(`users/${userId}/toggleIsMentor`, {}, {skipLoading}).then(isRoleModel => isRoleModel.data)
 }
+
