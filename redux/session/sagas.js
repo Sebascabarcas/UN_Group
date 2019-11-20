@@ -18,6 +18,7 @@ import Storage from '../../services/Storage';
 import jwt_decode from 'jwt-decode';
 import actions from './actions';
 import {fromJsonToFormData, errorMessage} from '../../services/helpers';
+import { toggleIsRoleModel } from '../../services/RoleModels';
 // import { errorMessage } from '../../services/helpers'
 
 export function* LOGIN({payload}) {
@@ -33,7 +34,7 @@ export function* LOGIN({payload}) {
     console.log (token);
     console.log (groups);
     // const {secret, tokenable_id: user_id, tokenable_type: role} = success
-    let {user, user: {isSuperAdmin, userGroupRelations}} = jwt_decode (token);
+    let {user, user: {isSuperAdmin, userGroupRelations, isRoleModel}} = jwt_decode (token);
     console.log('token Decoded:', jwt_decode (token));
     let current_group = null
     if (!isSuperAdmin && relations.length > 0) {
@@ -52,6 +53,7 @@ export function* LOGIN({payload}) {
       payload: {
         current_user: user,
         isAdmin: current_group ? current_group.isAdmin : false,
+        isRoleModel,
         isSuperAdmin,
         myGroups: isSuperAdmin ?  groups : userGroupRelations,
         current_group
@@ -71,6 +73,44 @@ export function* LOGIN({payload}) {
     );
     ToastAndroid.show ('Bienvenido a la aplicación!', ToastAndroid.SHORT);
     console.log ('guardado');
+  } catch (error) {
+    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+  }
+  yield put ({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  });
+}
+
+export function* BE_ROLE_MODEL({payload: {userId, navigate, goBack}}) {
+  yield put ({
+    type: 'session/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  });
+  try {
+    yield call (toggleIsRoleModel, userId);
+    const current_session = yield call (currentSession);
+    current_session.user.isRoleModel = true
+    yield call (
+      Storage.set,
+      'Session',
+      current_session,
+    );
+    yield put ({
+      type: 'session/SET_STATE',
+      payload: {
+        isRoleModel: true
+      },
+    });
+    ToastAndroid.show (
+      '¡Te has convertido en un Role Model!',
+      ToastAndroid.SHORT
+    );
+    navigate ('Home');
   } catch (error) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
@@ -428,6 +468,7 @@ export function* REJECT_EVENT_INVITATION({ payload: { id, eventId, skipLoading }
 export default function* rootSaga () {
   yield all ([
     takeLatest (actions.CHANGE_CURRENT_GROUP, CHANGE_CURRENT_GROUP),
+    takeLatest (actions.BE_ROLE_MODEL, BE_ROLE_MODEL),
     takeLatest (actions.LOGIN, LOGIN),
     takeLatest (actions.LOGOUT, LOGOUT),
     takeLatest (actions.DELETE_ACCOUNT, DELETE_ACCOUNT),

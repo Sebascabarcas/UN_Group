@@ -62,10 +62,14 @@ httpClient.interceptors.response.use(
     console.info('xxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
     console.info('xxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
     console.info('xxxxxxxxxxxRESPONSExxxxxxxxxx');
+    console.info('-Method-');
+    console.info(err.config.method);
+    console.info('-Url-');
+    console.info(err.config.url);
     console.info('-Status-');
-    console.info(err.status);
+    console.info(err.response.status);
     console.info('-Body-');
-    console.info(err.data);
+    console.info(err.response.data);
     console.info('</////RESPONSE////////>');
     console.info('<////////////////////>');
     console.info('<////////////////////>');
