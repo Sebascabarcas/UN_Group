@@ -111,6 +111,7 @@ const GroupProfile = () => {
             <Col>
               <GroupMenuButton navigate={navigate} route="MyEvents" icon="ios-calendar" title="Eventos" />
               <GroupMenuButton navigate={navigate} route="MySolicitudes" icon="ios-archive" title="Solicitudes" />
+              <GroupMenuButton navigate={navigate} route="Mentors" icon="ios-people" title="Mentores" />
               {/* B3C2CA */}
             </Col>
           </Row>

@@ -78,6 +78,13 @@ import MyTasks from '../screens/MyGroup/MyTasks';
 import MyTask from '../screens/MyGroup/MyTask';
 import Atendees from '../screens/MyGroup/Atendees';
 import MyUsers from '../screens/MyUsers';
+import RoleModels from '../screens/MyGroup/RoleModels';
+import CreatePost from '../screens/MyGroup/CreatePost';
+import ShowPost from '../screens/MyGroup/ShowPost';
+import ShowRoleModel from '../screens/MyGroup/ShowRoleModel';
+import BeRoleModel from '../screens/BeRoleModel';
+import BeMentor from '../screens/BeMentor';
+import EditPost from '../screens/MyGroup/EditPost';
 
 // import { Divider, Button } from 'react-native-elements';
 
@@ -134,6 +141,9 @@ const AppStack = createStackNavigator(
     // MyGroup: {
     //   screen: GroupProfile,
     // },
+    BeMentor: {
+      screen: BeMentor
+    },
     Home: {
       screen: MainTabNavigator,
       navigationOptions: {
@@ -172,6 +182,9 @@ const AppStack = createStackNavigator(
       navigationOptions: {
         header: null
       },
+    },
+    BeRoleModel: {
+      screen: BeRoleModel
     },
     Notifications: {
       screen: NotificationsScreen,
@@ -349,6 +362,33 @@ const AppStack = createStackNavigator(
       navigationOptions: {
         header: null
       }
+    },
+    RoleModels: {
+      screen: RoleModels,
+      navigationOptions: {
+        header: null
+      }
+    },
+    CreatePost: {
+      screen: CreatePost,
+      navigationOptions: {
+        header: null
+      }
+    },
+    EditPost: {
+      screen: EditPost,
+      navigationOptions: {
+        header: null
+      }
+    },
+    ShowPost: {
+      screen: ShowPost,
+      navigationOptions: {
+        header: null
+      }
+    },
+    ShowRoleModel: {
+      screen: ShowRoleModel,
     },
     EditProfile: {
       screen: EditProfileScreen,
