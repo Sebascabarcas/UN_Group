@@ -85,7 +85,7 @@ const HeaderComponent = ({group, taskName, handleTaskName, handleDescription, de
   );
 };
 
-const ShowTask = () => {
+const CreateTask = () => {
   const [membersSelected, _setMembersSelected] = useState([])
   const {current_group: group} = useSelector (state => state.groups);
   const {new_task: task, current_event: event, current_event_atendees: atendees} = useSelector (state => state.events);
@@ -211,7 +211,7 @@ const ShowTask = () => {
   );
 };
 
-ShowTask.navigationOptions = ({navigation}) => {
+CreateTask.navigationOptions = ({navigation}) => {
   return {
     // title: '',
     // header: null,
@@ -233,4 +233,4 @@ ShowTask.navigationOptions = ({navigation}) => {
   };
 };
 
-export default ShowTask;
+export default CreateTask;
