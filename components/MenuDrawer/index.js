@@ -13,7 +13,7 @@ import styles from './styles.js';
 import MyText from '../MyText';
 import {showUser, logout} from '../../services/Session';
 import Storage from '../../services/Storage';
-import {Badge} from 'native-base';
+import {Badge, Button} from 'native-base';
 import {
   AntDesign,
   FontAwesome,
@@ -34,7 +34,7 @@ const MenuDrawer = () => {
   const [isReady, _setReady] = useState (false);
   const dispatch = useDispatch()
   const {navigate} = navigationHooks.useNavigation ();
-  const {current_user: user, current_group,  myGroups, isSuperAdmin} = useSelector(state => state.session)
+  const {current_user: user, current_group,  myGroups, isSuperAdmin, isRoleModel} = useSelector(state => state.session)
   // console.log(user);
   
   
@@ -133,15 +133,37 @@ const MenuDrawer = () => {
                     {user.username}
                   </MyText>
               </Badge>
+              <Button
+              // block
+              iconLeft
+              style={{paddingTop: 2}}
+              transparent
+              onPress={() => {
+                navigate ('MyProfile')
+              }}
+            >
               <FontAwesome
-                style={{alignSelf: 'flex-end', marginLeft: 6, elevation: 4}}
+                style={{alignSelf: 'flex-start', marginLeft: 6, elevation: 4}}
                 name="gear"
                 color="white"
                 size={theme.ICON_SIZE_SMALL}
               />
+              </Button>
             </View>
             {/* <MyText >{user.email}</MyText> */}
           </View>
+        </View>
+        <View style={styles.otherOptions}>
+          <TouchableOpacity style={styles.otherOptionContainer} onPress={() => navigate ('BeMentor')}>
+            <MyText style={styles.otherOptionText}>
+              Deseo convertirme en Mentor
+            </MyText>
+          </TouchableOpacity>
+          {!isRoleModel && <TouchableOpacity style={styles.otherOptionContainer} onPress={() => navigate ('BeRoleModel')}>
+            <MyText style={styles.otherOptionText}>
+              Deseo convertirme en Role Model
+            </MyText>
+          </TouchableOpacity>}
         </View>
       </View>
       <View style={styles.bottomLinks}>

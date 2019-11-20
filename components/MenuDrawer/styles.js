@@ -22,8 +22,19 @@ export default StyleSheet.create ({
         alignContent: 'flex-end',
         paddingTop: 25,
         // backgroundColor: 'green',
-        // borderBottomWidth: 1,
-        // borderBottomColor: '#777777',
+        borderBottomWidth: 1,
+        borderBottomColor: theme.GRAY_LIGHT_COLOR,
+    },
+    otherOptions: { 
+        marginLeft: 12,
+        marginVertical: 10
+    },
+    otherOptionContainer: {
+        marginVertical: 5
+    },
+    otherOptionText: {
+        color: 'white',
+        fontSize: theme.FONT_SIZE_MEDIUM
     },
     profileText: {
         // backgroundColor: 'green',
@@ -82,7 +93,7 @@ export default StyleSheet.create ({
         overflow: 'hidden'
     },
     topLinks:{
-        height: 170,
+        height: 220,
         backgroundColor: theme.PRIMARY_COLOR,
     },
     bottomLinks: {
