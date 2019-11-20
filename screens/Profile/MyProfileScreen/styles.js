@@ -147,5 +147,12 @@ export default StyleSheet.create ({
 	},
 	iconContainer: {
 		left: 0, marginRight: wp(2)
+	},
+	actionBottomButton: {
+		// paddingVertical: 50,
+		height: hp(10),
+		position: 'absolute',
+		bottom: 0,
+		width: wp(100)
 	}
 })

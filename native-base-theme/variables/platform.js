@@ -104,6 +104,9 @@ export default {
   get buttonTextSizeSmall() {
     return this.fontSizeBase * 0.8;
   },
+  get borderRadiusCircle() {
+    return theme.BORDER_RADIUS_CIRCLE;
+  },
   get borderRadiusLarge() {
     return theme.BORDER_RADIUS_LARGE;
   },

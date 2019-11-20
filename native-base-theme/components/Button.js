@@ -230,6 +230,10 @@ export default (variables /* : * */ = variable) => {
       borderRadius: 0
     },
 
+    '.circle': {
+      borderRadius: variables.borderRadiusCircle
+    },
+
     '.superRounded': {
       borderRadius: variables.borderRadiusLarge
     },

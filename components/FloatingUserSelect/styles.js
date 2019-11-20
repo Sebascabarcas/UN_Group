@@ -84,25 +84,10 @@ export default StyleSheet.create({
         borderBottomLeftRadius: entryBorderRadius,
         borderBottomRightRadius: entryBorderRadius
     },
-    textContainerEven: {
-		backgroundColor: colors.black
-    },
     title: {
         color: 'white',
         textAlign: 'center',
         fontSize: theme.FONT_SIZE_SMALL,
         // letterSpacing: 0.5
-    },
-    titleEven: {
-        color: 'white'
-    },
-    subtitle: {
-        marginTop: 6,
-        color: colors.gray,
-        fontSize: 12,
-        fontStyle: 'italic'
-    },
-    subtitleEven: {
-        color: 'rgba(255, 255, 255, 0.7)'
     }
 });

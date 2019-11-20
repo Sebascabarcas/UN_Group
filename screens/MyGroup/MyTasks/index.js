@@ -68,8 +68,6 @@ const MyTasks = () => {
   const flatList = useRef (null);
   const {current_user: user, isAdmin} = useSelector (state => state.session);
   const {current_group: group, current_user_tasks: tasks, refreshing} = useSelector (state => state.groups);
-  console.log(tasks);
-  
   const dispatch = useDispatch ();
   const {navigate, goBack, getParam} = useNavigation ();
   
@@ -102,7 +100,7 @@ const MyTasks = () => {
 
   _renderTask = ({item: task, index}) => {
     return (
-      <CardTask containerStyles={{marginVertical: 10}} {...task} completed={task.responsibles[0].taskCompleted} group={group} onPress={() => _onPressTask(task, group)} />
+      <CardTask containerStyles={{marginVertical: 10}} {...task} completed={task.responsibles.length > 0 ? task.responsibles[0].taskCompleted : false} group={group} onPress={() => _onPressTask(task, group)} />
       // <CardEvent groupName="W-STEM" location={event.location} name={event.eventName} time={moment(event.date).format('hh:mm A')} date={moment(event.date).format('YYYY-MM-DD')} description={event.description} onPress={() => _onPressEvent(event)} />
     );
   };
