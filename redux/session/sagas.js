@@ -508,6 +508,7 @@ export default function* rootSaga () {
   yield all ([
     takeLatest (actions.CHANGE_CURRENT_GROUP, CHANGE_CURRENT_GROUP),
     takeLatest (actions.BE_ROLE_MODEL, BE_ROLE_MODEL),
+    takeLatest (actions.BE_MENTOR, BE_MENTOR),
     takeLatest (actions.LOGIN, LOGIN),
     takeLatest (actions.LOGOUT, LOGOUT),
     takeLatest (actions.DELETE_ACCOUNT, DELETE_ACCOUNT),
