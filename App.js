@@ -26,18 +26,6 @@ const store = createStore(reducers,
 );
 
 sagaMiddleware.run(sagas)
-// setupInterceptors(store);
-// var config = {
-//   apiKey: "AIzaSyDmMC-f756i3GCUU45Fqal2rBXBUcHjwHE",
-//   authDomain: "aventun-41aeb.firebaseapp.com",
-//   databaseURL: "https://aventun-41aeb.firebaseio.com",
-//   projectId: "aventun-41aeb",
-//   storageBucket: "aventun-41aeb.appspot.com",
-//   messagingSenderId: "941015886594"
-// };
-// firebase.initializeApp(config);
-
-
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);

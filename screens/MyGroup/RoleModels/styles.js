@@ -71,10 +71,10 @@ export default StyleSheet.create({
   },
   actionBottomButton: {
     // paddingVertical: 50,
-    height: hp(8),
     borderRadius: wp(10),
     borderTopRightRadius: wp(10),
     position: 'absolute',
+    height: hp(8),
     bottom: 0,
     width: wp(100)
   }

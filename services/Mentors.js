@@ -5,13 +5,13 @@ export async function getMentors(groupId, { skipLoading } = {}) {
 }
 
 export async function getMentorActivities(userId, { skipLoading } = {}) {
-    return Requests.get(`users/${userId}/acitivities`, {skipLoading}).then(activities => activities.data)
+    return Requests.get(`users/${userId}/activities`, {skipLoading}).then(activities => activities.data)
 }
 
 
 // BODY { searchQuery: '' }
-export async function searchActivity(groupId, post, { skipLoading } = {}) {
-    return Requests.post(`search/activities`, post, {skipLoading}).then(activities => activities.data)
+export async function searchActivity(searchQuery, { skipLoading } = {}) {
+    return Requests.post(`search/activities`, searchQuery, {skipLoading}).then(activities => activities.data)
 }
 
 // BODY { activityName: '' }
@@ -39,7 +39,7 @@ export async function deleteAvailability(availabilityId, availability, { skipLoa
     return Requests.delete(`availabilities/${availabilityId}`, availability, {skipLoading}).then(availability => availability.data)
 }
 
-export async function getActivityAvailabilities(activityId, { skipLoading } = {}) {
+export async function getActivity(activityId, { skipLoading } = {}) {
     return Requests.get(`activities/${activityId}`, {skipLoading}).then(availabilities => availabilities.data)
 }
 
@@ -48,6 +48,6 @@ export async function updateActivityAvailability(availabilityId, availability, {
 }
 
 export async function toggleIsMentor(userId, { skipLoading } = {}) {
-    return Requests.put(`users/${userId}/toggleIsMentor`, {}, {skipLoading}).then(isRoleModel => isRoleModel.data)
+    return Requests.put(`users/${userId}/toggleIsMentor`, {}, {skipLoading}).then(isRolemodel => isRolemodel.data)
 }
 

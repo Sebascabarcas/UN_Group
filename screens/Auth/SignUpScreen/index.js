@@ -67,7 +67,7 @@ const SignUpScreen = () => {
           >
           <Item white style={styles.itemForm}>
             <Input
-              placeholder="Correo"
+              placeholder="Correo*"
               placeholderTextColor="#FFF"
               style={styles.input}
               onChangeText={email => _setUser ({...user, email})}
@@ -82,7 +82,7 @@ const SignUpScreen = () => {
           </Item>
           <Item white style={styles.itemForm}>
             <Input
-              placeholder="Nombre de Usuario"
+              placeholder="Nombre de Usuario*"
               placeholderTextColor="#FFF"
               style={styles.input}
               onChangeText={username => _setUser ({...user, username})}
@@ -97,7 +97,7 @@ const SignUpScreen = () => {
           </Item>
           <Item white style={styles.itemForm}>
             <Input
-              placeholder="Primer Nombre"
+              placeholder="Primer Nombre*"
               placeholderTextColor="#FFF"
               style={styles.input}
               onChangeText={firstName => _setUser ({...user, firstName})}
@@ -127,7 +127,7 @@ const SignUpScreen = () => {
           </Item>
           <Item white style={styles.itemForm}>
             <Input
-              placeholder="Primer Apellido"
+              placeholder="Primer Apellido*"
               placeholderTextColor="#FFF"
               style={styles.input}
               onChangeText={firstLastName => _setUser ({...user, firstLastName})}
@@ -142,7 +142,7 @@ const SignUpScreen = () => {
           </Item>
           <Item white style={styles.itemForm}>
             <Input
-              placeholder="Segundo Apellido"
+              placeholder="Segundo Apellido*"
               placeholderTextColor="#FFF"
               style={styles.input}
               onChangeText={secondLastName => _setUser ({...user, secondLastName})}
@@ -173,7 +173,7 @@ const SignUpScreen = () => {
           </Item>
           <Item white style={styles.itemForm}>
             <Input
-              placeholder="Contraseña"
+              placeholder="Contraseña*"
               placeholderTextColor="#FFF"
               secureTextEntry={!showPassword}
               style={styles.input}

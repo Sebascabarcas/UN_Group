@@ -23,7 +23,7 @@ export default StyleSheet.create ({
         paddingTop: 25,
         // backgroundColor: 'green',
         borderBottomWidth: 1,
-        borderBottomColor: theme.GRAY_LIGHT_COLOR,
+        borderBottomColor: 'white',
     },
     otherOptions: { 
         marginLeft: 12,
@@ -93,14 +93,14 @@ export default StyleSheet.create ({
         overflow: 'hidden'
     },
     topLinks:{
-        height: 220,
+        height: 230,
         backgroundColor: theme.PRIMARY_COLOR,
     },
     bottomLinks: {
         flex: 1,
         // backgroundColor: 'white',
         paddingTop: 20,
-        paddingBottom: 450,
+        // paddingBottom: 450,
     },
     linkContainer: {
         flexDirection: 'row',

@@ -18,7 +18,7 @@ import Storage from '../../services/Storage';
 import jwt_decode from 'jwt-decode';
 import actions from './actions';
 import {fromJsonToFormData, errorMessage} from '../../services/helpers';
-import { toggleIsRoleModel } from '../../services/RoleModels';
+import { toggleisRolemodel } from '../../services/RoleModels';
 import { toggleIsMentor } from '../../services/Mentors';
 // import { errorMessage } from '../../services/helpers'
 
@@ -35,8 +35,9 @@ export function* LOGIN({payload}) {
     console.log (token);
     console.log (groups);
     // const {secret, tokenable_id: user_id, tokenable_type: role} = success
-    let {user, user: {isSuperAdmin, userGroupRelations, isRoleModel}} = jwt_decode (token);
+    let {user, user: {isSuperAdmin, userGroupRelations, isMentor, isRolemodel}} = jwt_decode (token);
     console.log('token Decoded:', jwt_decode (token));
+    console.log('token Decoded:', isRolemodel, isMentor);
     let current_group = null
     if (!isSuperAdmin && relations.length > 0) {
       relations[0].group.isAdmin = relations[0].isAdmin;
@@ -54,7 +55,8 @@ export function* LOGIN({payload}) {
       payload: {
         current_user: user,
         isAdmin: current_group ? current_group.isAdmin : false,
-        isRoleModel,
+        isRolemodel,
+        isMentor,
         isSuperAdmin,
         myGroups: isSuperAdmin ?  groups : userGroupRelations,
         current_group
@@ -93,9 +95,9 @@ export function* BE_ROLE_MODEL({payload: {userId, navigate, goBack}}) {
     },
   });
   try {
-    yield call (toggleIsRoleModel, userId);
+    yield call (toggleisRolemodel, userId);
     const current_session = yield call (currentSession);
-    current_session.user.isRoleModel = true
+    current_session.user.isRolemodel = true
     yield call (
       Storage.set,
       'Session',
@@ -104,7 +106,7 @@ export function* BE_ROLE_MODEL({payload: {userId, navigate, goBack}}) {
     yield put ({
       type: 'session/SET_STATE',
       payload: {
-        isRoleModel: true
+        isRolemodel: true
       },
     });
     ToastAndroid.show (

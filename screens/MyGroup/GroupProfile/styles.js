@@ -6,9 +6,10 @@ import {
 } from 'react-native-responsive-screen';
 
 export default StyleSheet.create({
-	container: {
+	content: {
         backgroundColor: 'white',
-        flex: 1,
+        marginBottom: hp(1)
+        // flex: 1,
         // paddingHorizontal: wp(5),
 		// height: '100%',
 		// width: '100%',
@@ -16,12 +17,12 @@ export default StyleSheet.create({
 		// alignItems: 'center'
 	},
     imageCar:{
-        width: PixelRatio.get()*50,
+        width: PixelRatio.get()*40,
         borderRadius: wp(100),
         borderColor: '#fff',
         borderWidth: 2,
         marginVertical: hp(3),
-        height: PixelRatio.get()*50,
+        height: PixelRatio.get()*40,
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf :'center',
@@ -31,6 +32,7 @@ export default StyleSheet.create({
     },
     groupInfoContainer: {
         width: wp(100),
+        flex: 1,
         backgroundColor: theme.SECONDARY_COLOR,
         paddingTop: Platform.OS === 'ios' ? 60 : 80,
         paddingBottom: hp(5),
@@ -70,5 +72,11 @@ export default StyleSheet.create({
     },
     iconButtonTitle: {
 
-    }
+    },
+    actionBottomButton: {
+        position: 'absolute',
+        bottom: 0,
+        height: hp(8),
+        width: wp(100)
+      }
 })

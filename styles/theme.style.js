@@ -3,10 +3,19 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+// Naranja oscuro: #AC2E00
+// Naranja claro: #F94200
+// Aqua oscuro: #00AC8A
+// Aqua claro: #00F9C7
+// Gris oscuro: #ECECEC
+
 export default {
-  PRIMARY_COLOR: '#407D39',
-  SECONDARY_COLOR: '#73387F',
-  ACCENT_COLOR: '#272169',
+  // PRIMARY_COLOR: '#407D39',
+  PRIMARY_COLOR: '#00AC8A',
+  // SECONDARY_COLOR: '#73387F',
+  SECONDARY_COLOR: '#AC2E00',
+  // ACCENT_COLOR: '#272169',
+  ACCENT_COLOR: '#F94200',
   COMPLEMENTARY_COLOR: '#FFF',
   GRAY_COLOR: '#BEC2CE',
   GRAY_COLOR2: '#7B807E',
@@ -21,6 +30,7 @@ export default {
   LIGHT_COLOR: '#F4F4F4',
   GRAY_BACKGROUND_COLOR: '#F7F8FA',
   GRAY_BACKGROUND_COLOR2: '#EFEFF4',
+  ACTIVITY_CARD_ICON_COLOR: '#68C2BB',
   HEADER_MENU_TITLE_COLOR: "#FFF",
   // HEADER_MENU_TITLE_COLOR: "#101010",
   ROLE_TEXT_COLOR: '#8A8A8F',

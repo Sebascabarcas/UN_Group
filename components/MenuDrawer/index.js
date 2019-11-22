@@ -34,7 +34,7 @@ const MenuDrawer = () => {
   const [isReady, _setReady] = useState (false);
   const dispatch = useDispatch()
   const {navigate} = navigationHooks.useNavigation ();
-  const {current_user: user, current_group,  myGroups, isSuperAdmin, isRoleModel} = useSelector(state => state.session)
+  const {current_user: user, current_group,  myGroups, isSuperAdmin, isRolemodel, isMentor} = useSelector(state => state.session)
   // console.log(user);
   
   
@@ -113,9 +113,7 @@ const MenuDrawer = () => {
       <View style={styles.topLinks}>
         <View style={styles.profile}>
           <TouchableWithoutFeedback style={styles.imgView} onPress={() => navigate ('MyProfile')}>
-            {/* <View style={styles.imgView}> */}
               <Image style={styles.img} resizeMode="cover" source={user.picture ? {uri: `${user.picture.uri}`} : images["no-profile-photo"]} />
-            {/* </View> */}
           </TouchableWithoutFeedback>
           <View style={styles.profileText}>
             <MyText style={styles.name}>{user.firstName} {user.firstLastName}</MyText>
@@ -124,17 +122,11 @@ const MenuDrawer = () => {
                 white
                 style={styles.roleBadge}
               >
-                  {/* <AntDesign
-                    name=""
-                    color={theme.PRIMARY_COLOR}
-                    size={theme.ICON_SIZE_SUPER_EXTRA_SMALL}
-                  /> */}
                   <MyText style={styles.roleText}>
                     {user.username}
                   </MyText>
               </Badge>
               <Button
-              // block
               iconLeft
               style={{paddingTop: 2}}
               transparent
@@ -150,21 +142,21 @@ const MenuDrawer = () => {
               />
               </Button>
             </View>
-            {/* <MyText >{user.email}</MyText> */}
           </View>
         </View>
-        <View style={styles.otherOptions}>
-          <TouchableOpacity style={styles.otherOptionContainer} onPress={() => navigate ('BeMentor')}>
+        {!isMentor && !isRolemodel && <View style={styles.otherOptions}>
+          {!isMentor && <TouchableOpacity style={styles.otherOptionContainer} onPress={() => navigate ('BeMentor')}>
             <MyText style={styles.otherOptionText}>
               Deseo convertirme en Mentor
             </MyText>
           </TouchableOpacity>
-          {!isRoleModel && <TouchableOpacity style={styles.otherOptionContainer} onPress={() => navigate ('BeRoleModel')}>
+          }
+          {!isRolemodel && <TouchableOpacity style={styles.otherOptionContainer} onPress={() => navigate ('BeRoleModel')}>
             <MyText style={styles.otherOptionText}>
               Deseo convertirme en Role Model
             </MyText>
           </TouchableOpacity>}
-        </View>
+        </View>}
       </View>
       <View style={styles.bottomLinks}>
         {navLink (
@@ -220,8 +212,18 @@ const MenuDrawer = () => {
             size={theme.ICON_SIZE_SMALL}
           />
         )} */}
+        { isMentor && navLink (
+          'Mentoring',
+          'Mentorías',
+          <FontAwesome
+            style={styles.iconLink}
+            name="book"
+            color={theme.GRAY_COLOR}
+            size={theme.ICON_SIZE_SMALL}
+          />
+        )}
         {navLink (
-          'Configuration',
+          'MyProfile',
           'Opciones',
           <FontAwesome
             style={styles.iconLink}

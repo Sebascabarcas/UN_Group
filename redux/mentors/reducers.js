@@ -7,6 +7,7 @@ const initialState = {
   mentors: [],
   current_mentor: {},
   current_mentor_activities: [],
+  activities: [],
   mentor_activities: [],
   new_activity: {},
   current_activity: {},

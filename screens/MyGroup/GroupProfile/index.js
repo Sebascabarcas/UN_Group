@@ -94,16 +94,10 @@ const GroupProfile = () => {
           {current_group.description}
         </MyText>
       </View>
-      <Content padder contentContainerStyle={styles.container}>
-        {/* <View>
-          <MyText style={[styles.groupSubtitle]} fontStyle="bold">
-            Grupo
-          </MyText>
-        </View> */}
+      <Content padder scrollEnabled contentContainerStyle={styles.content}>
         <Grid>
           <Row>
             <Col>
-              {/* B3C2CA */}
               <GroupMenuButton navigate={navigate} route="MyMembers" icon="ios-people" title="Miembros" />
               <GroupMenuButton navigate={navigate} route="RoleModels" icon="ios-man" title="Role Models" />
               <GroupMenuButton navigate={navigate} route="MyTasks" icon="ios-clipboard" title="Mis tareas" />
@@ -111,23 +105,22 @@ const GroupProfile = () => {
             <Col>
               <GroupMenuButton navigate={navigate} route="MyEvents" icon="ios-calendar" title="Eventos" />
               <GroupMenuButton navigate={navigate} route="MySolicitudes" icon="ios-archive" title="Solicitudes" />
-              <GroupMenuButton navigate={navigate} route="Mentors" icon="ios-people" title="Mentores" />
-              {/* B3C2CA */}
+              <GroupMenuButton navigate={navigate} route="GroupMentoring" icon="ios-people" title="Mentores" />
             </Col>
           </Row>
         </Grid>
-        <Button primary iconRight block superRounded onPress={() => dispatch({
-                type: `groups/${isSuperAdmin ? 'DELETE' : 'LEAVE'}_GROUP`,
-                payload: {id: current_group.id, navigate, resetNavigationStack, dispatchNavigation}
-              })}>
-              <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">{isSuperAdmin ? 'Eliminar' : 'Abandonar'} Grupo</MyText>
-              <Ionicons
-                name="ios-close-circle"
-                color="white"
-                size={theme.ICON_SIZE_SMALL}
-              />
-        </Button>
       </Content>
+      {/* <Button style={styles.actionBottomButton} primary iconRight block superRounded onPress={() => dispatch({
+              type: `groups/${isSuperAdmin ? 'DELETE' : 'LEAVE'}_GROUP`,
+              payload: {id: current_group.id, navigate, resetNavigationStack, dispatchNavigation}
+            })}>
+            <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">{isSuperAdmin ? 'Eliminar' : 'Abandonar'} Grupo</MyText>
+            <Ionicons
+              name="ios-close-circle"
+              color="white"
+              size={theme.ICON_SIZE_SMALL}
+            />
+      </Button> */}
     </Container>
   );
 };

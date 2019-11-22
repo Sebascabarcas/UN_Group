@@ -25,44 +25,72 @@ import styles from './styles';
 import theme from '../../../styles/theme.style.js';
 import Images from '../../../constants/Images.js';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 
 const {apiUrl} = getEnvVars ();
 const {height: fullHeight} = Dimensions.get ('window');
 
-const HeaderComponent = ({user, title, file, handlePostTitle, showImageModal, handleDescription, description, goBack}) => {
+const HeaderComponent = ({user, id: postId, dispatch, title, file, handlePostTitle, showImageModal, handleDescription, description, goBack, navigate}) => {
   return (
   <View style={styles.headerContainer}>
     <View style={styles.headerInnerContainer}>
-      <View style={styles.groupInfoContainer}>
-        <Image
-          resizeMode="cover"
-          style={styles.imageGroup}
-          source={
-            user.picture
-              ? {uri: `${user.picture.uri}`}
-              : Images['no-profile-photo']
-          }
-        />
-        <View>
-          <MyText style={{color: theme.DARK_COLOR}} fontStyle="bold">
-            {user.firstName} {user.firstLastName}
-          </MyText>
-          <MyText style={{color: theme.GRAY_LIGHT_COLOR}} fontStyle="semibold">
-            Edición de Publicación
-          </MyText>
+    <View>
+          <Button
+          // block
+            style={{marginLeft: 6}}
+            iconLeft
+            transparent
+            onPress={() => goBack ()}
+          >
+            <Ionicons
+              name="ios-arrow-back"
+              color={theme.PRIMARY_COLOR}
+              size={theme.ICON_SIZE_SMALL}
+            />
+          </Button>
         </View>
-      </View>
-      <View>
-        <Button onPress={() => goBack ()} light rounded>
-          <Icon
-            type="AntDesign"
-            name="arrowup"
-            color="#000"
-            size={theme.ICON_SIZE_SMALL}
+        <View style={styles.groupInfoContainer}>
+          <Image
+            resizeMode="cover"
+            style={styles.imageGroup}
+            source={
+              user.picture
+                ? {uri: `${user.picture.uri}`}
+                : Images['no-profile-photo']
+            }
           />
-        </Button>
-      </View>
+          <View>
+            <MyText style={{color: theme.DARK_COLOR}} fontStyle="bold">
+              {user.firstName} {user.firstLastName}
+            </MyText>
+            <MyText
+              style={{color: theme.GRAY_LIGHT_COLOR}}
+              fontStyle="semibold"
+            >
+              Edición de la publicación
+            </MyText>
+          </View>
+        </View>
+        <View>
+          <Button
+            // block
+            style={{marginRight: 6}}
+            iconLeft
+            transparent
+            onPress={() => {
+              dispatch ({
+                type: 'roleModels/DELETE_POST',
+                payload: {postId, navigate},
+              });
+            }}
+          >
+            <Ionicons
+              name="ios-trash"
+              color={theme.PRIMARY_COLOR}
+              size={theme.ICON_SIZE_MEDIUM}
+            />
+          </Button>
+        </View>
     </View>
     <View style={styles.userTextInputContainer}>
       <TextInput
@@ -259,7 +287,7 @@ const EditPost = () => {
           </Button>
         </View>
       </Modal>
-      <HeaderComponent user={user} {...post} showImageModal={_setShowImageModal} handlePostTitle={handlePostTitle} handleDescription={handleDescription}  goBack={goBack}/>
+      <HeaderComponent dispatch={dispatch} user={user} navigate={navigate} {...post} showImageModal={_setShowImageModal} handlePostTitle={handlePostTitle} handleDescription={handleDescription}  goBack={goBack}/>
         {
         }
         <Button style={styles.postButton} onPress={handleEditPost} full block primary>

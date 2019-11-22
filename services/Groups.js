@@ -1,8 +1,5 @@
 import Requests from './Requests'
 import Storage from './Storage';
-import getEnvVars from '../environment';
-
-const { apiUrl } = getEnvVars();
 
 export async function getGroupEvents(id, { skipLoading } = {}) {
     return Requests.get(`groups/${id}/events`).then(events => events.data)

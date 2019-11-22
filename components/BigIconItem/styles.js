@@ -42,7 +42,7 @@ export default StyleSheet.create ({
 	primaryText: {
 		fontSize: theme.FONT_SIZE_LARGE,
 		paddingTop: 10,
-		paddingBottom: 5,
+		// paddingBottom: 0,
 		textTransform: "capitalize",
 		// backgroundColor: 'red',
 		color: theme.DARK_COLOR,

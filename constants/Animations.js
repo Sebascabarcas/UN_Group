@@ -4,6 +4,7 @@ export default animations = {
     "empty-gabinete": require('../assets/lotties/empty-gabinete.json'),
     "falling-empty-box": require('../assets/lotties/falling-empty-box.json'),
     "error-tv": require('../assets/lotties/error-tv.json'),
+    "scanning": require('../assets/lotties/scanning.json'),
     "user-scanning": require('../assets/lotties/user-scanning.json'),
     "user-scanning2": require('../assets/lotties/user-scanning2.json'),
     "role-models": require('../assets/lotties/role-models.json'),

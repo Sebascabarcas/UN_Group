@@ -105,7 +105,7 @@ export function* DELETE_POST({ payload: {postId, goBack, navigate, skipLoading }
       type: 'roleModels/DELETE_ARRAY_ELEMENT',
       payload: {
         arrayName: 'current_role_model_posts',
-        index
+        id: postId
       },
     })
     ToastAndroid.show ('Publicación eliminado correctamente!', ToastAndroid.SHORT);

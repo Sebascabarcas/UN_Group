@@ -2,7 +2,7 @@ import { ToastAndroid } from 'react-native';
 import { put, call, all, takeEvery, takeLatest } from 'redux-saga/effects'
 import actions from './actions'
 import {errorMessage} from '../../services/helpers';
-import { createActivity, createAvailability, updateActivity, updateActivityAvailability, deleteActivity, deleteAvailability, getMentors, getMentorActivities, getActivityAvailability, getActivityAvailabilities, searchActivity } from '../../services/Mentors';
+import { createActivity, createAvailability, updateActivity, updateActivityAvailability, deleteActivity, deleteAvailability, getMentors, getMentorActivities, getActivityAvailability, searchActivity, getActivity } from '../../services/Mentors';
 // import moment from 'moment-timezone'
 // import 'moment/locale/es'  // without this line it didn't work
 // moment.locale('es')
@@ -11,16 +11,16 @@ import { createActivity, createAvailability, updateActivity, updateActivityAvail
 
 export function* SEARCH_ACTIVITIES({ payload: { searchQuery, skipLoading } }) {
   yield put({
-    type: 'models/SET_STATE',
+    type: 'mentors/SET_STATE',
     payload: {
       loading: true,
     }
   })
   try {
-    const {activities} = yield call(searchActivity, searchQuery, { skipLoading })
+    const {activities} = yield call(searchActivity, {searchQuery}, { skipLoading })
     
     yield put({
-      type: 'models/SET_STATE',
+      type: 'mentors/SET_STATE',
       payload: {
         activities
       }
@@ -30,7 +30,7 @@ export function* SEARCH_ACTIVITIES({ payload: { searchQuery, skipLoading } }) {
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'models/SET_STATE',
+    type: 'mentors/SET_STATE',
     payload: {
       loading: false,
     }
@@ -46,11 +46,12 @@ export function* CREATE_ACTIVITY({ payload: { userId, goBack, activity, navigate
   })
   
   try {
+    
     const {activity: new_activity} = yield call(createActivity, userId, activity, {skipLoading});
     yield put({
       type: 'mentors/ADD_ARRAY_ELEMENT',
       payload: {
-        arrayName: 'current_mentor_activities',
+        arrayName: 'mentor_activities',
         newElement: new_activity
       }
     })
@@ -68,7 +69,7 @@ export function* CREATE_ACTIVITY({ payload: { userId, goBack, activity, navigate
   })
 }
 
-export function* CREATE_AVAILABILITY({ payload: { userId, availability, navigate, skipLoading } }) {
+export function* CREATE_AVAILABILITY({ payload: { activityId, availability, goBack, skipLoading } }) {
   yield put({
     type: 'mentors/SET_STATE',
     payload: {
@@ -77,7 +78,8 @@ export function* CREATE_AVAILABILITY({ payload: { userId, availability, navigate
   })
   
   try {
-    const {availability: new_availability} = yield call(createAvailability, userId, availability, {skipLoading});
+    availability.hourRange = `${availability.start_time} - ${availability.end_time}` 
+    const {availability: new_availability} = yield call(createAvailability, activityId, availability, {skipLoading});
     yield put({
       type: 'mentors/ADD_ARRAY_ELEMENT',
       payload: {
@@ -86,7 +88,7 @@ export function* CREATE_AVAILABILITY({ payload: { userId, availability, navigate
       }
     })
     ToastAndroid.show ('!Disponibilidad agregada correctamente!', ToastAndroid.SHORT);
-    navigate('RoleModels')
+    goBack()
     // console.log(success);
   } catch (error) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
@@ -189,19 +191,12 @@ export function* DELETE_ACTIVITY({ payload: {activityId, goBack, navigate, skipL
     yield put({
       type: 'mentors/DELETE_ARRAY_ELEMENT',
       payload: {
-        arrayName: 'current_role_model_posts',
-        id: activityId
-      },
-    })
-    yield put({
-      type: 'mentors/DELETE_ARRAY_ELEMENT',
-      payload: {
-        arrayName: 'current_activity_availabilities',
+        arrayName: 'mentor_activities',
         id: activityId
       },
     })
     ToastAndroid.show ('¡Actividad eliminada correctamente!', ToastAndroid.SHORT);
-    goBack()
+    navigate('Mentoring')
     // console.log(success);
   } catch (error) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
@@ -298,7 +293,7 @@ export function* GET_MENTOR_ACTIVITIES({payload: {userId, skipLoading, concat}})
   })
 }
 
-export function* GET_ACTIVITY_AVAILABILITIES({payload: {activityId, skipLoading, concat}}) {
+export function* GET_ACTIVITY({payload: {activityId, skipLoading, concat}}) {
   yield put({
     type: 'mentors/SET_STATE',
     payload: {
@@ -306,11 +301,12 @@ export function* GET_ACTIVITY_AVAILABILITIES({payload: {activityId, skipLoading,
     },
   })
   try {
-    const {availabilities} = yield call(getActivityAvailabilities, activityId, { skipLoading })
+    const {activity} = yield call(getActivity, activityId, { skipLoading })
     yield put({
       type: `mentors/${concat ? 'CONCAT_EVENTS' : 'SET_STATE' }`,
       payload: {
-        current_activity_availabilities: availabilities
+        current_activity: activity,
+        current_activity_availabilities: activity.availabilities
       },
     })
   } catch (error) {
@@ -335,6 +331,6 @@ export default function* rootSaga() {
     takeLatest(actions.DELETE_AVAILABILITY, DELETE_AVAILABILITY),
     takeLatest(actions.GET_MENTORS, GET_MENTORS),
     takeLatest(actions.GET_MENTOR_ACTIVITIES, GET_MENTOR_ACTIVITIES),
-    takeLatest(actions.GET_ACTIVITY_AVAILABILITIES, GET_ACTIVITY_AVAILABILITIES),
+    takeLatest(actions.GET_ACTIVITY, GET_ACTIVITY),
   ])
 }

@@ -8,6 +8,7 @@ export default images = {
     "big_check": require('../assets/images/big_check.png'),
     "password_restored": require('../assets/images/passwordrestored.png'),
     "logo": require('../assets/images/Logo.png'),
+    "logo-small": require('../assets/images/logo-small.png'),
     "raul": require('../assets/images/robot-dev.png'),
     "abstractgradient4": require('../assets/images/abstractgradient4.png'),
 };

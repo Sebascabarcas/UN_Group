@@ -5,9 +5,7 @@
 // import 'firebase/storage'
 import Requests from './Requests'
 import Storage from './Storage';
-import getEnvVars from '../environment';
 
-const { apiUrl } = getEnvVars();
 // const firebaseConfig = {
 //   apiKey: 'AIzaSyAE5G0RI2LwzwTBizhJbnRKIKbiXQIA1dY',
 //   authDomain: 'cleanui-72a42.firebaseapp.com',

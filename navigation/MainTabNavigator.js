@@ -94,32 +94,9 @@ GroupsStack.navigationOptions = {
   ),
 };
 
-const SettingsStack = createStackNavigator (
-  {
-    Settings: AddCreditCardScreen,
-  },
-  defaultStackConfig
-);
-
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'No se',
-  tabBarOptions: {
-    // showLabel: false,
-    activeTintColor: theme.PRIMARY_COLOR,
-  },
-  tabBarIcon: ({focused}) => (
-    <TabBarIcon
-      focused={focused}
-      focusedColor={theme.PRIMARY_COLOR}
-      name={Platform.OS === 'ios' ? 'ios-star' : 'md-star'}
-    />
-  ),
-};
-
 export default createBottomTabNavigator ({
   EventsStack,
   GroupsStack,
-  SettingsStack,
 }
 
 // , {

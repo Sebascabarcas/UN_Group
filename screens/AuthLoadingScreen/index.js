@@ -21,9 +21,9 @@ export default AuthLoadingScreen = (props) => {
     // console.log('Session Info: ', sessionInfo);
     // let {status} = await Permissions.getAsync (Permissions.LOCATION);
     if (sessionInfo) {
-      const {user: current_user, user: {isSuperAdmin, isAdmin, isRoleModel, isMentor}, current_group, groups} = sessionInfo
+      const {user: current_user, user: {isSuperAdmin, isAdmin, isRolemodel, isMentor}, current_group, groups} = sessionInfo
       // console.log('Current group:', current_group);
-      dispatch({type: 'session/SET_STATE', payload: {current_user, current_group, myGroups: groups, isSuperAdmin, isRoleModel, isMentor, isAdmin}});
+      dispatch({type: 'session/SET_STATE', payload: {current_user, current_group, myGroups: groups, isSuperAdmin, isRolemodel, isMentor, isAdmin}});
       dispatch({type: 'groups/SET_STATE', payload: {current_group}});
       props.navigation.navigate('App');
       // props.navigation.navigate (status === 'granted' ? 'App' : 'Intro');

@@ -27,6 +27,7 @@ import EventSliderEntry from '../../../components/EventSliderEntry/index.js';
 import MapView from 'react-native-maps';
 import mapStyle from '../../../styles/mapStyle.json';
 import Locations from '../../../constants/Locations.js';
+import * as Permissions from 'expo-permissions';
 
 const {height: fullHeight} = Dimensions.get ('window');
 
@@ -107,6 +108,20 @@ EventsScreen = () => {
     [filter]
   ); */
  
+  getPermissionAsync = async () => {
+    const {status} = await Permissions.askAsync (
+      Permissions.LOCATION
+    );
+    if (status !== 'granted') {
+      alert ('Sorry, we need camera roll permissions to make this work!');
+    }
+  };
+
+  useEffect (() => {
+    getPermissionAsync ();
+  }, []);
+
+
   useEffect (() => {
     dispatch({
       type: 'events/GET_EVENTS',
@@ -225,7 +240,7 @@ EventsScreen = () => {
           rotateEnabled={false}
           pitchEnabled={false}
           scrollEnabled={false}
-          zoomEnabled={false}
+          zoomEnabled={true}
           ref={mapRef}
           // onRegionChangeComplete={_setLocationOnRegionChanged}
           style={{
@@ -244,11 +259,11 @@ EventsScreen = () => {
         >
           { mapReady && eventCoordinates &&
           <MapView.Marker
-            // image={Images['logo']}
+            image={Images['logo-small']}
             coordinate={eventCoordinates}
-            pinColor={'blue'}
-            title="My Marker"
-            description="Some description"
+            // pinColor={'blue'}
+            // title="Evento"
+            // description="Some description"
           />}
         </MapView>
         

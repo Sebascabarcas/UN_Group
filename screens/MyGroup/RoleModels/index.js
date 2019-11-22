@@ -93,7 +93,7 @@ const HeaderComponent = ({goBack, navigate, dispatch, roleModels}) => {
 const RoleModels = () => {
   const flatList = useRef (null);
   const {posts, role_models} = useSelector (state => state.roleModels);
-  const {isRoleModel, isAdmin} = useSelector (state => state.session);
+  const {isRolemodel, isAdmin} = useSelector (state => state.session);
   const {current_group: group, refreshing} = useSelector (state => state.session);
   const dispatch = useDispatch ();
   const {navigate, goBack, getParam} = useNavigation ();
@@ -166,7 +166,7 @@ const RoleModels = () => {
             <NoResults lottieProps={{autoSize: true, style:{width: wp(30)}}} animationName="minnion-looking" primaryText="¡No se ha encontrado ningúna publicación!" primaryTextStyles={{color: 'white'}} secondaryText={`Vuelva más tarde`}/>
           </View>
       }
-      {isRoleModel && <Button
+      {isRolemodel && <Button
         primary
         full
         onPress={() => {

@@ -85,6 +85,16 @@ import ShowRoleModel from '../screens/MyGroup/ShowRoleModel';
 import BeRoleModel from '../screens/BeRoleModel';
 import BeMentor from '../screens/BeMentor';
 import EditPost from '../screens/MyGroup/EditPost';
+import Mentoring from '../screens/Mentoring';
+import CreateActivity from '../screens/CreateActivity';
+import ShowActivity from '../screens/ShowActivity';
+import CreateAvailability from '../screens/CreateAvailability';
+import WeekDay from '../screens/WeekDay';
+import EditActivity from '../screens/EditActivity';
+import GroupMentoring from '../screens/MyGroup/GroupMentoring';
+import SearchActivity from '../screens/MyGroup/SearchActivity';
+import ShowMentorActivity from '../screens/MyGroup/ShowMentorActivity';
+import ShowMentor from '../screens/MyGroup/ShowMentor';
 
 // import { Divider, Button } from 'react-native-elements';
 
@@ -138,20 +148,70 @@ const AppStack = createStackNavigator(
     //     },
     //   },
     // },
-    // MyGroup: {
-    //   screen: GroupProfile,
-    // },
-    BeMentor: {
-      screen: BeMentor
-    },
     Home: {
       screen: MainTabNavigator,
       navigationOptions: {
         header: null
-      //   title: 'W STEM',
-      //   headerTransparent: true,
-      //   headerStyle: {}
       },
+    },
+    Mentoring: {
+      screen: Mentoring,
+      navigationOptions: {
+        header: null
+      },
+    },
+    ShowActivity: {
+      screen: ShowActivity,
+      navigationOptions: {
+        header: null
+      },
+    },
+    CreateActivity: {
+      screen: CreateActivity,
+      navigationOptions: {
+        header: null
+      },
+    },
+    EditActivity: {
+      screen: EditActivity,
+      navigationOptions: {
+        header: null
+      },
+    },
+    CreateAvailability: {
+      screen: CreateAvailability,
+      navigationOptions: {
+        header: null
+      },
+    },
+    SelectWeekDay: {
+      screen: WeekDay,
+      navigationOptions: ({navigation}) => ({
+        title: 'SELECCIONE EL DÍA DE SEMANA',
+        headerTransparent: true,
+        headerStyle: {
+          backgroundColor: 'transparent',
+        },
+        headerLeft: (
+          <Button
+            // block
+            style={{marginLeft: 20}}
+            iconLeft transparent
+            onPress={() => navigation.goBack()}
+          >
+            <Ionicons
+                name="ios-arrow-back"
+                color={theme.PRIMARY_COLOR}
+                size={theme.ICON_SIZE_SMALL}
+              />
+          </Button>
+        ),
+        headerTitleStyle: {
+          fontFamily: theme.FONT_FAMILY_SEMIBOLD,
+          fontSize: theme.FONT_SIZE_MEDIUM,
+          color: theme.DARK_COLOR
+        }
+      })
     },
     CreateGroup: {
       screen: CreateGroupScreen,
@@ -185,6 +245,9 @@ const AppStack = createStackNavigator(
     },
     BeRoleModel: {
       screen: BeRoleModel
+    },
+    BeMentor: {
+      screen: BeMentor
     },
     Notifications: {
       screen: NotificationsScreen,
@@ -241,6 +304,30 @@ const AppStack = createStackNavigator(
     },
     MySolicitudes: {
       screen: Solicitudes
+    },
+    GroupMentoring: {
+      screen: GroupMentoring,
+      navigationOptions: {
+        header: null
+      }
+    },
+    SearchActivity: {
+      screen: SearchActivity,
+      navigationOptions: {
+        header: null
+      }
+    },
+    ShowMentor: {
+      screen: ShowMentor,
+      navigationOptions: {
+        header: null
+      }
+    },
+    ShowMentorActivity: {
+      screen: ShowMentorActivity,
+      navigationOptions: {
+        header: null
+      }
     },
     MyEvents: {
       screen: Events
