@@ -85,6 +85,9 @@ import ShowActivity from '../screens/ShowActivity';
 import EditActivity from '../screens/EditActivity';
 import SearchActivity from '../screens/MyGroup/SearchActivity';
 import WeekDay from '../screens/WeekDay';
+import { Modal, View } from 'react-native';
+import LoadingModal from '../components/LoadingModal';
+import ConfirmModal from '../components/ConfirmModal';
 
 // Implementation of HomeScreen, OtherScreen, SignInScreen, AuthLoadingScreen
 // goes here.
@@ -472,7 +475,8 @@ export default createAppContainer (
             durationMs={500}
             interpolation="easeInOut"
           />
-          
+          <ConfirmModal/>
+          <LoadingModal/>
           <Transition.In type="fade" durationMs={500} />
         </Transition.Together>
       ),

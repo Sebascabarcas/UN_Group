@@ -379,7 +379,7 @@ export function* GET_USER_INVITATIONS({ payload: { id, skipLoading } }) {
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'session/SET_STATE',
     payload: {
       loading: false,
     },

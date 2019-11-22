@@ -12,6 +12,7 @@ import events from './events/reducers'
 import groups from './groups/reducers'
 import mentors from './mentors/reducers'
 import roleModels from './roleModels/reducers'
+import modals from './modals/reducers'
 
 export default
   combineReducers({
@@ -25,6 +26,7 @@ export default
     // offices,
     // extras,
     events,
+    modals,
     roleModels,
     mentors,
     groups,
