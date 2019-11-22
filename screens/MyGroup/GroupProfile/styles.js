@@ -32,10 +32,10 @@ export default StyleSheet.create({
     },
     groupInfoContainer: {
         width: wp(100),
-        flex: 1,
+        // flex: 1,
         backgroundColor: theme.SECONDARY_COLOR,
         paddingTop: Platform.OS === 'ios' ? 60 : 80,
-        paddingBottom: hp(5),
+        paddingBottom: hp(2),
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
         borderColor: '#EFEFF4',
@@ -76,7 +76,7 @@ export default StyleSheet.create({
     actionBottomButton: {
         position: 'absolute',
         bottom: 0,
-        height: hp(8),
+        height: hp(9),
         width: wp(100)
       }
 })

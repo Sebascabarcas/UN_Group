@@ -2,8 +2,6 @@ import Requests from './Requests'
 import Storage from './Storage';
 import getEnvVars from '../environment';
 
-const { apiUrl } = getEnvVars();
-
 export async function getEvents({ skipLoading } = {}) {
     return Requests.get(`events`).then(events => events.data)
 }

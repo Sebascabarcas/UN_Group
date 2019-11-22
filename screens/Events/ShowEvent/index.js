@@ -23,13 +23,11 @@ import {
 } from '@expo/vector-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import getEnvVars from '../../../environment';
 import moment from 'moment';
 import BigIconItem from '../../../components/BigIconItem';
 import { FloatingAction } from 'react-native-floating-action';
 
 const {height: fullHeight} = Dimensions.get ('window');
-const {apiUrl} = getEnvVars();
 
 const ShowEvent = () => {
   const {navigate, replace, goBack, getParam} = useNavigation ();
@@ -117,8 +115,8 @@ const ShowEvent = () => {
                 <Icon
                   type="AntDesign"
                   name="arrowup"
-                  color="#000"
-                  size={theme.ICON_SIZE_SMALL}
+                  fontSize={theme.ICON_SIZE_SMALL}
+                  style={{color: '#000'}}
                 />
             </Button>
           </View>
@@ -182,7 +180,7 @@ const ShowEvent = () => {
           <MyText> {moment(event.date).format('hh:mm A') }</MyText>
         }
         />
-        { isGroupEvent !== undefined && <View style={styles.actionEvent}>
+        { invitationId === undefined && <View style={styles.actionEvent}>
           <Button transparent onPress={() => {navigate('Atendees')}} style={styles.buttonAction}>
             <FontAwesome name="users" size={theme.ICON_SIZE_MEDIUM} color={theme.PRIMARY_COLOR} />
             <MyText fontStyle="semibold" style={styles.buttonTextIcon}>
@@ -204,7 +202,7 @@ const ShowEvent = () => {
             </MyText>
           </Button>
         </View>
-        }
+      }
         {/* <View style={styles.footerContainer}>
           <MyText fontStyle="bold">{group.groupName}/Nuevo Evento</MyText> */}
           { invitationId !== undefined && <View style={styles.actionButtonContainer}> 
@@ -243,17 +241,14 @@ ShowEvent.navigationOptions = ({navigation}) => {
     // title: '',
     headerLeft: (
       <Button
-        // block
-        style={{marginLeft: 20}}
-        iconLeft
+        style={{marginLeft: 5}}
         transparent
         onPress={() => navigation.goBack ()}
       >
         <Icon
-          type="FontAwesome"
-          name="arrow-left"
-          color={theme.HEADER_MENU_TITLE_COLOR}
-          size={theme.ICON_SIZE_SMALL}
+          type="Ionicons"
+          name="ios-arrow-back"
+          style={{fontSize: theme.ICON_SIZE_SMALL, color: theme.HEADER_MENU_TITLE_COLOR}}
         />
       </Button>
     ),

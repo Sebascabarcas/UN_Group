@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "BCD",
-    "slug": "BCD",
+    "name": "UNGROUP",
+    "slug": "UNGROUP",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
@@ -30,7 +30,7 @@
       "package": "com.wstem.ungroup",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyBcA6nehY8hx2kMll0bM3yhdrlxpNhqYSk"
+          "apiKey": "AIzaSyBhNU5zU-r1BOFiyoEgCP4TW3d9ds99Gok"
         }
       }
     }

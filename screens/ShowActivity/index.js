@@ -217,26 +217,4 @@ const ShowActivity = () => {
   );
 };
 
-ShowActivity.navigationOptions = ({navigation}) => {
-  return {
-    // title: '',
-    // header: null,
-    // headerLeft: (
-    //   <Button
-    //     // block
-    //     style={{marginLeft: 20}}
-    //     iconLeft
-    //     transparent
-    //     onPress={() => navigation.goBack ()}
-    //   >
-    //     <FontAwesome
-    //       name="arrow-left"
-    //       color={theme.HEADER_MENU_TITLE_COLOR}
-    //       size={theme.ICON_SIZE_SMALL}
-    //     />
-    //   </Button>
-    // ),
-  };
-};
-
 export default ShowActivity;

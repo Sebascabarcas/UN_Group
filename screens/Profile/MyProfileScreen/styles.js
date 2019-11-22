@@ -16,6 +16,7 @@ export default StyleSheet.create ({
 	},
 	infoContainer: {
 		flex: 1,
+		marginBottom: hp(9),
 		backgroundColor: theme.GRAY_BACKGROUND_COLOR,
 		opacity: 0.98
 	},
@@ -23,10 +24,11 @@ export default StyleSheet.create ({
 		justifyContent: 'center',
 		// margin: 20,
 		elevation: 1,
+		paddingTop: 5,
 		// backgroundColor: 'white',
 		borderColor: 'transparent',
 		borderBottomWidth: 1,
-		flex: 0.5,
+		flex: 0.7,
 		// height: '40%',
 		// backgroundColor:'red',
 		// alignContent: 'center',

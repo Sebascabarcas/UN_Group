@@ -21,11 +21,7 @@ import Constants from 'expo-constants';
 import {USER_FACING_NOTIFICATIONS} from 'expo-permissions';
 import {useDispatch, useSelector} from 'react-redux';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import getEnvVars from '../../../environment';
 
-const WIDTH = Dimensions.get ('window').width;
-const HEIGHT = Dimensions.get ('window').height;
-const {apiUrl} = getEnvVars();
 const EditProfileScreen = () => {
   const {navigate} = navigationHooks.useNavigation ();
   const [loading, _setLoading] = useState (false);
@@ -270,9 +266,6 @@ EditProfileScreen.navigationOptions = ({navigation}) => {
     // title: '',
     headerLeft: (
       <Button
-        // block
-        // style={{marginLeft: 20}}
-        iconLeft
         transparent
         onPress={() => navigation.goBack ()}
       >

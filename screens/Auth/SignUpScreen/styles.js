@@ -14,6 +14,9 @@ export default StyleSheet.create ({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    content: {
+      paddingVertical: hp(5)
+    },
     itemForm: {
       marginTop: 10,
       marginBottom: 10
@@ -30,7 +33,7 @@ export default StyleSheet.create ({
       fontSize: theme.FONT_SIZE_INPUT
     },
     registerButton:{
-      marginTop: 40,
+      // marginTop: 40,
       width: '90%',
       display: 'flex',
       justifyContent: 'center',
@@ -50,7 +53,7 @@ export default StyleSheet.create ({
       height: '100%',
       flex: 1,
       display: 'flex',
-      justifyContent: 'space-evenly',
+      // justifyContent: 'space-evenly',
       alignItems: 'center',
     },
     checksContainer:{
@@ -86,5 +89,8 @@ export default StyleSheet.create ({
       color: 'white',
       fontWeight: "bold",
     },
+    loginOption: {
+      marginBottom: hp(5)
+    }
   });
   

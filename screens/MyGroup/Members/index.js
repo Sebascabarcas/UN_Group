@@ -19,13 +19,14 @@ import NoResults from '../../../components/NoResults/index.js';
 import MyText from '../../../components/MyText/index.js';
 import theme from '../../../styles/theme.style.js';
 import { AntDesign } from '@expo/vector-icons';
-const { apiUrl } = getEnvVars();
-const {height: fullHeight} = Dimensions.get ('window');
 
 const Members = () => {
   console.log ('MyGroup/Members:');
-  const {current_group: group, current_group_members, more_pages, loading, refreshing} = useSelector (
+  const {current_group_members, more_pages, loading, refreshing} = useSelector (
     state => state.groups
+  );
+  const {current_group: group, isAdmin} = useSelector (
+    state => state.session
   );
   // let _current_group_members = [...current_group_members, ...current_group_members, ...current_group_members]
   const dispatch = useDispatch ();
@@ -114,7 +115,7 @@ const Members = () => {
                   type="AntDesign"
                   name="arrowup"
                   color="#000"
-                  size={theme.ICON_SIZE_SMALL}
+                  fontSize={theme.ICON_SIZE_SMALL}
                 />
             </Button>
           </View>
@@ -135,7 +136,7 @@ const Members = () => {
           : 
           <NoResults lottieProps={{style: {width: wp(50)}}} animationName="minnion-looking" primaryText="¡Aún no hay miembros!" secondaryText="Anímate a buscar usuarios y convertirlos en miembros de tu grupo"/>
           }
-          <Button primary iconRight block superRounded onPress={() => {
+          {isAdmin && <Button primary iconRight block superRounded onPress={() => {
             dispatch({
               type: 'session/SET_STATE',
               payload: {users_searched: []}
@@ -148,7 +149,7 @@ const Members = () => {
                 color="white"
                 size={theme.ICON_SIZE_SMALL}
               />
-          </Button>
+          </Button>}
         {/* <View style={styles.containerButtons}>
           <Button style={styles.buttonItem}>
             <MyText fontStyle="bold" style={styles.textItemButton}>
@@ -159,28 +160,6 @@ const Members = () => {
       </Content>
     </Container>
   );
-};
-
-Members.navigationOptions = ({navigation}) => {
-  return {
-    // title: '',
-    header: null,
-    // headerLeft: (
-    //   <Button
-    //     // block
-    //     style={{marginLeft: 20}}
-    //     iconLeft
-    //     transparent
-    //     onPress={() => navigation.goBack ()}
-    //   >
-    //     <FontAwesome
-    //       name="arrow-left"
-    //       color={theme.HEADER_MENU_TITLE_COLOR}
-    //       size={theme.ICON_SIZE_SMALL}
-    //     />
-    //   </Button>
-    // ),
-  };
 };
 
 export default Members;

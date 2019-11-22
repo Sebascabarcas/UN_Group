@@ -91,25 +91,4 @@ const TypeOfRoad = () => {
   );
 };
 
-// TypeOfRoad.navigationOptions = ({navigation}) => {
-//   return {
-//     // title: '',
-//     headerLeft: (
-//       <Button
-//         // block
-//         style={{marginLeft: 20}}
-//         iconLeft
-//         transparent
-//         onPress={() => navigation.goBack ()}
-//       >
-//         <FontAwesome
-//           name="arrow-left"
-//           color={theme.HEADER_MENU_TITLE_COLOR}
-//           size={theme.ICON_SIZE_SMALL}
-//         />
-//       </Button>
-//     ),
-//   };
-// };
-
 export default TypeOfRoad;

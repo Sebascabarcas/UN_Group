@@ -19,16 +19,12 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 // import {NavigationAction} from 'react-navigation';
 import {useDispatch, useSelector, createSelector} from 'react-redux';
-import getEnvVars from '../../../environment.js';
 import MyText from '../../../components/MyText';
 import styles from './styles';
 import theme from '../../../styles/theme.style.js';
 import Images from '../../../constants/Images.js';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
-
-const {apiUrl} = getEnvVars ();
-const {height: fullHeight} = Dimensions.get ('window');
 
 const HeaderComponent = ({user, id: postId, dispatch, title, file, handlePostTitle, showImageModal, handleDescription, description, goBack, navigate}) => {
   return (
@@ -299,28 +295,6 @@ const EditPost = () => {
         </Button>
     </View>
   );
-};
-
-EditPost.navigationOptions = ({navigation}) => {
-  return {
-    // title: '',
-    // header: null,
-    // headerLeft: (
-    //   <Button
-    //     // block
-    //     style={{marginLeft: 20}}
-    //     iconLeft
-    //     transparent
-    //     onPress={() => navigation.goBack ()}
-    //   >
-    //     <FontAwesome
-    //       name="arrow-left"
-    //       color={theme.HEADER_MENU_TITLE_COLOR}
-    //       size={theme.ICON_SIZE_SMALL}
-    //     />
-    //   </Button>
-    // ),
-  };
 };
 
 export default EditPost;

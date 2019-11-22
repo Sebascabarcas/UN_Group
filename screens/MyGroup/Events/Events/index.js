@@ -3,22 +3,15 @@ import {useNavigation} from 'react-navigation-hooks';
 import {
   View,
   Dimensions,
-  Animated,
-  ScrollView,
-  ImageBackground,
   Image,
-  // Picker,
   FlatList,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {AntDesign} from '@expo/vector-icons';
-import * as Location from 'expo-location';
-import {Divider} from 'react-native-elements';
 import {Fab, Content, Container, Button, Icon} from 'native-base';
 import NoResults from '../../../../components/NoResults/index.js';
 import MyText from '../../../../components/MyText';
 import CardEvent from '../../../../components/CardEvent/index.js';
-import Images from '../../../../constants/Images.js';
 import theme from '../../../../styles/theme.style.js';
 import styles from './styles';
 
@@ -107,7 +100,7 @@ Events = () => {
     dispatch ({
       type: 'events/GET_EVENT',
       payload: {id: event.id},
-      callback: () => navigate('ShowEvent', {isGroupEvent: true})
+      callback: () => navigate('ShowEvent')
     });
     // navigate ('ShowEvent', {isGroupEvent: true});
   };

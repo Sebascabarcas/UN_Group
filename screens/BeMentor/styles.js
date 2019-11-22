@@ -16,50 +16,18 @@ export default StyleSheet.create({
 		// height: '100%',
 		// width: '100%',
   },
-  headerContainer: {
+  content: {
     width: wp(100),
-    paddingHorizontal: wp(5),
     paddingTop: Platform.OS === 'ios' ? 40 : 60,
-    paddingBottom: 25,
     borderRadius: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'white',
-  },
-  headerInnerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  groupInfoContainer: {
-    // flex: 1,
-    flexDirection: 'row',
-  },
-  imageGroup: {
-    width: 50,
-    height: 50,
-    borderRadius: 25
+    paddingBottom: 10
   },
   userTextInputContainer: {
-    marginTop: hp(5),
     textAlign: 'center',
-  },
-  bodyContainer: {
-    display: 'flex',
-    flex: 1,
-    borderTopRightRadius: wp(30),
-    backgroundColor: theme.SECONDARY_COLOR,
-  },
-  groupDescriptionText: {
-    color: theme.GRAY_LIGHT_COLOR
-  },
-  postImgContainer: {
-    alignItems: 'center',
-    marginBottom: hp(1)
-  },
-  profileImg: {
-    // marginTop: 15,
-    // marginBottom: 15,
-    height: hp(20),
-    width: hp(20),
-    // justifyContent: 'space-between'
+    marginTop: hp(5),
   },
   actionBottomButton: {
     // paddingVertical: 50,

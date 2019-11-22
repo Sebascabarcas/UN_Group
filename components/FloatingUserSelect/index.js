@@ -4,11 +4,9 @@ import {View, Image, TouchableOpacity} from 'react-native';
 import {Badge, Card} from 'native-base';
 import MyText from '../MyText';
 import Images from '../../constants/Images.js';
-import getEnvVars from '../../environment.js';
 import { Ionicons } from '@expo/vector-icons';
 import theme from '../../styles/theme.style';
 
-const {apiUrl} = getEnvVars();
 const FloatingUserSelect = ({firstName, selected, picture, firstLastName, onPress}) => {
   console.log(selected);
   

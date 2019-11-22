@@ -2,8 +2,6 @@ import axios from 'axios'
 import Storage from './Storage';
 import getEnvVars from '../environment';
 
-const { apiUrl } = getEnvVars();
-
 const httpClient = axios 
 httpClient.interceptors.request.use(
   async config => {
@@ -98,7 +96,7 @@ function request(path, method, data, { _headers, skipLoading, skipToken }) {
     method,
     headers,
     url: `/UNGroup/API/${path}`,
-    baseURL: `${apiUrl}`,
+    baseURL: `https://ungroup-api.herokuapp.com`,
     data,
     skipLoading,
     skipToken,

@@ -10,7 +10,6 @@ import TabBarIcon from '../components/TabBarIcon';
 import WalletScreen from '../screens/Profile/WalletScreen';
 import GroupsScreen from '../screens/Groups/GroupsScreen';
 import CreateGroupScreen from '../screens/Groups/CreateGroupScreen';
-import AddCreditCardScreen from '../screens/Profile/AddCreditCardScreen';
 import theme from '../styles/theme.style';
 import Solicitudes from '../screens/MyGroup/Solicitudes';
 import Members from '../screens/MyGroup/Members';

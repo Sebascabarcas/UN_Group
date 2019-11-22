@@ -6,23 +6,81 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
-import {Button, Switch} from 'native-base';
+import {Button, Switch, Icon, Container} from 'native-base';
 import {useNavigation} from 'react-navigation-hooks';
 // import {NavigationAction} from 'react-navigation';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {useDispatch, useSelector} from 'react-redux';
-import getEnvVars from '../../../environment.js';
 import MyText from '../../../components/MyText';
 import Images from '../../../constants/Images';
 import styles from './styles';
+import theme from '../../../styles/theme.style';
 
-const {apiUrl} = getEnvVars ();
-const {height: fullHeight} = Dimensions.get ('window');
+const HeaderComponent = ({group, bottomSheet, isSuperAdmin, navigate, goBack}) => {
+  return (
+    <View style={styles.headerContainer}>
+      <View style={styles.headerInnerContainer}>
+        <View>
+          <Button
+            style={{marginLeft: 5}}
+            transparent
+            onPress={() => goBack ()}
+          >
+            <Icon
+              type="Ionicons"
+              name="ios-arrow-back"
+              style={{fontSize: theme.ICON_SIZE_SMALL, color: theme.PRIMARY_COLOR}}
+            />
+          </Button>
+        </View>
+        <View style={styles.groupInfoContainer}>
+          <Image
+            resizeMode="cover"
+            style={styles.imageGroup}
+            source={
+              group.groupPicture
+                ? {uri: `${group.groupPicture.uri}`}
+                : Images['logo']
+            }
+          />
+          <View>
+            <MyText style={{color: theme.DARK_COLOR}} fontStyle="bold">
+              Grupo
+            </MyText>
+            <MyText
+              style={{color: 'white'}}
+              fontStyle="semibold"
+            >
+              {group.groupName}
+            </MyText>
+          </View>
+        </View>
+        {isSuperAdmin && <View>
+        <Button
+            // block
+            style={{marginRight: 5}}
+            transparent
+            onPress={() => {
+              bottomSheet.current.open ();
+            }}
+          >
+            <Icon
+              type="SimpleLineIcons"
+              name="options-vertical"
+              style={{color: theme.PRIMARY_COLOR, fontSize: theme.ICON_SIZE_SMALL}}
+            />
+          </Button>
+        </View>}
+      </View>
+    </View>
+  );
+};
 
 const Member = () => {
   console.log ('MyGroup/Member:');
   const _RBSheetRef = useRef (null);
   const {
+    current_group: group,
     current_group: {id: groupId},
     current_user: {id: current_user_id},
     isSuperAdmin,
@@ -87,8 +145,9 @@ const Member = () => {
   );
 
   return (
-    <ImageBackground source={Images['abstractgradient4']} style={{flex: 1}}>
-      <View style={styles.container}>
+    <Container container={styles.container}>
+      <HeaderComponent isSuperAdmin={isSuperAdmin} bottomSheet={_RBSheetRef} group={group} navigate={navigate} goBack={goBack}/>
+      <View style={styles.content}>
         <View style={styles.containerProfileImg}>
           <Image
             style={styles.profileImg}
@@ -129,14 +188,6 @@ const Member = () => {
             </MyText>
           </View>
         </View>
-        {isSuperAdmin &&
-          <Button
-            onPress={() => {
-              _RBSheetRef.current.open ();
-            }}
-          >
-            <MyText>Acciones</MyText>
-          </Button>}
         <RBSheet
           ref={_RBSheetRef}
           height={150}
@@ -153,30 +204,7 @@ const Member = () => {
           <BottomSheetComponent />
         </RBSheet>
       </View>
-    </ImageBackground>
-  );
-};
-
-Member.navigationOptions = ({navigation}) => {
-  return {
-    // title: '',
-    // header: null,
-    // headerLeft: (
-    //   <Button
-    //     // block
-    //     style={{marginLeft: 20}}
-    //     iconLeft
-    //     transparent
-    //     onPress={() => navigation.goBack ()}
-    //   >
-    //     <FontAwesome
-    //       name="arrow-left"
-    //       color={theme.HEADER_MENU_TITLE_COLOR}
-    //       size={theme.ICON_SIZE_SMALL}
-    //     />
-    //   </Button>
-    // ),
-  };
-};
-
+    </Container>
+  )
+}
 export default Member;

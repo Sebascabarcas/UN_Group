@@ -18,7 +18,6 @@ import LottieView from 'lottie-react-native';
 // import {NavigationAction} from 'react-navigation';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {useDispatch, useSelector} from 'react-redux';
-import getEnvVars from '../../environment.js';
 import MyText from '../../components/MyText';
 import images from '../../constants/Images';
 import styles from './styles';
@@ -28,7 +27,6 @@ import CardUser from '../../components/CardUser/index.js';
 import FloatingUser from '../../components/FloatingUser/index.js';
 import animations from '../../constants/Animations.js';
 
-const {apiUrl} = getEnvVars ();
 const {height: fullHeight} = Dimensions.get ('window');
 
 const HeaderComponent = ({
@@ -248,28 +246,6 @@ const MyUsers = () => {
         </View>}
     </View>
   );
-};
-
-MyUsers.navigationOptions = ({navigation}) => {
-  return {
-    // title: '',
-    // header: null,
-    // headerLeft: (
-    //   <Button
-    //     // block
-    //     style={{marginLeft: 20}}
-    //     iconLeft
-    //     transparent
-    //     onPress={() => navigation.goBack ()}
-    //   >
-    //     <FontAwesome
-    //       name="arrow-left"
-    //       color={theme.HEADER_MENU_TITLE_COLOR}
-    //       size={theme.ICON_SIZE_SMALL}
-    //     />
-    //   </Button>
-    // ),
-  };
 };
 
 export default MyUsers;

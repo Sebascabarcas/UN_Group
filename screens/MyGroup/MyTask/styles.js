@@ -62,6 +62,10 @@ export default StyleSheet.create({
   userRow: {
     flex: 1
   },
+  groupDescriptionText: {
+    marginVertical: hp(2),
+    color: theme.GRAY_LIGHT_COLOR
+  },
   actionBottomButton: {
     // paddingVertical: 50,
     height: 80,

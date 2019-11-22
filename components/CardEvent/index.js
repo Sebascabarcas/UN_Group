@@ -7,9 +7,6 @@ import {AntDesign, Ionicons} from '@expo/vector-icons'
 import MyText from '../MyText';
 import images from '../../constants/Images.js';
 import theme from '../../styles/theme.style.js'
-import getEnvVars from '../../environment.js'
-
-const {apiUrl} = getEnvVars ();
 
 const CardEvent = ({ containerStyles, eventName, date, group: {groupName, groupPicture}, location, description, onPress}) => {
 	return(

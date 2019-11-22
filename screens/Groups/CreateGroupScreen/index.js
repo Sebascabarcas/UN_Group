@@ -12,7 +12,7 @@ import styles from './styles.js';
 import images from '../../../constants/Images';
 import MyText from '../../../components/MyText';
 import ConfirmButton from '../../../components/ConfirmEditProfile';
-import {Input, Button, List, ListItem, Form, Item} from 'native-base';
+import {Input, Button, List, ListItem, Form, Item, Icon} from 'native-base';
 import Storage from '../../../services/Storage';
 import {
   Ionicons,
@@ -282,16 +282,14 @@ CreateGroupScreen.navigationOptions = ({navigation}) => {
     // title: '',
     headerLeft: (
       <Button
-        // block
-        style={{marginLeft: 20}}
-        iconLeft
+        style={{marginLeft: 5}}
         transparent
         onPress={() => navigation.goBack ()}
       >
-        <FontAwesome
-          name="arrow-left"
-          color={theme.HEADER_MENU_TITLE_COLOR}
-          size={theme.ICON_SIZE_SMALL}
+        <Icon
+          type="Ionicons"
+          name="ios-arrow-back"
+          style={{fontSize: theme.ICON_SIZE_SMALL, color: theme.HEADER_MENU_TITLE_COLOR}}
         />
       </Button>
     ),

@@ -93,7 +93,7 @@ export default StyleSheet.create ({
         overflow: 'hidden'
     },
     topLinks:{
-        height: 230,
+        height: hp(40),
         backgroundColor: theme.PRIMARY_COLOR,
     },
     bottomLinks: {
@@ -105,6 +105,7 @@ export default StyleSheet.create ({
     linkContainer: {
         flexDirection: 'row',
         margin: 20,
+        marginVertical: hp(2),
         // marginBottom: 20,
         // backgroundColor: 'red',
     },

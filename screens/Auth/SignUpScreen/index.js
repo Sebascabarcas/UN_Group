@@ -7,7 +7,15 @@ import {
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from 'react-navigation-hooks';
-import {Button, CheckBox, Input, Form, Item} from 'native-base';
+import {
+  Button,
+  CheckBox,
+  Input,
+  Form,
+  Item,
+  Content,
+  Container,
+} from 'native-base';
 import {FontAwesome, AntDesign, Ionicons} from '@expo/vector-icons';
 import MyText from '../../../components/MyText';
 import styles from './styles.js';
@@ -39,7 +47,7 @@ const SignUpScreen = () => {
   //   "pwd_confirmation": "123456"
   // });
 
-  const platformIcons = Platform.OS === 'ios' ? 'ios' : 'md'
+  const platformIcons = Platform.OS === 'ios' ? 'ios' : 'md';
   useEffect (() => {
     console.log ('SignUp');
   }, []);
@@ -51,20 +59,16 @@ const SignUpScreen = () => {
   };
 
   return (
-      <ImageBackground
-        source={Images['auth_bg_image']}
-        style={styles.fullImage}
-        // blurRadius={0.5}
-        // tintColor={"rgba(0, 0, 0, .75)"}
-      >
-        {/* <View style={styles.container}> */}
+    <ImageBackground
+      source={Images['auth_bg_image']}
+      style={styles.fullImage}
+      // blurRadius={0.5}
+      // tintColor={"rgba(0, 0, 0, .75)"}
+    >
+      {/* <View style={styles.container}> */}
+      <Content contentContainerStyle={styles.content}>
         <Form style={styles.mainForm}>
           {/* {loading && <Spinner color={theme.PRIMARY_COLOR} />} */}
-          <KeyboardAvoidingView
-            // style={styles.containerBack}
-            behavior="padding"
-            enabled
-          >
           <Item white style={styles.itemForm}>
             <Input
               placeholder="Correo*"
@@ -130,7 +134,8 @@ const SignUpScreen = () => {
               placeholder="Primer Apellido*"
               placeholderTextColor="#FFF"
               style={styles.input}
-              onChangeText={firstLastName => _setUser ({...user, firstLastName})}
+              onChangeText={firstLastName =>
+                _setUser ({...user, firstLastName})}
               value={user.firstLastName}
             />
             <Ionicons
@@ -145,7 +150,8 @@ const SignUpScreen = () => {
               placeholder="Segundo Apellido*"
               placeholderTextColor="#FFF"
               style={styles.input}
-              onChangeText={secondLastName => _setUser ({...user, secondLastName})}
+              onChangeText={secondLastName =>
+                _setUser ({...user, secondLastName})}
               value={user.secondLastName}
             />
             <Ionicons
@@ -159,8 +165,7 @@ const SignUpScreen = () => {
             <Input
               placeholder="Celular"
               placeholderTextColor="#FFF"
-              onChangeText={phone =>
-                _setUser ({...user, phone})}
+              onChangeText={phone => _setUser ({...user, phone})}
               value={user.phone}
               keyboardType="number-pad"
               style={styles.input}
@@ -196,7 +201,6 @@ const SignUpScreen = () => {
                   size={theme.ICON_SIZE_SMALL}
                 />}
           </Item>
-          </KeyboardAvoidingView>
           <View style={styles.checksContainer}>
             <View style={styles.checkContainer}>
               <CheckBox
@@ -231,29 +235,29 @@ const SignUpScreen = () => {
               </MyText>
             </View>
           </View>
-          <Button
-            onPress={_signUpAsync}
-            rounded
-            block
-            // loading={loading}
-            primary
-            style={styles.registerButton}
-          >
-            <MyText> Registrarse </MyText>
-          </Button>
         </Form>
 
         {/* </View> */}
-        <View>
-          <MyText
-            onPress={() => navigate ('SignIn')}
-            style={{color: 'white', fontSize: theme.FONT_SIZE_MEDIUM}}
-          >
-            ¿Tienes una cuenta? Inicia sesión
-          </MyText>
-        </View>
-      </ImageBackground>
-    
+      </Content>
+      <Button
+        onPress={_signUpAsync}
+        rounded
+        block
+        // loading={loading}
+        primary
+        style={styles.registerButton}
+      >
+        <MyText> Registrarse </MyText>
+      </Button>
+      <View style={styles.loginOption}>
+        <MyText
+          onPress={() => navigate ('SignIn')}
+          style={{color: 'white', fontSize: theme.FONT_SIZE_MEDIUM}}
+        >
+          ¿Tienes una cuenta? Inicia sesión
+        </MyText>
+      </View>
+    </ImageBackground>
   );
 };
 

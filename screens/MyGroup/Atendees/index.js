@@ -15,7 +15,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useDispatch, useSelector, createSelector} from 'react-redux';
-import getEnvVars from '../../../environment.js';
 import MyText from '../../../components/MyText';
 import styles from './styles';
 import theme from '../../../styles/theme.style.js';
@@ -23,9 +22,6 @@ import NoResults from '../../../components/NoResults/index.js';
 import { AntDesign } from '@expo/vector-icons';
 import CardTask from '../../../components/CardTask/index.js';
 import CardAtendee from '../../../components/CardAtendee/index.js';
-
-const {apiUrl} = getEnvVars ();
-const {height: fullHeight} = Dimensions.get ('window');
 
 const HeaderComponent = ({group, event, goBack}) => {
   return (
@@ -55,8 +51,7 @@ const HeaderComponent = ({group, event, goBack}) => {
           <Icon
             type="AntDesign"
             name="arrowup"
-            color="#000"
-            size={theme.ICON_SIZE_SMALL}
+            style={{fontSize: theme.ICON_SIZE_SMALL, color: '#000'}}
           />
         </Button>
       </View>
@@ -144,28 +139,6 @@ const Atendees = () => {
       }
     </View>
   );
-};
-
-Atendees.navigationOptions = ({navigation}) => {
-  return {
-    // title: '',
-    // header: null,
-    // headerLeft: (
-    //   <Button
-    //     // block
-    //     style={{marginLeft: 20}}
-    //     iconLeft
-    //     transparent
-    //     onPress={() => navigation.goBack ()}
-    //   >
-    //     <FontAwesome
-    //       name="arrow-left"
-    //       color={theme.HEADER_MENU_TITLE_COLOR}
-    //       size={theme.ICON_SIZE_SMALL}
-    //     />
-    //   </Button>
-    // ),
-  };
 };
 
 export default Atendees;

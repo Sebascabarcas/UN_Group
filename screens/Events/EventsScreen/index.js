@@ -170,7 +170,7 @@ EventsScreen = () => {
   _onPressEvent = (event) => {
     dispatch({
       type: 'events/SET_STATE',
-      payload: { current_event: event }
+      payload: { current_event: {...event} }
     })
     navigate ('ShowEvent');
   };

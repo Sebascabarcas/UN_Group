@@ -32,6 +32,10 @@ export default StyleSheet.create({
     // flex: 1,
     flexDirection: 'row',
   },
+  groupDescriptionText: {
+    marginVertical: hp(2),
+    color: theme.GRAY_LIGHT_COLOR
+  },
   imageGroup: {
     width: 50,
     height: 50,

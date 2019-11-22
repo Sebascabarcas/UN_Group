@@ -4,7 +4,6 @@ import {View, Image, TouchableOpacity} from 'react-native';
 import {Badge, Card} from 'native-base';
 import MyText from '../MyText';
 import Images from '../../constants/Images.js';
-import getEnvVars from '../../environment.js';
 
 const FloatingRoleModel = ({firstName, picture, firstLastName, onPress}) => {
   return (

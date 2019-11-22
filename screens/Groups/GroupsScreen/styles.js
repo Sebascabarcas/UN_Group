@@ -6,17 +6,11 @@ import {
 } from 'react-native-responsive-screen';
 
 export default StyleSheet.create ({
-    tripBox: {
-      // margin: 20,
-      // marginBottom: 0,
-      // padding: 5,
-    },
     fullImage: {
       width: '100%',
       height: '100%',
       flex: 1,
       display: 'flex',
-      // marginTop: Platform.OS === 'ios' ? 60 : 80,
       // paddingBottom: Platform.OS === 'ios' ? 60 : 80,
       // justifyContent: 'space-evenly',
       // alignItems: 'center',
@@ -26,7 +20,8 @@ export default StyleSheet.create ({
     },
     container: {
       flex: 1,
-      marginTop: Platform.OS === 'ios' ? 60 : 80,
+      paddingTop: Platform.OS === 'ios' ? 60 : 80,
+      // marginTop: Platform.OS === 'ios' ? 60 : 80,
       // alignItems: 'center',
       justifyContent: 'center',
     },

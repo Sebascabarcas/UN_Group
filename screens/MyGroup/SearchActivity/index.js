@@ -2,21 +2,15 @@ import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
   Dimensions,
-  ScrollView,
   Image,
-  ImageBackground,
   TextInput,
   Keyboard,
   FlatList,
 } from 'react-native';
 import {
   Button,
-  Switch,
   Content,
   Icon,
-  Grid,
-  Row,
-  Col,
   Container,
 } from 'native-base';
 import {useNavigation} from 'react-navigation-hooks';
@@ -25,22 +19,13 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import LottieView from 'lottie-react-native';
-// import {NavigationAction} from 'react-navigation';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import {useDispatch, useSelector} from 'react-redux';
 import getEnvVars from '../../../environment.js';
 import MyText from '../../../components/MyText';
-import Images from '../../../constants/Images';
 import styles from './styles';
 import theme from '../../../styles/theme.style.js';
 import NoResults from '../../../components/NoResults/index.js';
-import CardUser from '../../../components/CardUser/index.js';
-import FloatingUser from '../../../components/FloatingUser/index.js';
-import animations from '../../../constants/Animations.js';
 import CardActivity from '../../../components/CardActivity/index.js';
-
-const {apiUrl} = getEnvVars ();
-const {height: fullHeight} = Dimensions.get ('window');
 
 const HeaderComponent = ({
   group,
@@ -105,6 +90,7 @@ const HeaderComponent = ({
           value={activityName}
           //  autoFocus
         />
+        <LottieView ref={searchAnimation} style={styles.searchAnimation} loop={loopSearchAnimation} source={animations['searching-around']} />
       </View>
     </View>
   );
@@ -194,28 +180,6 @@ const SearchActivity = () => {
           </View>}
     </Container>
   );
-};
-
-SearchActivity.navigationOptions = ({navigation}) => {
-  return {
-    // title: '',
-    // header: null,
-    // headerLeft: (
-    //   <Button
-    //     // block
-    //     style={{marginLeft: 20}}
-    //     iconLeft
-    //     transparent
-    //     onPress={() => navigation.goBack ()}
-    //   >
-    //     <FontAwesome
-    //       name="arrow-left"
-    //       color={theme.HEADER_MENU_TITLE_COLOR}
-    //       size={theme.ICON_SIZE_SMALL}
-    //     />
-    //   </Button>
-    // ),
-  };
 };
 
 export default SearchActivity;

@@ -127,12 +127,6 @@ const LoginScreen = () => {
           >
             <MyText style={styles.mainTextLogin}> INICIAR </MyText>
           </Button>
-          <MyText
-            style={styles.forgetPassword}
-            onPress={() => navigate ('ForgotPassword')}
-          >
-            ¿Olvidaste tu contraseña?
-          </MyText>
         </Form>
         <View>
           <MyText

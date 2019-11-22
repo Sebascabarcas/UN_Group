@@ -24,11 +24,6 @@ import {
 import theme from '../../styles/theme.style';
 import {useDispatch, useSelector} from 'react-redux';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import getEnvVars from '../../environment.js';
-
-const { apiUrl } = getEnvVars();
-const WIDTH = Dimensions.get ('window').width;
-const HEIGHT = Dimensions.get ('window').height;
 
 const MenuDrawer = () => {
   const [isReady, _setReady] = useState (false);

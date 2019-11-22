@@ -9,9 +9,7 @@ import {
  widthPercentageToDP as wp,
  heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import getEnvVars from '../../environment';
 // https://dbits.netlify.com/assets/img/teamAlbeiro.min.jpg
-const {apiUrl} = getEnvVars();
 
 const CardGroupRequest = ({name, username, image, onAccept, onReject}) => {
     return(

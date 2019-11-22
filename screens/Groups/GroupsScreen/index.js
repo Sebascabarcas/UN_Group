@@ -10,8 +10,8 @@ import {
   FlatList,
 } from 'react-native';
 import * as Location from 'expo-location';
-import { Divider} from 'react-native-elements';
-import {Badge, Picker, Button, Fab} from 'native-base';
+import {Divider} from 'react-native-elements';
+import {Badge, Picker, Button, Fab, Icon} from 'native-base';
 import styles from './styles.js';
 import MyText from '../../../components/MyText';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -25,18 +25,13 @@ import Images from '../../../constants/Images.js';
 const {height: fullHeight} = Dimensions.get ('window');
 
 GroupsScreen = () => {
-  const dispatch = useDispatch()
-  const {
-    isSuperAdmin
-  } = useSelector (state => state.session);
-  const {
-    groups,
-    more_pages,
-    loading,
-    refreshing
-  } = useSelector (state => state.groups);
+  const dispatch = useDispatch ();
+  const {isSuperAdmin} = useSelector (state => state.session);
+  const {groups, more_pages, loading, refreshing} = useSelector (
+    state => state.groups
+  );
   const [offSet, _setOffSet] = useState (0);
-  const flatList = useRef (null); 
+  const flatList = useRef (null);
   const {navigate, setParams} = useNavigation ();
   // const [GroupsFiltered, _setGroupsFiltered] = useState ([]);
   // const [filtering, _setFiltering] = useState (false);
@@ -46,9 +41,9 @@ GroupsScreen = () => {
   useEffect (
     () => {
       flatList.current.scrollToOffset ({animated: true, offset: 0});
-      dispatch({
-        type: 'groups/GET_GROUPS'
-      })
+      dispatch ({
+        type: 'groups/GET_GROUPS',
+      });
     },
     [dispatch]
   );
@@ -56,10 +51,10 @@ GroupsScreen = () => {
   _fetchGroupsOnEnd = async () => {
     // console.log(groups);
     try {
-      dispatch({
+      dispatch ({
         type: 'groups/GET_GROUPS',
-        concat: true
-      })
+        concat: true,
+      });
       /* ({
         index_tag: filter !== 'all' ? 'status' : 'all',
         page: page + 1,
@@ -79,9 +74,9 @@ GroupsScreen = () => {
 
   _onRefresh = async () => {
     try {
-      dispatch({
-        type: 'groups/GET_GROUPS'
-      })
+      dispatch ({
+        type: 'groups/GET_GROUPS',
+      });
       /* ({
         index_tag: filter !== 'all' ? 'status' : 'all',
         page: 1,
@@ -94,89 +89,80 @@ GroupsScreen = () => {
   };
 
   _renderGroup = ({item: group, index}) => {
-    return (
-      <CardGroup {...group} onPress={() => _onPressGroup(group)} />
-    );
+    return <CardGroup {...group} onPress={() => _onPressGroup (group)} />;
   };
-  
-  _onPressGroup = (group) => {
-    dispatch({
+
+  _onPressGroup = group => {
+    dispatch ({
       type: 'groups/SET_STATE',
       payload: {
-        current_group: group
-      }
-    })
+        current_group: group,
+      },
+    });
     navigate ('ShowGroup');
   };
 
-
-  onLayout = ({
-    nativeEvent: { layout: { height } },
-  }) => {
+  onLayout = ({nativeEvent: {layout: {height}}}) => {
     const offset = fullHeight - height;
-    _setOffSet(offset);
-  }
+    _setOffSet (offset);
+  };
 
   return (
     <ImageBackground
-        onLayout={onLayout}  
-        style={styles.fullImage}
-        source={Images['dashboard_bg_image']}
-      >
-    <View style={styles.container}>
-      {/* <ScrollView > */}
-      <View style={styles.groupsContainer}>
-        { <FlatList
-          // style={styles.scroller}
-          data={groups}
-          // data={filtering ? GroupsFiltered : Groups}
-          keyExtractor={group => group.id.toString ()}
-          renderItem={_renderGroup}
-          showsVerticalScrollIndicator={false}
-          ref={flatList}
-          refreshing={refreshing}
-          onRefresh={_onRefresh}
-          // onRefresh={!filtering && _onRefresh}
-          // onEndReached={!noMorePages && _fetchGroupsOnEnd}
-          // onEndReached={!noMorePages && !filtering && _fetchGroupsOnEnd}
-          // onEndReachedThreshold={0.2}
-        /> }
-        { isSuperAdmin &&
-          <Fab
+      onLayout={onLayout}
+      style={styles.fullImage}
+      source={Images['dashboard_bg_image']}
+    >
+      <View style={styles.container}>
+        {/* <ScrollView > */}
+        <View style={styles.groupsContainer}>
+          {
+            <FlatList
+              // style={styles.scroller}
+              data={groups}
+              // data={filtering ? GroupsFiltered : Groups}
+              keyExtractor={group => group.id.toString ()}
+              renderItem={_renderGroup}
+              showsVerticalScrollIndicator={false}
+              ref={flatList}
+              refreshing={refreshing}
+              onRefresh={_onRefresh}
+              // onRefresh={!filtering && _onRefresh}
+              // onEndReached={!noMorePages && _fetchGroupsOnEnd}
+              // onEndReached={!noMorePages && !filtering && _fetchGroupsOnEnd}
+              // onEndReachedThreshold={0.2}
+            />
+          }
+          {isSuperAdmin &&
+            <Fab
               direction="up"
-              style={{ backgroundColor: theme.PRIMARY_COLOR }}
+              style={{backgroundColor: theme.PRIMARY_COLOR}}
               position="bottomRight"
               onPress={() => {
-                dispatch({
+                dispatch ({
                   type: 'groups/SET_STATE',
-                  payload: {new_group: {}}
-                })
-                navigate("CreateGroup")
-              }}>
+                  payload: {new_group: {}},
+                });
+                navigate ('CreateGroup');
+              }}
+            >
               <AntDesign name="plus" />
-          </Fab>
-        }
-        
+            </Fab>}
+
+        </View>
       </View>
-    </View>
     </ImageBackground>
   );
 };
 
 GroupsScreen.navigationOptions = ({navigation}) => {
-  // const searchHeader = navigation.getParam('search_header', null)
-  // return {
-  //   headerRight: (
-  //     <Button iconRight transparent onPress={() => searchHeader.current.show ()}
-  //     style={{marginRight: 20}}
-  //     >
-  //       <Ionicons
-  //         name="md-search"
-  //         color={theme.HEADER_MENU_TITLE_COLOR}
-  //         size={theme.ICON_SIZE_MEDIUM}
-  //       />
-  //     </Button>
-  //   ),
-  // }
+  return {
+    title: '',
+    headerTransparent: true,
+    headerStyle: {
+      backgroundColor: 'transparent',
+    },
+  };
 };
+
 export default GroupsScreen;

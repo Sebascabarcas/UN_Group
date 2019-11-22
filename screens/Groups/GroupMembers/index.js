@@ -24,7 +24,6 @@ import NoResults from '../../../components/NoResults/index.js';
 import { AntDesign } from '@expo/vector-icons';
 
 const {height: fullHeight} = Dimensions.get ('window');
-const { apiUrl } = getEnvVars();
 
 const GroupMembers = () => {
   const {
@@ -93,7 +92,7 @@ const GroupMembers = () => {
                   type="AntDesign"
                   name="arrowup"
                   color="#000"
-                  size={theme.ICON_SIZE_SMALL}
+                  fontSize={theme.ICON_SIZE_SMALL}
                 />
             </Button>
           </View>
@@ -124,28 +123,6 @@ const GroupMembers = () => {
       </Content>
     </Container>
   );
-};
-
-GroupMembers.navigationOptions = ({navigation}) => {
-  return {
-    // title: '',
-    header: null,
-    // headerLeft: (
-    //   <Button
-    //     // block
-    //     style={{marginLeft: 20}}
-    //     iconLeft
-    //     transparent
-    //     onPress={() => navigation.goBack ()}
-    //   >
-    //     <FontAwesome
-    //       name="arrow-left"
-    //       color={theme.HEADER_MENU_TITLE_COLOR}
-    //       size={theme.ICON_SIZE_SMALL}
-    //     />
-    //   </Button>
-    // ),
-  };
 };
 
 export default GroupMembers;

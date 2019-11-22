@@ -25,13 +25,13 @@ export default (
           <MyText
             fontStyle="bold"
             style={{fontSize: theme.FONT_SIZE_LARGE}}
-            color={theme.HEADER_MENU_TITLE_COLOR}
+            color={theme.PRIMARY_COLOR}
           >
             {current_group ? current_group.groupName : 'UNGROUP'}
           </MyText>
           { current_group && <AntDesign
             name="caretdown"
-            color={theme.HEADER_MENU_TITLE_COLOR}
+            color={theme.PRIMARY_COLOR}
             size={theme.ICON_SIZE_SUPER_EXTRA_SMALL}
           />}
           

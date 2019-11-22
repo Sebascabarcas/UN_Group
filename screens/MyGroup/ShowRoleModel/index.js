@@ -134,16 +134,14 @@ ShowRoleModel.navigationOptions = ({navigation}) => {
     },
     headerLeft: (
       <Button
-        // block
-        style={{marginLeft: 20}}
-        iconLeft
+        style={{marginLeft: 5}}
         transparent
         onPress={() => navigation.goBack ()}
       >
-        <Ionicons
+        <Icon
+          type="Ionicons"
           name="ios-arrow-back"
-          color={theme.PRIMARY_COLOR}
-          size={theme.ICON_SIZE_SMALL}
+          style={{fontSize: theme.ICON_SIZE_SMALL, color: theme.PRIMARY_COLOR}}
         />
       </Button>
     ),

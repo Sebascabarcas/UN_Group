@@ -29,9 +29,6 @@ import animations from '../../../constants/Animations.js';
 import FloatingUserSelect from '../../../components/FloatingUserSelect/index.js';
 import { AntDesign } from '@expo/vector-icons';
 
-const {apiUrl} = getEnvVars ();
-const {height: fullHeight} = Dimensions.get ('window');
-
 const HeaderComponent = ({group, taskName, handleTaskName, handleDescription, description, goBack}) => {
   return (
   <View style={styles.headerContainer}>
@@ -60,8 +57,7 @@ const HeaderComponent = ({group, taskName, handleTaskName, handleDescription, de
           <Icon
             type="AntDesign"
             name="arrowup"
-            color="#000"
-            size={theme.ICON_SIZE_SMALL}
+            style={{fontSize: theme.ICON_SIZE_SMALL, color: '#000'}}
           />
         </Button>
       </View>
@@ -209,28 +205,6 @@ const CreateTask = () => {
         }
     </View>
   );
-};
-
-CreateTask.navigationOptions = ({navigation}) => {
-  return {
-    // title: '',
-    // header: null,
-    // headerLeft: (
-    //   <Button
-    //     // block
-    //     style={{marginLeft: 20}}
-    //     iconLeft
-    //     transparent
-    //     onPress={() => navigation.goBack ()}
-    //   >
-    //     <FontAwesome
-    //       name="arrow-left"
-    //       color={theme.HEADER_MENU_TITLE_COLOR}
-    //       size={theme.ICON_SIZE_SMALL}
-    //     />
-    //   </Button>
-    // ),
-  };
 };
 
 export default CreateTask;

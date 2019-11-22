@@ -16,18 +16,15 @@ import {
   Grid,
   Row,
   Col,
+  Icon,
 } from 'native-base';
 import {AntDesign, Ionicons, FontAwesome} from '@expo/vector-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import CardGroupInfo from '../../../components/CardGroupInfo';
 import { NavigationActions, StackActions } from 'react-navigation';
-import getEnvVars from '../../../environment.js';
 import theme from '../../../styles/theme.style.js';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import EditGroupButton from '../../../components/EditGroupButton/index.js';
-
-const {height: fullHeight} = Dimensions.get ('window');
-const {apiUrl} = getEnvVars ();
 
 const GroupMenuButton = ({route, navigate, icon, title}) => (
   <TouchableOpacity onPress={() => navigate(route)} style={[styles.iconButtonContainer]}>
@@ -110,17 +107,12 @@ const GroupProfile = () => {
           </Row>
         </Grid>
       </Content>
-      {/* <Button style={styles.actionBottomButton} primary iconRight block superRounded onPress={() => dispatch({
+      <Button style={styles.actionBottomButton} danger iconRight block onPress={() => dispatch({
               type: `groups/${isSuperAdmin ? 'DELETE' : 'LEAVE'}_GROUP`,
               payload: {id: current_group.id, navigate, resetNavigationStack, dispatchNavigation}
             })}>
-            <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">{isSuperAdmin ? 'Eliminar' : 'Abandonar'} Grupo</MyText>
-            <Ionicons
-              name="ios-close-circle"
-              color="white"
-              size={theme.ICON_SIZE_SMALL}
-            />
-      </Button> */}
+            <MyText style={{fontSize: theme.FONT_SIZE_LARGE}} fontStyle="bold">{isSuperAdmin ? 'ELIMINAR' : 'ABANDONAR'} GRUPO</MyText>
+      </Button>
     </Container>
   );
 };
@@ -134,16 +126,14 @@ GroupProfile.navigationOptions = ({navigation}) => {
     },
     headerLeft: (
       <Button
-        // block
-        style={{marginLeft: 20}}
-        iconLeft
+        style={{marginLeft: 5}}
         transparent
         onPress={() => navigation.goBack ()}
       >
-        <Ionicons
+        <Icon
+          type="Ionicons"
           name="ios-arrow-back"
-          color="white"
-          size={theme.ICON_SIZE_SMALL}
+          style={{fontSize: theme.ICON_SIZE_SMALL, color: 'white'}}
         />
       </Button>
     ),

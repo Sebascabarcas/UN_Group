@@ -7,7 +7,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useDispatch, useSelector, createSelector} from 'react-redux';
-import getEnvVars from '../../environment.js';
 import MyText from '../../components/MyText';
 import styles from './styles';
 import theme from '../../styles/theme.style.js';
@@ -174,28 +173,6 @@ const Mentoring = () => {
         </Button>
     </View>
   );
-};
-
-Mentoring.navigationOptions = ({navigation}) => {
-  return {
-    // title: '',
-    // header: null,
-    // headerLeft: (
-    //   <Button
-    //     // block
-    //     style={{marginLeft: 20}}
-    //     iconLeft
-    //     transparent
-    //     onPress={() => navigation.goBack ()}
-    //   >
-    //     <FontAwesome
-    //       name="arrow-left"
-    //       color={theme.HEADER_MENU_TITLE_COLOR}
-    //       size={theme.ICON_SIZE_SMALL}
-    //     />
-    //   </Button>
-    // ),
-  };
 };
 
 export default Mentoring;

@@ -10,10 +10,7 @@ import {
  heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Images from '../../constants/Images';
-import getEnvVars from '../../environment';
 // https://dbits.netlify.com/assets/img/teamAlbeiro.min.jpg
-
-const { apiUrl } = getEnvVars();
 
 const CardGroup = ({groupName, groupPicture, onPress}) => {
     return(

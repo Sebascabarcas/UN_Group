@@ -6,6 +6,7 @@ import {
   Button,
   Content,
   Container,
+  Icon,
 } from 'native-base';
 import {useNavigation} from 'react-navigation-hooks';
 import {
@@ -21,27 +22,6 @@ import theme from '../../styles/theme.style.js';
 import {MaterialIcons, Ionicons} from '@expo/vector-icons';
 import Animations from '../../constants/Animations';
 
-const HeaderComponent = ({firstName, firstLastName}) => {
-  return (
-    <View style={styles.headerContainer}>
-      <View style={styles.postImgContainer}>
-        <LottieView style={{width: wp(50), height: wp(50)}} autoPlay source={Animations['mentors']}/>
-      </View>
-      <View style={styles.userTextInputContainer}>
-        <MyText
-          style={{
-            textAlign: 'justify',
-            fontFamily: theme.FONT_FAMILY_BOLD,
-            fontSize: theme.FONT_SIZE_EXTRA_EXTRA_LARGE,
-          }}
-        >
-          {firstName} Conviertete en un Mentor
-        </MyText>
-      </View>
-    </View>
-  );
-};
-
 const BeMentor = () => {
   const {current_user: user} = useSelector (state => state.session);
   const dispatch = useDispatch ();
@@ -53,10 +33,19 @@ const BeMentor = () => {
 
   return (
     <Container style={styles.container}>
-      <HeaderComponent
-        {...user}
-      />
-      <Content padder>
+      <Content contentContainerStyle={styles.content} padder>
+        <LottieView style={{width: wp(50), height: wp(50)}} autoPlay source={Animations['mentors']}/>
+        <View style={styles.userTextInputContainer}>
+          <MyText
+            style={{
+              textAlign: 'justify',
+              fontFamily: theme.FONT_FAMILY_BOLD,
+              fontSize: theme.FONT_SIZE_EXTRA_EXTRA_LARGE,
+            }}
+          >
+            {user.firstName} Conviertete en un Mentor
+          </MyText>
+        </View>
         {/* <MyText style={{textAlign: 'justify'}}>
         </MyText> */}
       </Content>
@@ -88,16 +77,14 @@ BeMentor.navigationOptions = ({navigation}) => {
     },
     headerLeft: (
       <Button
-        // block
-        style={{marginLeft: 20}}
-        iconLeft
+        style={{marginLeft: 5}}
         transparent
         onPress={() => navigation.goBack ()}
       >
-        <Ionicons
+        <Icon
+          type="Ionicons"
           name="ios-arrow-back"
-          color={theme.PRIMARY_COLOR}
-          size={theme.ICON_SIZE_SMALL}
+          style={{fontSize: theme.ICON_SIZE_SMALL, color: theme.PRIMARY_COLOR}}
         />
       </Button>
     ),

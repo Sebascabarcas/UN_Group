@@ -1,4 +1,4 @@
-import {StyleSheet, PixelRatio} from 'react-native';
+import {StyleSheet, Platform, PixelRatio} from 'react-native';
 import theme from '../../../styles/theme.style';
 import {
   widthPercentageToDP as wp,
@@ -6,8 +6,33 @@ import {
 } from 'react-native-responsive-screen';
 
 export default StyleSheet.create({
-	container: {
+  headerContainer: {
+    width: wp(100),
+    paddingHorizontal: wp(5),
+    paddingTop: Platform.OS === 'ios' ? 40 : 60,
+    paddingBottom: 25,
+    borderBottomStartRadius: 40,
+    borderBottomEndRadius: 40,
+    backgroundColor: theme.SECONDARY_COLOR,
+  },
+  headerInnerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  groupInfoContainer: {
+    // flex: 1,
+    flexDirection: 'row',
+  },
+  imageGroup: {
+    width: 50,
+    height: 50,
+    borderRadius: 25
+  },
+  container: {
     flex: 1,
+    backgroundColor: '#EFEFF4'
+  },
+  content: {
     justifyContent: 'space-evenly',
     // flexDirection: 'column',
     // backgroundColor: 'white',
@@ -41,7 +66,8 @@ export default StyleSheet.create({
     color: theme.DARK_COLOR
   },
   containerUsername: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginVertical: hp(5)
     // marginHorizontal: wp(10)
   },
   usernameText: {

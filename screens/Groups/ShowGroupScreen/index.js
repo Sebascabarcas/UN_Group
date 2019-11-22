@@ -8,7 +8,7 @@ import {
 import {useNavigation} from 'react-navigation-hooks';
 import styles from './styles.js';
 import MyText from '../../../components/MyText';
-import {Input, Button, List, ListItem, Form, Item, Badge, Container, Content, Col, Row, Grid} from 'native-base';
+import {Input, Button, List, ListItem, Form, Item, Badge, Container, Content, Col, Row, Grid, Icon} from 'native-base';
 import {
   Ionicons,
   FontAwesome,
@@ -20,7 +20,6 @@ import EditGroupButton from '../../../components/EditGroupButton/index.js';
 import theme from '../../../styles/theme.style.js';
 
 const {height: fullHeight} = Dimensions.get ('window');
-const { apiUrl } = getEnvVars();
 
 const GroupMenuButton = ({route, navigate, icon, title}) => (
   <TouchableOpacity onPress={() => navigate(route)} style={[styles.iconButtonContainer]}>
@@ -121,15 +120,15 @@ ShowGroupScreen.navigationOptions = ({navigation}) => {
     headerLeft: (
       <Button
         // block
-        style={{marginLeft: 20}}
-        iconLeft
+        style={{marginLeft: 5}}
+        // iconLeft
         transparent
         onPress={() => navigation.goBack ()}
       >
-        <Ionicons
+        <Icon
+          type="Ionicons"
           name="ios-arrow-back"
-          color="white"
-          size={theme.ICON_SIZE_SMALL}
+          style={{fontSize: theme.ICON_SIZE_SMALL, color: 'white'}}
         />
       </Button>
     ),

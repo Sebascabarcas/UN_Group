@@ -12,7 +12,7 @@ import styles from './styles';
 import images from '../../../constants/Images';
 import MyText from '../../../components/MyText';
 import ConfirmButton from '../../../components/ConfirmEditProfile';
-import {Input, Button, List, ListItem, Form, Item} from 'native-base';
+import {Input, Button, List, ListItem, Form, Item, Icon} from 'native-base';
 import Storage from '../../../services/Storage';
 import {
   Ionicons,
@@ -28,10 +28,7 @@ import {USER_FACING_NOTIFICATIONS} from 'expo-permissions';
 import {useDispatch, useSelector} from 'react-redux';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import Images from '../../../constants/Images.js';
-import getEnvVars from '../../../environment';
 
-const {height: fullHeight} = Dimensions.get ('window');
-const {apiUrl} = getEnvVars();
 const EditGroup = () => {
   const {navigate} = useNavigation ();
   const [showImageModal, _setShowImageModal] = useState (false);
@@ -80,13 +77,12 @@ const EditGroup = () => {
   };
   
   _takePhoto = async () => {
-    const file = await ImagePicker.launchCameraAsync ({
+    let file = await ImagePicker.launchCameraAsync ({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       base64: true,
       allowsEditing: true,
       aspect: [4, 3],
     });
-
     if (!file.cancelled) {
       _setShowImageModal (false);
       let localUri = file.uri;
@@ -276,19 +272,17 @@ const EditGroup = () => {
 
 EditGroup.navigationOptions = ({navigation}) => {
   return {
-    title: 'Editar',
+    title: 'Editar Grupo',
     headerLeft: (
       <Button
-        // block
-        style={{marginLeft: 20}}
-        iconLeft
+        style={{marginLeft: 5}}
         transparent
         onPress={() => navigation.goBack ()}
       >
-        <FontAwesome
-          name="arrow-left"
-          color={theme.HEADER_MENU_TITLE_COLOR}
-          size={theme.ICON_SIZE_SMALL}
+        <Icon
+          type="Ionicons"
+          name="ios-arrow-back"
+          style={{fontSize: theme.ICON_SIZE_SMALL, color: theme.HEADER_MENU_TITLE_COLOR}}
         />
       </Button>
     ),

@@ -17,7 +17,6 @@ import LottieView from 'lottie-react-native';
 // import {NavigationAction} from 'react-navigation';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {useDispatch, useSelector, createSelector} from 'react-redux';
-import getEnvVars from '../../../environment.js';
 import MyText from '../../../components/MyText';
 import Images from '../../../constants/Images';
 import styles from './styles';
@@ -28,9 +27,6 @@ import FloatingUser from '../../../components/FloatingUser/index.js';
 import animations from '../../../constants/Animations.js';
 import FloatingUserSelect from '../../../components/FloatingUserSelect/index.js';
 import { AntDesign } from '@expo/vector-icons';
-
-const {apiUrl} = getEnvVars ();
-const {height: fullHeight} = Dimensions.get ('window');
 
 const HeaderComponent = ({group, taskName, handleTaskName, handleDescription, description, goBack}) => {
   return (
@@ -60,8 +56,7 @@ const HeaderComponent = ({group, taskName, handleTaskName, handleDescription, de
           <Icon
             type="AntDesign"
             name="arrowup"
-            color="#000"
-            size={theme.ICON_SIZE_SMALL}
+            style={{fontSize: theme.ICON_SIZE_SMALL, color: '#000'}}
           />
         </Button>
       </View>
@@ -212,28 +207,6 @@ const EditTask = () => {
         </Button>
     </View>
   );
-};
-
-EditTask.navigationOptions = ({navigation}) => {
-  return {
-    // title: '',
-    // header: null,
-    // headerLeft: (
-    //   <Button
-    //     // block
-    //     style={{marginLeft: 20}}
-    //     iconLeft
-    //     transparent
-    //     onPress={() => navigation.goBack ()}
-    //   >
-    //     <FontAwesome
-    //       name="arrow-left"
-    //       color={theme.HEADER_MENU_TITLE_COLOR}
-    //       size={theme.ICON_SIZE_SMALL}
-    //     />
-    //   </Button>
-    // ),
-  };
 };
 
 export default EditTask;

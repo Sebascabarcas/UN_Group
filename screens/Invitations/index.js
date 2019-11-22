@@ -19,7 +19,6 @@ import {
   MaterialIcons,
 } from '@expo/vector-icons';
 import {useDispatch, useSelector} from 'react-redux';
-import getEnvVars from '../../environment';
 import moment from 'moment';
 import BigListItem from '../../components/BigListItem';
 import MyText from '../../components/MyText';
@@ -28,7 +27,6 @@ import NoResults from '../../components/NoResults';
 
 
 const {height: fullHeight} = Dimensions.get ('window');
-const {apiUrl} = getEnvVars();
 
 const Invitations = () => {
   const {navigate, goBack} = useNavigation ();
@@ -80,7 +78,7 @@ const Invitations = () => {
                   type="AntDesign"
                   name="arrowup"
                   color="#000"
-                  size={theme.ICON_SIZE_SMALL}
+                  fontSize={theme.ICON_SIZE_SMALL}
                 />
             </Button>
           </View>
@@ -145,17 +143,14 @@ Invitations.navigationOptions = ({navigation}) => {
     // title: '',
     headerLeft: (
       <Button
-        // block
-        style={{marginLeft: 20}}
-        iconLeft
+        style={{marginLeft: 5}}
         transparent
         onPress={() => navigation.goBack ()}
       >
         <Icon
-          type="FontAwesome"
-          name="arrow-left"
-          color={theme.HEADER_MENU_TITLE_COLOR}
-          size={theme.ICON_SIZE_SMALL}
+          type="Ionicons"
+          name="ios-arrow-back"
+          style={{fontSize: theme.ICON_SIZE_SMALL, color: theme.HEADER_MENU_TITLE_COLOR}}
         />
       </Button>
     ),

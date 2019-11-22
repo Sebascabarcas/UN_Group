@@ -26,12 +26,8 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import Constants from 'expo-constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import getEnvVars from '../../../../environment';
 import moment from 'moment';
 import { splitAddressComponents } from '../../../../services/helpers';
-
-const {height: fullHeight} = Dimensions.get ('window');
-const {apiUrl} = getEnvVars();
 
 const EditEvent = () => {
   const {navigate, goBack} = useNavigation ();
@@ -233,17 +229,14 @@ EditEvent.navigationOptions = ({navigation}) => {
     // title: '',
     headerLeft: (
       <Button
-        // block
-        style={{marginLeft: 20}}
-        iconLeft
+        style={{marginLeft: 5}}
         transparent
         onPress={() => navigation.goBack ()}
       >
         <Icon
-          type="FontAwesome"
-          name="arrow-left"
-          color={theme.HEADER_MENU_TITLE_COLOR}
-          size={theme.ICON_SIZE_SMALL}
+          type="Ionicons"
+          name="ios-arrow-back"
+          style={{fontSize: theme.ICON_SIZE_SMALL, color: theme.HEADER_MENU_TITLE_COLOR}}
         />
       </Button>
     ),

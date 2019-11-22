@@ -21,17 +21,14 @@ import {
   ListItem,
   Left,
   Right,
+  Icon,
 } from 'native-base';
 // import {Input, CheckBox, Button, Header} from 'react-native-elements';
 import {Ionicons, FontAwesome} from '@expo/vector-icons';
 import EditProfileButton from '../../../components/EditProfileButton';
 import {updateUser} from '../../../services/Session';
 import {useSelector, useDispatch} from 'react-redux';
-import getEnvVars from '../../../environment';
 
-const {apiUrl} = getEnvVars ();
-const WIDTH = Dimensions.get ('window').width;
-const HEIGHT = Dimensions.get ('window').height;
 const MyProfileScreen = () => {
   const {navigate} = useNavigation ();
   const [loading, _setLoading] = useState (false);
@@ -159,16 +156,14 @@ MyProfileScreen.navigationOptions = ({navigation}) => {
     // title: '',
     headerLeft: (
       <Button
-        // block
-        style={{marginLeft: 20}}
-        iconLeft
+        style={{marginLeft: 5}}
         transparent
         onPress={() => navigation.goBack ()}
       >
-        <FontAwesome
-          name="arrow-left"
-          color={theme.HEADER_MENU_TITLE_COLOR}
-          size={theme.ICON_SIZE_SMALL}
+        <Icon
+          type="Ionicons"
+          name="ios-arrow-back"
+          style={{fontSize: theme.ICON_SIZE_SMALL, color: theme.HEADER_MENU_TITLE_COLOR}}
         />
       </Button>
     ),

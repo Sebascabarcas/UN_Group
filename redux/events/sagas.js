@@ -68,7 +68,7 @@ export function* CREATE_EVENT({ payload: { groupId, event, navigate, skipLoading
     // console.log(event);
     yield call(createEvent, groupId, event, {skipLoading});
     ToastAndroid.show ('Evento creado correctamente!', ToastAndroid.SHORT);
-    navigate('Events')
+    navigate('Invitations')
     // console.log(success);
   } catch (error) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);

@@ -10,11 +10,8 @@ import theme from '../../styles/theme.style';
 import styles from './styles.js';
 import MyText from '../../components/MyText';
 import BigListItem from '../../components/BigListItem/index.js';
-import getEnvVars from '../../environment';
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyCWPrODz1hIw-3g2gX94dTJTspvq768GOw';
-const {width, height} = Dimensions.get ('window');
-const {apiUrl} = getEnvVars ();
 
 export default (SelectGroupModal = () => {
   const {goBack} = useNavigation ();

@@ -1,14 +1,13 @@
 import React from 'react';
 import {Platform} from 'react-native';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
-import {Button} from 'native-base';
+import {Button, Icon} from 'native-base';
 import {FontAwesome} from '@expo/vector-icons';
 import theme from '../styles/theme.style';
 import TabBarIcon from '../components/TabBarIcon';
 
 /* Screens */
 import GroupsScreen from '../screens/Groups/GroupsScreen';
-import AddCreditCardScreen from '../screens/Profile/AddCreditCardScreen';
 import EventsScreen from '../screens/Events/EventsScreen';
 import SelectGroupButton from '../components/SelectGroupButton';
 
@@ -27,15 +26,14 @@ const defaultStackConfig = {
     headerLeft: (
       <Button
         // block
-        style={{marginLeft: 20}}
-        iconLeft
+        style={{marginLeft: 5}}
         transparent
-        onPress={() => navigation.openDrawer ()}
+        onPress={() => navigation.openDrawer()}
       >
-        <FontAwesome
+        <Icon
+          type="FontAwesome"
           name="navicon"
-          color={theme.HEADER_MENU_TITLE_COLOR}
-          size={theme.ICON_SIZE_SMALL}
+          style={{fontSize: theme.ICON_SIZE_SMALL, color: theme.PRIMARY_COLOR}}
         />
       </Button>
     ),
@@ -76,7 +74,7 @@ const GroupsStack = createStackNavigator (
   {
     Groups: GroupsScreen,
   },
-  defaultStackConfig
+  // defaultStackConfig
 );
 
 GroupsStack.navigationOptions = {
@@ -97,10 +95,4 @@ GroupsStack.navigationOptions = {
 export default createBottomTabNavigator ({
   EventsStack,
   GroupsStack,
-}
-
-// , {
-//   animationEnabled: true,
-//   lazy: false
-// }
-);
+});
