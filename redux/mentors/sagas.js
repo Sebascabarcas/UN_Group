@@ -11,9 +11,9 @@ import { createActivity, createAvailability, updateActivity, updateActivityAvail
 
 export function* SEARCH_ACTIVITIES({ payload: { searchQuery, skipLoading } }) {
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     }
   })
   try {
@@ -30,18 +30,18 @@ export function* SEARCH_ACTIVITIES({ payload: { searchQuery, skipLoading } }) {
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     }
   })
 }
 
 export function* CREATE_ACTIVITY({ payload: { userId, goBack, activity, navigate, skipLoading } }) {
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -62,18 +62,18 @@ export function* CREATE_ACTIVITY({ payload: { userId, goBack, activity, navigate
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* CREATE_AVAILABILITY({ payload: { activityId, availability, goBack, skipLoading } }) {
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -94,18 +94,18 @@ export function* CREATE_AVAILABILITY({ payload: { activityId, availability, goBa
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* UPDATE_ACTIVITY({ payload: { activityId, activity, navigate, goBack, skipLoading } }) {
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -132,18 +132,18 @@ export function* UPDATE_ACTIVITY({ payload: { activityId, activity, navigate, go
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* UPDATE_AVAILABILITY({ payload: { availabilityId, availability, navigate, goBack, skipLoading } }) {
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -170,18 +170,18 @@ export function* UPDATE_AVAILABILITY({ payload: { availabilityId, availability, 
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* DELETE_ACTIVITY({ payload: {activityId, goBack, navigate, skipLoading } }) {
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -202,18 +202,18 @@ export function* DELETE_ACTIVITY({ payload: {activityId, goBack, navigate, skipL
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* DELETE_AVAILABILITY({ payload: {availabilityId, goBack, navigate, skipLoading } }) {
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -234,18 +234,18 @@ export function* DELETE_AVAILABILITY({ payload: {availabilityId, goBack, navigat
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_MENTORS({payload: {groupId, skipLoading, concat}}) {
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -260,18 +260,18 @@ export function* GET_MENTORS({payload: {groupId, skipLoading, concat}}) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_MENTOR_ACTIVITIES({payload: {userId, skipLoading, concat}}) {
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -286,18 +286,18 @@ export function* GET_MENTOR_ACTIVITIES({payload: {userId, skipLoading, concat}})
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_ACTIVITY({payload: {activityId, skipLoading, concat}}) {
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -313,9 +313,9 @@ export function* GET_ACTIVITY({payload: {activityId, skipLoading, concat}}) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'mentors/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }

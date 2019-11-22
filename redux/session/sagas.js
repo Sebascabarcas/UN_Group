@@ -25,9 +25,9 @@ import { toggleIsMentor } from '../../services/Mentors';
 export function* LOGIN({payload}) {
   const {auth, storeSession, navigate, skipLoading} = payload;
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   });
   try {
@@ -89,9 +89,9 @@ export function* LOGIN({payload}) {
 
 export function* BE_ROLE_MODEL({payload: {userId, navigate, goBack}}) {
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   });
   try {
@@ -127,9 +127,9 @@ export function* BE_ROLE_MODEL({payload: {userId, navigate, goBack}}) {
 
 export function* BE_MENTOR({payload: {userId, navigate, goBack}}) {
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   });
   try {
@@ -166,9 +166,9 @@ export function* BE_MENTOR({payload: {userId, navigate, goBack}}) {
 export function* REGISTER({payload}) {
   const {user, navigate} = payload;
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   });
   try {
@@ -191,9 +191,9 @@ export function* REGISTER({payload}) {
 
 export function* UPDATE_PROFILE({payload}) {
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   });
   try {
@@ -231,9 +231,9 @@ export function* UPDATE_PROFILE({payload}) {
 
 export function* DELETE_ACCOUNT({payload: {skipLoading, navigate}}) {
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   });
   try {
@@ -250,9 +250,9 @@ export function* DELETE_ACCOUNT({payload: {skipLoading, navigate}}) {
 
 export function* DELETE_USER({payload: {userId, skipLoading, navigate}}) {
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   });
   try {
@@ -278,9 +278,9 @@ export function* DELETE_USER({payload: {userId, skipLoading, navigate}}) {
 
 export function* LOGOUT({payload: {skipLoading, navigate}}) {
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   });
   try {
@@ -296,9 +296,9 @@ export function* LOGOUT({payload: {skipLoading, navigate}}) {
 
 export function* CHANGE_CURRENT_GROUP({payload: {group, goBack}}) {
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   });
   const current_session = yield call (currentSession);
@@ -330,9 +330,9 @@ export function* CHANGE_CURRENT_GROUP({payload: {group, goBack}}) {
 
 export function* LOAD_CURRENT_ACCOUNT () {
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   });
   const current_session = yield call (currentSession);
@@ -361,9 +361,9 @@ export function* LOAD_CURRENT_ACCOUNT () {
 
 export function* GET_USER_INVITATIONS({ payload: { id, skipLoading } }) {
   yield put({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -388,9 +388,9 @@ export function* GET_USER_INVITATIONS({ payload: { id, skipLoading } }) {
 
 export function* GET_USER_EVENTS({ payload: { id, skipLoading } }) {
   yield put({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     }
   })
   try {
@@ -406,18 +406,18 @@ export function* GET_USER_EVENTS({ payload: { id, skipLoading } }) {
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     }
   })
 }
 
 export function* SEARCH_USERS({ payload: { querySearch, skipLoading } }) {
   yield put({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     }
   })
   try {
@@ -443,9 +443,9 @@ export function* SEARCH_USERS({ payload: { querySearch, skipLoading } }) {
 
 export function* ACCEPT_EVENT_INVITATION({ payload: { id, eventId, navigate, skipLoading } }) {
   yield put({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -469,18 +469,18 @@ export function* ACCEPT_EVENT_INVITATION({ payload: { id, eventId, navigate, ski
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* REJECT_EVENT_INVITATION({ payload: { id, eventId, skipLoading } }) {
   yield put({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -498,9 +498,9 @@ export function* REJECT_EVENT_INVITATION({ payload: { id, eventId, skipLoading }
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }

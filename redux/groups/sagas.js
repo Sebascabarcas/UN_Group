@@ -14,9 +14,9 @@ import { element } from 'prop-types';
 
 export function* CREATE_GROUP({ payload: { group, groups, navigate, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -54,18 +54,18 @@ export function* CREATE_GROUP({ payload: { group, groups, navigate, skipLoading 
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* UPDATE_GROUP({ payload: { id, group, isSuperAdmin, navigate, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -111,18 +111,18 @@ export function* UPDATE_GROUP({ payload: { id, group, isSuperAdmin, navigate, sk
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_GROUP_EVENTS({payload: {id, skipLoading, concat}}) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -141,18 +141,18 @@ export function* GET_GROUP_EVENTS({payload: {id, skipLoading, concat}}) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_GROUPS({skipLoading, concat}) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -169,18 +169,18 @@ export function* GET_GROUPS({skipLoading, concat}) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_GROUP({ payload: { id, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -195,18 +195,18 @@ export function* GET_GROUP({ payload: { id, skipLoading } }) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_GROUP_MEMBERS({ payload: { id, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -221,18 +221,18 @@ export function* GET_GROUP_MEMBERS({ payload: { id, skipLoading } }) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_GROUP_CANDIDATES({ payload: { id, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -248,18 +248,18 @@ export function* GET_GROUP_CANDIDATES({ payload: { id, skipLoading } }) {
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_USER_TASKS({ payload: { userId, groupId, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -275,18 +275,18 @@ export function* GET_USER_TASKS({ payload: { userId, groupId, skipLoading } }) {
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* SEND_GROUP_REQUEST({ payload: { id, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -297,18 +297,18 @@ export function* SEND_GROUP_REQUEST({ payload: { id, skipLoading } }) {
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* INCREASE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -333,18 +333,18 @@ export function* INCREASE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* REDUCE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -369,18 +369,18 @@ export function* REDUCE_PRIVILEGES({ payload: { id, userID, skipLoading } }) {
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* ADD_GROUP_MEMBER({ payload: { id, userID, goBack, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -399,18 +399,18 @@ export function* ADD_GROUP_MEMBER({ payload: { id, userID, goBack, skipLoading }
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* ACCEPT_GROUP_REQUEST({ payload: { id, index, userID, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -435,18 +435,18 @@ export function* ACCEPT_GROUP_REQUEST({ payload: { id, index, userID, skipLoadin
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* REJECT_GROUP_REQUEST({ payload: { id, index, userID, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -463,18 +463,18 @@ export function* REJECT_GROUP_REQUEST({ payload: { id, index, userID, skipLoadin
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* DELETE_GROUP_MEMBER({ payload: { id, userID, relationId, goBack, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -492,18 +492,18 @@ export function* DELETE_GROUP_MEMBER({ payload: { id, userID, relationId, goBack
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* LEAVE_GROUP({ payload: { id, navigate, resetNavigationStack, dispatchNavigation, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -539,18 +539,18 @@ export function* LEAVE_GROUP({ payload: { id, navigate, resetNavigationStack, di
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* DELETE_GROUP({ payload: { id, navigate, resetNavigationStack, dispatchNavigation, skipLoading } }) {
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -586,9 +586,9 @@ export function* DELETE_GROUP({ payload: { id, navigate, resetNavigationStack, d
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'groups/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }

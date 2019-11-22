@@ -1,5 +1,5 @@
 const actions = {
-  SET_STATE: 'roleModels/SET_STATE',
+  SET_STATE: 'modals/SET_STATE',
   RESET_APP: 'RESET_APP',
 }
 

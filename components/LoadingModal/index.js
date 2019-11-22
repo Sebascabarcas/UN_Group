@@ -13,12 +13,9 @@ import Animations from '../../constants/Animations';
 export default (LoadingModal = () => {
   const dispatch = useDispatch ();
   const {navigate} = useNavigation ();
-  const {loading: loadingSession} = useSelector (state => state.session);
-  const {loading: loadingMentors} = useSelector (state => state.mentors);
-  const {loading: loadingRoleModels} = useSelector (state => state.roleModels);
-  const {loading: loadingGroups} = useSelector (state => state.groups);
+  const {loadingModalVisible} = useSelector (state => state.modals);
   return (
-    <Modal animationType="fade" transparent={true} visible={loadingSession || loadingRoleModels || loadingMentors || loadingGroups}>
+    <Modal animationType="fade" transparent={true} visible={loadingModalVisible}>
       <View style={styles.container}>
         <LottieView style={styles.lottieView} source={Animations['scanning']} autoPlay loop />
       </View>

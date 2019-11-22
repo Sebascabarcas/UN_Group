@@ -14,9 +14,9 @@ import { getLocation } from '../../services/Location';
 
 export function* FIND_LOCATION({payload: {current_event, event, navigate}}) {
   yield put ({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   });
   try {
@@ -44,18 +44,18 @@ export function* FIND_LOCATION({payload: {current_event, event, navigate}}) {
     );
   }
   yield put ({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   });
 }
 
 export function* CREATE_EVENT({ payload: { groupId, event, navigate, skipLoading } }) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -74,18 +74,18 @@ export function* CREATE_EVENT({ payload: { groupId, event, navigate, skipLoading
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* UPDATE_EVENT({ payload: { event, userId, navigate, skipLoading } }) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -126,18 +126,18 @@ export function* UPDATE_EVENT({ payload: { event, userId, navigate, skipLoading 
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* CREATE_TASK({ payload: { eventId, task, goBack, skipLoading } }) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -157,18 +157,18 @@ export function* CREATE_TASK({ payload: { eventId, task, goBack, skipLoading } }
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* EDIT_TASK({ payload: {task, goBack, navigate, skipLoading } }) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -191,18 +191,18 @@ export function* EDIT_TASK({ payload: {task, goBack, navigate, skipLoading } }) 
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* TOGGLE_TASK_COMPLETED({ payload: {taskId, completed, navigate, skipLoading } }) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -225,18 +225,18 @@ export function* TOGGLE_TASK_COMPLETED({ payload: {taskId, completed, navigate, 
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* COMPLETE_TASK({ payload: {task, goBack, navigate, skipLoading } }) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -259,18 +259,18 @@ export function* COMPLETE_TASK({ payload: {task, goBack, navigate, skipLoading }
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* DELETE_EVENT({ payload: {index, eventId, goBack, navigate, skipLoading } }) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -292,18 +292,18 @@ export function* DELETE_EVENT({ payload: {index, eventId, goBack, navigate, skip
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* DELETE_TASK({ payload: {index, taskId, goBack, navigate, skipLoading } }) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -325,18 +325,18 @@ export function* DELETE_TASK({ payload: {index, taskId, goBack, navigate, skipLo
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_EVENT({ payload: { id, skipLoading }, callback }) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -352,18 +352,18 @@ export function* GET_EVENT({ payload: { id, skipLoading }, callback }) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_EVENTS({isSuperAdmin, userId, skipLoading, concat}) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -380,18 +380,18 @@ export function* GET_EVENTS({isSuperAdmin, userId, skipLoading, concat}) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_EVENT_ATENDEES({ payload: { id, skipLoading } }) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -406,18 +406,18 @@ export function* GET_EVENT_ATENDEES({ payload: { id, skipLoading } }) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_EVENT_TASKS({ payload: { id, skipLoading } }) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -432,18 +432,18 @@ export function* GET_EVENT_TASKS({ payload: { id, skipLoading } }) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_EVENT_TASK({ payload: { id, skipLoading } }) {
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -458,9 +458,9 @@ export function* GET_EVENT_TASK({ payload: { id, skipLoading } }) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'events/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }

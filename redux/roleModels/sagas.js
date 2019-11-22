@@ -11,9 +11,9 @@ import { createPost, updatePost, deletePost, getRoleModelsPosts, getRoleModels, 
 
 export function* CREATE_POST({ payload: { groupId, post, navigate, skipLoading } }) {
   yield put({
-    type: 'roleModels/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -36,18 +36,18 @@ export function* CREATE_POST({ payload: { groupId, post, navigate, skipLoading }
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'roleModels/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* UPDATE_POST({ payload: { postId, post, navigate, goBack, skipLoading } }) {
   yield put({
-    type: 'roleModels/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -83,18 +83,18 @@ export function* UPDATE_POST({ payload: { postId, post, navigate, goBack, skipLo
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'roleModels/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* DELETE_POST({ payload: {postId, goBack, navigate, skipLoading } }) {
   yield put({
-    type: 'roleModels/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   
@@ -116,18 +116,18 @@ export function* DELETE_POST({ payload: {postId, goBack, navigate, skipLoading }
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'roleModels/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_ROLE_MODELS({payload: {groupId, skipLoading, concat}}) {
   yield put({
-    type: 'roleModels/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -144,18 +144,18 @@ export function* GET_ROLE_MODELS({payload: {groupId, skipLoading, concat}}) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'roleModels/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_ROLE_MODELS_POSTS({payload: {groupId, skipLoading, concat}}) {
   yield put({
-    type: 'roleModels/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -172,18 +172,18 @@ export function* GET_ROLE_MODELS_POSTS({payload: {groupId, skipLoading, concat}}
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'roleModels/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
 
 export function* GET_ROLE_MODEL_POSTS({payload: {groupId, userId, skipLoading, concat}}) {
   yield put({
-    type: 'roleModels/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: true,
+      loadingModalVisible: true,
     },
   })
   try {
@@ -200,9 +200,9 @@ export function* GET_ROLE_MODEL_POSTS({payload: {groupId, userId, skipLoading, c
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put({
-    type: 'roleModels/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   })
 }
