@@ -34,15 +34,8 @@ export default StyleSheet.create ({
     opacity: 0.98,
   },
   profileImgContainer: {
-    // justifyContent: 'center',
-	// margin: 20,
-	
     flex: 0.4,
-    // height: '40%',
-    // backgroundColor:'red',
-    // alignContent: 'center',
     alignItems: 'center',
-    // flexDirection: 'row',
   },
   input: {
     textTransform: 'capitalize',
@@ -51,28 +44,18 @@ export default StyleSheet.create ({
     textTransform: 'capitalize',
   },
   profileNameForm: {
-    // backgroundColor:'blue',
-    // justifyContent: 'center',
-    // margin: 20,
     flex: 0.6,
-    // height: '40%',
-    // backgroundColor:'red',
-    // alignContent: 'center',
     alignItems: 'center',
-    // flexDirection: 'row',
   },
   profileImg: {
-    // marginTop: 15,
-    // marginBottom: 15,
     height: 125,
     width: 125,
     borderRadius: 62.5
-    // justifyContent: 'space-between'
   },
   profileImgOverlay: {
     backgroundColor: '#000',
     opacity: 0.5,
-    borderRadius: 100,
+    borderRadius: wp(100),
     position: 'absolute',
     top: 0,
     right: 0,

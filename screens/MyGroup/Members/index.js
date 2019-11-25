@@ -13,7 +13,6 @@ import {
   sliderWidth,
   itemWidth,
 } from '../../../components/SliderEntry/styles.js';
-import getEnvVars from '../../../environment.js';
 import { Content, Button, Icon, Container } from 'native-base';
 import NoResults from '../../../components/NoResults/index.js';
 import MyText from '../../../components/MyText/index.js';
@@ -21,16 +20,12 @@ import theme from '../../../styles/theme.style.js';
 import { AntDesign } from '@expo/vector-icons';
 
 const Members = () => {
-  console.log ('MyGroup/Members:');
   const {current_group_members, more_pages, loading, refreshing} = useSelector (
     state => state.groups
   );
-  console.log(current_group_members);
-  
   const {current_group: group, isAdmin, isSuperAdmin} = useSelector (
     state => state.session
   );
-  // let _current_group_members = [...current_group_members, ...current_group_members, ...current_group_members]
   const dispatch = useDispatch ();
   const {navigate, goBack, getParam} = useNavigation ();
 
@@ -66,18 +61,6 @@ const Members = () => {
 
   const layoutExample = (title, type) => {
     return (
-      // <View
-      //   style={[
-      //     styles.exampleContainer,
-      //     isTinder ? styles.exampleContainerDark : styles.exampleContainerLight,
-      //   ]}
-      // >
-      //   <MyText
-      //     style={[styles.title, isTinder ? {} : styles.titleDark]}
-      //   >{`Example ${number}`}</MyText>
-      //   <MyText style={[styles.subtitle, isTinder ? {} : styles.titleDark]}>
-      //     {title}
-      //   </MyText>
         <Carousel
           data={current_group_members.length === 1 ? [...current_group_members, ...current_group_members] : current_group_members}
           renderItem={_renderItem}
@@ -88,7 +71,6 @@ const Members = () => {
           layout={type}
           loop={true}
         />
-      // </View>
     );
   };
 

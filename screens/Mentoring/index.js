@@ -11,9 +11,7 @@ import MyText from '../../components/MyText';
 import styles from './styles';
 import theme from '../../styles/theme.style.js';
 import NoResults from '../../components/NoResults/index.js';
-import {AntDesign, MaterialIcons, Feather} from '@expo/vector-icons';
-import CardPost from '../../components/CardPost/index.js';
-import BigIconItem from '../../components/BigIconItem/index.js';
+import {Feather} from '@expo/vector-icons';
 import CardActivity from '../../components/CardActivity/index.js';
 
 const HeaderComponent = ({goBack, navigate}) => {

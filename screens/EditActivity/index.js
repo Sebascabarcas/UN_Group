@@ -1,43 +1,47 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {View, Image, TextInput} from 'react-native';
-import {
-  Button,
-  Content,
-  Icon,
-  Container,
-} from 'native-base';
+import {Button, Content, Icon, Container} from 'native-base';
 import {useNavigation} from 'react-navigation-hooks';
 import {useDispatch, useSelector, createSelector} from 'react-redux';
 import MyText from '../../components/MyText';
 import styles from './styles';
 import theme from '../../styles/theme.style.js';
 import Images from '../../constants/Images.js';
-import { Ionicons } from '@expo/vector-icons';
+import {Ionicons} from '@expo/vector-icons';
 
-const HeaderComponent = ({user, activityName, id: activityId, handleActivityName, goBack, navigate, dispatch}) => {
-
+const HeaderComponent = ({
+  user,
+  activityName,
+  id: activityId,
+  handleActivityName,
+  goBack,
+  navigate,
+  dispatch,
+}) => {
   const handleDeleteActivity = () => {
     dispatch ({
       type: 'mentors/DELETE_ACTIVITY',
       payload: {activityId: activityId, navigate, goBack},
     });
-  }
+  };
 
   return (
     <View style={styles.headerContainer}>
       <View style={styles.headerInnerContainer}>
         <View>
           <Button
-          // block
+            // block
             style={{marginLeft: 6}}
-            iconLeft
             transparent
             onPress={() => goBack ()}
           >
-            <Ionicons
+            <Icon
+              type="Ionicons"
               name="ios-arrow-back"
-              color={theme.PRIMARY_COLOR}
-              size={theme.ICON_SIZE_SMALL}
+              style={{
+                color: theme.PRIMARY_COLOR,
+                fontSize: theme.ICON_SIZE_SMALL,
+              }}
             />
           </Button>
         </View>
@@ -64,22 +68,23 @@ const HeaderComponent = ({user, activityName, id: activityId, handleActivityName
           </View>
         </View>
         <View>
-        <Button
-            // block
+          <Button
             style={{marginRight: 6}}
-            iconLeft
             transparent
             onPress={() => {
               dispatch ({
                 type: 'modals/SET_STATE',
-                payload: {confirmModalVisible: true, handleOnConfirm: handleDeleteActivity},
+                payload: {
+                  confirmModalVisible: true,
+                  handleOnConfirm: handleDeleteActivity,
+                },
               });
             }}
           >
-            <Ionicons
+            <Icon
+              type="Ionicons"
               name="ios-trash"
-              color={theme.DANGER_COLOR}
-              size={theme.ICON_SIZE_MEDIUM}
+              style={{color: theme.DANGER_COLOR, fontSize: theme.ICON_SIZE_MEDIUM}}
             />
           </Button>
         </View>
@@ -95,7 +100,6 @@ const HeaderComponent = ({user, activityName, id: activityId, handleActivityName
           autoFocus
           onChangeText={activityName => handleActivityName (activityName)}
           value={activityName}
-          //  autoFocus
         />
       </View>
     </View>
@@ -106,7 +110,9 @@ const EditActivity = () => {
   const {current_user: user, current_group: group} = useSelector (
     state => state.session
   );
-  const {editing_activity: activity, current_activity} = useSelector (state => state.mentors);
+  const {editing_activity: activity, current_activity} = useSelector (
+    state => state.mentors
+  );
   const dispatch = useDispatch ();
   const {navigate, goBack, getParam} = useNavigation ();
 

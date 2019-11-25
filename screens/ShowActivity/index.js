@@ -9,6 +9,7 @@ import {
 import {
   Button,
   Content,
+  Icon,
 } from 'native-base';
 import {useNavigation} from 'react-navigation-hooks';
 // import {NavigationAction} from 'react-navigation';
@@ -33,14 +34,13 @@ const HeaderComponent = ({canEdit, dispatch, activity, navigate, goBack}) => {
           <Button
           // block
             style={{marginLeft: 6}}
-            iconLeft
             transparent
             onPress={() => goBack ()}
           >
-            <Ionicons
+            <Icon
+              type="Ionicons"
               name="ios-arrow-back"
-              color={theme.PRIMARY_COLOR}
-              size={theme.ICON_SIZE_SMALL}
+              style={{color: theme.PRIMARY_COLOR, fontSize: theme.ICON_SIZE_SMALL}}
             />
           </Button>
         </View>

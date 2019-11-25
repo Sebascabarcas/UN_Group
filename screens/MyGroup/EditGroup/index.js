@@ -202,18 +202,6 @@ const EditGroup = () => {
               placeholder="Nombre del Grupo"
             />
           </Item>
-          {/* <Item>
-            <Input
-              onChangeText={last_name =>
-                dispatch ({
-                  type: 'groups/SET_STATE',
-                  payload: {editing_group: {...group, last_name}},
-                })}
-              style={styles.input}
-              value={user.last_name}
-              placeholder="Apellidos"
-            />
-          </Item> */}
         </Form>
       </View>
       <View style={styles.infoContainer}>
