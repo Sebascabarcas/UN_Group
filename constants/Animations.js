@@ -15,4 +15,6 @@ export default animations = {
     "search-users": require('../assets/lotties/search-users.json'),
     "minnion-looking": require('../assets/lotties/minnion-looking.json'),
     "searching-around": require('../assets/lotties/searching-around.json'),
+    "default-success": require('../assets/lotties/default-success.json'),
+    "failure": require('../assets/lotties/failure.json'),
 };

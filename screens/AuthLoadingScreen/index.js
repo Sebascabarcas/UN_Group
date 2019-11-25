@@ -37,7 +37,7 @@ export default (AuthLoadingScreen = props => {
       {
         toValue: 1,
         useNativeDriver: true,
-        duration: 3000,
+        duration: 9000,
         easing: Easing.linear
       }
       ).start()

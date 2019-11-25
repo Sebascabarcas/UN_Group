@@ -1,16 +1,15 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button} from 'native-base';
-import MyText from '../MyText';
+import MyText from '../../MyText';
 import styles from './styles';
 import LottieView from 'lottie-react-native';
-import theme from '../../styles/theme.style';
 import {Modal, View} from 'react-native';
-import Animations from '../../constants/Animations';
+import Animations from '../../../constants/Animations';
 
-export default (ConfirmModal = () => {
+export default (ErrorModal = () => {
   const dispatch = useDispatch ();
-  const {handleOnConfirm, confirmModalVisible} = useSelector (
+  const {errorModalVisible, errorModalProps: {errorText, errorAnimation}} = useSelector (
     state => state.modals
   );
   // const {loading: loadingMentors} = useSelector (state => state.mentors);
@@ -20,58 +19,42 @@ export default (ConfirmModal = () => {
     <Modal
       animationType="fade"
       transparent={true}
-      visible={confirmModalVisible}
+      visible={errorModalVisible}
       onRequestClose={() =>
         dispatch ({
           type: 'modals/SET_STATE',
           payload: {
-            confirmModalVisible: false,
+            errorModalVisible: false,
           },
         })}
     >
       <View style={styles.container}>
-        <View style={styles.confirmModal}>
+        <View style={styles.errorModal}>
           <LottieView
             style={styles.lottieView}
-            source={Animations['question-mark']}
+            source={Animations[errorAnimation || 'failure']}
             autoPlay
             loop
           />
-          <MyText fontStyle="bold" style={styles.questionText}>
-            ¿Está seguro?
+          <MyText fontStyle="bold" style={styles.errorText}>
+            {errorText}
           </MyText>
           <View style={styles.actionButtonsContainer}>
             <Button
               primary
+              transparent
               style={styles.acceptButton}
               onPress={() => {
                 dispatch ({
                   type: 'modals/SET_STATE',
                   payload: {
-                    confirmModalVisible: false,
+                    errorModalVisible: false,
                   },
                 })
-                handleOnConfirm();
               }}
             >
-              <MyText fontStyle="bold">
-                SI
-              </MyText>
-            </Button>
-            <Button
-              danger
-              style={styles.denyButton}
-              onPress={() => {
-                dispatch ({
-                  type: 'modals/SET_STATE',
-                  payload: {
-                    confirmModalVisible: false,
-                  },
-                });
-              }}
-            >
-              <MyText fontStyle="bold">
-                NO
+              <MyText style={styles.acceptButtonText} fontStyle="bold">
+                Ok
               </MyText>
             </Button>
           </View>

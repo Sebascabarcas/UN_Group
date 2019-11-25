@@ -32,12 +32,8 @@ export function* LOGIN({payload}) {
   });
   try {
     let {token, groups, relations} = yield call (login, auth, {skipLoading});
-    console.log (token);
-    console.log (groups);
-    // const {secret, tokenable_id: user_id, tokenable_type: role} = success
     let {user, user: {isSuperAdmin, userGroupRelations, isMentor, isRolemodel}} = jwt_decode (token);
     console.log('token Decoded:', jwt_decode (token));
-    console.log('token Decoded:', isRolemodel, isMentor);
     let current_group = null
     if (!isSuperAdmin && relations.length > 0) {
       relations[0].group.isAdmin = relations[0].isAdmin;
@@ -74,17 +70,30 @@ export function* LOGIN({payload}) {
       },
       () => navigate ('Home')
     );
-    ToastAndroid.show ('Bienvenido a la aplicación!', ToastAndroid.SHORT);
+    yield put ({
+      type: 'modals/SET_STATE',
+      payload: {
+        loadingModalVisible: false,
+        resultModalVisible: true,
+        resultModalProps: {
+          resultText: '¡Bienvenido a la aplicación!'
+        }
+      },
+    });
+    // ToastAndroid.show ('Bienvenido a la aplicación!', ToastAndroid.SHORT);
     console.log ('guardado');
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield put ({
+      type: 'modals/SET_STATE',
+      payload: {
+        loadingModalVisible: false,
+        errorModalVisible: true,
+        errorModalProps: {
+          errorText: errorMessage(error) 
+        }
+      },
+    });
   }
-  yield put ({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  });
 }
 
 export function* BE_ROLE_MODEL({payload: {userId, navigate, goBack}}) {

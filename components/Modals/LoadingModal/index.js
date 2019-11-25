@@ -4,7 +4,7 @@ import {useNavigation} from 'react-navigation-hooks';
 import styles from './styles';
 import LottieView from 'lottie-react-native';
 import { Modal, View, Platform } from 'react-native';
-import Animations from '../../constants/Animations';
+import Animations from '../../../constants/Animations';
 
 export default (LoadingModal = () => {
   const dispatch = useDispatch ();

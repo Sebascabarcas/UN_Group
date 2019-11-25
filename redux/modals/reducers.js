@@ -3,6 +3,10 @@ import actions from './actions'
 const initialState = {
   loadingModalVisible: false,
   confirmModalVisible: false,
+  resultModalVisible: false,
+  resultModalProps: {},
+  errorModalVisible: false,
+  errorModalProps: {},
   confirmDispatchAction: null
 }
 
