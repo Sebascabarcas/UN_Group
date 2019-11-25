@@ -1,9 +1,6 @@
 import {all, takeEvery, takeLatest, put, call} from 'redux-saga/effects';
-import {ToastAndroid} from 'react-native';
 import {
   login,
-  currentAccount,
-  logout,
   register,
   updateUser,
   currentSession,
@@ -17,9 +14,13 @@ import {
 import Storage from '../../services/Storage';
 import jwt_decode from 'jwt-decode';
 import actions from './actions';
-import {fromJsonToFormData, errorMessage} from '../../services/helpers';
-import { toggleisRolemodel } from '../../services/RoleModels';
-import { toggleIsMentor } from '../../services/Mentors';
+import {
+  fromJsonToFormData,
+  showErrorModal,
+  showResultModal,
+} from '../../services/helpers';
+import {toggleisRolemodel} from '../../services/RoleModels';
+import {toggleIsMentor} from '../../services/Mentors';
 // import { errorMessage } from '../../services/helpers'
 
 export function* LOGIN({payload}) {
@@ -32,16 +33,16 @@ export function* LOGIN({payload}) {
   });
   try {
     let {token, groups, relations} = yield call (login, auth, {skipLoading});
-    let {user, user: {isSuperAdmin, userGroupRelations, isMentor, isRolemodel}} = jwt_decode (token);
-    console.log('token Decoded:', jwt_decode (token));
-    let current_group = null
+    let {
+      user,
+      user: {isSuperAdmin, userGroupRelations, isMentor, isRolemodel},
+    } = jwt_decode (token);
+    console.log ('token Decoded:', jwt_decode (token));
+    let current_group = null;
     if (!isSuperAdmin && relations.length > 0) {
       relations[0].group.isAdmin = relations[0].isAdmin;
-      relations = relations.map (
-        groupRelation => groupRelation.group
-      );
+      relations = relations.map (groupRelation => groupRelation.group);
       current_group = relations[0];
-      // current_group.isAdmin = relations[0].isAdmin;
     }
     if (groups) {
       current_group = groups[0];
@@ -54,45 +55,33 @@ export function* LOGIN({payload}) {
         isRolemodel,
         isMentor,
         isSuperAdmin,
-        myGroups: isSuperAdmin ?  groups : userGroupRelations,
-        current_group
-      }
+        myGroups: isSuperAdmin ? groups : userGroupRelations,
+        current_group,
+      },
     });
-    user.isAdmin = current_group ? current_group.isAdmin : false
+    user.isAdmin = current_group ? current_group.isAdmin : false;
     yield call (
       Storage.set,
       'Session',
       {
         secret: token,
         user,
-        groups: isSuperAdmin ? groups : userGroupRelations ,
-        current_group
+        groups: isSuperAdmin ? groups : userGroupRelations,
+        current_group,
       },
       () => navigate ('Home')
     );
-    yield put ({
-      type: 'modals/SET_STATE',
-      payload: {
-        loadingModalVisible: false,
-        resultModalVisible: true,
-        resultModalProps: {
-          resultText: '¡Bienvenido a la aplicación!'
-        }
-      },
+    yield showResultModal ({
+      resultText: '¡Bienvenido a UNGROUP!',
     });
-    // ToastAndroid.show ('Bienvenido a la aplicación!', ToastAndroid.SHORT);
-    console.log ('guardado');
   } catch (error) {
     yield put ({
       type: 'modals/SET_STATE',
       payload: {
-        loadingModalVisible: false,
-        errorModalVisible: true,
-        errorModalProps: {
-          errorText: errorMessage(error) 
-        }
-      },
-    });
+        loadingModalVisible: false
+      }
+    })
+    yield showErrorModal (error);
   }
 }
 
@@ -106,32 +95,21 @@ export function* BE_ROLE_MODEL({payload: {userId, navigate, goBack}}) {
   try {
     yield call (toggleisRolemodel, userId);
     const current_session = yield call (currentSession);
-    current_session.user.isRolemodel = true
-    yield call (
-      Storage.set,
-      'Session',
-      current_session,
-    );
+    current_session.user.isRolemodel = true;
+    yield call (Storage.set, 'Session', current_session);
     yield put ({
       type: 'session/SET_STATE',
       payload: {
-        isRolemodel: true
+        isRolemodel: true,
       },
     });
-    ToastAndroid.show (
-      '¡Te has convertido en un Role Model!',
-      ToastAndroid.SHORT
-    );
+    yield showResultModal ({
+      resultText: '¡Te has convertido en un Role Model!',
+    });
     navigate ('Home');
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put ({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  });
 }
 
 export function* BE_MENTOR({payload: {userId, navigate, goBack}}) {
@@ -144,32 +122,21 @@ export function* BE_MENTOR({payload: {userId, navigate, goBack}}) {
   try {
     yield call (toggleIsMentor, userId);
     const current_session = yield call (currentSession);
-    current_session.user.isMentor = true
-    yield call (
-      Storage.set,
-      'Session',
-      current_session,
-    );
+    current_session.user.isMentor = true;
+    yield call (Storage.set, 'Session', current_session);
     yield put ({
       type: 'session/SET_STATE',
       payload: {
-        isMentor: true
+        isMentor: true,
       },
     });
-    ToastAndroid.show (
-      '¡Te has convertido en un Mentor!',
-      ToastAndroid.SHORT
-    );
+    yield showResultModal ({
+      resultText: '¡Te has convertido en un Mentor!',
+    });
     navigate ('Home');
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put ({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  });
 }
 
 export function* REGISTER({payload}) {
@@ -182,20 +149,13 @@ export function* REGISTER({payload}) {
   });
   try {
     yield call (register, user);
-    ToastAndroid.show (
-      'Usuario registrado, porfavor ingrese a su correo y haga la confirmación de su cuenta',
-      ToastAndroid.SHORT
-    );
+    yield showResultModal ({
+      resultText: 'Usuario registrado, porfavor ingrese a su correo y haga la confirmación de su cuenta',
+    });
     navigate ('SignIn');
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put ({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  });
 }
 
 export function* UPDATE_PROFILE({payload}) {
@@ -209,33 +169,24 @@ export function* UPDATE_PROFILE({payload}) {
     const current_session = yield call (currentSession);
     var {user: {id: userId}, user, skipLoading, navigate} = payload;
     user = fromJsonToFormData (user);
-    // user.password = "123456" //Por motivos de pruebas
-    const {user: user_edited} = yield call (updateUser, userId, user, {skipLoading});
-    // console.log('User edited:', user_edited);
-    
-    current_session.user = {...current_session.user, ...user_edited}
-    yield call (
-      Storage.set,
-      'Session',
-      current_session,
-    );
+    const {user: user_edited} = yield call (updateUser, userId, user, {
+      skipLoading,
+    });
+    current_session.user = {...current_session.user, ...user_edited};
+    yield call (Storage.set, 'Session', current_session);
     yield put ({
       type: 'session/SET_STATE',
       payload: {
         current_user: user_edited,
       },
     });
-    ToastAndroid.show ('Usuario actualizado!', ToastAndroid.SHORT);
+    yield showResultModal ({
+      resultText: '¡Usuario actualizado!',
+    });
     navigate ('MyProfile');
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put ({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  });
 }
 
 export function* DELETE_ACCOUNT({payload: {skipLoading, navigate}}) {
@@ -245,22 +196,18 @@ export function* DELETE_ACCOUNT({payload: {skipLoading, navigate}}) {
       loadingModalVisible: true,
     },
   });
-  try {
-    yield call (deleteAccount, {skipLoading});
-    // yield call(logout, { skipLoading })
-    yield call (Storage.delete, 'Session', () => navigate ('Auth'));
-  } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
-  }
   yield put ({
     type: 'RESET_APP',
   });
-  yield put ({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  });
+  try {
+    yield call (deleteAccount, {skipLoading});
+    yield call (Storage.delete, 'Session', () => navigate ('Auth'));
+    yield showResultModal ({
+      resultText: '¡Has eliminado tu cuenta!',
+    });
+  } catch (error) {
+    yield showErrorModal (error);
+  }
 }
 
 export function* DELETE_USER({payload: {userId, skipLoading, navigate}}) {
@@ -278,17 +225,12 @@ export function* DELETE_USER({payload: {userId, skipLoading, navigate}}) {
         users_searched: [],
       },
     });
-    ToastAndroid.show ('¡Usuario eliminado!', ToastAndroid.SHORT);
-    // yield call(logout, { skipLoading })
+    yield showResultModal ({
+      resultText: '¡Usuario eliminado!',
+    });
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put ({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  });
 }
 
 export function* LOGOUT({payload: {skipLoading, navigate}}) {
@@ -298,15 +240,14 @@ export function* LOGOUT({payload: {skipLoading, navigate}}) {
       loadingModalVisible: true,
     },
   });
-  try {
-    // yield call(logout, { skipLoading })
-    yield call (Storage.delete, 'Session', () => navigate ('Auth'));
-  } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
-  }
   yield put ({
     type: 'RESET_APP',
   });
+  try {
+    yield call (Storage.delete, 'Session', () => navigate ('Auth'));
+  } catch (error) {
+    yield showErrorModal (error);
+  }
   yield put ({
     type: 'modals/SET_STATE',
     payload: {
@@ -325,21 +266,16 @@ export function* CHANGE_CURRENT_GROUP({payload: {group, goBack}}) {
   const current_session = yield call (currentSession);
   if (current_session) {
     current_session.current_group = group;
-    current_session.user.isAdmin = group.isAdmin
+    current_session.user.isAdmin = group.isAdmin;
     yield put ({
       type: 'session/SET_STATE',
       payload: {
         current_group: group,
       },
     });
-    yield call (
-      Storage.set,
-      'Session',
-      current_session,
-      () => {
-        goBack ();
-      }
-    );
+    yield call (Storage.set, 'Session', current_session, () => {
+      goBack ();
+    });
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -357,10 +293,13 @@ export function* LOAD_CURRENT_ACCOUNT () {
     },
   });
   const current_session = yield call (currentSession);
-  // console.log('El usuario', current_user);
-
   if (current_session) {
-    let {user: current_user, user: {isSuperAdmin}, groups, current_group} = current_session;
+    let {
+      user: current_user,
+      user: {isSuperAdmin},
+      groups,
+      current_group,
+    } = current_session;
     const payload = {
       current_user,
       isSuperAdmin,
@@ -380,23 +319,23 @@ export function* LOAD_CURRENT_ACCOUNT () {
   });
 }
 
-export function* GET_USER_INVITATIONS({ payload: { id, skipLoading } }) {
-  yield put({
+export function* GET_USER_INVITATIONS({payload: {id, skipLoading}}) {
+  yield put ({
     type: 'modals/SET_STATE',
     payload: {
       loadingModalVisible: true,
     },
-  })
+  });
   try {
-    const {invitations} = yield call(getUserInvitations, id, { skipLoading })
-    yield put({
+    const {invitations} = yield call (getUserInvitations, id, {skipLoading});
+    yield put ({
       type: 'session/SET_STATE',
       payload: {
         myInvitations: invitations,
       },
-    })
+    });
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put ({
@@ -407,125 +346,121 @@ export function* GET_USER_INVITATIONS({ payload: { id, skipLoading } }) {
   });
 }
 
-export function* GET_USER_EVENTS({ payload: { id, skipLoading } }) {
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: true,
-    }
-  })
-  try {
-    const {atendees} = yield call(getUserEvents, id, { skipLoading })
-    yield put({
-      type: 'events/SET_STATE',
-      payload: {
-        events
-      }
-    })
-  } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
-  }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    }
-  })
-}
-
-export function* SEARCH_USERS({ payload: { querySearch, skipLoading } }) {
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: true,
-    }
-  })
-  try {
-    const {users} = yield call(searchUsers, querySearch, { skipLoading })
-    
-    yield put({
-      type: 'session/SET_STATE',
-      payload: {
-        users_searched: users
-      }
-    })
-  } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
-  }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    }
-  })
-}
-
-export function* ACCEPT_EVENT_INVITATION({ payload: { id, eventId, navigate, skipLoading } }) {
-  yield put({
+export function* GET_USER_EVENTS({payload: {id, skipLoading}}) {
+  yield put ({
     type: 'modals/SET_STATE',
     payload: {
       loadingModalVisible: true,
     },
-  })
+  });
   try {
-    const {atendee} = yield call(acceptEventInvitation, id, eventId, { skipLoading })
-    yield put({
+    const {atendees} = yield call (getUserEvents, id, {skipLoading});
+    yield put ({
+      type: 'events/SET_STATE',
+      payload: {
+        events,
+      },
+    });
+  } catch (error) {
+    yield showErrorModal (error);
+  }
+  yield put ({
+    type: 'modals/SET_STATE',
+    payload: {
+      loadingModalVisible: false,
+    },
+  });
+}
+
+export function* SEARCH_USERS({payload: {querySearch, skipLoading}}) {
+  yield put ({
+    type: 'modals/SET_STATE',
+    payload: {
+      loadingModalVisible: true,
+    },
+  });
+  try {
+    const {users} = yield call (searchUsers, querySearch, {skipLoading});
+    yield put ({
+      type: 'session/SET_STATE',
+      payload: {
+        users_searched: users,
+      },
+    });
+  } catch (error) {
+    yield showErrorModal (error);
+  }
+  yield put ({
+    type: 'modals/SET_STATE',
+    payload: {
+      loadingModalVisible: false,
+    },
+  });
+}
+
+export function* ACCEPT_EVENT_INVITATION({
+  payload: {id, eventId, navigate, skipLoading},
+}) {
+  yield put ({
+    type: 'modals/SET_STATE',
+    payload: {
+      loadingModalVisible: true,
+    },
+  });
+  try {
+    const {atendee} = yield call (acceptEventInvitation, id, eventId, {
+      skipLoading,
+    });
+    yield put ({
       type: 'events/ADD_ARRAY_ELEMENT',
       payload: {
         newElement: atendee,
-        arrayName: 'events'
+        arrayName: 'events',
       },
-    })
-    navigate('Home')
-    /* yield put({
-      type: 'session/SET_STATE',
-      payload: {
-        myInvitations: invitations,
-      },
-    }) */
+    });
+    navigate ('Home');
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    yield showErrorModal (error);
   }
-  yield put({
+  yield put ({
     type: 'modals/SET_STATE',
     payload: {
       loadingModalVisible: false,
     },
-  })
+  });
 }
 
-export function* REJECT_EVENT_INVITATION({ payload: { id, eventId, skipLoading } }) {
-  yield put({
+export function* REJECT_EVENT_INVITATION({
+  payload: {id, eventId, skipLoading},
+}) {
+  yield put ({
     type: 'modals/SET_STATE',
     payload: {
       loadingModalVisible: true,
     },
-  })
+  });
   try {
-    const success = yield call(rejectUserInvitation, id, eventId, { skipLoading })
-    yield put({
+    const success = yield call (rejectUserInvitation, id, eventId, {
+      skipLoading,
+    });
+    yield put ({
       type: 'session/DELETE_ARRAY_ELEMENT',
       payload: {
         arrayName: 'myInvitations',
-        id: success.id
+        id: success.id,
       },
-    })
-    navigate('MyInvitations');
+    });
+    navigate ('MyInvitations');
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    yield showErrorModal (error);
   }
-  yield put({
+  yield put ({
     type: 'modals/SET_STATE',
     payload: {
       loadingModalVisible: false,
     },
-  })
+  });
 }
-
 
 export default function* rootSaga () {
   yield all ([
@@ -542,8 +477,6 @@ export default function* rootSaga () {
     takeLatest (actions.GET_USER_INVITATIONS, GET_USER_INVITATIONS),
     takeLatest (actions.GET_USER_EVENTS, GET_USER_EVENTS),
     takeLatest (actions.ACCEPT_EVENT_INVITATION, ACCEPT_EVENT_INVITATION),
-    // takeEvery(actions.LOAD_CURRENT_ACCOUNT, LOAD_CURRENT_ACCOUNT),
-    // takeEvery(actions.UNAUTH_USER, UNAUTH_USER),
     // LOAD_CURRENT_ACCOUNT (),
   ]);
 }

@@ -1,16 +1,10 @@
-import { ToastAndroid } from 'react-native';
-import { put, call, all, takeEvery, takeLatest } from 'redux-saga/effects'
+import { put, call, all, takeLatest } from 'redux-saga/effects'
 import actions from './actions'
 import { createEvent, getEvent, getEvents, getEventAtendees, createTask, editTask, getEventTasks, deleteTask, getEventTask, deleteEvent, editEvent, completeTask } from '../../services/Events';
-import {fromJsonToFormData, errorMessage} from '../../services/helpers';
+import {showResultModal, showErrorModal} from '../../services/helpers';
 import moment from 'moment';
 import { getUserEvents } from '../../services/Session';
 import { getLocation } from '../../services/Location';
-// import moment from 'moment-timezone'
-// import 'moment/locale/es'  // without this line it didn't work
-// moment.locale('es')
-// import { errorMessage } from '../../services/helpers'
-
 
 export function* FIND_LOCATION({payload: {current_event, event, navigate}}) {
   yield put ({
@@ -21,27 +15,15 @@ export function* FIND_LOCATION({payload: {current_event, event, navigate}}) {
   });
   try {
     const {results} = yield call (getLocation, `${event.typeOfRoad}%20${event.mainRoad}%20%23${event.secondaryRoad}-${event.roadNumber}%2C%20Barranquilla%2C%20Atl%C3%A1ntico`);
-    console.log(results);
     let location_result = results[0] || {geometry: {location: {lat: 10.966981761315, lng: -74.79788233489182}}}
     const {geometry: {location: {lat: latitude, lng: longitude}}} = location_result
-    console.log('latitude: ', latitude);
-    console.log('longitude: ', longitude);
     yield put({
       type: 'events/SET_STATE',
       payload: {[current_event]: {...event, latitude, longitude, location: `${event.typeOfRoad} ${event.mainRoad} # ${event.secondaryRoad} - ${event.roadNumber}`}}
     })
     navigate('AddLocation', {current_event})
-    // ToastAndroid.show (
-    //   'Usuario registrado, porfavor ingrese con su identificación y contraseña',
-    //   ToastAndroid.SHORT
-    // );
-    // navigate ('SignIn');
   } catch (error) {
-    console.log (error);
-    ToastAndroid.show (
-      'Error encontrando dirección, verifique los campos',
-      ToastAndroid.SHORT
-    );
+    yield showErrorModal ('Error encontrando dirección, verifique los campos');
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -58,27 +40,16 @@ export function* CREATE_EVENT({ payload: { groupId, event, navigate, skipLoading
       loadingModalVisible: true,
     },
   })
-  
   try {
-    // event.date = moment.tz(`${event.date}, ${event.time}`, 'YYYY-MM-DD, hh:mm A', 'America/Bogota')._d
-    // event.date = moment(`${event.date}, ${event.time}`, 'YYYY-MM-DD, hh:mm A').format()
     event.date = moment(`${event.date}, ${event.time}`, 'YYYY-MM-DD, hh:mm A').format()
-    // console.log(event.date);
-    // event = fromJsonToFormData(event)
-    // console.log(event);
     yield call(createEvent, groupId, event, {skipLoading});
-    ToastAndroid.show ('Evento creado correctamente!', ToastAndroid.SHORT);
+    yield showResultModal ({
+      resultText: '¡Evento creado correctamente!',
+    });
     navigate('Invitations')
-    // console.log(success);
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* UPDATE_EVENT({ payload: { event, userId, navigate, skipLoading } }) {
@@ -88,14 +59,8 @@ export function* UPDATE_EVENT({ payload: { event, userId, navigate, skipLoading 
       loadingModalVisible: true,
     },
   })
-  
   try {
-    // event.date = moment.tz(`${event.date}, ${event.time}`, 'YYYY-MM-DD, hh:mm A', 'America/Bogota')._d
-    // event.date = moment(`${event.date}, ${event.time}`, 'YYYY-MM-DD, hh:mm A').format()
     event.date = moment(`${event.date}, ${event.time}`, 'YYYY-MM-DD, hh:mm A').format()
-    // console.log(event.date);
-    // event = fromJsonToFormData(event)
-    // console.log(event);
     const {event: new_event} = yield call(editEvent, event.id, event, {skipLoading});
     yield put({
       type: 'groups/REPLACE_ARRAY_ELEMENT',
@@ -119,18 +84,14 @@ export function* UPDATE_EVENT({ payload: { event, userId, navigate, skipLoading 
         current_event: {...event, ...new_event}
       }
     })
-    ToastAndroid.show ('Evento editado correctamente!', ToastAndroid.SHORT);
+    yield showResultModal ({
+      resultText: '¡Evento editado correctamente!',
+    });
     navigate('ShowEvent', {isGroupEvent: true})
     // console.log(success);
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* CREATE_TASK({ payload: { eventId, task, goBack, skipLoading } }) {
@@ -140,7 +101,6 @@ export function* CREATE_TASK({ payload: { eventId, task, goBack, skipLoading } }
       loadingModalVisible: true,
     },
   })
-  
   try {
     const {task: new_task} = yield call(createTask, eventId, task, {skipLoading});
     yield put({
@@ -150,18 +110,13 @@ export function* CREATE_TASK({ payload: { eventId, task, goBack, skipLoading } }
         newElement: new_task
       }
     })
-    ToastAndroid.show ('Tarea creada correctamente!', ToastAndroid.SHORT);
     goBack();
-    // console.log(success);
+    yield showResultModal ({
+      resultText: '¡Tarea creada correctamente!',
+    });
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* EDIT_TASK({ payload: {task, goBack, navigate, skipLoading } }) {
@@ -183,19 +138,13 @@ export function* EDIT_TASK({ payload: {task, goBack, navigate, skipLoading } }) 
         id: task.id
       },
     })
-    ToastAndroid.show ('Tarea editada correctamente!', ToastAndroid.SHORT);
-    // goBack()
     navigate('MyEvents');
-    // console.log(success);
+    yield showResultModal ({
+      resultText: '¡Tarea editada correctamente!',
+    });
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* TOGGLE_TASK_COMPLETED({ payload: {taskId, completed, navigate, skipLoading } }) {
@@ -208,7 +157,6 @@ export function* TOGGLE_TASK_COMPLETED({ payload: {taskId, completed, navigate, 
   
   try {
     const {task: new_task} = yield call(editTask, taskId, {completed}, {skipLoading});
-    // console.log();
     yield put({
       type: 'events/REPLACE_ARRAY_ELEMENT',
       payload: {
@@ -217,19 +165,13 @@ export function* TOGGLE_TASK_COMPLETED({ payload: {taskId, completed, navigate, 
         id: taskId
       },
     })
-    ToastAndroid.show ('Tarea editada correctamente!', ToastAndroid.SHORT);
-    // goBack()
     navigate('MyEvents');
-    // console.log(success);
+    yield showResultModal ({
+      resultText: '¡Tarea completada correctamente!',
+    });
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* COMPLETE_TASK({ payload: {task, goBack, navigate, skipLoading } }) {
@@ -239,10 +181,8 @@ export function* COMPLETE_TASK({ payload: {task, goBack, navigate, skipLoading }
       loadingModalVisible: true,
     },
   })
-  
   try {
     const {responsible} = yield call(completeTask, task.id, task.responsibles[0].id, {completed: true}, {skipLoading});
-    // console.log();
     yield put({
       type: 'groups/REPLACE_ARRAY_ELEMENT',
       payload: {
@@ -251,19 +191,13 @@ export function* COMPLETE_TASK({ payload: {task, goBack, navigate, skipLoading }
         id: task.id
       },
     })
-    ToastAndroid.show ('Tarea completada correctamente!', ToastAndroid.SHORT);
-    // goBack()
     navigate('MyGroup');
-    // console.log(success);
+    yield showResultModal ({
+      resultText: '¡Tarea completada correctamente!',
+    });
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* DELETE_EVENT({ payload: {index, eventId, goBack, navigate, skipLoading } }) {
@@ -276,27 +210,13 @@ export function* DELETE_EVENT({ payload: {index, eventId, goBack, navigate, skip
   
   try {
     yield call(deleteEvent, eventId, {skipLoading});
-    // console.log();
-    /* yield put({
-      type: 'groups/DELETE_ARRAY_ELEMENT',
-      payload: {
-        arrayName: 'current_event_tasks',
-        index
-      },
-    }) */
-    ToastAndroid.show ('Evento eliminado correctamente!', ToastAndroid.SHORT);
-    // goBack()
     navigate('MyGroup');
-    // console.log(success);
+    yield showResultModal ({
+      resultText: '¡Evento eliminado correctamente!',
+    });
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* DELETE_TASK({ payload: {index, taskId, goBack, navigate, skipLoading } }) {
@@ -306,30 +226,15 @@ export function* DELETE_TASK({ payload: {index, taskId, goBack, navigate, skipLo
       loadingModalVisible: true,
     },
   })
-  
   try {
     yield call(deleteTask, taskId, {skipLoading});
-    // console.log();
-    /* yield put({
-      type: 'groups/DELETE_ARRAY_ELEMENT',
-      payload: {
-        arrayName: 'current_event_tasks',
-        index
-      },
-    }) */
-    ToastAndroid.show ('Tarea eliminada correctamente!', ToastAndroid.SHORT);
-    // goBack()
     navigate('MyEvents');
-    // console.log(success);
+    yield showResultModal ({
+      resultText: '¡Tarea eliminada correctamente!',
+    });
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* GET_EVENT({ payload: { id, skipLoading }, callback }) {
@@ -349,7 +254,7 @@ export function* GET_EVENT({ payload: { id, skipLoading }, callback }) {
     })
     if(callback) callback();
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -375,9 +280,7 @@ export function* GET_EVENTS({isSuperAdmin, userId, skipLoading, concat}) {
       },
     })
   } catch (error) {
-    console.log(error);
-    
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -403,7 +306,7 @@ export function* GET_EVENT_ATENDEES({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -429,7 +332,7 @@ export function* GET_EVENT_TASKS({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -455,7 +358,7 @@ export function* GET_EVENT_TASK({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
   yield put({
     type: 'modals/SET_STATE',

@@ -1,13 +1,7 @@
-import { ToastAndroid } from 'react-native';
-import { put, call, all, takeEvery, takeLatest } from 'redux-saga/effects'
+import { put, call, all, takeLatest } from 'redux-saga/effects'
 import actions from './actions'
-import {errorMessage} from '../../services/helpers';
+import {showResultModal, showErrorModal} from '../../services/helpers';
 import { createActivity, createAvailability, updateActivity, updateActivityAvailability, deleteActivity, deleteAvailability, getMentors, getMentorActivities, getActivityAvailability, searchActivity, getActivity } from '../../services/Mentors';
-// import moment from 'moment-timezone'
-// import 'moment/locale/es'  // without this line it didn't work
-// moment.locale('es')
-// import { errorMessage } from '../../services/helpers'
-
 
 export function* SEARCH_ACTIVITIES({ payload: { searchQuery, skipLoading } }) {
   yield put({
@@ -18,7 +12,6 @@ export function* SEARCH_ACTIVITIES({ payload: { searchQuery, skipLoading } }) {
   })
   try {
     const {activities} = yield call(searchActivity, {searchQuery}, { skipLoading })
-    
     yield put({
       type: 'mentors/SET_STATE',
       payload: {
@@ -26,8 +19,7 @@ export function* SEARCH_ACTIVITIES({ payload: { searchQuery, skipLoading } }) {
       }
     })
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
-    // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
+    yield showErrorModal (error);
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -44,9 +36,7 @@ export function* CREATE_ACTIVITY({ payload: { userId, goBack, activity, navigate
       loadingModalVisible: true,
     },
   })
-  
   try {
-    
     const {activity: new_activity} = yield call(createActivity, userId, activity, {skipLoading});
     yield put({
       type: 'mentors/ADD_ARRAY_ELEMENT',
@@ -55,18 +45,13 @@ export function* CREATE_ACTIVITY({ payload: { userId, goBack, activity, navigate
         newElement: new_activity
       }
     })
-    ToastAndroid.show ('!Actividad creada correctamente!', ToastAndroid.SHORT);
+    yield showResultModal ({
+      resultText: '!Actividad creada correctamente!'
+    })
     goBack()
-    // console.log(success);
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* CREATE_AVAILABILITY({ payload: { activityId, availability, goBack, skipLoading } }) {
@@ -87,18 +72,13 @@ export function* CREATE_AVAILABILITY({ payload: { activityId, availability, goBa
         newElement: new_availability
       }
     })
-    ToastAndroid.show ('!Disponibilidad agregada correctamente!', ToastAndroid.SHORT);
+    yield showResultModal ({
+      resultText: '!Disponibilidad agregada correctamente!'
+    })
     goBack()
-    // console.log(success);
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* UPDATE_ACTIVITY({ payload: { activityId, activity, navigate, goBack, skipLoading } }) {
@@ -125,18 +105,13 @@ export function* UPDATE_ACTIVITY({ payload: { activityId, activity, navigate, go
         current_activity: {...activity, ...modified_activity}
       }
     })
-    ToastAndroid.show ('¡Actividad editada correctamente!', ToastAndroid.SHORT);
+    yield showResultModal ({
+      resultText: '¡Actividad editada correctamente!'
+    })
     goBack();
-    // console.log(success);
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* UPDATE_AVAILABILITY({ payload: { availabilityId, availability, navigate, goBack, skipLoading } }) {
@@ -163,18 +138,13 @@ export function* UPDATE_AVAILABILITY({ payload: { availabilityId, availability, 
         current_availability: {...availability, ...modified_availability}
       }
     })
-    ToastAndroid.show ('¡Disponibilidad editada correctamente!', ToastAndroid.SHORT);
+    yield showResultModal ({
+      resultText: '¡Disponibilidad editada correctamente!'
+    })
     goBack();
-    // console.log(success);
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* DELETE_ACTIVITY({ payload: {activityId, goBack, navigate, skipLoading } }) {
@@ -195,18 +165,13 @@ export function* DELETE_ACTIVITY({ payload: {activityId, goBack, navigate, skipL
         id: activityId
       },
     })
-    ToastAndroid.show ('¡Actividad eliminada correctamente!', ToastAndroid.SHORT);
+    yield showResultModal ({
+      resultText: '¡Actividad eliminada correctamente!'
+    })
     navigate('Mentoring')
-    // console.log(success);
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* DELETE_AVAILABILITY({ payload: {availabilityId, goBack, navigate, skipLoading } }) {
@@ -227,18 +192,12 @@ export function* DELETE_AVAILABILITY({ payload: {availabilityId, goBack, navigat
         id: availabilityId
       },
     })
-    ToastAndroid.show ('¡Disponibilidad eliminada correctamente!', ToastAndroid.SHORT);
-    // goBack()
-    // console.log(success);
+    yield showResultModal ({
+      resultText: '¡Disponibilidad eliminada correctamente!'
+    })
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* GET_MENTORS({payload: {groupId, skipLoading, concat}}) {
@@ -257,7 +216,7 @@ export function* GET_MENTORS({payload: {groupId, skipLoading, concat}}) {
       },
     })
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -283,7 +242,7 @@ export function* GET_MENTOR_ACTIVITIES({payload: {userId, skipLoading, concat}})
       },
     })
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -310,7 +269,7 @@ export function* GET_ACTIVITY({payload: {activityId, skipLoading, concat}}) {
       },
     })
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
   yield put({
     type: 'modals/SET_STATE',

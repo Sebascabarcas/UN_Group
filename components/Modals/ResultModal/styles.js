@@ -38,7 +38,6 @@ export default StyleSheet.create ({
   },
   acceptButton: {
     width: wp(30),
-    marginRight: 15,
     justifyContent: 'center'
   },
   acceptButtonText: {

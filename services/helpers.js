@@ -1,3 +1,5 @@
+import {put} from 'redux-saga/effects';
+
 export function fromJsonToFormData(obj, form, namespace, k) {
   const keys = k || Object.keys(obj)
 
@@ -87,4 +89,31 @@ export function errorMessage(error) {
     return error
   }
   
+}
+
+export function* showErrorModal (error) {
+  yield put ({
+    type: 'modals/SET_STATE',
+    payload: {
+      loadingModalVisible: false,
+      errorModalVisible: true,
+      errorModalProps: {
+        errorText: errorMessage(error) 
+      }
+    },
+  });
+}
+
+export function* showResultModal ({resultText, resultAnimation = null}) {
+  yield put ({
+    type: 'modals/SET_STATE',
+    payload: {
+      loadingModalVisible: false,
+      resultModalVisible: true,
+      resultModalProps: {
+        resultText,
+        resultAnimation
+      }
+    },
+  });
 }

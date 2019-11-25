@@ -1,13 +1,7 @@
-import { ToastAndroid } from 'react-native';
-import { put, call, all, takeEvery, takeLatest } from 'redux-saga/effects'
+import { put, call, all, takeLatest } from 'redux-saga/effects'
 import actions from './actions'
-import {fromJsonToFormData, errorMessage} from '../../services/helpers';
+import {fromJsonToFormData, showErrorModal, showResultModal} from '../../services/helpers';
 import { createPost, updatePost, deletePost, getRoleModelsPosts, getRoleModels, getRoleModelPosts } from '../../services/RoleModels';
-// import moment from 'moment-timezone'
-// import 'moment/locale/es'  // without this line it didn't work
-// moment.locale('es')
-// import { errorMessage } from '../../services/helpers'
-
 
 export function* CREATE_POST({ payload: { groupId, post, navigate, skipLoading } }) {
   yield put({
@@ -18,9 +12,7 @@ export function* CREATE_POST({ payload: { groupId, post, navigate, skipLoading }
   })
   
   try {
-    // console.log(event.date);
     post = fromJsonToFormData(post)
-    // console.log(event);
     const {post: new_post} = yield call(createPost, groupId, post, {skipLoading});
     yield put({
       type: 'roleModels/ADD_ARRAY_ELEMENT',
@@ -29,18 +21,13 @@ export function* CREATE_POST({ payload: { groupId, post, navigate, skipLoading }
         newElement: new_post
       }
     })
-    ToastAndroid.show ('!Publicación creada correctamente!', ToastAndroid.SHORT);
     navigate('RoleModels')
-    // console.log(success);
+    yield showResultModal ({
+      resultText: '¡Publicación creada correctamente!',
+    });
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* UPDATE_POST({ payload: { postId, post, navigate, goBack, skipLoading } }) {
@@ -50,7 +37,6 @@ export function* UPDATE_POST({ payload: { postId, post, navigate, goBack, skipLo
       loadingModalVisible: true,
     },
   })
-  
   try {
     post = fromJsonToFormData(post)
     const {post: modified_post} = yield call(updatePost, postId, post, {skipLoading});
@@ -76,18 +62,13 @@ export function* UPDATE_POST({ payload: { postId, post, navigate, goBack, skipLo
         current_post: {...post, ...modified_post}
       }
     })
-    ToastAndroid.show ('Publicación editada correctamente!', ToastAndroid.SHORT);
     goBack();
-    // console.log(success);
+    yield showResultModal ({
+      resultText: '¡Publicación editada correctamente!',
+    });
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* DELETE_POST({ payload: {postId, goBack, navigate, skipLoading } }) {
@@ -100,7 +81,6 @@ export function* DELETE_POST({ payload: {postId, goBack, navigate, skipLoading }
   
   try {
     yield call(deletePost, postId, {skipLoading});
-    // console.log();
     yield put({
       type: 'roleModels/DELETE_ARRAY_ELEMENT',
       payload: {
@@ -108,19 +88,13 @@ export function* DELETE_POST({ payload: {postId, goBack, navigate, skipLoading }
         id: postId
       },
     })
-    ToastAndroid.show ('Publicación eliminado correctamente!', ToastAndroid.SHORT);
-    // goBack()
     navigate('RoleModels');
-    // console.log(success);
+    yield showResultModal ({
+      resultText: '¡Publicación eliminado correctamente!',
+    });
   } catch (error) {
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
-  yield put({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  })
 }
 
 export function* GET_ROLE_MODELS({payload: {groupId, skipLoading, concat}}) {
@@ -139,9 +113,7 @@ export function* GET_ROLE_MODELS({payload: {groupId, skipLoading, concat}}) {
       },
     })
   } catch (error) {
-    console.log(error);
-    
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -167,9 +139,7 @@ export function* GET_ROLE_MODELS_POSTS({payload: {groupId, skipLoading, concat}}
       },
     })
   } catch (error) {
-    console.log(error);
-    
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -195,9 +165,7 @@ export function* GET_ROLE_MODEL_POSTS({payload: {groupId, userId, skipLoading, c
       },
     })
   } catch (error) {
-    console.log(error);
-    
-    ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
+    yield showErrorModal (error);
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -215,10 +183,5 @@ export default function* rootSaga() {
     takeLatest(actions.GET_ROLE_MODELS, GET_ROLE_MODELS),
     takeLatest(actions.GET_ROLE_MODEL_POSTS, GET_ROLE_MODEL_POSTS),
     takeLatest(actions.GET_ROLE_MODELS_POSTS, GET_ROLE_MODELS_POSTS),
-    // takeEvery(actions.DELETE_LOCATION, DELETE_LOCATION),
-    // takeEvery(actions.GET_LOCATIONS, GET_LOCATIONS),
-    // takeEvery(actions.GET_LOCATION, GET_LOCATION),
-    // takeEvery(actions.UPDATE_LOCATION, UPDATE_LOCATION),
-    // GET_INFO_locations(), // run once on app load to check user auth
   ])
 }

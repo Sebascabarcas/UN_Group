@@ -53,7 +53,7 @@ export default (ResultModal = () => {
                 })
               }}
             >
-              <MyText fontStyle="bold">
+              <MyText style={styles.acceptButtonText} fontStyle="bold">
                 Ok
               </MyText>
             </Button>
