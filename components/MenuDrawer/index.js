@@ -30,39 +30,14 @@ const MenuDrawer = () => {
   const dispatch = useDispatch()
   const {navigate} = navigationHooks.useNavigation ();
   const {current_user: user, current_group,  myGroups, isSuperAdmin, isRolemodel, isMentor} = useSelector(state => state.session)
-  // console.log(user);
-  
-  
- /*  useEffect (() => {
-    const fetchUserInfo = async () => {
-      const sessionInfo = await Storage.get ('Session');
-      if (!sessionInfo) return null
-      try {
-        // const userInfo = await showUser (userID);
-        // Object.entries (userInfo).map (
-        //   ([key, value]) =>
-        //     (userInfo[key] = userInfo[key] ? value.toString () : null)
-        // );
-        dispatch({type: 'session/SET_STATE', payload: {current_user: sessionInfo.user}});
-        _setReady (true);
-      } catch (error) {
-        console.log (error);
-      }
-    };
-    // setTimeout(() => {
-    fetchUserInfo ();
-    // }, 10000);
-  }, []); */
 
   _signOutAsync = async () => {
-    // await logout();
     navigate('Auth')
     dispatch({type: 'session/LOGOUT', payload: {navigate}})
     
   };
 
   _handleMyGroup = async () => {
-    // await logout();
     navigate('MyGroup')
     dispatch({type: 'groups/SET_STATE', payload: {current_group}})
     
@@ -196,17 +171,6 @@ const MenuDrawer = () => {
             size={theme.ICON_SIZE_SMALL}
           />
         )}
-        {/* {navLink (
-          // 'Wallet',
-          'Assignment',
-          'Enviar PQR',
-          <Ionicons
-            style={styles.iconLink}
-            name="md-notifications"
-            color={theme.GRAY_COLOR}
-            size={theme.ICON_SIZE_SMALL}
-          />
-        )} */}
         { isMentor && navLink (
           'Mentoring',
           'Mentorías',

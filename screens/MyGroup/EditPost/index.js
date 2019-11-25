@@ -27,6 +27,13 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 
 const HeaderComponent = ({user, id: postId, dispatch, title, file, handlePostTitle, showImageModal, handleDescription, description, goBack, navigate}) => {
+
+  const handleDeletePost = () => {
+    dispatch ({
+      type: 'roleModels/DELETE_POST',
+      payload: {postId, navigate},
+    });
+  }
   return (
   <View style={styles.headerContainer}>
     <View style={styles.headerInnerContainer}>
@@ -74,10 +81,13 @@ const HeaderComponent = ({user, id: postId, dispatch, title, file, handlePostTit
             iconLeft
             transparent
             onPress={() => {
-              dispatch ({
-                type: 'roleModels/DELETE_POST',
-                payload: {postId, navigate},
-              });
+              dispatch({
+                type: 'modals/SET_STATE',
+                payload: {
+                  confirmModalVisible: true,
+                  handleOnConfirm: handleDeletePost
+                }
+              })
             }}
           >
             <Ionicons
@@ -100,7 +110,6 @@ const HeaderComponent = ({user, id: postId, dispatch, title, file, handlePostTit
     <View style={styles.postImgContainer}>
       <TouchableWithoutFeedback onPress={() => showImageModal (true)}>
         <ImageBackground
-          imageStyle={{borderRadius: 100}}
           style={styles.profileImg}
           source={
             file

@@ -27,27 +27,18 @@ export default function groupsReducer(state = initialState, action) {
       return state
     }
     case actions.DELETE_ARRAY_ELEMENT: {
-      console.log(state[`${payload.arrayName}`]);
-      const newArray = state[`${payload.arrayName}`].filter((element) => element.id !== payload.id)
-      console.log(newArray);
-      
-      state[`${payload.arrayName}`] = newArray
-      return state
+      const newArray = state[`${payload.arrayName}`].filter((element) => element.id != payload.id)
+      return { ...state, [`${payload.arrayName}`]: newArray }
     }
     case actions.ADD_ARRAY_ELEMENT: {
       const newArray = state[`${payload.arrayName}`].concat(payload.newElement)
-      state[`${payload.arrayName}`] = newArray
-      return state
+      return { ...state, [`${payload.arrayName}`]: newArray }
     }
     case actions.REPLACE_ARRAY_ELEMENT: {
       const newArray = state[`${payload.arrayName}`]
-      console.log(newArray);
       let foundIndex = newArray.findIndex(e => e.id == payload.id)
-      console.log(foundIndex);
-      
       newArray[foundIndex] = payload.newElement
-      state[`${payload.arrayName}`] = newArray
-      return state
+      return { ...state, [`${payload.arrayName}`]: newArray }
     }
     case actions.SET_STATE:
       // console.log({ ...state, ...payload })

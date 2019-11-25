@@ -1,4 +1,4 @@
-import actions from './actions'
+import actions from './actions';
 
 const initialState = {
   current_user: {},
@@ -13,26 +13,34 @@ const initialState = {
   myInvitations: [],
   loading: false,
   refreshing: false,
-}
+};
 
-export default function sessionReducer(state = initialState, action) {
-  const {type, payload} = action
+export default function sessionReducer (state = initialState, action) {
+  const {type, payload} = action;
   switch (type) {
     case actions.RESET_APP:
-      return initialState
+      return initialState;
     case actions.SET_STATE:
-      return { ...state, ...payload }
+      return {...state, ...payload};
     case actions.DELETE_ARRAY_ELEMENT: {
-        const newArray = state[`${payload.arrayName}`].filter((element, i) => i !== payload.index)
-        state[`${payload.arrayName}`] = newArray
-        return state
-      }
+      const newArray = state[`${payload.arrayName}`].filter (
+        element => element.id != payload.id
+      );
+      return {...state, [`${payload.arrayName}`]: newArray};
+    }
     case actions.ADD_ARRAY_ELEMENT: {
-        const newArray = state[`${payload.arrayName}`].concat(payload.newElement)
-        state[`${payload.arrayName}`] = newArray
-        return state
-      }
+      const newArray = state[`${payload.arrayName}`].concat (
+        payload.newElement
+      );
+      return {...state, [`${payload.arrayName}`]: newArray};
+    }
+    case actions.REPLACE_ARRAY_ELEMENT: {
+      const newArray = state[`${payload.arrayName}`];
+      let foundIndex = newArray.findIndex (e => e.id == payload.id);
+      newArray[foundIndex] = payload.newElement;
+      return {...state, [`${payload.arrayName}`]: newArray};
+    }
     default:
-      return state
+      return state;
   }
 }

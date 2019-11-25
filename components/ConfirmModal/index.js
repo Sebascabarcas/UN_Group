@@ -44,7 +44,15 @@ export default (ConfirmModal = () => {
             <Button
               primary
               style={styles.acceptButton}
-              onPress={handleOnConfirm}
+              onPress={() => {
+                dispatch ({
+                  type: 'modals/SET_STATE',
+                  payload: {
+                    confirmModalVisible: false,
+                  },
+                })
+                handleOnConfirm();
+              }}
             >
               <MyText fontStyle="bold">
                 SI

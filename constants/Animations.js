@@ -2,6 +2,7 @@ export default animations = {
     "cloud-disconnection": require('../assets/lotties/cloud-disconnection.json'),
     "question-mark": require('../assets/lotties/question-mark.json'),
     "loading-jumping-ball": require('../assets/lotties/loading-jumping-ball.json'),
+    "loading-2": require('../assets/lotties/loading-2.json'),
     "empty-box": require('../assets/lotties/empty-box.json'),
     "empty-gabinete": require('../assets/lotties/empty-gabinete.json'),
     "falling-empty-box": require('../assets/lotties/falling-empty-box.json'),

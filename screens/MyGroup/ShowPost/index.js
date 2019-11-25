@@ -95,7 +95,6 @@ const HeaderComponent = ({canEdit, dispatch, post, navigate, goBack}) => {
       </View>
       <View style={styles.postImgContainer}>
         <ImageBackground
-          imageStyle={{borderRadius: 100}}
           style={styles.profileImg}
           source={post.postPicture ? {uri: post.postPicture.uri} : Images['logo']}
         />

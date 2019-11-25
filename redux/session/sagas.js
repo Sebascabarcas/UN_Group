@@ -80,9 +80,9 @@ export function* LOGIN({payload}) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   });
 }
@@ -118,9 +118,9 @@ export function* BE_ROLE_MODEL({payload: {userId, navigate, goBack}}) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   });
 }
@@ -156,9 +156,9 @@ export function* BE_MENTOR({payload: {userId, navigate, goBack}}) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   });
 }
@@ -182,9 +182,9 @@ export function* REGISTER({payload}) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   });
 }
@@ -222,9 +222,9 @@ export function* UPDATE_PROFILE({payload}) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   });
 }
@@ -245,6 +245,12 @@ export function* DELETE_ACCOUNT({payload: {skipLoading, navigate}}) {
   }
   yield put ({
     type: 'RESET_APP',
+  });
+  yield put ({
+    type: 'modals/SET_STATE',
+    payload: {
+      loadingModalVisible: false,
+    },
   });
 }
 
@@ -269,9 +275,9 @@ export function* DELETE_USER({payload: {userId, skipLoading, navigate}}) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
   }
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   });
 }
@@ -291,6 +297,12 @@ export function* LOGOUT({payload: {skipLoading, navigate}}) {
   }
   yield put ({
     type: 'RESET_APP',
+  });
+  yield put ({
+    type: 'modals/SET_STATE',
+    payload: {
+      loadingModalVisible: false,
+    },
   });
 }
 
@@ -321,9 +333,9 @@ export function* CHANGE_CURRENT_GROUP({payload: {group, goBack}}) {
     );
   }
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   });
 }
@@ -352,9 +364,9 @@ export function* LOAD_CURRENT_ACCOUNT () {
     });
   }
   yield put ({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
   });
 }
@@ -378,12 +390,12 @@ export function* GET_USER_INVITATIONS({ payload: { id, skipLoading } }) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
-  yield put({
-    type: 'session/SET_STATE',
+  yield put ({
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     },
-  })
+  });
 }
 
 export function* GET_USER_EVENTS({ payload: { id, skipLoading } }) {
@@ -434,9 +446,9 @@ export function* SEARCH_USERS({ payload: { querySearch, skipLoading } }) {
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put({
-    type: 'session/SET_STATE',
+    type: 'modals/SET_STATE',
     payload: {
-      loading: false,
+      loadingModalVisible: false,
     }
   })
 }
@@ -485,14 +497,14 @@ export function* REJECT_EVENT_INVITATION({ payload: { id, eventId, skipLoading }
   })
   try {
     const success = yield call(rejectUserInvitation, id, eventId, { skipLoading })
-    console.log(success);
-    
-    /* yield put({
-      type: 'session/SET_STATE',
+    yield put({
+      type: 'session/DELETE_ARRAY_ELEMENT',
       payload: {
-        myInvitations: invitations,
+        arrayName: 'myInvitations',
+        id: success.id
       },
-    }) */
+    })
+    navigate('MyInvitations');
   } catch (error) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
@@ -523,6 +535,6 @@ export default function* rootSaga () {
     takeLatest (actions.ACCEPT_EVENT_INVITATION, ACCEPT_EVENT_INVITATION),
     // takeEvery(actions.LOAD_CURRENT_ACCOUNT, LOAD_CURRENT_ACCOUNT),
     // takeEvery(actions.UNAUTH_USER, UNAUTH_USER),
-    LOAD_CURRENT_ACCOUNT (),
+    // LOAD_CURRENT_ACCOUNT (),
   ]);
 }

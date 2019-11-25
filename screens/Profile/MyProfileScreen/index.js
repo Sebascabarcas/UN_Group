@@ -61,6 +61,13 @@ const MyProfileScreen = () => {
     navigate ('Auth');
   };
 
+  const handleDeleteAccount = () => {
+    dispatch ({
+      type: 'session/DELETE_ACCOUNT',
+      payload: {navigate},
+    });
+  }
+
   _updateUserAsync = async () => {
     _setLoading (true);
     try {
@@ -130,13 +137,14 @@ const MyProfileScreen = () => {
         danger
         full
         onPress={() => {
-          dispatch ({
-            type: 'session/DELETE_ACCOUNT',
-            payload: {navigate},
-          });
-          // navigate ('Groups');
+          dispatch({
+            type: 'modals/SET_STATE',
+            payload: {
+              confirmModalVisible: true,
+              handleOnConfirm: handleDeleteAccount
+            }
+          })
         }}
-        // onPress={() => navigate('EditProfile')}
         style={styles.actionBottomButton}
       >
         <MyText

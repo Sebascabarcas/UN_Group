@@ -81,6 +81,7 @@ export default StyleSheet.create({
     // marginBottom: 15,
     height: hp(20),
     width: hp(20),
+    borderRadius: hp(10)
     // justifyContent: 'space-between'
   },
   profileImgOverlay: {

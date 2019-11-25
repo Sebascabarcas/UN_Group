@@ -13,7 +13,6 @@ import {
 import styles from './styles.js';
 import MyText from '../../../components/MyText';
 import {useDispatch, useSelector} from 'react-redux';
-import CardGroupInfo from '../../../components/CardGroupInfo';
 import Carousel from 'react-native-snap-carousel';
 import SliderEntry from '../../../components/SliderEntry/index.js';
 import { sliderWidth, itemWidth } from '../../../components/SliderEntry/styles.js';

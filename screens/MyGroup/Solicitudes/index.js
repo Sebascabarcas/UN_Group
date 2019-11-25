@@ -85,14 +85,14 @@ Solicitudes = () => {
   _acceptRequest = (request, index) => {
     dispatch ({
       type: 'groups/ACCEPT_GROUP_REQUEST',
-      payload: {id: request.groupId, index, userID: request.user.id},
+      payload: {id: request.groupId, relationId: request.id, index, userID: request.user.id},
     });
   };
 
   _rejectRequest = (request, index) => {
     dispatch ({
       type: 'groups/REJECT_GROUP_REQUEST',
-      payload: {id: request.groupId, index, userID: request.user.id},
+      payload: {id: request.groupId, relationId: request.id, index, userID: request.user.id},
     });
   };
 

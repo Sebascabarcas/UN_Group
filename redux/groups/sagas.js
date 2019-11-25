@@ -406,7 +406,7 @@ export function* ADD_GROUP_MEMBER({ payload: { id, userID, goBack, skipLoading }
   })
 }
 
-export function* ACCEPT_GROUP_REQUEST({ payload: { id, index, userID, skipLoading } }) {
+export function* ACCEPT_GROUP_REQUEST({ payload: { id, relationId, userID, skipLoading } }) {
   yield put({
     type: 'modals/SET_STATE',
     payload: {
@@ -418,7 +418,7 @@ export function* ACCEPT_GROUP_REQUEST({ payload: { id, index, userID, skipLoadin
     yield put({
       type: 'groups/DELETE_ARRAY_ELEMENT',
       payload: {
-        index,
+        id: relationId,
         arrayName: 'current_group_requests'
       },
     })
@@ -442,7 +442,7 @@ export function* ACCEPT_GROUP_REQUEST({ payload: { id, index, userID, skipLoadin
   })
 }
 
-export function* REJECT_GROUP_REQUEST({ payload: { id, index, userID, skipLoading } }) {
+export function* REJECT_GROUP_REQUEST({ payload: { id, relationId, userID, skipLoading } }) {
   yield put({
     type: 'modals/SET_STATE',
     payload: {
@@ -454,7 +454,7 @@ export function* REJECT_GROUP_REQUEST({ payload: { id, index, userID, skipLoadin
     yield put({
       type: 'groups/DELETE_ARRAY_ELEMENT',
       payload: {
-        index,
+        id: relationId,
         arrayName: 'current_group_requests'
       },
     })
@@ -486,7 +486,7 @@ export function* DELETE_GROUP_MEMBER({ payload: { id, userID, relationId, goBack
         arrayName: 'current_group_members'
       },
     })
-    ToastAndroid.show ('Miembro eliminado del grupo!', ToastAndroid.SHORT);
+    ToastAndroid.show ('¡Miembro eliminado del grupo!', ToastAndroid.SHORT);
     goBack();
   } catch (error) {
     ToastAndroid.show (errorMessage(error), ToastAndroid.SHORT);

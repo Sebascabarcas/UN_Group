@@ -103,6 +103,13 @@ const Member = () => {
     },
     [dispatch]
   ); */
+  const handleDeleteMember = () => {
+    dispatch ({
+      type: 'groups/DELETE_GROUP_MEMBER',
+      payload: {id: groupId, relationId, userID: user.id, goBack, navigate},
+    });
+  }
+
   const BottomSheetComponent = () => (
     <View>
       <View style={{alignItems: 'center'}}>
@@ -127,8 +134,8 @@ const Member = () => {
         <Button
           onPress={() => {
             dispatch ({
-              type: 'groups/DELETE_GROUP_MEMBER',
-              payload: {id: groupId, relationId, userID: user.id, goBack},
+              type: 'modals/SET_STATE',
+              payload: {confirmModalVisible: true, handleOnConfirm: handleDeleteMember},
             });
           }}
           full

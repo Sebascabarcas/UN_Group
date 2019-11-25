@@ -1,28 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Dimensions,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Dimensions, Image, TouchableOpacity} from 'react-native';
 import {useNavigation} from 'react-navigation-hooks';
 import styles from './styles.js';
 import MyText from '../../../components/MyText';
-import {Input, Button, List, ListItem, Form, Item, Badge, Container, Content, Col, Row, Grid, Icon} from 'native-base';
 import {
-  Ionicons,
-  FontAwesome,
-} from '@expo/vector-icons';
+  Button,
+  Container,
+  Content,
+  Col,
+  Row,
+  Grid,
+  Icon,
+} from 'native-base';
+import {Ionicons, FontAwesome} from '@expo/vector-icons';
 import {useDispatch, useSelector} from 'react-redux';
-import CardGroupInfo from '../../../components/CardGroupInfo';
-import getEnvVars from '../../../environment.js';
-import EditGroupButton from '../../../components/EditGroupButton/index.js';
 import theme from '../../../styles/theme.style.js';
 
-const {height: fullHeight} = Dimensions.get ('window');
-
 const GroupMenuButton = ({route, navigate, icon, title}) => (
-  <TouchableOpacity onPress={() => navigate(route)} style={[styles.iconButtonContainer]}>
+  <TouchableOpacity
+    onPress={() => navigate (route)}
+    style={[styles.iconButtonContainer]}
+  >
     <Ionicons name={icon} color="#B3C2CA" size={theme.ICON_SIZE_MEDIUM} />
     <MyText style={[styles.iconButtonTitle]} fontStyle="bold">
       {title}
@@ -31,32 +29,30 @@ const GroupMenuButton = ({route, navigate, icon, title}) => (
 );
 
 const ShowGroupScreen = () => {
-  const {
-    current_group,
-    more_pages,
-    loading,
-    refreshing
-  } = useSelector (state => state.groups);
-  const {
-    isSuperAdmin
-  } = useSelector (state => state.session);
+  const {current_group, more_pages, loading, refreshing} = useSelector (
+    state => state.groups
+  );
+  const {isSuperAdmin} = useSelector (state => state.session);
   const dispatch = useDispatch ();
   const {navigate, getParam} = useNavigation ();
 
-  useEffect (() => {
-    dispatch({
-      type: 'groups/GET_GROUP',
-      payload: {id: current_group.id}
-    })
-  }, [dispatch]);
+  useEffect (
+    () => {
+      dispatch ({
+        type: 'groups/GET_GROUP',
+        payload: {id: current_group.id},
+      });
+    },
+    [dispatch]
+  );
 
   sendGroupRequest = () => {
-    const {id} = current_group
-    dispatch({
+    const {id} = current_group;
+    dispatch ({
       type: 'groups/SEND_GROUP_REQUEST',
-      payload: {id}
-    })
-  }
+      payload: {id},
+    });
+  };
 
   return (
     <Container>
@@ -93,18 +89,31 @@ const ShowGroupScreen = () => {
           <Row>
             <Col>
               {/* B3C2CA */}
-              <GroupMenuButton navigate={navigate} route="GroupMembers" icon="ios-people" title="Miembros" />
+              <GroupMenuButton
+                navigate={navigate}
+                route="GroupMembers"
+                icon="ios-people"
+                title="Miembros"
+              />
             </Col>
           </Row>
         </Grid>
-        {!isSuperAdmin && <Button primary iconRight block superRounded onPress={sendGroupRequest}>
-              <MyText style={{fontSize: theme.FONT_SIZE_MEDIUM}} fontStyle="bold">Quiero Unirme</MyText>
-              <Ionicons
-                name="ios-play-circle"
-                color="white"
-                size={theme.ICON_SIZE_SMALL}
-              />
-        </Button>}
+        {!isSuperAdmin &&
+          <Button
+            primary
+            iconRight
+            block
+            onPress={sendGroupRequest}
+          >
+            <MyText style={{fontSize: theme.FONT_SIZE_LARGE}} fontStyle="bold">
+              Quiero Unirme
+            </MyText>
+            <Ionicons
+              name="ios-play-circle"
+              color="white"
+              size={theme.ICON_SIZE_SMALL}
+            />
+          </Button>}
       </Content>
     </Container>
   );

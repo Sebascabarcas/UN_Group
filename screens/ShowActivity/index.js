@@ -143,7 +143,13 @@ const ShowActivity = () => {
         {...availability}
         canDelete={activity.userId === user.id}
         touchContainerStyles={{marginVertical: 10}}
-        onPress={() => _onDeleteAvailability (availability)}
+        onPress={() => dispatch({
+          type: 'modals/SET_STATE',
+          payload: {
+            confirmModalVisible: true,
+            handleOnConfirm: _onDeleteAvailability
+          }
+        })}
       />
     );
     // <CardEvent groupName="W-STEM" location={event.location} name={event.eventName} time={moment(event.date).format('hh:mm A')} date={moment(event.date).format('YYYY-MM-DD')} description={event.description} onPress={() => _onPressEvent(event)} />

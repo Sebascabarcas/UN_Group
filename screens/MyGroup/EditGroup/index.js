@@ -167,7 +167,6 @@ const EditGroup = () => {
         <View style={styles.profileImgContainer}>
           <TouchableWithoutFeedback onPress={() => _setShowImageModal (true)}>
             <ImageBackground
-              imageStyle={{borderRadius: 100}}
               style={styles.profileImg}
               source={
                 group.file ? {uri: group.file.uri} : group.groupPicture ? {uri: `${group.groupPicture.uri}`} : images['logo']

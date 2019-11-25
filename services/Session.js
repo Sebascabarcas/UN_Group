@@ -37,8 +37,8 @@ export async function searchUsers(searchQuery, {skipLoading} = {}) {
 //   return Requests.get('utils/testSQLConnection/').then(user => user.data)
 // }
 
-export async function showUser(userID, { skipLoading }) {
-  return Requests.get(`users/id/${userID}`, { skipLoading }).then(user => user.data)
+export async function showUser(userID) {
+  return Requests.get(`users/${userID}`).then(user => user.data)
 }
 
 export async function updateUser(id, user, { skipLoading }) {

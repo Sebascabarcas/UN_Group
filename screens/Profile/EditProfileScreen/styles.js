@@ -66,6 +66,7 @@ export default StyleSheet.create ({
     // marginBottom: 15,
     height: 125,
     width: 125,
+    borderRadius: 62.5
     // justifyContent: 'space-between'
   },
   profileImgOverlay: {
@@ -149,7 +150,7 @@ export default StyleSheet.create ({
   img: {
     height: 140,
     width: 140,
-    borderRadius: 250,
+    borderRadius: 70,
   },
   topLinks: {
     height: 220,

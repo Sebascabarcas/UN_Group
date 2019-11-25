@@ -75,7 +75,7 @@ export default StyleSheet.create({
     width: wp(100)
   },
   userSelectedImageContainer: {
-    borderRadius: wp(50),
+    borderRadius: wp(25),
     height: hp(10),
     width: wp(20),
     marginRight: 10

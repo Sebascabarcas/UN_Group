@@ -71,7 +71,6 @@ const HeaderComponent = ({user, title, file, handlePostTitle, showImageModal, ha
     <View style={styles.postImgContainer}>
       <TouchableWithoutFeedback onPress={() => showImageModal (true)}>
         <ImageBackground
-          imageStyle={{borderRadius: 100}}
           style={styles.profileImg}
           source={
             file

@@ -18,7 +18,7 @@ export default StyleSheet.create({
 	},
     imageCar:{
         width: PixelRatio.get()*40,
-        borderRadius: wp(100),
+        borderRadius: PixelRatio.get()*40/2,
         borderColor: '#fff',
         borderWidth: 2,
         marginVertical: hp(3),

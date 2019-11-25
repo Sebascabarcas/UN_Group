@@ -30,7 +30,6 @@ const HeaderComponent = ({user: {firstName, firstLastName, picture}}) => {
       <View style={styles.userTextInputContainer}>
         <View style={styles.postImgContainer}>
           <ImageBackground
-            imageStyle={{borderRadius: 100}}
             style={styles.profileImg}
             source={picture ? {uri: picture.uri} : Images['no-profile-photo']}
           />

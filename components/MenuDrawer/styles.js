@@ -85,9 +85,9 @@ export default StyleSheet.create ({
         // backgroundColor: 'red',
     },
     img: {
-        height: 80,
-        width: 80,
-        borderRadius: 90,
+        height: 100,
+        width: 100,
+        borderRadius: 50,
         borderColor: 'white',
         borderWidth: 2,
         overflow: 'hidden'

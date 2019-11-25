@@ -15,6 +15,14 @@ import Images from '../../constants/Images.js';
 import { Ionicons } from '@expo/vector-icons';
 
 const HeaderComponent = ({user, activityName, id: activityId, handleActivityName, goBack, navigate, dispatch}) => {
+
+  const handleDeleteActivity = () => {
+    dispatch ({
+      type: 'mentors/DELETE_ACTIVITY',
+      payload: {activityId: activityId, navigate, goBack},
+    });
+  }
+
   return (
     <View style={styles.headerContainer}>
       <View style={styles.headerInnerContainer}>
@@ -63,8 +71,8 @@ const HeaderComponent = ({user, activityName, id: activityId, handleActivityName
             transparent
             onPress={() => {
               dispatch ({
-                type: 'mentors/DELETE_ACTIVITY',
-                payload: {activityId: activityId, navigate, goBack},
+                type: 'modals/SET_STATE',
+                payload: {confirmModalVisible: true, handleOnConfirm: handleDeleteActivity},
               });
             }}
           >

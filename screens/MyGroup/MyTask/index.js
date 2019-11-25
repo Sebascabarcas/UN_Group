@@ -144,7 +144,7 @@ const MyTask = () => {
               primaryTextStyles={{color: 'white'}}
             />
           </View>}
-      <Button
+      {task.responsibles.length > 0 && <Button
         primary
         full
         onPress={() => {
@@ -164,7 +164,7 @@ const MyTask = () => {
         >
           COMPLETAR
         </MyText>
-      </Button>
+      </Button>}
     </View>
   );
 };

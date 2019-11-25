@@ -79,7 +79,12 @@ const ShowEvent = () => {
     {
       name: 'Delete button',
       render: () => 
-      <Button key="deleting" transparent onPress={handleOnPressDelete}>
+      <Button key="deleting" transparent onPress={() => {
+        dispatch({
+          type: 'modals/SET_STATE',
+          payload: {confirmModalVisible: true, handleOnConfirm: handleOnPressDelete}
+        })
+      }}>
         <MaterialCommunityIcons name="delete-circle" color={theme.DANGER_COLOR} size={theme.ICON_SIZE_MEDIUM} />
       </Button>
     },

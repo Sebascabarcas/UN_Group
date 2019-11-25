@@ -19,7 +19,7 @@ export async function getEventTasks(id, { skipLoading } = {}) {
 }
 
 export async function completeTask(taskId, responsibleId, taskAction, { skipLoading } = {}) {
-    return Requests.put(`tasks/${taskId}/responsibles/${responsibleId}`, taskAction).then(tasks => tasks.data)
+    return Requests.put(`tasks/${taskId}/responsibles/${responsibleId}`, taskAction, {skipLoading}).then(tasks => tasks.data)
 }
 
 export async function createEvent(groupId, newEvent, { skipLoading } = {}) {

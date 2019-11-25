@@ -3,7 +3,7 @@ import actions from './actions'
 const initialState = {
   loadingModalVisible: false,
   confirmModalVisible: false,
-  handleOnConfirm: null
+  confirmDispatchAction: null
 }
 
 export default function roleModelsReducer(state = initialState, action) {

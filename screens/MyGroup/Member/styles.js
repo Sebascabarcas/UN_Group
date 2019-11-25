@@ -53,7 +53,7 @@ export default StyleSheet.create({
   profileImg: {
     height: hp(40),
     width: wp (80),
-    borderRadius: 90,
+    borderRadius: wp(40),
     borderColor: 'white',
     borderWidth: 2,
     overflow: 'hidden',

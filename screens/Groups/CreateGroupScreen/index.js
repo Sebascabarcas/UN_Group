@@ -81,7 +81,7 @@ const CreateGroupScreen = () => {
   };
 
   _takePhoto = async () => {
-    const file = await ImagePicker.launchCameraAsync ({
+    let file = await ImagePicker.launchCameraAsync ({
       base64: true,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -174,7 +174,6 @@ const CreateGroupScreen = () => {
         <View style={styles.profileImgContainer}>
           <TouchableWithoutFeedback onPress={() => _setShowImageModal (true)}>
             <ImageBackground
-              imageStyle={{borderRadius: 100}}
               style={styles.profileImg}
               source={
                 group.file ? {uri: group.file.uri} : Images['raul']

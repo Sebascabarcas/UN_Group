@@ -21,6 +21,7 @@ import {getGroups} from '../../../services/Groups';
 import CardGroup from '../../../components/CardGroup/index.js';
 import {useSelector, useDispatch} from 'react-redux';
 import Images from '../../../constants/Images.js';
+import NoResults from '../../../components/NoResults/index.js';
 
 const {height: fullHeight} = Dimensions.get ('window');
 
@@ -33,14 +34,9 @@ GroupsScreen = () => {
   const [offSet, _setOffSet] = useState (0);
   const flatList = useRef (null);
   const {navigate, setParams} = useNavigation ();
-  // const [GroupsFiltered, _setGroupsFiltered] = useState ([]);
-  // const [filtering, _setFiltering] = useState (false);
-  const [filter, _setFilter] = useState ('all');
-  // const [Groups, _setGroups] = useState ([]);
 
   useEffect (
     () => {
-      flatList.current.scrollToOffset ({animated: true, offset: 0});
       dispatch ({
         type: 'groups/GET_GROUPS',
       });
@@ -55,17 +51,6 @@ GroupsScreen = () => {
         type: 'groups/GET_GROUPS',
         concat: true,
       });
-      /* ({
-        index_tag: filter !== 'all' ? 'status' : 'all',
-        page: page + 1,
-        flag: filter !== 'all' ? filter : null,
-      }); */
-      /* if (_groups.length !== 0) {
-        _setGroups (groups.concat (_groups));
-        _setPage (page + 1);
-      } else {
-        _setNoMorePages (true);
-      } */
     } catch (error) {
       console.log (error);
     }
@@ -77,19 +62,13 @@ GroupsScreen = () => {
       dispatch ({
         type: 'groups/GET_GROUPS',
       });
-      /* ({
-        index_tag: filter !== 'all' ? 'status' : 'all',
-        page: 1,
-        flag: filter !== 'all' ? filter : null,
-      }); 
-      _setPage (1); */
     } catch (error) {
       console.log (error);
     }
   };
 
   _renderGroup = ({item: group, index}) => {
-    return <CardGroup {...group} onPress={() => _onPressGroup (group)} />;
+    return <CardGroup containerStyles={{marginVertical: 10}} {...group} onPress={() => _onPressGroup (group)} />;
   };
 
   _onPressGroup = group => {
@@ -117,6 +96,7 @@ GroupsScreen = () => {
         {/* <ScrollView > */}
         <View style={styles.groupsContainer}>
           {
+            groups.length > 0 ?
             <FlatList
               // style={styles.scroller}
               data={groups}
@@ -131,7 +111,9 @@ GroupsScreen = () => {
               // onEndReached={!noMorePages && _fetchGroupsOnEnd}
               // onEndReached={!noMorePages && !filtering && _fetchGroupsOnEnd}
               // onEndReachedThreshold={0.2}
-            />
+            /> 
+            :
+            <NoResults lottieProps={{style: {width: 200}}} animationName="minnion-looking" primaryText="¡No hay resultados!" secondaryText="No hay grupos, vuelve más tarde" secondaryTextStyles={{color: 'white'}}/>
           }
           {isSuperAdmin &&
             <Fab

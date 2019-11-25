@@ -36,11 +36,11 @@ export default StyleSheet.create ({
 		// flexDirection: 'row',
 	},
 	profileImg: {
-		borderRadius: 100,
+		borderRadius: hp(12),
 		// marginTop: 15,
 		// marginBottom: 15,
-		height: 125,
-		width: 125,
+		height: hp(25),
+		width: hp(25),
         borderColor: theme.GRAY_COLOR,
         borderWidth: 2,
         overflow: 'hidden'
@@ -114,7 +114,7 @@ export default StyleSheet.create ({
 	img: {
 		height: 140,
 		width: 140,
-		borderRadius: 250,
+		borderRadius: 70,
 	},
 	topLinks:{
 		height: 220,

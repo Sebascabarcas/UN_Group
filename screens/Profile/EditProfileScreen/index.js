@@ -165,7 +165,6 @@ const EditProfileScreen = () => {
         <View style={styles.profileImgContainer}>
           <TouchableWithoutFeedback onPress={() => _setShowImageModal (true)}>
             <ImageBackground
-              imageStyle={{borderRadius: 100}}
               style={styles.profileImg}
               source={
                 user.file

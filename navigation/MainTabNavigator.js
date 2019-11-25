@@ -63,7 +63,7 @@ EventsStack.navigationOptions = {
       focusedColor={theme.PRIMARY_COLOR}
       name={
         Platform.OS === 'ios'
-          ? `ios-calendar-${focused ? '' : '-outline'}`
+          ? `ios-calendar`
           : 'md-calendar'
       }
     />

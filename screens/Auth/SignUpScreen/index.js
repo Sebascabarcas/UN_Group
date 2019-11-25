@@ -20,7 +20,6 @@ import {FontAwesome, AntDesign, Ionicons} from '@expo/vector-icons';
 import MyText from '../../../components/MyText';
 import styles from './styles.js';
 import theme from '../../../styles/theme.style';
-import {register} from '../../../services/Session';
 import Images from '../../../constants/Images';
 
 const SignUpScreen = () => {
@@ -32,7 +31,9 @@ const SignUpScreen = () => {
   // const [email, _setEmail] = useState (null);
   // const [password, _setPassword] = useState (null);
   // const [user, _setUser] = useState ({});
-  const [user, _setUser] = useState ({});
+  const [user, _setUser] = useState ({
+    gender: 'male'
+  });
   // const [user, _setUser] = useState ( {
   //   "email": "hpedy123@gmail.com",
   //   "username": "tester",

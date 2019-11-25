@@ -65,6 +65,7 @@ export default StyleSheet.create ({
   profileImg: {
     // marginTop: 15,
     // marginBottom: 15,
+    borderRadius: 62.5,
     height: 125,
     width: 125,
     // justifyContent: 'space-between'
@@ -134,7 +135,7 @@ export default StyleSheet.create ({
   img: {
     height: 140,
     width: 140,
-    borderRadius: 250,
+    borderRadius: 70,
   },
   topLinks: {
     height: 220,

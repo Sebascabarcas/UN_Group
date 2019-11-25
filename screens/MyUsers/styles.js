@@ -76,7 +76,7 @@ export default StyleSheet.create({
     width: wp(100)
   },
   userSelectedImageContainer: {
-    borderRadius: wp(50),
+    borderRadius: wp(10),
     height: hp(10),
     width: wp(20),
     marginRight: 10
@@ -88,7 +88,7 @@ export default StyleSheet.create({
     height: hp(10),
     width: wp(20),
     resizeMode: 'cover',
-    borderRadius: wp(50),
+    borderRadius: wp(10),
   },
   userSelectedNameContainer: {
     flex: 1,

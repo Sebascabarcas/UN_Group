@@ -66,6 +66,7 @@ export default StyleSheet.create ({
     // marginTop: 15,
     // marginBottom: 15,
     height: 125,
+    borderRadius: 62.5,
     width: 125,
     // justifyContent: 'space-between'
   },
@@ -134,7 +135,7 @@ export default StyleSheet.create ({
   img: {
     height: 140,
     width: 140,
-    borderRadius: 250,
+    borderRadius: 70,
   },
   topLinks: {
     height: 220,

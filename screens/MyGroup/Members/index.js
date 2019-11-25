@@ -25,7 +25,9 @@ const Members = () => {
   const {current_group_members, more_pages, loading, refreshing} = useSelector (
     state => state.groups
   );
-  const {current_group: group, isAdmin} = useSelector (
+  console.log(current_group_members);
+  
+  const {current_group: group, isAdmin, isSuperAdmin} = useSelector (
     state => state.session
   );
   // let _current_group_members = [...current_group_members, ...current_group_members, ...current_group_members]
@@ -136,7 +138,7 @@ const Members = () => {
           : 
           <NoResults lottieProps={{style: {width: wp(50)}}} animationName="minnion-looking" primaryText="¡Aún no hay miembros!" secondaryText="Anímate a buscar usuarios y convertirlos en miembros de tu grupo"/>
           }
-          {isAdmin && <Button primary iconRight block superRounded onPress={() => {
+          {isAdmin || isSuperAdmin && <Button primary iconRight block superRounded onPress={() => {
             dispatch({
               type: 'session/SET_STATE',
               payload: {users_searched: []}
