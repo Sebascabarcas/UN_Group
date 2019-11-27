@@ -121,8 +121,7 @@ const CreateEvent = () => {
               <Icon
                 type="AntDesign"
                 name="arrowup"
-                color="#000"
-                size={theme.ICON_SIZE_SMALL}
+                style={{fontSize: theme.ICON_SIZE_SMALL, color: '#000'}}
               />
           </Button>
         </View>
@@ -130,14 +129,14 @@ const CreateEvent = () => {
       <View style={styles.inputContainer}>
           <TextInput
            style={{fontFamily: theme.FONT_FAMILY_BOLD, fontSize: theme.FONT_SIZE_XL}}
-           placeholder="Nombre del Evento"
+           placeholder="Nombre Evento"
            onChangeText={(eventName) => dispatch({type: 'events/SET_STATE', payload: { new_event: {...event, eventName}}})}
            value={event.eventName}
            autoFocus
           />
-          <Item stackedLabel>
+          <Item style={{height: 80}} stackedLabel>
               <Label>Descripción del Evento</Label>
-              <Input value={event.description} onChangeText={(description) => dispatch({type: 'events/SET_STATE', payload: { new_event: {...event, description}}})} />
+              <Input value={event.description} multiline numberOfLines={2} onChangeText={(description) => dispatch({type: 'events/SET_STATE', payload: { new_event: {...event, description}}})} />
           </Item>
       </View>
       <TouchableWithoutFeedback onPress={() => showDateTimePicker('date')} style={styles.dateTimeContainer}>

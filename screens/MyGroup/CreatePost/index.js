@@ -174,6 +174,8 @@ const CreatePost = () => {
       payload: {
         goBack,
         post,
+        user,
+        navigate,
         groupId: group.id
       }
     })

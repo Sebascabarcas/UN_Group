@@ -60,7 +60,7 @@ const ShowRoleModel = () => {
     () => {
       dispatch ({
         type: 'roleModels/GET_ROLE_MODEL_POSTS',
-        payload: {groupId: group.id, userId: user.id},
+        payload: {groupId: group.id, userId: role_model.userId},
       });
     },
     [dispatch]
@@ -69,7 +69,7 @@ const ShowRoleModel = () => {
   _fetchTasksOnEnd = async () => {
     dispatch ({
       type: 'roleModels/GET_ROLE_MODEL_POSTS',
-      payload: {groupId: group.id, userId: user.id},
+      payload: {groupId: group.id, userId: role_model.userId},
       concat: true
     });
   };
@@ -77,7 +77,7 @@ const ShowRoleModel = () => {
   _onRefresh = async () => {
     dispatch ({
       type: 'roleModels/GET_ROLE_MODEL_POSTS',
-      payload: {groupId: group.id, userId: user.id},
+      payload: {groupId: group.id, userId: role_model.userId},
     });
   };
 
@@ -90,7 +90,7 @@ const ShowRoleModel = () => {
   _onPressPost = (post) => {
     dispatch({
       type: 'roleModels/SET_STATE',
-      payload: { current_post: {...post, file: post.postPicture} }
+      payload: { current_post: {...post, file: post.postPicture, user: role_model.user} }
     });
     navigate('ShowPost')
   };

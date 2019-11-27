@@ -87,7 +87,7 @@ export default StyleSheet.create({
   profileImgOverlay: {
     backgroundColor: '#000',
     opacity: 0.5,
-    borderRadius: 100,
+    borderRadius: hp(10),
     position: 'absolute',
     top: 0,
     right: 0,

@@ -1,57 +1,33 @@
 import React, {useState} from 'react';
 import {
-  AsyncStorage,
   Image,
   ImageBackground,
   View,
   KeyboardAvoidingView,
-  ToastAndroid,
 } from 'react-native';
 import MyText from '../../../components/MyText';
 import {FontAwesome} from '@expo/vector-icons';
 import {
-  Container,
-  Icon,
   Form,
   Item,
   Input,
-  Label,
-  CheckBox,
   Button,
-  Spinner,
 } from 'native-base';
 import styles from './styles.js';
 import theme from '../../../styles/theme.style.js';
 import {useNavigation} from 'react-navigation-hooks';
-import {login} from '../../../services/Session';
-import Storage from '../../../services/Storage';
 import {useDispatch} from 'react-redux';
 import Images from '../../../constants/Images';
 
 const LoginScreen = () => {
   const dispatch = useDispatch ();
   const {navigate} = useNavigation ();
-  // const [checked, _setChecked] = useState (true);
   const [showPassword, _setShowPassword] = useState (false);
-  const [loading, _setLoading] = useState (false);
   const [username, _setUsername] = useState (null);
   const [pwd, _setPassword] = useState (null);
-  // const [username, _setUsername] = useState ('sebastiancabarcas');
-  // const [pwd, _setPassword] = useState ('tester');
 
   _signInAsync = async () => {
-    _setLoading (true);
-    try {
-      dispatch({type: 'session/LOGIN', payload: {auth: {username, pwd}, navigate}});
-      // storeSession: checked, }});
-    } catch (error) {
-      console.log('error');
-      console.log(error);
-      
-      ToastAndroid.show ('Usuario o contraseña invalidos', ToastAndroid.SHORT);
-    }
-    _setLoading (false);
-    // await AsyncStorage.setItem ('userToken', 'abc');
+    dispatch({type: 'session/LOGIN', payload: {auth: {username, pwd}, navigate}});
   };
   
   return (
@@ -65,7 +41,6 @@ const LoginScreen = () => {
           source={Images['logo']}
         />
         <Form style={styles.mainForm}>
-          {loading && <Spinner color={theme.PRIMARY_COLOR} />}
           <Item style={styles.itemForm}>
             <Input
               placeholder="Nombre de usuario"
