@@ -26,11 +26,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const MenuDrawer = () => {
-  const [isReady, _setReady] = useState (false);
   const dispatch = useDispatch()
   const {navigate} = navigationHooks.useNavigation ();
   const {current_user: user, current_group,  myGroups, isSuperAdmin, isRolemodel, isMentor} = useSelector(state => state.session)
-
+  
   _signOutAsync = async () => {
     navigate('Auth')
     dispatch({type: 'session/LOGOUT', payload: {navigate}})
@@ -114,7 +113,7 @@ const MenuDrawer = () => {
             </View>
           </View>
         </View>
-        {!isMentor && !isRolemodel && <View style={styles.otherOptions}>
+        {(!isMentor || !isRolemodel) && <View style={styles.otherOptions}>
           {!isMentor && <TouchableOpacity style={styles.otherOptionContainer} onPress={() => navigate ('BeMentor')}>
             <MyText style={styles.otherOptionText}>
               Deseo convertirme en Mentor
