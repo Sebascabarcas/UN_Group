@@ -101,7 +101,7 @@ const AddLocation = () => {
           current_event === 'new_event' ?
           dispatch({
             type:  `events/CREATE_EVENT`, 
-            payload: {groupId: group.id, event, navigate}
+            payload: {group, groupId: group.id, event, navigate}
           })
           :
           navigate ('EditEvent');

@@ -53,6 +53,7 @@ const AddAdress = () => {
         </View>
       </Content>
       <Button
+        disabled={!event.mainRoad || !event.secondaryRoad}
         primary
         full
         onPress={() => {

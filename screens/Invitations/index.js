@@ -77,8 +77,7 @@ const Invitations = () => {
                 <Icon
                   type="AntDesign"
                   name="arrowup"
-                  color="#000"
-                  fontSize={theme.ICON_SIZE_SMALL}
+                  style={{fontSize: theme.ICON_SIZE_SMALL, color: '#000'}}
                 />
             </Button>
           </View>

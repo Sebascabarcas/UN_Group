@@ -14,12 +14,12 @@ export function* FIND_LOCATION({payload: {current_event, event, navigate}}) {
     },
   });
   try {
-    const {results} = yield call (getLocation, `${event.typeOfRoad}%20${event.mainRoad}%20%23${event.secondaryRoad}-${event.roadNumber}%2C%20Barranquilla%2C%20Atl%C3%A1ntico`);
+    const {results} = yield call (getLocation, `${event.typeOfRoad}%20${event.mainRoad}%20%23${event.secondaryRoad}${event.roadNumber ? `${event.roadNumber}` : ''}%2C%20Barranquilla%2C%20Atl%C3%A1ntico`);
     let location_result = results[0] || {geometry: {location: {lat: 10.966981761315, lng: -74.79788233489182}}}
     const {geometry: {location: {lat: latitude, lng: longitude}}} = location_result
     yield put({
       type: 'events/SET_STATE',
-      payload: {[current_event]: {...event, latitude, longitude, location: `${event.typeOfRoad} ${event.mainRoad} # ${event.secondaryRoad} - ${event.roadNumber}`}}
+      payload: {[current_event]: {...event, latitude, longitude, location: `${event.typeOfRoad} ${event.mainRoad} # ${event.secondaryRoad} ${event.roadNumber ? `- ${event.roadNumber}` : ''}`}}
     })
     navigate('AddLocation', {current_event})
   } catch (error) {
@@ -33,7 +33,7 @@ export function* FIND_LOCATION({payload: {current_event, event, navigate}}) {
   });
 }
 
-export function* CREATE_EVENT({ payload: { groupId, event, navigate, skipLoading } }) {
+export function* CREATE_EVENT({ payload: { group, groupId, event, navigate, skipLoading } }) {
   yield put({
     type: 'modals/SET_STATE',
     payload: {
@@ -42,11 +42,25 @@ export function* CREATE_EVENT({ payload: { groupId, event, navigate, skipLoading
   })
   try {
     event.date = moment(`${event.date}, ${event.time}`, 'YYYY-MM-DD, hh:mm A').format()
-    yield call(createEvent, groupId, event, {skipLoading});
+    const {event: new_event} = yield call(createEvent, groupId, event, {skipLoading});
+    yield put({
+      type: 'groups/ADD_ARRAY_ELEMENT',
+      payload: {
+        arrayName: 'current_group_events',
+        newElement: {...new_event, group}
+      }
+    })
+    yield put({
+      type: 'events/ADD_ARRAY_ELEMENT',
+      payload: {
+        arrayName: 'events',
+        newElement: {...new_event, group}
+      }
+    })
     yield showResultModal ({
       resultText: '¡Evento creado correctamente!',
     });
-    navigate('Invitations')
+    navigate('MyEvents')
   } catch (error) {
     yield showErrorModal (error);
   }
