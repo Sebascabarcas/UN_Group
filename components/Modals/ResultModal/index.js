@@ -12,12 +12,11 @@ export default (ResultModal = () => {
   const {resultModalVisible, resultModalProps: {resultText, resultAnimation}} = useSelector (
     state => state.modals
   );
-  // const {loading: loadingMentors} = useSelector (state => state.mentors);
-  // const {loading: loadingRoleModels} = useSelector (state => state.roleModels);
-  // const {loading: loadingGroups} = useSelector (state => state.groups);
+  
   return (
     <Modal
       animationType="fade"
+      hardwareAccelerated={true}
       transparent={true}
       visible={resultModalVisible}
       onRequestClose={() =>

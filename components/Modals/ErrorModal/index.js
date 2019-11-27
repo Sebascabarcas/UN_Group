@@ -18,6 +18,7 @@ export default (ErrorModal = () => {
   return (
     <Modal
       animationType="fade"
+      hardwareAccelerated={true}
       transparent={true}
       visible={errorModalVisible}
       onRequestClose={() =>

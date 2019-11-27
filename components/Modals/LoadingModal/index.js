@@ -11,7 +11,7 @@ export default (LoadingModal = () => {
   const {navigate} = useNavigation ();
   const {loadingModalVisible} = useSelector (state => state.modals);
   return (
-    <Modal animationType="fade" transparent={true} visible={loadingModalVisible}>
+    <Modal animationType="fade" hardwareAccelerated={true} transparent={true} visible={loadingModalVisible}>
       <View style={styles.container}>
         <LottieView style={styles.lottieView} source={Animations[Platform.OS === 'ios' ? 'loading-2' : 'scanning']} autoPlay loop />
       </View>
