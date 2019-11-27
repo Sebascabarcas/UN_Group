@@ -29,7 +29,7 @@ export default function sessionReducer (state = initialState, action) {
       return {...state, [`${payload.arrayName}`]: newArray};
     }
     case actions.ADD_ARRAY_ELEMENT: {
-      const newArray = state[`${payload.arrayName}`].concat (
+      const newArray = payload.first ? state[`${payload.arrayName}`].unshift(payload.newElement) : state[`${payload.arrayName}`].concat (
         payload.newElement
       );
       return {...state, [`${payload.arrayName}`]: newArray};
