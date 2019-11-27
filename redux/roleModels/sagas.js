@@ -3,7 +3,7 @@ import actions from './actions'
 import {fromJsonToFormData, showErrorModal, showResultModal} from '../../services/helpers';
 import { createPost, updatePost, deletePost, getRoleModelsPosts, getRoleModels, getRoleModelPosts } from '../../services/RoleModels';
 
-export function* CREATE_POST({ payload: { groupId, post, navigate, skipLoading } }) {
+export function* CREATE_POST({ payload: { groupId, user, post, navigate, skipLoading } }) {
   yield put({
     type: 'modals/SET_STATE',
     payload: {
@@ -18,7 +18,8 @@ export function* CREATE_POST({ payload: { groupId, post, navigate, skipLoading }
       type: 'roleModels/ADD_ARRAY_ELEMENT',
       payload: {
         arrayName: 'posts',
-        newElement: new_post
+        newElement: {...new_post, user},
+        first: true
       }
     })
     navigate('RoleModels')

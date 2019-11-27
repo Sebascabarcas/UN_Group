@@ -10,6 +10,7 @@ import {
   searchUsers,
   deleteAccount,
   deleteUser,
+  showUser,
 } from '../../services/Session';
 import Storage from '../../services/Storage';
 import jwt_decode from 'jwt-decode';
@@ -21,10 +22,11 @@ import {
 } from '../../services/helpers';
 import {toggleisRolemodel} from '../../services/RoleModels';
 import {toggleIsMentor} from '../../services/Mentors';
+import { getGroups } from '../../services/Groups';
 // import { errorMessage } from '../../services/helpers'
 
 export function* LOGIN({payload}) {
-  const {auth, storeSession, navigate, skipLoading} = payload;
+  const {auth, navigate, skipLoading} = payload;
   yield put ({
     type: 'modals/SET_STATE',
     payload: {
@@ -60,6 +62,12 @@ export function* LOGIN({payload}) {
       },
     });
     user.isAdmin = current_group ? current_group.isAdmin : false;
+    console.log('asdklasdkasldk');
+    
+    yield showResultModal ({
+      resultText: '¡Bienvenido a UNGROUP!',
+    });
+    console.log('bdkfjakanwww');
     yield call (
       Storage.set,
       'Session',
@@ -71,16 +79,8 @@ export function* LOGIN({payload}) {
       },
       () => navigate ('Home')
     );
-    yield showResultModal ({
-      resultText: '¡Bienvenido a UNGROUP!',
-    });
+    console.log('xcxzczxca');
   } catch (error) {
-    yield put ({
-      type: 'modals/SET_STATE',
-      payload: {
-        loadingModalVisible: false
-      }
-    })
     yield showErrorModal (error);
   }
 }
@@ -285,40 +285,6 @@ export function* CHANGE_CURRENT_GROUP({payload: {group, goBack}}) {
   });
 }
 
-export function* LOAD_CURRENT_ACCOUNT () {
-  yield put ({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: true,
-    },
-  });
-  const current_session = yield call (currentSession);
-  if (current_session) {
-    let {
-      user: current_user,
-      user: {isSuperAdmin},
-      groups,
-      current_group,
-    } = current_session;
-    const payload = {
-      current_user,
-      isSuperAdmin,
-      myGroups: groups,
-    };
-    if (current_group) payload.current_group = current_group;
-    yield put ({
-      type: 'session/SET_STATE',
-      payload,
-    });
-  }
-  yield put ({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-    },
-  });
-}
-
 export function* GET_USER_INVITATIONS({payload: {id, skipLoading}}) {
   yield put ({
     type: 'modals/SET_STATE',
@@ -408,13 +374,13 @@ export function* ACCEPT_EVENT_INVITATION({
     },
   });
   try {
-    const {atendee} = yield call (acceptEventInvitation, id, eventId, {
+    const {atendee: {event}} = yield call (acceptEventInvitation, id, eventId, {
       skipLoading,
     });
     yield put ({
       type: 'events/ADD_ARRAY_ELEMENT',
       payload: {
-        newElement: atendee,
+        newElement: event,
         arrayName: 'events',
       },
     });
@@ -462,6 +428,69 @@ export function* REJECT_EVENT_INVITATION({
   });
 }
 
+export function* LOAD_CURRENT_ACCOUNT({payload: {navigate, current_session}}) {
+  yield put ({
+    type: 'modals/SET_STATE',
+    payload: {
+      loadingModalVisible: true,
+    }
+  });
+  try {
+    console.log('LOAD_CURRENT_ACCOUNT BEGINS');
+    
+    let current_group = null;
+    let {user: {id: userId, userGroupRelations}, secret} = current_session;
+    let {user, user: {isSuperAdmin, isRolemodel, isMentor}} = yield call (
+      showUser,
+      userId
+    );
+    if (isSuperAdmin) {
+      var {groups} = yield call (getGroups);
+      current_group = groups ? groups[0] || null : null;
+    } else {
+      if (userGroupRelations.length > 0) {
+        userGroupRelations[0].group.isAdmin = userGroupRelations[0].isAdmin;
+        userGroupRelations = userGroupRelations.map (
+          groupRelation => groupRelation.group
+        );
+        current_group = userGroupRelations[0];
+      }
+    }
+    user.isAdmin = current_group ? current_group.isAdmin : false;
+    yield call (Storage.set, 'Session', {
+      secret,
+      user,
+      groups: isSuperAdmin ? groups : userGroupRelations,
+      current_group,
+    });
+    yield put ({
+      type: 'session/SET_STATE',
+      payload: {
+        current_user: user,
+        current_group,
+        myGroups: isSuperAdmin ? groups : userGroupRelations,
+        isSuperAdmin,
+        isRolemodel,
+        isMentor,
+        isAdmin: current_group ? current_group.isAdmin : false,
+      },
+    });
+    yield put ({
+      type: 'groups/SET_STATE',
+      payload: {current_group},
+    });
+    navigate ('App');
+  } catch (error) {
+    yield showErrorModal (error, navigate);
+  }
+  yield put ({
+    type: 'modals/SET_STATE',
+    payload: {
+      loadingModalVisible: false,
+    },
+  });
+}
+
 export default function* rootSaga () {
   yield all ([
     takeLatest (actions.CHANGE_CURRENT_GROUP, CHANGE_CURRENT_GROUP),
@@ -477,6 +506,7 @@ export default function* rootSaga () {
     takeLatest (actions.GET_USER_INVITATIONS, GET_USER_INVITATIONS),
     takeLatest (actions.GET_USER_EVENTS, GET_USER_EVENTS),
     takeLatest (actions.ACCEPT_EVENT_INVITATION, ACCEPT_EVENT_INVITATION),
+    takeLatest (actions.LOAD_CURRENT_ACCOUNT, LOAD_CURRENT_ACCOUNT),
     // LOAD_CURRENT_ACCOUNT (),
   ]);
 }

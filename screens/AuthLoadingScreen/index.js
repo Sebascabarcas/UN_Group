@@ -8,6 +8,7 @@ import {
   Animated,
   Easing
 } from 'react-native';
+import {useNavigation} from 'react-navigation-hooks';
 import styles from './styles.js';
 import Storage from '../../services/Storage';
 import LottieView from 'lottie-react-native';
@@ -19,7 +20,7 @@ import { getGroups } from '../../services/Groups.js';
 
 export default (AuthLoadingScreen = props => {
   const dispatch = useDispatch ();
-  const [loadingAnimation, _setLoadingAnimation] = useState(false)
+  const {navigate} = useNavigation ();
   const spinValue = new Animated.Value(0)
 
   // First set up animation 
@@ -54,52 +55,14 @@ export default (AuthLoadingScreen = props => {
   // Fetch the token from storage then navigate to our appropriate places
   _bootstrapAsync = async () => {
     const sessionInfo = await Storage.get ('Session');
-    // console.log('Session Info: ', sessionInfo);
-    // let {status} = await Permissions.getAsync (Permissions.LOCATION);
-
     if (sessionInfo) {
-      let current_group = null;
-      let {user: {id: userId, userGroupRelations}, secret} = sessionInfo;
-      let {user, user: {isSuperAdmin, isRolemodel, isMentor}} = await showUser (userId);
-      if (isSuperAdmin) {
-        var {groups} = await getGroups ();
-        current_group = groups ? groups[0] || null : null;
-      } else {
-        if (userGroupRelations.length > 0) {
-          userGroupRelations[0].group.isAdmin = userGroupRelations[0].isAdmin;
-          userGroupRelations = userGroupRelations.map (
-            groupRelation => groupRelation.group
-          );
-          current_group = userGroupRelations[0];
-        }
-      }
-      user.isAdmin = current_group ? current_group.isAdmin : false;
-      await Storage.set (
-        'Session',
-        {
-          secret,
-          user,
-          groups: isSuperAdmin ? groups : userGroupRelations,
-          current_group,
-        },
-      );
-
-      // console.log('Current group:', current_group);
-      dispatch ({
-        type: 'session/SET_STATE',
+      dispatch({
+        type: 'session/LOAD_CURRENT_ACCOUNT',
         payload: {
-          current_user: user,
-          current_group,
-          myGroups: isSuperAdmin ? groups : userGroupRelations,
-          isSuperAdmin,
-          isRolemodel,
-          isMentor,
-          isAdmin: current_group ? current_group.isAdmin : false,
-        },
-      });
-      dispatch ({type: 'groups/SET_STATE', payload: {current_group}});
-      props.navigation.navigate ('App');
-      // props.navigation.navigate (status === 'granted' ? 'App' : 'Intro');
+          navigate,
+          current_session: sessionInfo
+        }
+      })
     } else {
       props.navigation.navigate ('Auth');
     }
