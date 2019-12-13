@@ -62,10 +62,11 @@ export function* CREATE_GROUP({
     }
     yield showResultModal ({
       resultText: '¡Grupo creado correctamente!',
+      error: false
     });
     navigate ('Groups');
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -115,10 +116,11 @@ export function* UPDATE_GROUP({
     yield call (Storage.set, 'Session', current_session);
     yield showResultModal ({
       resultText: '¡Grupo modificado correctamente!',
+      error: false
     });
     navigate ('Groups');
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -140,7 +142,7 @@ export function* GET_GROUP_EVENTS({payload: {id, skipLoading, concat}}) {
       },
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -168,7 +170,7 @@ export function* GET_GROUPS({skipLoading, concat}) {
       },
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -194,7 +196,7 @@ export function* GET_GROUP({payload: {id, skipLoading}}) {
       },
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -220,7 +222,7 @@ export function* GET_GROUP_MEMBERS({payload: {id, skipLoading}}) {
       },
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -246,7 +248,7 @@ export function* GET_GROUP_CANDIDATES({payload: {id, skipLoading}}) {
       },
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -272,7 +274,7 @@ export function* GET_USER_TASKS({payload: {userId, groupId, skipLoading}}) {
       },
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -293,9 +295,10 @@ export function* SEND_GROUP_REQUEST({payload: {id, skipLoading}}) {
     yield call (sendGroupMemberRequest, id, {skipLoading});
     yield showResultModal ({
       resultText: '¡Solicitud de unión al grupo enviada!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -326,9 +329,10 @@ export function* INCREASE_PRIVILEGES({payload: {id, userID, skipLoading}}) {
     });
     yield showResultModal ({
       resultText: '¡Incremento de privilegios!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -357,9 +361,10 @@ export function* REDUCE_PRIVILEGES({payload: {id, userID, skipLoading}}) {
     });
     yield showResultModal ({
       resultText: '¡Decremento de privilegios!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -383,10 +388,11 @@ export function* ADD_GROUP_MEMBER({
     });
     yield showResultModal ({
       resultText: '¡Nuevo miembro de grupo añadido!',
+      error: false
     });
     goBack ();
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -417,9 +423,10 @@ export function* ACCEPT_GROUP_REQUEST({
     });
     yield showResultModal ({
       resultText: '¡Solicitud de unión al grupo aceptada!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -443,9 +450,10 @@ export function* REJECT_GROUP_REQUEST({
     });
     yield showResultModal ({
       resultText: '¡Solicitud de unión al grupo rechazada!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -469,10 +477,11 @@ export function* DELETE_GROUP_MEMBER({
     });
     yield showResultModal ({
       resultText: '¡Miembro eliminado del grupo!',
+      error: false
     });
     goBack ();
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -519,9 +528,10 @@ export function* LEAVE_GROUP({
     }
     yield showResultModal ({
       resultText: '¡Has dejado el grupo!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -568,9 +578,10 @@ export function* DELETE_GROUP({
     }
     yield showResultModal ({
       resultText: '¡Has eliminado el grupo!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 

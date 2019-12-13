@@ -1,9 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
-  AsyncStorage,
-  ActivityIndicator,
-  StatusBar,
-  Image,
   View,
   Animated,
   Easing
@@ -11,12 +7,8 @@ import {
 import {useNavigation} from 'react-navigation-hooks';
 import styles from './styles.js';
 import Storage from '../../services/Storage';
-import LottieView from 'lottie-react-native';
 import {useDispatch} from 'react-redux';
-import Animations from '../../constants/Animations.js';
 import Images from '../../constants/Images.js';
-import {showUser} from '../../services/Session.js';
-import { getGroups } from '../../services/Groups.js';
 
 export default (AuthLoadingScreen = props => {
   const dispatch = useDispatch ();
@@ -71,8 +63,6 @@ export default (AuthLoadingScreen = props => {
   // Render any loading content that you like here
   return (
     <View style={styles.container}>
-      {/* <ActivityIndicator /> */}
-      {/* <StatusBar barStyle="default" /> */}
       <Animated.Image style={{width: 200, height: 200, transform: [{ rotate: spin }]}} source={Images['logo']} />
     </View>
   );

@@ -23,7 +23,7 @@ export function* FIND_LOCATION({payload: {current_event, event, navigate}}) {
     })
     navigate('AddLocation', {current_event})
   } catch (error) {
-    yield showErrorModal ('Error encontrando dirección, verifique los campos');
+    yield showResultModal ({resultText: 'Error encontrando dirección, verifique los campos', resultAnimation: 'failure', error: true});
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -59,10 +59,11 @@ export function* CREATE_EVENT({ payload: { group, groupId, event, navigate, skip
     })
     yield showResultModal ({
       resultText: '¡Evento creado correctamente!',
+      error: false
     });
     navigate('MyEvents')
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -100,11 +101,12 @@ export function* UPDATE_EVENT({ payload: { event, userId, navigate, skipLoading 
     })
     yield showResultModal ({
       resultText: '¡Evento editado correctamente!',
+      error: false
     });
     navigate('ShowEvent', {isGroupEvent: true})
     // console.log(success);
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -127,9 +129,10 @@ export function* CREATE_TASK({ payload: { eventId, task, goBack, skipLoading } }
     goBack();
     yield showResultModal ({
       resultText: '¡Tarea creada correctamente!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -155,9 +158,10 @@ export function* EDIT_TASK({ payload: {task, goBack, navigate, skipLoading } }) 
     navigate('MyEvents');
     yield showResultModal ({
       resultText: '¡Tarea editada correctamente!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -182,9 +186,10 @@ export function* TOGGLE_TASK_COMPLETED({ payload: {taskId, completed, navigate, 
     navigate('MyEvents');
     yield showResultModal ({
       resultText: '¡Tarea completada correctamente!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -208,9 +213,10 @@ export function* COMPLETE_TASK({ payload: {task, goBack, navigate, skipLoading }
     navigate('MyGroup');
     yield showResultModal ({
       resultText: '¡Tarea completada correctamente!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -227,9 +233,10 @@ export function* DELETE_EVENT({ payload: {index, eventId, goBack, navigate, skip
     navigate('MyGroup');
     yield showResultModal ({
       resultText: '¡Evento eliminado correctamente!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -245,9 +252,10 @@ export function* DELETE_TASK({ payload: {index, taskId, goBack, navigate, skipLo
     navigate('MyEvents');
     yield showResultModal ({
       resultText: '¡Tarea eliminada correctamente!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -268,7 +276,7 @@ export function* GET_EVENT({ payload: { id, skipLoading }, callback }) {
     })
     if(callback) callback();
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -294,7 +302,7 @@ export function* GET_EVENTS({isSuperAdmin, userId, skipLoading, concat}) {
       },
     })
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -320,7 +328,7 @@ export function* GET_EVENT_ATENDEES({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -346,7 +354,7 @@ export function* GET_EVENT_TASKS({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -372,7 +380,7 @@ export function* GET_EVENT_TASK({ payload: { id, skipLoading } }) {
       },
     })
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put({
     type: 'modals/SET_STATE',

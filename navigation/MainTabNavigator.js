@@ -10,6 +10,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import GroupsScreen from '../screens/Groups/GroupsScreen';
 import EventsScreen from '../screens/Events/EventsScreen';
 import SelectGroupButton from '../components/SelectGroupButton';
+import ReloadButton from '../components/ReloadButton';
 
 const headerTitleStyle = {
   fontFamily: theme.FONT_FAMILY_BOLD,
@@ -41,6 +42,9 @@ const defaultStackConfig = {
     headerTitle: (
       <SelectGroupButton/>
     ),
+    headerRight: (
+      <ReloadButton/>
+    )
   }),
 };
 

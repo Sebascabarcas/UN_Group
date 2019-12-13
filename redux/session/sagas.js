@@ -62,12 +62,10 @@ export function* LOGIN({payload}) {
       },
     });
     user.isAdmin = current_group ? current_group.isAdmin : false;
-    console.log('asdklasdkasldk');
-    
     yield showResultModal ({
       resultText: '¡Bienvenido a UNGROUP!',
+      error: false
     });
-    console.log('bdkfjakanwww');
     yield call (
       Storage.set,
       'Session',
@@ -79,9 +77,8 @@ export function* LOGIN({payload}) {
       },
       () => navigate ('Home')
     );
-    console.log('xcxzczxca');
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -105,10 +102,11 @@ export function* BE_ROLE_MODEL({payload: {userId, navigate, goBack}}) {
     });
     yield showResultModal ({
       resultText: '¡Te has convertido en un Role Model!',
+      error: false
     });
     navigate ('Home');
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -132,10 +130,11 @@ export function* BE_MENTOR({payload: {userId, navigate, goBack}}) {
     });
     yield showResultModal ({
       resultText: '¡Te has convertido en un Mentor!',
+      error: false
     });
     navigate ('Home');
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -151,10 +150,11 @@ export function* REGISTER({payload}) {
     yield call (register, user);
     yield showResultModal ({
       resultText: 'Usuario registrado, porfavor ingrese a su correo y haga la confirmación de su cuenta',
+      error: false
     });
     navigate ('SignIn');
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -182,10 +182,11 @@ export function* UPDATE_PROFILE({payload}) {
     });
     yield showResultModal ({
       resultText: '¡Usuario actualizado!',
+      error: false
     });
     navigate ('MyProfile');
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -204,9 +205,10 @@ export function* DELETE_ACCOUNT({payload: {skipLoading, navigate}}) {
     yield call (Storage.delete, 'Session', () => navigate ('Auth'));
     yield showResultModal ({
       resultText: '¡Has eliminado tu cuenta!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -227,9 +229,10 @@ export function* DELETE_USER({payload: {userId, skipLoading, navigate}}) {
     });
     yield showResultModal ({
       resultText: '¡Usuario eliminado!',
+      error: false
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -246,7 +249,7 @@ export function* LOGOUT({payload: {skipLoading, navigate}}) {
   try {
     yield call (Storage.delete, 'Session', () => navigate ('Auth'));
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -301,7 +304,7 @@ export function* GET_USER_INVITATIONS({payload: {id, skipLoading}}) {
       },
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
     // errorMessage(error.response, { title: 'Fetch de localidad fallida!' })
   }
   yield put ({
@@ -328,7 +331,7 @@ export function* GET_USER_EVENTS({payload: {id, skipLoading}}) {
       },
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -354,7 +357,7 @@ export function* SEARCH_USERS({payload: {querySearch, skipLoading}}) {
       },
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -386,7 +389,7 @@ export function* ACCEPT_EVENT_INVITATION({
     });
     navigate ('Home');
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put ({
     type: 'modals/SET_STATE',
@@ -418,7 +421,7 @@ export function* REJECT_EVENT_INVITATION({
     });
     navigate ('MyInvitations');
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put ({
     type: 'modals/SET_STATE',

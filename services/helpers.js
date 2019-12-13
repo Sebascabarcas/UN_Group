@@ -103,11 +103,9 @@ export function errorMessage (error) {
 
 export function* showErrorModal (error, navigate = null) {
   let error_message = errorMessage (error);
-  console.log(error_message);
-   
-  (
-    error_message === 'Por favor inice sesión.'
-  )
+  console.log (error_message);
+
+  error_message === 'Por favor inice sesión.'
     ? yield put ({
         type: 'session/LOGOUT',
         payload: {
@@ -127,17 +125,29 @@ export function* showErrorModal (error, navigate = null) {
       });
 }
 
-export function* showResultModal({resultText, resultAnimation = null}) {
-  yield put ({
-    type: 'modals/SET_STATE',
-    payload: {
-      loadingModalVisible: false,
-      errorModalVisible: false,
-      resultModalVisible: true,
-      resultModalProps: {
-        resultText,
-        resultAnimation,
-      },
-    },
-  });
+export function* showResultModal({
+  resultText,
+  resultAnimation = 'default-success',
+  error = false,
+}) {
+  let message = error ? errorMessage (resultText) : resultText;
+  ( message === 'Por favor inice sesión.' )
+      ? yield put ({
+          type: 'session/LOGOUT',
+          payload: {
+            navigate,
+          },
+        })
+      : yield put ({
+          type: 'modals/SET_STATE',
+          payload: {
+            loadingModalVisible: false,
+            resultModalVisible: true,
+            resultModalProps: {
+              resultText: message,
+              resultAnimation,
+              error,
+            },
+          },
+        });
 }

@@ -7,14 +7,11 @@ import LottieView from 'lottie-react-native';
 import {Modal, View} from 'react-native';
 import Animations from '../../../constants/Animations';
 
-export default (ResultModal = () => {
+export default (SuccessModal = () => {
   const dispatch = useDispatch ();
-  const {resultModalVisible, resultModalProps: {resultText, resultAnimation, error}} = useSelector (
+  const {resultModalVisible, resultModalProps: {resultText, resultAnimation}} = useSelector (
     state => state.modals
   );
-  console.log(resultText);
-  console.log(resultAnimation);
-  
   
   return (
     <Modal
@@ -34,7 +31,7 @@ export default (ResultModal = () => {
         <View style={styles.resultModal}>
           <LottieView
             style={styles.lottieView}
-            source={Animations[resultAnimation]}
+            source={Animations[resultAnimation || 'default-success']}
             autoPlay
             loop
           />

@@ -477,10 +477,9 @@ export default createAppContainer (
             durationMs={500}
             interpolation="easeInOut"
           />
-          <LoadingModal/>
           <ResultModal/>
-          <ErrorModal/>
           <ConfirmModal/>
+          <LoadingModal/>
           <Transition.In type="fade" durationMs={500} />
         </Transition.Together>
       ),

@@ -4,9 +4,9 @@ const initialState = {
   loadingModalVisible: false,
   confirmModalVisible: false,
   resultModalVisible: false,
-  resultModalProps: {},
-  errorModalVisible: false,
-  errorModalProps: {},
+  resultModalProps: {resultText: '', resultAnimation: 'default-success', error: false},
+  // errorModalVisible: false,
+  // errorModalProps: {},
   confirmDispatchAction: null
 }
 

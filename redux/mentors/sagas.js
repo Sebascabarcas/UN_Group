@@ -19,7 +19,7 @@ export function* SEARCH_ACTIVITIES({ payload: { searchQuery, skipLoading } }) {
       }
     })
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -46,11 +46,12 @@ export function* CREATE_ACTIVITY({ payload: { userId, goBack, activity, navigate
       }
     })
     yield showResultModal ({
-      resultText: '!Actividad creada correctamente!'
+      resultText: '!Actividad creada correctamente!',
+      error: false
     })
     goBack()
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -73,11 +74,12 @@ export function* CREATE_AVAILABILITY({ payload: { activityId, availability, goBa
       }
     })
     yield showResultModal ({
-      resultText: '!Disponibilidad agregada correctamente!'
+      resultText: '!Disponibilidad agregada correctamente!',
+      error: false
     })
     goBack()
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -106,11 +108,12 @@ export function* UPDATE_ACTIVITY({ payload: { activityId, activity, navigate, go
       }
     })
     yield showResultModal ({
-      resultText: '¡Actividad editada correctamente!'
+      resultText: '¡Actividad editada correctamente!',
+      error: false
     })
     goBack();
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -139,11 +142,12 @@ export function* UPDATE_AVAILABILITY({ payload: { availabilityId, availability, 
       }
     })
     yield showResultModal ({
-      resultText: '¡Disponibilidad editada correctamente!'
+      resultText: '¡Disponibilidad editada correctamente!',
+      error: false
     })
     goBack();
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -166,11 +170,12 @@ export function* DELETE_ACTIVITY({ payload: {activityId, goBack, navigate, skipL
       },
     })
     yield showResultModal ({
-      resultText: '¡Actividad eliminada correctamente!'
+      resultText: '¡Actividad eliminada correctamente!',
+      error: false
     })
     navigate('Mentoring')
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -193,10 +198,11 @@ export function* DELETE_AVAILABILITY({ payload: {availabilityId, goBack, navigat
       },
     })
     yield showResultModal ({
-      resultText: '¡Disponibilidad eliminada correctamente!'
+      resultText: '¡Disponibilidad eliminada correctamente!',
+      error: false
     })
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -216,7 +222,7 @@ export function* GET_MENTORS({payload: {groupId, skipLoading, concat}}) {
       },
     })
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -242,7 +248,7 @@ export function* GET_MENTOR_ACTIVITIES({payload: {userId, skipLoading, concat}})
       },
     })
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -269,7 +275,7 @@ export function* GET_ACTIVITY({payload: {activityId, skipLoading, concat}}) {
       },
     })
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put({
     type: 'modals/SET_STATE',

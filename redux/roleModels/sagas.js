@@ -25,9 +25,10 @@ export function* CREATE_POST({ payload: { groupId, user, post, navigate, skipLoa
     navigate('RoleModels')
     yield showResultModal ({
       resultText: '¡Publicación creada correctamente!',
+      error: true
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -66,9 +67,10 @@ export function* UPDATE_POST({ payload: { postId, post, navigate, goBack, skipLo
     goBack();
     yield showResultModal ({
       resultText: '¡Publicación editada correctamente!',
+      error: true
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -92,9 +94,10 @@ export function* DELETE_POST({ payload: {postId, goBack, navigate, skipLoading }
     navigate('RoleModels');
     yield showResultModal ({
       resultText: '¡Publicación eliminado correctamente!',
+      error: true
     });
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
 }
 
@@ -114,7 +117,7 @@ export function* GET_ROLE_MODELS({payload: {groupId, skipLoading, concat}}) {
       },
     })
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -140,7 +143,7 @@ export function* GET_ROLE_MODELS_POSTS({payload: {groupId, skipLoading, concat}}
       },
     })
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put({
     type: 'modals/SET_STATE',
@@ -166,7 +169,7 @@ export function* GET_ROLE_MODEL_POSTS({payload: {groupId, userId, skipLoading, c
       },
     })
   } catch (error) {
-    yield showErrorModal (error);
+    yield showResultModal ({resultText: error, resultAnimation: 'failure', error: true});
   }
   yield put({
     type: 'modals/SET_STATE',
